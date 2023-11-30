@@ -60,7 +60,7 @@ dependencies {
     androidTestImplementation(libs.uiTests.espressoCore)
     // endregion
 
-    //! DI Hilt
+    // DI Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
@@ -69,7 +69,7 @@ dependencies {
     kapt(libs.room.compiler)
     implementation(libs.room.ktx)
 
-    //? ViewPager удалить, если не понадобится в проекте
+    // ViewPager
     implementation(libs.viewpager)
 
     // Navigation
@@ -79,6 +79,6 @@ dependencies {
     // Fragment
     implementation(libs.fragment)
 
-    //? Coil вместо Glide
+    // Coil
     implementation(libs.coil)
 }
