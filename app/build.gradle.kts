@@ -2,6 +2,9 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("ru.practicum.android.diploma.plugins.developproperties")
+    id("org.jetbrains.kotlin.kapt")
+    id("com.google.dagger.hilt.android")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -36,6 +39,7 @@ android {
 
     buildFeatures {
         buildConfig = true
+        viewBinding = true
     }
 }
 
@@ -55,4 +59,26 @@ dependencies {
     androidTestImplementation(libs.uiTests.junitExt)
     androidTestImplementation(libs.uiTests.espressoCore)
     // endregion
+
+    //! DI Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+
+    // DB Room
+    implementation(libs.room.runtime)
+    kapt(libs.room.compiler)
+    implementation(libs.room.ktx)
+
+    //? ViewPager удалить, если не понадобится в проекте
+    implementation(libs.viewpager)
+
+    // Navigation
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation)
+
+    // Fragment
+    implementation(libs.fragment)
+
+    //? Coil вместо Glide
+    implementation(libs.coil)
 }
