@@ -2,7 +2,6 @@ package ru.practicum.android.diploma.root.ui
 
 // import ru.practicum.android.diploma.BuildConfig
 import android.content.res.Configuration
-import android.graphics.Color
 import android.os.Build
 import android.view.View
 import android.view.WindowInsetsController
