@@ -16,5 +16,4 @@ class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::infl
     private fun networkRequestExample(accessToken: String) {
         // ...
     }
-
 }
