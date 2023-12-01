@@ -1,20 +1,15 @@
 package ru.practicum.android.diploma.favorite
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import ru.practicum.android.diploma.R
+import androidx.fragment.app.viewModels
+import com.hellcorp.selfdictation.utils.BaseFragment
+import ru.practicum.android.diploma.databinding.FragmentFavoriteBinding
 
-class FavoriteFragment : Fragment() {
+class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel>(FragmentFavoriteBinding::inflate) {
+    override val viewModel: FavoriteViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorite, container, false)
+    override fun initViews() {
+    }
+
+    override fun subscribe() {
     }
 }
