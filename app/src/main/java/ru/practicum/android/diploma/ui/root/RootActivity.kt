@@ -1,8 +1,8 @@
 package ru.practicum.android.diploma.ui.root
 
 // import ru.practicum.android.diploma.BuildConfig
-import com.hellcorp.selfdictation.utils.BaseActivity
 import ru.practicum.android.diploma.databinding.ActivityRootBinding
+import ru.practicum.android.diploma.util.BaseActivity
 
 class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::inflate) {
 

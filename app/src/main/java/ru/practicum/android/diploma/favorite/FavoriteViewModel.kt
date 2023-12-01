@@ -1,5 +1,5 @@
 package ru.practicum.android.diploma.favorite
 
-import com.hellcorp.selfdictation.utils.BaseViewModel
+import ru.practicum.android.diploma.util.BaseViewModel
 
 class FavoriteViewModel : BaseViewModel()
