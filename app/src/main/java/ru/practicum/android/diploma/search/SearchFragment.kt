@@ -8,8 +8,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     override val viewModel: SearchViewModel by viewModels()
 
     override fun initViews() {
+        // Блок для инициализации ui
     }
 
     override fun subscribe() {
+        // Блок для подписок (клики, viewModel)
     }
 }

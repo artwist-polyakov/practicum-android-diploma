@@ -8,8 +8,10 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
     override val viewModel: FavoriteViewModel by viewModels()
 
     override fun initViews() {
+        // Блок для инициализации ui
     }
 
     override fun subscribe() {
+        // Блок для подписок (клики, viewModel)
     }
 }

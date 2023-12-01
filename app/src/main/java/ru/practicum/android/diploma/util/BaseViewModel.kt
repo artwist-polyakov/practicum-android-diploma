@@ -1,4 +1,4 @@
-package com.hellcorp.selfdictation.utils
+package ru.practicum.android.diploma.util
 
 import androidx.lifecycle.ViewModel
 

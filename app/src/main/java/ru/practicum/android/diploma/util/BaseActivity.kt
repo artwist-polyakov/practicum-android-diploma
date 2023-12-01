@@ -1,4 +1,4 @@
-package com.hellcorp.selfdictation.utils
+package ru.practicum.android.diploma.util
 
 import android.os.Bundle
 import android.view.LayoutInflater

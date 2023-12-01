@@ -1,4 +1,4 @@
-package com.hellcorp.selfdictation.utils
+package ru.practicum.android.diploma.util
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,7 +20,9 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(
     abstract val viewModel: VM
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         _binding = inflate.invoke(inflater, container, false)
         return binding.root
