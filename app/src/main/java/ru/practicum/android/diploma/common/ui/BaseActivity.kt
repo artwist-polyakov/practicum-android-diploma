@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.util
+package ru.practicum.android.diploma.common.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
