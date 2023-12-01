@@ -1,7 +1,8 @@
-package ru.practicum.android.diploma.favorite
+package ru.practicum.android.diploma.favorites.ui.fragments
 
 import androidx.fragment.app.viewModels
 import ru.practicum.android.diploma.databinding.FragmentFavoriteBinding
+import ru.practicum.android.diploma.favorites.ui.viewmodels.FavoriteViewModel
 import ru.practicum.android.diploma.util.BaseFragment
 
 class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel>(FragmentFavoriteBinding::inflate) {

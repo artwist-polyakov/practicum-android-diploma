@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.team
+package ru.practicum.android.diploma.team.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

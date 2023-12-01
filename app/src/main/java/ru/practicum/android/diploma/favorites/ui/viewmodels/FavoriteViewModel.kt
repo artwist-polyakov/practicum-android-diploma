@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.favorite
+package ru.practicum.android.diploma.favorites.ui.viewmodels
 
 import ru.practicum.android.diploma.util.BaseViewModel
 
