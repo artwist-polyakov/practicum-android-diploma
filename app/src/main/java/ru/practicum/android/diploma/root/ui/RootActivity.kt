@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.ui.root
+package ru.practicum.android.diploma.root.ui
 
 // import ru.practicum.android.diploma.BuildConfig
 import ru.practicum.android.diploma.common.ui.BaseActivity
