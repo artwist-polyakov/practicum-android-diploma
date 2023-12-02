@@ -18,6 +18,7 @@
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">@dimen/button_text_size</item>
         <item name="android:fontWeight">@integer/button_text_weight</item>
+        <item name="fontFamily">@font/ys_display_medium</item>
     </style>
     <style name="Button.Blue">
         <item name="backgroundTint">@color/blue</item>
