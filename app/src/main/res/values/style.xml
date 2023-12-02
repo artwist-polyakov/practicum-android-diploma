@@ -44,9 +44,23 @@
         <item name="android:color">?attr/colorOnPrimary</item>
     </style>
 
-    <!--Элемент списка местоположений неактивный-->
+    <!--Элемент списка неактивный-->
     <style name="list_places_inactive" parent="regular_16">
         <item name="android:color">@color/gray</item>
     </style>
 
+    <!--Заголовок вакансий-->
+    <style name="vacancy_header" parent="medium_22">
+        <item name="android:color">?attr/colorOnPrimary</item>
+    </style>
+
+    <!--Раздел описания вакансии-->
+    <style name="vacancy_chapter" parent="medium_16">
+        <item name="android:color">?attr/colorOnPrimary</item>
+    </style>
+
+    <!--Содержимое раздела вакансии-->
+    <style name="vacancy_content" parent="regular_16">
+        <item name="android:color">?attr/colorOnPrimary</item>
+    </style>
 </resources>
