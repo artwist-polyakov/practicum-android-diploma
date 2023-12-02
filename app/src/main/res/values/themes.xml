@@ -5,7 +5,7 @@
         <item name="colorOnPrimary">@color/black</item>
         <!--White[Day]-->
         <item name="colorOnSecondary">@color/white</item>
-        <item name="colorPrimary">@color/blue</item>
+        <item name="textFillColor">@color/blue</item>
         <item name="colorAccent">@color/red</item>
         <item name="colorOnTertiary">@color/gray</item>
         <item name="colorOnContainer">@color/light_gray</item>

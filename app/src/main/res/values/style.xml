@@ -1,71 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Widget.HH.Text" parent="TextAppearance.AppCompat">
+
+    <style name="Text" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="bold_32" parent="Widget.HH.Text">
+    <style name="Text.bold_32">
         <item name="android:textSize">32sp</item>
         <item name="android:fontFamily">@font/ys_display_bold</item>
     </style>
 
-    <style name="medium_22" parent="Widget.HH.Text">
+    <style name="Text.medium_22">
         <item name="android:textSize">22sp</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
     </style>
 
-    <style name="medium_16" parent="Widget.HH.Text">
+    <style name="Text.medium_16">
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
     </style>
 
-    <style name="regular_16" parent="Widget.HH.Text">
+    <style name="Text.regular_16">
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
     </style>
 
-    <style name="regular_12" parent="Widget.HH.Text">
+    <style name="Text.regular_12">
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
     </style>
 
     <!--Элемент списка вакансий, заголовок-->
-    <style name="list_element_header" parent="medium_22">
+    <style name="Text.medium_22.list_element_header">
         <item name="android:color">?attr/colorOnPrimary</item>
     </style>
 
     <!--Элемент списка вакансий, описание-->
-    <style name="list_element_description" parent="regular_16">
+    <style name="Text.regular_16.list_element_description">
         <item name="android:color">?attr/colorOnPrimary</item>
     </style>
 
     <!--Элемент списка местоположений активный-->
-    <style name="list_places_active" parent="regular_16">
+    <style name="Text.regular_16.list_places_active">
         <item name="android:color">?attr/colorOnPrimary</item>
     </style>
 
     <!--Элемент списка неактивный-->
-    <style name="list_places_inactive" parent="regular_16">
+    <style name="Text.regular_16.list_places_inactive">
         <item name="android:color">?attr/colorOnTertiary</item>
     </style>
 
     <!--Заголовок вакансий-->
-    <style name="vacancy_header" parent="medium_22">
+    <style name="Text.medium_22.vacancy_header">
         <item name="android:color">?attr/colorOnPrimary</item>
     </style>
 
     <!--Раздел описания вакансии-->
-    <style name="vacancy_chapter" parent="medium_16">
+    <style name="Text.medium_16.vacancy_chapter">
         <item name="android:color">?attr/colorOnPrimary</item>
     </style>
 
     <!--Содержимое раздела вакансии-->
-    <style name="vacancy_content" parent="regular_16">
+    <style name="Text.regular_16.vacancy_content">
         <item name="android:color">?attr/colorOnPrimary</item>
     </style>
 
     <!--Текст ошибки-->
-    <style name="error_text" parent="medium_22">
+    <style name="Text.medium_22.error_text">
         <item name="android:color">?attr/colorOnPrimary</item>
         <item name="android:gravity">center</item>
     </style>
