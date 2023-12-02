@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- TextInputs -->
+    <style name="TextInputLayout" parent="Widget.Material3.TextInputLayout.FilledBox">
+        <item name="android:textColorHint">@color/gray</item>
+        <item name="boxBackgroundColor">@color/light_gray</item>
+        <!--        <item name="hintTextAppearance">@style/</item>-->
+        <item name="cornerRadius">@dimen/edittext_corner_radius</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+        <!--        <item name="errorTextAppearance">@style/</item>-->
+    </style>
+
+    <style name="TextInputEditText" parent="Widget.Material3.TextInputLayout.FilledBox">
+        <item name="android:textColorHint">@color/gray</item>
+        <item name="boxBackgroundColor">@color/light_gray</item>
+        <!--        <item name="hintTextAppearance">@style/</item>-->
+    </style>
+</resources>
