@@ -7,15 +7,22 @@ import android.view.View
 import android.view.WindowInsetsController
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.common.ui.BaseActivity
 import ru.practicum.android.diploma.databinding.ActivityRootBinding
 
 class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::inflate) {
 
-    override fun initViews() {
+    override fun initViews() = with(binding) {
         // Пример использования access token для HeadHunter API
         // networkRequestExample(accessToken = BuildConfig.HH_ACCESS_TOKEN)
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.container_view) as NavHostFragment
+        val navController = navHostFragment.navController
+        bottomNavigationView.setupWithNavController(navController)
+
         setStatusBarColor()
     }
 
