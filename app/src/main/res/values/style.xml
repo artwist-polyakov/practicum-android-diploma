@@ -46,7 +46,7 @@
 
     <!--Элемент списка неактивный-->
     <style name="list_places_inactive" parent="regular_16">
-        <item name="android:color">@color/gray</item>
+        <item name="android:color">?attr/colorOnTertiary</item>
     </style>
 
     <!--Заголовок вакансий-->
