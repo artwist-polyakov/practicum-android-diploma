@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="bold_32">
+    <style name="Widget.HH.Text" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="bold_32" parent="Widget.HH.Text">
         <item name="android:textSize">32sp</item>
         <item name="android:fontFamily">@font/ys_display_bold</item>
     </style>
 
-    <style name="medium_22">
+    <style name="medium_22" parent="Widget.HH.Text">
         <item name="android:textSize">22sp</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
     </style>
 
-    <style name="medium_16">
+    <style name="medium_16" parent="Widget.HH.Text">
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
     </style>
 
-    <style name="regular_16">
+    <style name="regular_16" parent="Widget.HH.Text">
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
     </style>
 
-    <style name="regular_12">
+    <style name="regular_12" parent="Widget.HH.Text">
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
     </style>
