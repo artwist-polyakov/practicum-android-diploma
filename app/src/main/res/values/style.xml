@@ -50,17 +50,17 @@
         <item name="android:color">?attr/colorOnTertiary</item>
     </style>
 
-    <!--Заголовок вакансий-->
+    <!--Заголовок раздела вакансий-->
     <style name="Text.medium_22.vacancy_header">
         <item name="android:color">?attr/colorOnPrimary</item>
     </style>
 
-    <!--Раздел описания вакансии-->
+    <!--Часть раздела вакансии-->
     <style name="Text.medium_16.vacancy_chapter">
         <item name="android:color">?attr/colorOnPrimary</item>
     </style>
 
-    <!--Содержимое раздела вакансии-->
+    <!--Содержимое части раздела вакансии-->
     <style name="Text.regular_16.vacancy_content">
         <item name="android:color">?attr/colorOnPrimary</item>
     </style>
