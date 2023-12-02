@@ -13,4 +13,5 @@
     <color name="transparent">#00FFFFFF</color>
 
     <color name="navbar_color">@color/white</color>
+    <color name="text_color">@color/black</color>
 </resources>
