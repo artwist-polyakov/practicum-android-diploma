@@ -63,4 +63,10 @@
     <style name="vacancy_content" parent="regular_16">
         <item name="android:color">?attr/colorOnPrimary</item>
     </style>
+
+    <!--Текст ошибки-->
+    <style name="error_text" parent="medium_22">
+        <item name="android:color">?attr/colorOnPrimary</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>
