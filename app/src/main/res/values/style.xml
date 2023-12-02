@@ -28,4 +28,25 @@
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
     </style>
+
+    <!--Элемент списка вакансий, заголовок-->
+    <style name="list_element_header" parent="medium_22">
+        <item name="android:color">?attr/colorOnPrimary</item>
+    </style>
+
+    <!--Элемент списка вакансий, описание-->
+    <style name="list_element_description" parent="regular_16">
+        <item name="android:color">?attr/colorOnPrimary</item>
+    </style>
+
+    <!--Элемент списка местоположений активный-->
+    <style name="list_places_active" parent="regular_16">
+        <item name="android:color">?attr/colorOnPrimary</item>
+    </style>
+
+    <!--Элемент списка местоположений неактивный-->
+    <style name="list_places_inactive" parent="regular_16">
+        <item name="android:color">@color/gray</item>
+    </style>
+
 </resources>
