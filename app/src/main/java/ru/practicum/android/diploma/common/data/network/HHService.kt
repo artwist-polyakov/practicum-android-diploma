@@ -9,7 +9,7 @@ interface HHService {
 
     @GET("vacancies")
     suspend fun searchVacancies(
-        @Header("Authorization") token: String,
+        @Header("Authorization") token: String? = null,
         @Query("text") text: String = "",
         @Query("page") page: Int = 0,
         @Query("per_page") perPage: Int = 20,
