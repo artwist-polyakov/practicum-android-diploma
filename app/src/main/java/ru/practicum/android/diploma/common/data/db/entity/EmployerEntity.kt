@@ -10,6 +10,7 @@ data class EmployerEntity (
     val employerEmail: String?,
     val employerContactName: String?,
     val employerPhone: String?,
+    val comment:String?, //комментарий из раздела Контакты
     val employerLogo_urls_90: String?,
     val employerLogo_urls_240: String?,
     val employerLogo_urls_original: String?,
