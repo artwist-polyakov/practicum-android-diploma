@@ -38,12 +38,8 @@ class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::infl
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.favoriteFragment, R.id.searchFragment, R.id.teamFragment -> {
-                    bottomNavigationView.visibility = View.VISIBLE
-                }
-                else -> {
-                    bottomNavigationView.visibility = View.GONE
-                }
+                R.id.filterFragment -> bottomNavigationView.visibility = View.GONE
+                else -> bottomNavigationView.visibility = View.VISIBLE
             }
         }
     }
