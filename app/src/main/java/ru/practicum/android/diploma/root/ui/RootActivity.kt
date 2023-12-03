@@ -9,10 +9,12 @@ import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.common.ui.BaseActivity
 import ru.practicum.android.diploma.databinding.ActivityRootBinding
 
+@AndroidEntryPoint
 class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::inflate) {
 
     override fun initViews() = with(binding) {
