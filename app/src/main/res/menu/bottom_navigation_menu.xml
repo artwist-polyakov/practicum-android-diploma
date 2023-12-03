@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/searchFragment"
+        android:icon="@drawable/main_24px"
+        android:orderInCategory="1"
+        android:title="@string/main" />
+    <item
+        android:id="@+id/favoriteFragment"
+        android:icon="@drawable/favorites_active_24px"
+        android:orderInCategory="2"
+        android:title="@string/favorite" />
+    <item
+        android:id="@+id/teamFragment"
+        android:icon="@drawable/team_24px"
+        android:orderInCategory="3"
+        android:title="@string/team" />
+</menu>
