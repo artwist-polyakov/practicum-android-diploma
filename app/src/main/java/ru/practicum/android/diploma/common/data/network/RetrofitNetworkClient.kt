@@ -1,10 +1,11 @@
 package ru.practicum.android.diploma.common.data.network
 
 import android.content.Context
+import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.common.data.dto.Response
-import ru.practicum.android.diploma.common.data.dto.VacanciesSearchRequest
+import ru.practicum.android.diploma.common.data.network.requests.VacanciesSearchRequest
 import ru.practicum.android.diploma.common.utils.checkInternetReachability
 
 class RetrofitNetworkClient(
@@ -29,6 +30,14 @@ class RetrofitNetworkClient(
                 }
                 response.apply { resultCode = 200 }
             } catch (e: Throwable) {
+                // TODO Удалить после отладки
+                Log.e("NetworkClient", "Произошла ошибка при запросе", e)
+                e.printStackTrace()
+                if (e is retrofit2.HttpException) {
+                    val errorBody = e.response()?.errorBody()?.string()
+                    Log.e("NetworkClient", "Тело ошибки: $errorBody")
+                }
+                // Удалять до сюда
                 Response().apply { resultCode = 500 }
             }
         }

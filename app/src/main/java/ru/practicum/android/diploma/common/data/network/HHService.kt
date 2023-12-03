@@ -3,7 +3,7 @@ package ru.practicum.android.diploma.common.data.network
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query
-import ru.practicum.android.diploma.common.data.dto.HHSearchResponse
+import ru.practicum.android.diploma.common.data.network.responce.HHSearchResponse
 
 interface HHService {
 

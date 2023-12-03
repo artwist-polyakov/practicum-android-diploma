@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.common.data.dto
+package ru.practicum.android.diploma.common.data.network.requests
 
 data class VacanciesSearchRequest(
     val text: String = "",
