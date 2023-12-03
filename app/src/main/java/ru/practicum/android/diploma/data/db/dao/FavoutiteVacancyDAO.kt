@@ -8,16 +8,16 @@ import androidx.room.Query
 /*
 @Dao
 interface FavoutiteVacancyDAO {
-    @Insert(entity = VacancyEntity::class, onConflict = OnConflictStrategy.REPLACE)
-    fun insertTrack (vacancy: VacancyEntity)
+    @Upsert(entity = VacancyEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    fun insert (vacancy: VacancyEntity)
 
     @Delete(entity = VacancyEntity::class)
-    fun deleteTrack (track:VacancyEntity)
+    fun delete (track:VacancyEntity)
 
     @Query("SELECT * FROM favourite_vacancy_table ORDER BY addTime DESC")
-    fun queryTrack():List<VacancyEntity>
+    fun query():List<VacancyEntity>
 
     @Query("SELECT * FROM favourite_vacancy_table WHERE trackId=:vacancyId")
-    fun queryTrackId(searchId:Long):VacancyEntity
+    fun queryId(searchId:Long):VacancyEntity
 }
 */
