@@ -81,4 +81,7 @@ dependencies {
 
     // Coil
     implementation(libs.coil)
+
+    // Retrofit
+    implementation(libs.retrofit)
 }
