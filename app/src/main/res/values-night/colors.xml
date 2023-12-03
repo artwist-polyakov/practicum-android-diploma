@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <!--Black[Universal]-->
+    <color name="black">#1A1B22</color>
+    <!--White[Universal]-->
+    <color name="white">#FDFDFD</color>
+    <!--Остальные цвета-->
+    <color name="blue">#3772E7</color>
+    <color name="red">#F56B6C</color>
+    <color name="gray">#AEAFB4</color>
+    <color name="light_gray">#E6E8EB</color>
+    <color name="background">#80AEAFB4</color>
     <color name="navbar">?attr/colorOnSecondary</color>
     <color name="text">?attr/colorOnPrimary</color>
     <color name="edit_text">@color/gray</color>
