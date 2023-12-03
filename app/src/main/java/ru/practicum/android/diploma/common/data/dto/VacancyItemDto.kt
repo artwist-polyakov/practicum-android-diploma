@@ -5,4 +5,5 @@ data class VacancyItemDto(
     val name: String,
     val department: String,
     val salary: SalaryDto?,
+    val employer: EmployerDto?,
 )
