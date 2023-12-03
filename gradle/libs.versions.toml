@@ -5,11 +5,16 @@ java = "VERSION_1_8"
 # Build constants
 minSdk = "26"
 compileSdk = "34"
-targetSdk = "33"
+targetSdk = "34"
 
 # Detekt
 detekt = "1.23.3"
-detektTwitterComposeRules ="0.0.26"
+detektTwitterComposeRules = "0.0.26"
+
+room = "2.6.1"
+nav = "2.7.5"
+hilt = "2.48.1"
+org-jetbrains-kotlin-android = "1.9.0"
 
 [libraries]
 
@@ -37,4 +42,33 @@ unitTests-junit = "junit:junit:4.13.2"
 uiTests-junitExt = "androidx.test.ext:junit:1.1.5"
 uiTests-espressoCore = "androidx.test.espresso:espresso-core:3.5.1"
 
+#DI Koin
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
+
+# DB
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+
+# Network Retrofit2
+retrofit = "com.squareup.retrofit2:retrofit:2.9.0"
+converter-gson = "com.squareup.retrofit2:converter-gson:2.9.0"
+
+# ViewPager
+viewpager = "androidx.viewpager2:viewpager2:1.0.0"
+
+# Navigation
+navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "nav" }
+navigation = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "nav" }
+
+# Fragment
+fragment = "androidx.fragment:fragment-ktx:1.6.2"
+
+#Coil
+coil = "io.coil-kt:coil:2.3.0"
+
 [bundles]
+[plugins]
+org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-android" }
