@@ -5,7 +5,9 @@ import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.common.data.dto.Response
+import ru.practicum.android.diploma.common.data.network.requests.AreasRequest
 import ru.practicum.android.diploma.common.data.network.requests.VacanciesSearchRequest
+import ru.practicum.android.diploma.common.data.network.response.AreaSearchResponse
 import ru.practicum.android.diploma.common.utils.checkInternetReachability
 
 class RetrofitNetworkClient(
@@ -25,7 +27,14 @@ class RetrofitNetworkClient(
                         industry = dto.industry,
                         salary = dto.salary,
                         onlyWithSalary = dto.onlyWithSalary
-                        )
+                    )
+
+                    is AreasRequest -> {
+                        AreaSearchResponse(areas = hhService.getAreas()).apply {
+                            resultCode = 200
+                        }
+                    }
+
                     else -> Response().apply { resultCode = 400 }
                 }
                 response.apply { resultCode = 200 }

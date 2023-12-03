@@ -4,6 +4,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Path
 import retrofit2.http.Query
+import ru.practicum.android.diploma.common.data.dto.AreaDto
 import ru.practicum.android.diploma.common.data.network.response.HHSearchResponse
 
 interface HHService {
@@ -26,9 +27,8 @@ interface HHService {
         @Path("vacancy_id") vacancyId: Int
     ): HHSearchResponse
 
-    @GET("areas/{area_id}")
-    suspend fun getArea(
+    @GET("areas")
+    suspend fun getAreas(
         @Header("Authorization") token: String? = null,
-        @Path("area_id") areaId: Int? = null
-    ): HHSearchResponse
+    ): List<AreaDto>
 }

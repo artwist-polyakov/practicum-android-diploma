@@ -9,6 +9,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.common.data.network.requests.VacanciesSearchRequest
 import ru.practicum.android.diploma.common.data.network.NetworkClient
+import ru.practicum.android.diploma.common.data.network.requests.AreasRequest
+import ru.practicum.android.diploma.common.data.network.response.AreaSearchResponse
 import ru.practicum.android.diploma.common.data.network.response.HHSearchResponse
 import ru.practicum.android.diploma.common.ui.BaseFragment
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
@@ -38,8 +40,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
                     text = "",
                     onlyWithSalary = true
                 ))
-            Log.d("NetworkClient", result.resultCode.toString())
+
+            val regions = networkClient.doRequest(AreasRequest())
+            Log.d("NetworkClient", regions.resultCode.toString())
             Log.d("NetworkClient", (result as HHSearchResponse).toString())
+            Log.d("NetworkClient", (regions as AreaSearchResponse).areas.toString())
         }
     }
 }
