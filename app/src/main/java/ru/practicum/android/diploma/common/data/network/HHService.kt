@@ -8,9 +8,8 @@ interface HHService {
 
     @GET("vacancies")
     suspend fun searchVacancies(
-        @Query("text") text: String,
+        @Query("text") text: String = "",
         @Query("page") page: Int = 0,
-        @Query("per_page") perPage: Int,
+        @Query("per_page") perPage: Int = 20,
     ): HHSearchResponce
-
 }
