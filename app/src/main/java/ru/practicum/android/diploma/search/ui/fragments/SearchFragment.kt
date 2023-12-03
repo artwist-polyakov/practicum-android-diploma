@@ -39,7 +39,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
                     onlyWithSalary = true
                 ))
             Log.d("NetworkClient", result.resultCode.toString())
-            Log.d("NetworkClient", (result as HHSearchResponse).items[0].salary.let{ it?.currency!!.symbol})
+            Log.d("NetworkClient", (result as HHSearchResponse).toString())
         }
     }
 }
