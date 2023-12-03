@@ -13,6 +13,10 @@ data class VacancyEntity(
     val experience: String?, //например, "От 1 года до 3 лет"
     val keySkills: String?,
     val jobName: String,
-    val salary: String?,
+    //зарплата:
+    val currency: String,
+    val from: String,
+    val to: String,
+
     val schedule: String?, //например, "Полный день"
 )
