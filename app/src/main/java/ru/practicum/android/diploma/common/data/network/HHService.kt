@@ -2,6 +2,7 @@ package ru.practicum.android.diploma.common.data.network
 
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.practicum.android.diploma.common.data.network.responce.HHSearchResponse
 
@@ -19,9 +20,15 @@ interface HHService {
         @Query("only_with_salary") onlyWithSalary: Boolean = false
     ): HHSearchResponse
 
-    @GET("vacancies/{vacancyId}/show_contacts")
+    @GET("vacancies/{vacancy_id}/show_contacts")
     suspend fun getVacancyContacts(
         @Header("Authorization") token: String? = null,
-        @Query("vacancyId") vacancyId: Int
+        @Path("vacancy_id") vacancyId: Int
+    ): HHSearchResponse
+
+    @GET("areas/{area_id}")
+    suspend fun getArea(
+        @Header("Authorization") token: String? = null,
+        @Path("area_id") areaId: Int? = null
     ): HHSearchResponse
 }

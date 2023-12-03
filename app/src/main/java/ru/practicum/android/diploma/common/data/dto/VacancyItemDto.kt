@@ -1,7 +1,7 @@
 package ru.practicum.android.diploma.common.data.dto
 
-import java.lang.Exception
 
+//todo Добавить keyskills
 data class VacancyItemDto(
     val id: Int,
     val name: String,
