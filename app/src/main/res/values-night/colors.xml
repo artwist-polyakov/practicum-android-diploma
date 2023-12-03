@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="navbar_color">?attr/colorOnSecondary</color>
+    <color name="text_color">?attr/colorOnPrimary</color>
+</resources>
