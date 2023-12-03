@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.filter
+package ru.practicum.android.diploma.filter.ui.viewmodel
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ru.practicum.android.diploma.common.ui.BaseViewModel
