@@ -2,6 +2,74 @@
 <resources>
 
     <style name="Text" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Text.Bold32">
+        <item name="android:textSize">32sp</item>
+        <item name="android:fontFamily">@font/ys_display_bold</item>
+    </style>
+
+    <style name="Text.Medium22">
+        <item name="android:textSize">22sp</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+    </style>
+
+    <style name="Text.Medium16">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+    </style>
+
+    <style name="Text.Regular16">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+    </style>
+
+    <style name="Text.Regular12">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+    </style>
+
+    <!--Элемент списка вакансий, заголовок-->
+    <style name="Text.Medium22.listElementHeader">
+        <item name="android:color">?attr/colorOnPrimary</item>
+    </style>
+
+    <!--Элемент списка вакансий, описание-->
+    <style name="Text.Regular16.listElementDescription">
+        <item name="android:color">?attr/colorOnPrimary</item>
+    </style>
+
+    <!--Элемент списка местоположений активный-->
+    <style name="Text.Regular16.listPlacesActive">
+        <item name="android:color">?attr/colorOnPrimary</item>
+    </style>
+
+    <!--Элемент списка неактивный-->
+    <style name="Text.Regular16.listPlacesInactive">
+        <item name="android:color">?attr/colorOnTertiary</item>
+    </style>
+
+    <!--Заголовок раздела вакансий-->
+    <style name="Text.Medium22.vacancyHeader">
+        <item name="android:color">?attr/colorOnPrimary</item>
+    </style>
+
+    <!--Часть раздела вакансии-->
+    <style name="Text.Medium16.vacancyChapter">
+        <item name="android:color">?attr/colorOnPrimary</item>
+    </style>
+
+    <!--Содержимое части раздела вакансии-->
+    <style name="Text.Regular16.vacancyContent">
+        <item name="android:color">?attr/colorOnPrimary</item>
+    </style>
+
+    <!--Текст ошибки-->
+    <style name="Text.Medium22.errorText">
+        <item name="android:color">?attr/colorOnPrimary</item>
+        <item name="android:gravity">center</item>
+=======
         <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 
