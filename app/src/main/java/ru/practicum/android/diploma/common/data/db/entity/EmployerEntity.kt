@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.data.db.entity
+package ru.practicum.android.diploma.common.data.db.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "employere_vacancy_table")
 data class EmployerEntity (
     @PrimaryKey
-    val employerId: Int, // см. в API раздел "employer", поле "id" https://api.hh.ru/openapi/redoc#tag/Vakansii/operation/get-vacancy
+    val id: Int, // см. в API раздел "employer", поле "id" https://api.hh.ru/openapi/redoc#tag/Vakansii/operation/get-vacancy
     val employerEmail: String?,
     val employerContactName: String?,
     val employerPhone: String?,
