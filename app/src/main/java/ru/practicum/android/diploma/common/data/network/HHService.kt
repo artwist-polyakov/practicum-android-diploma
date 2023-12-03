@@ -18,4 +18,10 @@ interface HHService {
         @Query("salary") salary: Int? = null,
         @Query("only_with_salary") onlyWithSalary: Boolean = false
     ): HHSearchResponse
+
+    @GET("vacancies/{vacancyId}/show_contacts")
+    suspend fun getVacancyContacts(
+        @Header("Authorization") token: String? = null,
+        @Query("vacancyId") vacancyId: Int
+    ): HHSearchResponse
 }
