@@ -1,6 +1,6 @@
 package ru.practicum.android.diploma.common.data.dto
 
-data class HHSearchResponce(
+data class HHSearchResponse(
     val items: List<VacancyItemDto>,
     val found: Int,
     val pages: Int,

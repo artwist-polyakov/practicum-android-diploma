@@ -3,7 +3,7 @@ package ru.practicum.android.diploma.common.data.network
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query
-import ru.practicum.android.diploma.common.data.dto.HHSearchResponce
+import ru.practicum.android.diploma.common.data.dto.HHSearchResponse
 
 interface HHService {
 
@@ -17,5 +17,5 @@ interface HHService {
         @Query("industry") industry: Int? = null,
         @Query("salary") salary: Int? = null,
         @Query("only_with_salary") onlyWithSalary: Boolean = false
-    ): HHSearchResponce
+    ): HHSearchResponse
 }
