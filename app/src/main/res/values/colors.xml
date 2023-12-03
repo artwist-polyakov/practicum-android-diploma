@@ -12,6 +12,6 @@
     <color name="background">#80AEAFB4</color>
     <color name="transparent">#00FFFFFF</color>
 
-    <color name="navbar_color">@color/white</color>
-    <color name="text_color">@color/black</color>
+    <color name="navbar_color">?attr/colorOnPrimary</color>
+    <color name="text_color">?attr/colorOnSecondary</color>
 </resources>
