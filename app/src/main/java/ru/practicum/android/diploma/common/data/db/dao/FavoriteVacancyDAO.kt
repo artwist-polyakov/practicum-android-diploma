@@ -13,7 +13,7 @@ interface FavoriteVacancyDAO {
 //
 //    @Delete(entity = VacancyEntity::class)
 //    fun deleteVacancy(vacancy: VacancyEntity)
-/*
+
     @Query(
         """
         SELECT v.id as vacancyId,
@@ -63,4 +63,4 @@ interface FavoriteVacancyDAO {
     suspend fun getVacancyById(vacancyId: Int): Vacancy?
 }
 */
-*/
+
