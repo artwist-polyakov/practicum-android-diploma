@@ -8,16 +8,15 @@ import androidx.room.Relation
 data class VacancyEntity(
     @PrimaryKey
     val id: Int,
-    val city:String,
+    val city: String,
     val jobDescription: String?,
-    val jobTiming: String?, //например, "Полная занятость"
-    val experience: String?, //например, "От 1 года до 3 лет"
-    val keySkills: List<String>?,  //их может быть несколько, у каждого поле name
-    val professional_roles: List<String>?, //тоже несколько
+    val jobTiming: String?,
+    val experience: String?,
+    val keySkills: List<String>?,
+    val professional_roles: List<String>?,
     val jobName: String,
-    //зарплата:
     val currency: String,
     val from: String,
     val to: String,
-    val schedule: String?, //например, "Полный день"
+    val schedule: String?,
 )
