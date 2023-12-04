@@ -54,7 +54,7 @@ room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 
 # Network Retrofit2
 retrofit = "com.squareup.retrofit2:retrofit:2.9.0"
-converter-gson = "com.squareup.retrofit2:converter-gson:2.9.0"
+convertGson = "com.squareup.retrofit2:converter-gson:2.9.0"
 
 # ViewPager
 viewpager = "androidx.viewpager2:viewpager2:1.0.0"
