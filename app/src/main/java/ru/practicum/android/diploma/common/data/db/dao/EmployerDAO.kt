@@ -1,4 +1,9 @@
 package ru.practicum.android.diploma.common.data.db.dao
+
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Query
+import androidx.room.Upsert
 /*
 @Dao
 interface EmployerDAO {
