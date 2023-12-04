@@ -7,6 +7,7 @@ import android.view.View
 import android.view.WindowInsetsController
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,7 +31,8 @@ class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::infl
 //    }
 
     /**
-     *Метод управляет видимостью bottomNavigationView
+     * Метод управляет видимостью элементов и назначением текста на Header
+     * При добавлении новых фрагментов следует вписать его в сценарий manageBottomNavigation
      */
     private fun manageBottomNavigation() = with(binding) {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.container_view) as NavHostFragment
@@ -40,14 +42,49 @@ class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::infl
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.filterFragment -> bottomNavigationView.visibility = View.GONE
+                R.id.searchFragment -> manageItemViews(
+                    headerText = getString(R.string.search_for_vacancies),
+                    arrowBackIcon = false,
+                    bottomNavigation = true,
+                    shareIcon = false,
+                    favoriteIcon = false,
+                    filterIcon = true
+                )
+
+                R.id.favoriteFragment -> manageItemViews(
+                    headerText = getString(R.string.favorite),
+                    arrowBackIcon = false,
+                    bottomNavigation = true,
+                    shareIcon = false,
+                    favoriteIcon = false,
+                    filterIcon = false
+                )
+
+                R.id.teamFragment -> manageItemViews(
+                    headerText = getString(R.string.team),
+                    arrowBackIcon = false,
+                    bottomNavigation = true,
+                    shareIcon = false,
+                    favoriteIcon = false,
+                    filterIcon = false
+                )
+
+                R.id.filterFragment -> manageItemViews(
+                    headerText = getString(R.string.filter_settings),
+                    arrowBackIcon = true,
+                    bottomNavigation = true,
+                    shareIcon = false,
+                    favoriteIcon = false,
+                    filterIcon = false
+                )
+
                 else -> bottomNavigationView.visibility = View.VISIBLE
             }
         }
     }
 
     /**
-     *Метод определяет теккущую тему устройства (тёмная/светлая) и относительно этого устанавливает цвета в статус баре
+     * Метод определяет теккущую тему устройства (тёмная/светлая) и относительно этого устанавливает цвета в статус баре
      */
     private fun setStatusBarColor() {
         val uiMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
@@ -69,6 +106,27 @@ class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::infl
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
                 window.decorView.systemUiVisibility = 0
             }
+        }
+    }
+
+    /**
+     * Метод-конструктор элементов RootActivity
+     */
+    private fun manageItemViews(
+        headerText: String,
+        arrowBackIcon: Boolean,
+        bottomNavigation: Boolean,
+        shareIcon: Boolean,
+        favoriteIcon: Boolean,
+        filterIcon: Boolean
+    ) {
+        with(binding) {
+            ivArrowBack.isVisible = arrowBackIcon
+            tvHeader.text = headerText
+            bottomNavigationView.isVisible = bottomNavigation
+            ivShare.isVisible = shareIcon
+            ivFavorite.isVisible = favoriteIcon
+            ivFilter.isVisible = filterIcon
         }
     }
 }
