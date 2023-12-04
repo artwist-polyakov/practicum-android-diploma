@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.common.data.network
 
 import android.content.Context
+import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
@@ -23,7 +24,7 @@ class RetrofitNetworkClient(
         if (!context.checkInternetReachability()) return Response().apply { resultCode = NO_INTERNET_ERROR }
         return withContext(Dispatchers.IO) {
             try {
-                val response = when (dto) {
+                when (dto) {
                     is VacanciesSearchRequest -> makeVacancySearchRequest(dto)
 
                     is AreasRequest -> makeAreasRequest(dto)
@@ -34,11 +35,18 @@ class RetrofitNetworkClient(
 
                     else -> Response().apply { resultCode = CLIENT_ERROR }
                 }
-                response.apply { resultCode = SUCCESS }
             } catch (e: IOException) {
                 Response().apply { resultCode = NO_INTERNET_ERROR }
             } catch (e: HttpException) {
+                Log.e("NetworkClient", "HTTP ошибка при сетевом запросе: ${e.message}", e)
                 Response().apply { resultCode = e.code() }
+            } catch (e: RuntimeException) {
+                Log.e(
+                    "NetworkClient",
+                    "Непредвиденное runtime исключение при выполнении сетевого запроса: ${e.message}",
+                    e
+                )
+                Response().apply { resultCode = CLIENT_ERROR }
             } catch (e: Exception) {
                 Response().apply { resultCode = SERVER_ERROR }
             }
@@ -54,7 +62,9 @@ class RetrofitNetworkClient(
             industry = dto.industry,
             salary = dto.salary,
             onlyWithSalary = dto.onlyWithSalary
-        )
+        ).apply {
+            resultCode = SUCCESS
+        }
     }
 
     private suspend fun makeSingleVacancyRequest(dto: SingleVacancyRequest): Response {

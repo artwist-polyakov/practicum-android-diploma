@@ -31,6 +31,6 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun providesNetworkClient(hhService: HHService,  @ApplicationContext context: Context): NetworkClient =
+    fun providesNetworkClient(hhService: HHService, @ApplicationContext context: Context): NetworkClient =
         RetrofitNetworkClient(hhService, context)
 }
