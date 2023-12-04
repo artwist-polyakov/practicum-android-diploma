@@ -7,7 +7,6 @@ import android.view.View
 import android.view.WindowInsetsController
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
-import dagger.hilt.android.AndroidEntryPoint
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,9 +25,9 @@ class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::infl
         setStatusBarColor()
     }
 
-    private fun networkRequestExample(accessToken: String) {
-        // ...
-    }
+//    private fun networkRequestExample(accessToken: String) {
+//        // ...
+//    }
 
     /**
      *Метод управляет видимостью bottomNavigationView
