@@ -11,18 +11,20 @@ import androidx.room.ForeignKey
             entity= EmployerEntity::class,
             parentColumns = ["id"],
             childColumns = ["employerId"],
-            onDelete = ForeignKey.CASCADE
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE
         ),
         ForeignKey(
             entity= VacancyEntity::class,
             parentColumns = ["id"],
             childColumns = ["vacancyId"],
-            onDelete = ForeignKey.CASCADE
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE
         )
     ]
 )
 data class EmployerVacancyReference (
     val employerId:Int,
     val vacancyId:Int,
-    val lastUpdate: Long
+    val lastUpdate: Long?
 )

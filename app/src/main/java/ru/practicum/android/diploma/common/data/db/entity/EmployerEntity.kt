@@ -9,7 +9,7 @@ data class EmployerEntity (
     val id: Int, // см. в API раздел "employer", поле "id" https://api.hh.ru/openapi/redoc#tag/Vakansii/operation/get-vacancy
     val employerEmail: String?,
     val employerContactName: String?,
-    val employerPhone: String?,
+    val employerPhone: List<String>?,
     val comment:String?, //комментарий из раздела Контакты
     val employerLogo_urls_90: String?,
     val employerLogo_urls_240: String?,
