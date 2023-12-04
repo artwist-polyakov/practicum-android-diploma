@@ -3,7 +3,7 @@ package ru.practicum.android.diploma.common.data.db.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "employere_vacancy_table")
+@Entity(tableName = "employer_vacancy_table")
 data class EmployerEntity(
     @PrimaryKey
     val id: Int,
