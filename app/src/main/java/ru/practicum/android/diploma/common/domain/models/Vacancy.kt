@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.common.domain.models
 
 data class Vacancy (
+    val vacancyId: Int,
     val city:String,
     val jobDescription: String?,
     val jobTiming: String?, //например, "Полная занятость"
@@ -13,6 +14,7 @@ data class Vacancy (
     val from: String,
     val to: String,
     val schedule: String?, //например, "Полный день"
+    val employerId: Int,
     val employerEmail: String?,
     val employerContactName: String?,
     val employerPhone: List<String>?,
