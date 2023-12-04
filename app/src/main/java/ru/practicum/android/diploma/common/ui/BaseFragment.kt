@@ -9,6 +9,11 @@ import androidx.viewbinding.ViewBinding
 
 typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
+/**
+ * Базовый фрагмент, позволяет привести к единому виду все реализации фрагментов, работает в связке с BaseViewModel.
+ *
+ * При реализации потребуется реализовать абстрактные методы для инициализации вью и слушатели событий
+ */
 abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(
     private val inflate: Inflate<VB>,
 ) : Fragment() {
