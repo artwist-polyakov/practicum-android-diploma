@@ -20,7 +20,7 @@ class RetrofitNetworkClient(
     private val hhService: HHService,
     private val context: Context
 ) : NetworkClient {
-    @Suppress("TooGenericExceptionCaught", "CyclomaticComplexity", "SwallowedException")
+    @Suppress("TooGenericExceptionCaught", "CyclomaticComplexMethod", "SwallowedException")
     override suspend fun doRequest(dto: Any): Response {
         if (!context.checkInternetReachability()) return Response().apply { resultCode = NO_INTERNET_ERROR }
         return withContext(Dispatchers.IO) {

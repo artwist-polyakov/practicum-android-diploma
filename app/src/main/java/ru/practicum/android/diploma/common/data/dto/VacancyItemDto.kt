@@ -2,8 +2,6 @@ package ru.practicum.android.diploma.common.data.dto
 
 import com.google.gson.annotations.SerializedName
 
-
-//todo Добавить keyskills
 data class VacancyItemDto(
     val id: Int,
     val name: String,
