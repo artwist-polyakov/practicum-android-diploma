@@ -10,8 +10,10 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.common.data.network.requests.VacanciesSearchRequest
 import ru.practicum.android.diploma.common.data.network.NetworkClient
 import ru.practicum.android.diploma.common.data.network.requests.AreasRequest
+import ru.practicum.android.diploma.common.data.network.requests.SingleVacancyRequest
 import ru.practicum.android.diploma.common.data.network.response.AreaSearchResponse
 import ru.practicum.android.diploma.common.data.network.response.HHSearchResponse
+import ru.practicum.android.diploma.common.data.network.response.SingleVacancyResponse
 import ru.practicum.android.diploma.common.ui.BaseFragment
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 import ru.practicum.android.diploma.search.ui.viewmodels.SearchViewModel
@@ -37,14 +39,17 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         viewLifecycleOwner.lifecycleScope.launch {
             val result  = networkClient.doRequest(
                 VacanciesSearchRequest(
-                    text = "",
+                    text = "android",
                     onlyWithSalary = true
                 ))
 
             val regions = networkClient.doRequest(AreasRequest())
+            val vacancy = (networkClient.doRequest(SingleVacancyRequest(vacancyId = 89815858)) as SingleVacancyResponse).vacancy.keySkills
             Log.d("NetworkClient", regions.resultCode.toString())
             Log.d("NetworkClient", (result as HHSearchResponse).toString())
             Log.d("NetworkClient", (regions as AreaSearchResponse).areas.toString())
+
+            Log.d("NetworkClient", vacancy.toString())
         }
     }
 }
