@@ -6,9 +6,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.common.data.dto.Response
 import ru.practicum.android.diploma.common.data.network.requests.AreasRequest
+import ru.practicum.android.diploma.common.data.network.requests.IndustriesRequest
 import ru.practicum.android.diploma.common.data.network.requests.SingleVacancyRequest
 import ru.practicum.android.diploma.common.data.network.requests.VacanciesSearchRequest
 import ru.practicum.android.diploma.common.data.network.response.AreaSearchResponse
+import ru.practicum.android.diploma.common.data.network.response.IndustriesSearchResponse
 import ru.practicum.android.diploma.common.data.network.response.SingleVacancyResponse
 import ru.practicum.android.diploma.common.utils.checkInternetReachability
 
@@ -39,6 +41,12 @@ class RetrofitNetworkClient(
 
                     is SingleVacancyRequest -> {
                         SingleVacancyResponse(vacancy = hhService.getVacancy(vacancyId = dto.vacancyId)).apply {
+                            resultCode = 200
+                        }
+                    }
+
+                    is IndustriesRequest -> {
+                        IndustriesSearchResponse(industries = hhService.getIndustries()).apply {
                             resultCode = 200
                         }
                     }

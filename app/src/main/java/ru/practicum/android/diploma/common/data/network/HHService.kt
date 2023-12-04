@@ -4,7 +4,9 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Path
 import retrofit2.http.Query
-import ru.practicum.android.diploma.common.data.dto.AreaDto
+import ru.practicum.android.diploma.common.data.dto.AreasDto
+import ru.practicum.android.diploma.common.data.dto.IndustriesDto
+import ru.practicum.android.diploma.common.data.dto.Response
 import ru.practicum.android.diploma.common.data.dto.VacancyItemDto
 import ru.practicum.android.diploma.common.data.network.response.HHSearchResponse
 
@@ -29,14 +31,20 @@ interface HHService {
         @Path("vacancy_id") vacancyId: Int
     ): VacancyItemDto
 
+    //todo реализовать классы запроса и ответа, когда будет апи
     @GET("vacancies/{vacancy_id}/show_contacts")
     suspend fun getVacancyContacts(
         @Header("Authorization") token: String? = null,
         @Path("vacancy_id") vacancyId: Int
-    ): HHSearchResponse
+    ): Response
 
     @GET("areas")
     suspend fun getAreas(
         @Header("Authorization") token: String? = null,
-    ): List<AreaDto>
+    ): List<AreasDto>
+
+    @GET("industries")
+    suspend fun getIndustries(
+        @Header("Authorization") token: String? = null,
+    ): List<IndustriesDto>
 }

@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.common.data.network.requests.VacanciesSearchRequest
 import ru.practicum.android.diploma.common.data.network.NetworkClient
 import ru.practicum.android.diploma.common.data.network.requests.AreasRequest
+import ru.practicum.android.diploma.common.data.network.requests.IndustriesRequest
 import ru.practicum.android.diploma.common.data.network.requests.SingleVacancyRequest
 import ru.practicum.android.diploma.common.data.network.response.AreaSearchResponse
 import ru.practicum.android.diploma.common.data.network.response.HHSearchResponse
@@ -36,20 +37,35 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //todo  удалить после отладки
+        // начало удаляемого блока =>
         viewLifecycleOwner.lifecycleScope.launch {
-            val result  = networkClient.doRequest(
+            val result = networkClient.doRequest(
                 VacanciesSearchRequest(
                     text = "android",
                     onlyWithSalary = true
-                ))
+                )
+            )
 
             val regions = networkClient.doRequest(AreasRequest())
-            val vacancy = (networkClient.doRequest(SingleVacancyRequest(vacancyId = 89815858)) as SingleVacancyResponse).vacancy.keySkills
+            val vacancy =
+                (networkClient
+                    .doRequest(
+                        SingleVacancyRequest(
+                            vacancyId = 89815858
+                        )) as SingleVacancyResponse)
+                    .vacancy
+                    .keySkills
+            val industries = networkClient.doRequest(IndustriesRequest())
             Log.d("NetworkClient", regions.resultCode.toString())
             Log.d("NetworkClient", (result as HHSearchResponse).toString())
             Log.d("NetworkClient", (regions as AreaSearchResponse).areas.toString())
 
             Log.d("NetworkClient", vacancy.toString())
+
+            Log.d("NetworkClient", industries.toString())
         }
+        // <= Конец удаляемого блока
     }
 }

@@ -1,7 +1,7 @@
 package ru.practicum.android.diploma.common.data.dto
 
-data class AreaDto(
+data class AreasDto(
     val id: String,
     val name: String,
-    val areas: List<AreaDto>
+    val areas: List<AreasDto>?
 )
