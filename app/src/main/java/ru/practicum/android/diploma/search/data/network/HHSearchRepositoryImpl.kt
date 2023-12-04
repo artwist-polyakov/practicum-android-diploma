@@ -2,7 +2,6 @@ package ru.practicum.android.diploma.search.data.network
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import ru.practicum.android.diploma.common.data.dto.IndustriesDto
 import ru.practicum.android.diploma.common.data.dto.Resource
 import ru.practicum.android.diploma.common.data.dto.Response
 import ru.practicum.android.diploma.common.data.network.NetworkClient
@@ -51,25 +50,33 @@ class HHSearchRepositoryImpl(
         return handleResponse<IndustriesSearchResponse> { networkClient.doRequest(request) }
     }
 
+    @Suppress("TooGenericExceptionCaught", "SwallowedException")
     private inline fun <reified T> handleResponse(
         crossinline functionToHandle: suspend () -> Response
     ): Flow<Resource<T>> = flow {
         try {
             val response = functionToHandle()
             when (response.resultCode) {
-                -1 -> emit(Resource.Error(NetworkErrors.NoInternet))
-                200 -> {
+                NO_INTERNET_ERROR -> emit(Resource.Error(NetworkErrors.NoInternet))
+                SUCCESS -> {
                     val data =
                         response as? T ?: throw ClassCastException("Невозможно преобразовать результат к ${T::class}")
                     emit(Resource.Success(data))
                 }
 
-                400 -> emit(Resource.Error(NetworkErrors.ClientError))
-                500 -> emit(Resource.Error(NetworkErrors.ServerError))
+                CLIENT_ERROR -> emit(Resource.Error(NetworkErrors.ClientError))
+                SERVER_ERROR -> emit(Resource.Error(NetworkErrors.ServerError))
                 else -> emit(Resource.Error(NetworkErrors.UnknownError))
             }
         } catch (e: Exception) {
             emit(Resource.Error(NetworkErrors.UnknownError))
         }
+    }
+
+    companion object {
+        private const val CLIENT_ERROR = 400
+        private const val SERVER_ERROR = 500
+        private const val NO_INTERNET_ERROR = -1
+        private const val SUCCESS = 200
     }
 }
