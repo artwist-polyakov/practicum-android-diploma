@@ -10,6 +10,7 @@ import ru.practicum.android.diploma.common.data.dto.Response
 import ru.practicum.android.diploma.common.data.dto.VacancyItemDto
 import ru.practicum.android.diploma.common.data.network.response.HHSearchResponse
 
+// todo реализовать передачу токена
 interface HHService {
 
     @GET("vacancies")
