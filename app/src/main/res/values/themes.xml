@@ -2,8 +2,10 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.PracticumAndroidDiploma" parent="Theme.Material3.DayNight.NoActionBar">
         <!--Black[Day]-->
+        <item name="colorPrimary">@color/white</item>
         <item name="colorOnPrimary">@color/black</item>
         <!--White[Day]-->
+        <item name="colorSecondary">@color/black</item>
         <item name="colorOnSecondary">@color/white</item>
         <item name="textFillColor">@color/blue</item>
         <item name="colorAccent">@color/red</item>

@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="button_radius">12dp</dimen>
+    <dimen name="button_text_size">16sp</dimen>
+    <dimen name="button_text_weight">500dp</dimen>
+    <dimen name="button_padding_horizontal">8dp</dimen>
+    <dimen name="button_padding_vertical">20dp</dimen>
+
     <dimen name="navbar_height">64dp</dimen>
     <dimen name="edittext_corner_radius">12dp</dimen>
 </resources>
