@@ -84,5 +84,5 @@ dependencies {
 
     // Retrofit
     implementation(libs.retrofit)
-    implementation(libs.convertgson)
+    implementation(libs.convertGson)
 }
