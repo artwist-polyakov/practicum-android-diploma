@@ -4,4 +4,12 @@
     <string name="main">Главная</string>
     <string name="favorite">Избранное</string>
     <string name="team">Команда</string>
+    <string name="vacancy">Вакансия</string>
+    <string name="search_for_vacancies">Поиск вакансий</string>
+    <string name="filter_settings">Настройки фильтрации</string>
+    <string name="location_selection">Выбор места работы</string>
+    <string name="country_selection">Выбор страны</string>
+    <string name="region_selection">Выбор региона</string>
+    <string name="industry_selection">Выбор отрасли</string>
+    <string name="similar_vacancies">Похожие вакансии</string>
 </resources>
