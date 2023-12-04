@@ -7,17 +7,17 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 /*
 @Dao
-interface FavoutiteVacancyDAO {
+interface VacancyDao {
     @Upsert(entity = VacancyEntity::class, onConflict = OnConflictStrategy.REPLACE)
-    fun insert (vacancy: VacancyEntity)
+    fun insertVacancy(vacancy: VacancyEntity)
 
     @Delete(entity = VacancyEntity::class)
-    fun delete (track:VacancyEntity)
+    fun deleteVacancy(vacancy: VacancyEntity)
 
-    @Query("SELECT * FROM favourite_vacancy_table ORDER BY addTime DESC")
-    fun query():List<VacancyEntity>
+    @Query@Query("SELECT * FROM favourite_vacancy_table ORDER BY addTime DESC")
+    fun getAllVacancies(): List<VacancyEntity>
 
-    @Query("SELECT * FROM favourite_vacancy_table WHERE trackId=:vacancyId")
-    fun queryId(searchId:Long):VacancyEntity
+    @Query("SELECT * FROM favourite_vacancy_table WHERE id = :id")
+    fun getVacancyById(id: Int): VacancyEntity
 }
 */
