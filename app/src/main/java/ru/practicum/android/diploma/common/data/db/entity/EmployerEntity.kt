@@ -15,4 +15,5 @@ data class EmployerEntity(
     val employerLogoUrls240: String?,
     val employerLogoUrlsOriginal: String?,
     val employerName: String,
+    val employerPicture: String
 )
