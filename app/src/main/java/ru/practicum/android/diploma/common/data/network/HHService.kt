@@ -32,7 +32,7 @@ interface HHService {
         @Path("vacancy_id") vacancyId: Int
     ): VacancyItemDto
 
-    //todo реализовать классы запроса и ответа, когда будет апи
+    // todo реализовать классы запроса и ответа, когда будет апи
     @GET("vacancies/{vacancy_id}/show_contacts")
     suspend fun getVacancyContacts(
         @Header("Authorization") token: String? = null,

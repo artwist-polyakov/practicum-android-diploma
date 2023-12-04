@@ -15,6 +15,7 @@
 # added by Poliakov 04.12.2023
 .idea/codeStyles
 /.idea/migrations.xml
+.idea/deploymentTargetDropDown.xml
 
 # Gradle files
 .gradle/

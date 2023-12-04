@@ -9,4 +9,4 @@ data class HHSearchResponse(
     val pages: Int,
     val per_page: Int,
     val page: Int,
-): Response()
+) : Response()

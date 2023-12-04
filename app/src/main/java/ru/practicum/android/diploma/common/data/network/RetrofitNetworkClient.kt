@@ -1,7 +1,6 @@
 package ru.practicum.android.diploma.common.data.network
 
 import android.content.Context
-import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.common.data.dto.Response
@@ -23,48 +22,60 @@ class RetrofitNetworkClient(
         return withContext(Dispatchers.IO) {
             try {
                 val response = when (dto) {
-                    is VacanciesSearchRequest -> hhService.searchVacancies(
-                        text = dto.text,
-                        page = dto.page,
-                        perPage = dto.perPage,
-                        area = dto.area,
-                        industry = dto.industry,
-                        salary = dto.salary,
-                        onlyWithSalary = dto.onlyWithSalary
-                    )
+                    is VacanciesSearchRequest -> makeVacancySearchRequest(dto)
 
-                    is AreasRequest -> {
-                        AreaSearchResponse(areas = hhService.getAreas()).apply {
-                            resultCode = 200
-                        }
-                    }
+                    is AreasRequest -> makeAreasRequest(dto)
 
-                    is SingleVacancyRequest -> {
-                        SingleVacancyResponse(vacancy = hhService.getVacancy(vacancyId = dto.vacancyId)).apply {
-                            resultCode = 200
-                        }
-                    }
+                    is SingleVacancyRequest -> makeSingleVacancyRequest(dto)
 
-                    is IndustriesRequest -> {
-                        IndustriesSearchResponse(industries = hhService.getIndustries()).apply {
-                            resultCode = 200
-                        }
-                    }
+                    is IndustriesRequest -> makeIndustriesRequest(dto)
 
                     else -> Response().apply { resultCode = 400 }
                 }
                 response.apply { resultCode = 200 }
             } catch (e: Throwable) {
-                // TODO Удалить после отладки
-                Log.e("NetworkClient", "Произошла ошибка при запросе", e)
-                e.printStackTrace()
-                if (e is retrofit2.HttpException) {
-                    val errorBody = e.response()?.errorBody()?.string()
-                    Log.e("NetworkClient", "Тело ошибки: $errorBody")
-                }
+                // todo Удалить после отладки
+//                Log.e("NetworkClient", "Произошла ошибка при запросе", e)
+//                e.printStackTrace()
+//                if (e is retrofit2.HttpException) {
+//                    val errorBody = e.response()?.errorBody()?.string()
+//                    Log.e("NetworkClient", "Тело ошибки: $errorBody")
+//                }
                 // Удалять до сюда
                 Response().apply { resultCode = 500 }
             }
+        }
+
+
+    }
+
+    private suspend fun makeVacancySearchRequest(dto: VacanciesSearchRequest): Response {
+        return hhService.searchVacancies(
+            text = dto.text,
+            page = dto.page,
+            perPage = dto.perPage,
+            area = dto.area,
+            industry = dto.industry,
+            salary = dto.salary,
+            onlyWithSalary = dto.onlyWithSalary
+        )
+    }
+
+    private suspend fun makeSingleVacancyRequest(dto: SingleVacancyRequest): Response {
+        return SingleVacancyResponse(vacancy = hhService.getVacancy(vacancyId = dto.vacancyId)).apply {
+            resultCode = 200
+        }
+    }
+
+    private suspend fun makeAreasRequest(dto: AreasRequest): Response {
+        return AreaSearchResponse(areas = hhService.getAreas()).apply {
+            resultCode = 200
+        }
+    }
+
+    private suspend fun makeIndustriesRequest(dto: IndustriesRequest): Response {
+        return IndustriesSearchResponse(industries = hhService.getIndustries()).apply {
+            resultCode = 200
         }
     }
 }
