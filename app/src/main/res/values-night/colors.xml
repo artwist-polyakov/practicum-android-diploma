@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="navbar">@color/black</color>
-    <color name="text">@color/white</color>
     <color name="edit_text">@color/gray</color>
     <color name="hint_text">@color/white</color>
 </resources>
