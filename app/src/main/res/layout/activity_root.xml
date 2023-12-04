@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorOnSecondary"
     tools:context=".root.ui.RootActivity">
 
     <androidx.fragment.app.FragmentContainerView
@@ -33,6 +34,7 @@
         android:layout_height="@dimen/navbar_height"
         android:background="?attr/colorOnSecondary"
         app:itemActiveIndicatorStyle="@null"
+        app:itemBackground="@android:color/transparent"
         app:itemIconTint="@color/bottom_navigation_item_color"
         app:itemTextColor="@color/bottom_navigation_item_color"
         app:layout_constraintBottom_toBottomOf="parent"
