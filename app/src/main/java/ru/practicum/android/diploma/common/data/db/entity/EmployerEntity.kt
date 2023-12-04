@@ -9,7 +9,7 @@ data class EmployerEntity(
     val id: Int,
     val employerEmail: String?,
     val employerContactName: String?,
-    val employerPhone: List<String>?,
+    val employerPhone: String?,
     val comment: String?,
     val employerLogoUrls90: String?,
     val employerLogoUrls240: String?,
