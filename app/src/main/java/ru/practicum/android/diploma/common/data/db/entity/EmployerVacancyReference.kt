@@ -25,6 +25,5 @@ import androidx.room.ForeignKey
 )
 data class EmployerVacancyReference(
     val employerId: Int,
-    val vacancyId: Int,
-    val lastUpdate: Long?
+    val vacancyId: Int
 )

@@ -18,4 +18,5 @@ data class VacancyEntity(
     val from: String,
     val to: String,
     val schedule: String?,
+    val lastUpdate: Long?
 )
