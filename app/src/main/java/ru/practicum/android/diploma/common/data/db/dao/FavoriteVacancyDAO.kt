@@ -2,15 +2,19 @@ package ru.practicum.android.diploma.common.data.db.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Upsert
+import ru.practicum.android.diploma.common.data.db.entity.EmployerEntity
+import ru.practicum.android.diploma.common.data.db.entity.VacancyEntity
 import ru.practicum.android.diploma.common.domain.models.Vacancy
+import ru.practicum.android.diploma.common.domain.models.VacancyForFavoriteList
 
 
 @Dao
 interface FavoriteVacancyDAO {
     @Upsert(entity = VacancyEntity::class, onConflict = OnConflictStrategy.REPLACE)
-    fun insertVacancy(vacancy: VacancyEntity, employer:EmployerEntity)
+    fun insertVacancy(vacancy: VacancyEntity, employer: EmployerEntity)
 
     @Delete(entity = VacancyEntity::class)
     fun deleteVacancy(vacancy: VacancyEntity)

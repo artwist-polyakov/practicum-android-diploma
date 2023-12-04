@@ -1,6 +1,6 @@
 package ru.practicum.android.diploma.common.domain.models
 
-data class vacancyForFavoriteList(
+data class VacancyForFavoriteList(
     val vacancyId: Int,
     val employerName: String,
     val employerLogoUrls90: String?,
