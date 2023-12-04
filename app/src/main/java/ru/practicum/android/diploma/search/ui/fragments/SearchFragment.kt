@@ -46,6 +46,18 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
                         Log.d("SearchFragment", "vacancy: ${vacancy.name}")
                     }
                 }
+            repo.getAreas()
+                .collect {
+                    it.data?.areas?.forEach { area ->
+                        Log.d("SearchFragment", "area: ${area.name}")
+                    }
+                }
+            repo.getIndustries()
+                .collect {
+                    it.data?.industries?.forEach { industry ->
+                        Log.d("SearchFragment", "industry: ${industry.name}")
+                    }
+                }
         }
     }
 }

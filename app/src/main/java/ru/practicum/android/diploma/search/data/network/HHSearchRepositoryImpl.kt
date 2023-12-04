@@ -7,6 +7,7 @@ import ru.practicum.android.diploma.common.data.dto.Resource
 import ru.practicum.android.diploma.common.data.dto.Response
 import ru.practicum.android.diploma.common.data.network.NetworkClient
 import ru.practicum.android.diploma.common.data.network.requests.AreasRequest
+import ru.practicum.android.diploma.common.data.network.requests.IndustriesRequest
 import ru.practicum.android.diploma.common.data.network.requests.SingleVacancyRequest
 import ru.practicum.android.diploma.common.data.network.requests.VacanciesSearchRequest
 import ru.practicum.android.diploma.common.data.network.response.AreaSearchResponse
@@ -46,7 +47,7 @@ class HHSearchRepositoryImpl(
     }
 
     override fun getIndustries(): Flow<Resource<IndustriesSearchResponse>> {
-        val request = AreasRequest()
+        val request = IndustriesRequest()
         return handleResponse<IndustriesSearchResponse> { networkClient.doRequest(request) }
     }
 
