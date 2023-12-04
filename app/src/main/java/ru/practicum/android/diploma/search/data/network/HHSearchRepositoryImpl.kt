@@ -24,7 +24,7 @@ class HHSearchRepositoryImpl(
         perPage: Int,
         salary: Int?,
         onlyWithSalary: Boolean
-    ) : Flow<Resource<HHSearchResponse>> {
+    ): Flow<Resource<HHSearchResponse>> {
         val request = VacanciesSearchRequest(
             text = query,
             page = page,
@@ -35,22 +35,22 @@ class HHSearchRepositoryImpl(
         return handleResponse<HHSearchResponse> { networkClient.doRequest(request) }
     }
 
-    override fun getVacancy(id: Int) : Flow<Resource<SingleVacancyResponse>> {
+    override fun getVacancy(id: Int): Flow<Resource<SingleVacancyResponse>> {
         val request = SingleVacancyRequest(vacancyId = id)
         return handleResponse<SingleVacancyResponse> { networkClient.doRequest(request) }
     }
 
-    override fun getAreas() : Flow<Resource<AreaSearchResponse>> {
+    override fun getAreas(): Flow<Resource<AreaSearchResponse>> {
         val request = AreasRequest()
         return handleResponse<AreaSearchResponse> { networkClient.doRequest(request) }
     }
 
-    override fun getIndustries() : Flow<Resource<IndustriesSearchResponse>> {
+    override fun getIndustries(): Flow<Resource<IndustriesSearchResponse>> {
         val request = AreasRequest()
         return handleResponse<IndustriesSearchResponse> { networkClient.doRequest(request) }
     }
 
-    private inline fun <reified T : Any> handleResponse(
+    private inline fun <reified T> handleResponse(
         crossinline functionToHandle: suspend () -> Response
     ): Flow<Resource<T>> = flow {
         try {
@@ -58,7 +58,8 @@ class HHSearchRepositoryImpl(
             when (response.resultCode) {
                 -1 -> emit(Resource.Error(NetworkErrors.NoInternet))
                 200 -> {
-                    val data = response as? T ?: throw ClassCastException("Невозможно преобразовать результат к ${T::class}")
+                    val data =
+                        response as? T ?: throw ClassCastException("Невозможно преобразовать результат к ${T::class}")
                     emit(Resource.Success(data))
                 }
 
