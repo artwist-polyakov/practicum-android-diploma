@@ -12,6 +12,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import ru.practicum.android.diploma.common.data.network.HHService
 import ru.practicum.android.diploma.common.data.network.NetworkClient
 import ru.practicum.android.diploma.common.data.network.RetrofitNetworkClient
+import ru.practicum.android.diploma.search.data.network.HHSearchRepository
+import ru.practicum.android.diploma.search.data.network.HHSearchRepositoryImpl
 import javax.inject.Singleton
 
 @Module
@@ -33,4 +35,9 @@ class DataModule {
     @Singleton
     fun providesNetworkClient(hhService: HHService, @ApplicationContext context: Context): NetworkClient =
         RetrofitNetworkClient(hhService, context)
+
+    @Provides
+    @Singleton
+    fun providesSearchRepository(networkClient: NetworkClient): HHSearchRepository =
+        HHSearchRepositoryImpl(networkClient)
 }
