@@ -9,6 +9,7 @@ data class VacancyItemDto(
     val department: IdNameDto?,
     val experience: IdNameDto?,
     val employment: IdNameDto?,
+    val area: IdNameDto?,
     val schedule: IdNameDto?,
     val snippet: SnippetDto?,
     val salary: SalaryDto?,
