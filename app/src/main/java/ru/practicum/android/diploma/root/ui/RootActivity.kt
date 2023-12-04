@@ -9,10 +9,12 @@ import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.common.ui.BaseActivity
 import ru.practicum.android.diploma.databinding.ActivityRootBinding
 
+@AndroidEntryPoint
 class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::inflate) {
 
     override fun initViews() = with(binding) {
@@ -23,9 +25,9 @@ class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::infl
         setStatusBarColor()
     }
 
-    private fun networkRequestExample(accessToken: String) {
-        // ...
-    }
+//    private fun networkRequestExample(accessToken: String) {
+//        // ...
+//    }
 
     /**
      *Метод управляет видимостью bottomNavigationView
@@ -38,12 +40,8 @@ class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::infl
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.favoriteFragment, R.id.searchFragment, R.id.teamFragment -> {
-                    bottomNavigationView.visibility = View.VISIBLE
-                }
-                else -> {
-                    bottomNavigationView.visibility = View.GONE
-                }
+                R.id.filterFragment -> bottomNavigationView.visibility = View.GONE
+                else -> bottomNavigationView.visibility = View.VISIBLE
             }
         }
     }
