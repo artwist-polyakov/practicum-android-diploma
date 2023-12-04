@@ -40,23 +40,16 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         viewLifecycleOwner.lifecycleScope.launch {
             val result = networkClient.doRequest(
                 VacanciesSearchRequest(
-                    text = "android",
-                    onlyWithSalary = true
+                    text = "android", onlyWithSalary = true
                 )
             )
 
             val regions = networkClient.doRequest(AreasRequest())
-            val vacancy =
-                (networkClient
-                    .doRequest
-                        (
-                        SingleVacancyRequest
-                            (
-                            vacancyId = 89_815_858
-                        )
-                    ) as SingleVacancyResponse)
-                    .vacancy
-                    .keySkills
+            val vacancy = (networkClient.doRequest(
+                    SingleVacancyRequest(
+                        vacancyId = 89_815_858
+                    )
+                ) as SingleVacancyResponse).vacancy.keySkills
             val industries = networkClient.doRequest(IndustriesRequest())
 //            Log.d("NetworkClient", regions.resultCode.toString())
 //            Log.d("NetworkClient", (result as HHSearchResponse).toString())
