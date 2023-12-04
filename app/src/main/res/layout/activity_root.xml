@@ -31,7 +31,7 @@
         android:id="@+id/bottom_navigation_view"
         android:layout_width="0dp"
         android:layout_height="@dimen/navbar_height"
-        android:background="@color/navbar"
+        android:background="?attr/colorOnSecondary"
         app:itemActiveIndicatorStyle="@null"
         app:itemIconTint="@color/bottom_navigation_item_color"
         app:itemTextColor="@color/bottom_navigation_item_color"

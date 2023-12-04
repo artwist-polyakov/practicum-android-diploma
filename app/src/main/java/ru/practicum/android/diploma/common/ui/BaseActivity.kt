@@ -7,6 +7,10 @@ import androidx.viewbinding.ViewBinding
 
 typealias InflateActivity<T> = (LayoutInflater) -> T
 
+/**
+ * Базовая активити, делает то же что и базовый фрагмент, но адаптирован под сингл активити
+ *
+ */
 abstract class BaseActivity<VB : ViewBinding>(
     private val inflate: InflateActivity<VB>
 ) : AppCompatActivity() {
