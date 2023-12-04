@@ -1,11 +1,11 @@
 package ru.practicum.android.diploma.search.data.network
 
 import kotlinx.coroutines.flow.Flow
-import ru.practicum.android.diploma.common.data.dto.AreasDto
-import ru.practicum.android.diploma.common.data.dto.IndustriesDto
 import ru.practicum.android.diploma.common.data.dto.Resource
-import ru.practicum.android.diploma.common.data.dto.VacancyItemDto
+import ru.practicum.android.diploma.common.data.network.response.AreaSearchResponse
 import ru.practicum.android.diploma.common.data.network.response.HHSearchResponse
+import ru.practicum.android.diploma.common.data.network.response.IndustriesSearchResponse
+import ru.practicum.android.diploma.common.data.network.response.SingleVacancyResponse
 
 interface HHSearchRepository {
     fun getVacancies(
@@ -16,7 +16,7 @@ interface HHSearchRepository {
         onlyWithSalary: Boolean = false
     ): Flow<Resource<HHSearchResponse>>
 
-    fun getVacancy(id: Int): Flow<Resource<VacancyItemDto>>
-    fun getAreas(): Flow<Resource<List<AreasDto>>>
-    fun getIndustries(): Flow<Resource<List<IndustriesDto>?>>
+    fun getVacancy(id: Int): Flow<Resource<SingleVacancyResponse>>
+    fun getAreas(): Flow<Resource<AreaSearchResponse>>
+    fun getIndustries(): Flow<Resource<IndustriesSearchResponse>>
 }
