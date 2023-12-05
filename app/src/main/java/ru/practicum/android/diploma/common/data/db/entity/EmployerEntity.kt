@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "employers")
-data class EmployerEntity(
+data class  EmployerEntity(
     @PrimaryKey
     val id: Int,
     val employerEmail: String?,

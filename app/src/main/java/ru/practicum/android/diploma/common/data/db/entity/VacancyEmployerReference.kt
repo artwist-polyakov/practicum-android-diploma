@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 
 @Entity(
-    tableName = "employer_vacancy_reference",
+    tableName = "vacancy_employer_reference",
     primaryKeys = ["vacancyId"],
     foreignKeys = [
         ForeignKey(
@@ -21,7 +21,7 @@ import androidx.room.ForeignKey
         )
     ]
 )
-data class EmployerVacancyReference(
+data class VacancyEmployerReference(
     val employerId: Int,
     val vacancyId: Int
 )
