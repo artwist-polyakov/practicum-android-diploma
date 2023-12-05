@@ -1,12 +1,7 @@
-package ru.practicum.android.diploma.common.data.db.entity
+package ru.practicum.android.diploma.common.data.db.dto
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity(tableName = "vacancies")
-data class VacancyEntity(
-    @PrimaryKey
-    val id: Int,
+data class VacancyWithEmployerDTO(
+    val vacancyId: Int,
     val title: String,
     val city: String?,
     val jobDescription: String?,
@@ -20,5 +15,9 @@ data class VacancyEntity(
     val salaryTo: Int?,
     val currency: String?,
     val schedule: String?,
-    val lastUpdate: Long
+    val lastUpdate: Long,
+    val employerId: Int,
+    val logosJSON: String?,
+    val employerName: String,
+    val employerLogoUri: String?
 )
