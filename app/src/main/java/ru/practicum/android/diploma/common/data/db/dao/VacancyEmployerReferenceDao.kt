@@ -7,10 +7,10 @@ import androidx.room.Query
 import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import ru.practicum.android.diploma.common.data.db.dto.VacancyWithEmployerDTO
 import ru.practicum.android.diploma.common.data.db.entity.EmployerEntity
 import ru.practicum.android.diploma.common.data.db.entity.VacancyEmployerReference
 import ru.practicum.android.diploma.common.data.db.entity.VacancyEntity
-import ru.practicum.android.diploma.common.data.db.dto.VacancyWithEmployerDTO
 
 @Dao
 interface VacancyEmployerReferenceDao : VacancyDao, EmployerDao {
@@ -90,11 +90,15 @@ interface VacancyEmployerReferenceDao : VacancyDao, EmployerDao {
         removeVacancy(vacancy)
         employer?.let {
             if (getVacancies(it.id).first().isEmpty()) {
-                getEmployer(it.id)?.let { employer ->
-                    employer?.first()?.let { toDelete ->
-                        removeEmployer(toDelete)
-                    }
-                }
+                removeEmployer(it.id)
+            }
+        }
+    }
+
+    private suspend fun removeEmployer(id: Int) {
+        getEmployer(id)?.let { employer ->
+            employer?.first()?.let { toDelete ->
+                removeEmployer(toDelete)
             }
         }
     }
