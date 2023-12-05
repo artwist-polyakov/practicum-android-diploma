@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.count
 import ru.practicum.android.diploma.common.data.db.entity.VacancyEmployerReference
 import ru.practicum.android.diploma.common.data.db.relations.VacancyWithEmployer
@@ -17,7 +18,7 @@ interface VacancyEmployerReferenceDao : VacancyDao, EmployerDao {
 
     @Delete
     suspend fun removeReference(data: VacancyEmployerReference): Int
-    
+
     @Query("SELECT * FROM vacancy_employer_reference")
     fun getVacancies(): Flow<List<VacancyEmployerReference>>
 
@@ -48,8 +49,10 @@ interface VacancyEmployerReferenceDao : VacancyDao, EmployerDao {
                 employerId = data.employer.id
             )
         )
-        if (getVacancies(data.employer.id).count() > 0) {
-            removeEmployer(data.employer)
+        getVacancies(data.employer.id).collect{
+            if (it.isEmpty()){
+                removeEmployer(data.employer)
+            }
         }
     }
 }
