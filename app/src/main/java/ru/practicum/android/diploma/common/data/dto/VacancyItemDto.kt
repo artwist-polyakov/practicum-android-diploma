@@ -2,6 +2,13 @@ package ru.practicum.android.diploma.common.data.dto
 
 import com.google.gson.annotations.SerializedName
 
+/**
+ * DTO для отдельной вакансии
+ *
+ * - employment — тут Полная занятость или удаленная работа
+ * - schedule — тут график, например "Полный день"
+ * - employer — содержит name имя работодателя
+ */
 data class VacancyItemDto(
     val id: Int,
     val name: String,
