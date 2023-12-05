@@ -48,6 +48,20 @@ interface VacancyEmployerReferenceDao : VacancyDao, EmployerDao {
     @Transaction
     @Query(
         """
+         SELECT * 
+         FROM vacancies
+         LEFT JOIN vacancy_employer_reference
+         ON vacancies.id = vacancy_employer_reference.vacancyId
+         LEFT JOIN employers 
+         ON vacancy_employer_reference.employerId = employers.id
+         ORDER BY vacancies.lastUpdate DESC
+         LIMIT :limit OFFSET :page * :limit"""
+    )
+    fun getVacancies(page: Int, limit: Int = DEFAULT_LIMIT): Flow<List<VacancyEmployerReference>>
+
+    @Transaction
+    @Query(
+        """
          SELECT *
          FROM (SELECT * FROM vacancy_employer_reference WHERE employerId = :employerId) as reference
          LEFT JOIN vacancies
@@ -101,5 +115,9 @@ interface VacancyEmployerReferenceDao : VacancyDao, EmployerDao {
                 removeEmployer(toDelete)
             }
         }
+    }
+
+    companion object {
+        private const val DEFAULT_LIMIT = 20
     }
 }
