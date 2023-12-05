@@ -7,8 +7,6 @@ import androidx.room.PrimaryKey
 data class EmployerEntity(
     @PrimaryKey
     val id: Int,
-    val employerEmail: String?,
-    val phonesJSON: String?,
     val logosJSON: String?,
     val employerName: String,
     val employerLogoUri: String?
