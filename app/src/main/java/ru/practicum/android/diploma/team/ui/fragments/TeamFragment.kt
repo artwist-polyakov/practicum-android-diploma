@@ -6,13 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import ru.practicum.android.diploma.R
+import ru.practicum.android.diploma.databinding.FragmentTeamBinding
 
 class TeamFragment : Fragment() {
+    private lateinit var binding: FragmentTeamBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_team, container, false)
+        binding = FragmentTeamBinding.inflate(inflater, container, false)
+        return binding.root
     }
 }
