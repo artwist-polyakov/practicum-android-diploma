@@ -5,6 +5,8 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.count
 import ru.practicum.android.diploma.common.data.db.entity.VacancyEmployerReference
 import ru.practicum.android.diploma.common.data.db.relations.VacancyWithEmployer
 
@@ -17,16 +19,16 @@ interface VacancyEmployerReferenceDao : VacancyDao, EmployerDao {
     suspend fun removeReference(data: VacancyEmployerReference): Int
 
     @Query("SELECT * FROM vacancy_employer_reference")
-    suspend fun getVacanciesWithEmployer(): List<VacancyWithEmployer>
+    fun getVacanciesWithEmployer(): Flow<List<VacancyWithEmployer>>
 
     @Query("SELECT * FROM vacancy_employer_reference")
-    suspend fun getVacancies(): List<VacancyEmployerReference>
+    fun getVacancies(): Flow<List<VacancyEmployerReference>>
 
     @Query("SELECT * FROM vacancy_employer_reference WHERE employerId = :employerId")
-    suspend fun getVacancies(employerId: Int): List<VacancyEmployerReference>
+    fun getVacancies(employerId: Int): Flow<List<VacancyEmployerReference>>
 
     @Query("SELECT * FROM vacancy_employer_reference WHERE vacancyId = :vacancyId")
-    suspend fun getVacancy(vacancyId: Int): VacancyEmployerReference?
+    fun getVacancy(vacancyId: Int): Flow<VacancyEmployerReference?>
 
     @Transaction
     suspend fun addVacancy(data: VacancyWithEmployer) {
@@ -49,7 +51,7 @@ interface VacancyEmployerReferenceDao : VacancyDao, EmployerDao {
                 employerId = data.employer.id
             )
         )
-        if (getVacancies(data.employer.id).isEmpty()) {
+        if (getVacancies(data.employer.id).count() > 0) {
             removeEmployer(data.employer)
         }
     }

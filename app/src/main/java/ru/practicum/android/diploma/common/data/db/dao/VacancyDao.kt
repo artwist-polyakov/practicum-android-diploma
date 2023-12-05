@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 import ru.practicum.android.diploma.common.data.db.entity.VacancyEntity
 
 @Dao
@@ -16,5 +17,5 @@ interface VacancyDao {
     suspend fun removeVacancy(data: VacancyEntity): Int
 
     @Query("SELECT COUNT(*) > 0 FROM vacancies WHERE id = :id")
-    suspend fun contains(id: Int): Boolean
+    fun contains(id: Int): Flow<Boolean>
 }

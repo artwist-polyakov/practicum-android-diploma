@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 import ru.practicum.android.diploma.common.data.db.entity.EmployerEntity
 
 @Dao
@@ -16,5 +17,5 @@ interface EmployerDao {
     suspend fun removeEmployer(data: EmployerEntity): Int
 
     @Query("SELECT * FROM employers WHERE id = :id")
-    suspend fun getEmployer(id: Int): EmployerEntity?
+    fun getEmployer(id: Int): Flow<EmployerEntity?>
 }
