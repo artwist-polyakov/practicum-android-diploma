@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.root.ui
 
-// import ru.practicum.android.diploma.BuildConfig
 import android.content.res.Configuration
 import android.os.Build
 import android.view.View
