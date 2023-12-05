@@ -5,21 +5,19 @@ import androidx.room.ForeignKey
 
 @Entity(
     tableName = "employer_vacancy_reference",
-    primaryKeys = ["employerId", "vacancyId"],
+    primaryKeys = ["vacancyId"],
     foreignKeys = [
         ForeignKey(
             entity = EmployerEntity::class,
             parentColumns = ["id"],
             childColumns = ["employerId"],
             onDelete = ForeignKey.CASCADE,
-            onUpdate = ForeignKey.CASCADE
         ),
         ForeignKey(
             entity = VacancyEntity::class,
             parentColumns = ["id"],
             childColumns = ["vacancyId"],
             onDelete = ForeignKey.CASCADE,
-            onUpdate = ForeignKey.CASCADE
         )
     ]
 )
