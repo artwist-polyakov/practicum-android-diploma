@@ -25,6 +25,9 @@ interface VacancyEmployerReferenceDao : VacancyDao, EmployerDao {
     @Query("SELECT * FROM vacancy_employer_reference WHERE employerId = :employerId")
     fun getVacancies(employerId: Int): Flow<List<VacancyEmployerReference>>
 
+    @Query("SELECT * FROM vacancy_employer_reference WHERE employerId = :employerId LIMIT :count OFFSET :offset")
+    fun getVacancies(employerId: Int, count: Int, offset: Int): Flow<List<VacancyEmployerReference>>
+
     @Query("SELECT * FROM vacancy_employer_reference WHERE vacancyId = :vacancyId")
     fun getVacancy(vacancyId: Int): Flow<VacancyEmployerReference?>
 
