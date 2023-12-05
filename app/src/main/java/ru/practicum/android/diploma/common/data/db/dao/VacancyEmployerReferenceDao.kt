@@ -17,10 +17,7 @@ interface VacancyEmployerReferenceDao : VacancyDao, EmployerDao {
 
     @Delete
     suspend fun removeReference(data: VacancyEmployerReference): Int
-
-    @Query("SELECT * FROM vacancy_employer_reference")
-    fun getVacanciesWithEmployer(): Flow<List<VacancyWithEmployer>>
-
+    
     @Query("SELECT * FROM vacancy_employer_reference")
     fun getVacancies(): Flow<List<VacancyEmployerReference>>
 
