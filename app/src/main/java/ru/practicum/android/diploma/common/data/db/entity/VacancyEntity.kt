@@ -15,8 +15,8 @@ data class VacancyEntity(
     val professionalRoles: String?,
     val jobName: String,
     val currency: String,
-    val from: String,
-    val to: String,
+    val min: String,
+    val max: String,
     val schedule: String?,
     val lastUpdate: Long?
 )

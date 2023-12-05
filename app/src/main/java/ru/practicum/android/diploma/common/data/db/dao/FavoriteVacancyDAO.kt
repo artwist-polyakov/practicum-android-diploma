@@ -13,7 +13,7 @@ import ru.practicum.android.diploma.common.domain.models.VacancyForFavoriteList
 
 @Dao
 interface FavoriteVacancyDAO {
-    @Upsert(entity = VacancyEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    @Upsert(entity = VacancyEntity::class)
     fun insertVacancy(vacancy: VacancyEntity, employer: EmployerEntity)
 
     @Delete(entity = VacancyEntity::class)
@@ -27,30 +27,30 @@ interface FavoriteVacancyDAO {
                v.city,
                v.jobName,
                v.currency,
-               v.from,
-               v.to
+               v.min,
+               v.max
         FROM favourite_vacancy_table as v
         INNER JOIN employer_vacancy_reference as r ON v.id = r.vacancyId
-        INNER JOIN employere_vacancy_table as e ON r.employerId = e.id
+        INNER JOIN employer_vacancy_table as e ON r.employerId = e.id
         """
     )
     suspend fun getAllVacanciesForFavoriteList(): List<VacancyForFavoriteList>
 
     @Query(
         """
-        SELECT v.vacancyId,
+        SELECT v.id,
                v.city,
                v.jobDescription,
                v.jobTiming,
                v.experience,
                v.keySkills,
-               v.professional_roles,
+               v.professionalRoles,
                v.jobName,
                v.currency,
-               v.from,
-               v.to,
+               v.min,
+               v.max,
                v.schedule,
-               e.employerId,
+               e.id,
                e.employerEmail,
                e.employerContactName,
                e.employerPhone,

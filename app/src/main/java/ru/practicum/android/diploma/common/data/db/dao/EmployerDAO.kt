@@ -6,20 +6,22 @@ import androidx.room.Index
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Upsert
+import ru.practicum.android.diploma.common.data.db.entity.EmployerEntity
 
 @Dao
 interface EmployerDAO {
-    @Upsert(entity = EmployerEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    @Upsert(entity = EmployerEntity::class)
     fun insertEmployer(employer: EmployerEntity)
 
-/*    @Delete(entity = EmployerEntity::class)
-    fun deleteEmployer(employer: EmployerEntity)
+    /*  @Delete(entity = EmployerEntity::class)
+        fun deleteEmployer(employer: EmployerEntity)
 
-    @Query(
+        @Query(
         "SELECT * FROM employer_vacancy_table" ORDER BY addTime Index.Order.DESC")
         fun getAllEmployers(): List<EmployerEntity>
 
         @Query("SELECT * FROM employer_vacancy_table WHERE id = :id")
         fun getEmployerById(id: Int): EmployerEntity
+    */
 }
-*/
+
