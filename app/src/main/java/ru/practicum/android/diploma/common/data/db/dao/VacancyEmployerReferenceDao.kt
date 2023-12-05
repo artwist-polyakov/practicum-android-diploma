@@ -37,13 +37,13 @@ interface VacancyEmployerReferenceDao : VacancyDao, EmployerDao {
     @Transaction
     suspend fun removeVacancy(data: VacancyWithEmployer) {
         removeVacancy(data.vacancy)
-        if (getVacancies(data.employer.id).isEmpty())
-            removeEmployer(data.employer)
         removeReference(
             VacancyEmployerReference(
                 vacancyId = data.vacancy.id,
                 employerId = data.employer.id
             )
         )
+        if (getVacancies(data.employer.id).isEmpty())
+            removeEmployer(data.employer)
     }
 }
