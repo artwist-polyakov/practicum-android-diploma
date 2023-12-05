@@ -9,7 +9,7 @@ import ru.practicum.android.diploma.common.data.db.entity.EmployerEntity
 
 @Dao
 interface EmployerDao {
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addEmployer(data: EmployerEntity)
 
     @Delete
