@@ -13,6 +13,7 @@ data class VacancyEntity(
     val experience: String?,
     val employment: String?,
     val keySkillsJSON: String?,
+    val phonesJSON: String?,
     val salaryFrom: Int?,
     val salaryTo: Int?,
     val currency: String,
