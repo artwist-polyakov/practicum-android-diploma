@@ -16,7 +16,7 @@
         android:layout_marginTop="19dp"
         style="@style/Text.Medium22"
         android:color="?attr/colorOnPrimary"
-        android:text="@string/team_text"
+        android:text="@string/team"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

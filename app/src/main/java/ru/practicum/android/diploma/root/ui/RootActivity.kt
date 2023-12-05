@@ -29,7 +29,8 @@ class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::infl
 //    }
 
     /**
-     *Метод управляет видимостью bottomNavigationView
+     * Метод управляет видимостью элементов и назначением текста на Header
+     * При добавлении новых фрагментов следует вписать его в сценарий manageBottomNavigation
      */
     private fun manageBottomNavigation() = with(binding) {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.container_view) as NavHostFragment
@@ -46,7 +47,7 @@ class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::infl
     }
 
     /**
-     *Метод определяет теккущую тему устройства (тёмная/светлая) и относительно этого устанавливает цвета в статус баре
+     * Метод определяет теккущую тему устройства (тёмная/светлая) и относительно этого устанавливает цвета в статус баре
      */
     private fun setStatusBarColor() {
         val uiMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK

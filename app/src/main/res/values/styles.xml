@@ -69,7 +69,7 @@
     <style name="Text.Medium22.errorText">
         <item name="android:color">?attr/colorOnPrimary</item>
         <item name="android:gravity">center</item>
-=======
+        =======
         <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 
@@ -127,5 +127,28 @@
         <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="hintTextAppearance">@style/Text.Hint</item>
         <item name="hintEnabled">false</item>
+    </style>
+
+    <style name="Button" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">@dimen/button_radius</item>
+        <item name="android:paddingHorizontal">@dimen/image_padding_medium</item>
+        <item name="android:paddingVertical">@dimen/button_padding_vertical</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="fontFamily">@font/ys_display_medium</item>
+    </style>
+    <style name="Button.Blue">
+        <item name="backgroundTint">@color/blue</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Button.Red">
+        <item name="backgroundTint">@color/red</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Button.Transparent">
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:textColor">@color/red</item>
     </style>
 </resources>
