@@ -2,7 +2,7 @@
 <resources>
 
     <style name="Text" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColor">?attr/mainTextColor</item>
     </style>
 
     <style name="Text.Bold32">
@@ -32,51 +32,49 @@
 
     <!--Элемент списка вакансий, заголовок-->
     <style name="Text.Medium22.listElementHeader">
-        <item name="android:color">?attr/colorOnPrimary</item>
+        <item name="android:color">?attr/mainTextColor</item>
     </style>
 
     <!--Элемент списка вакансий, описание-->
     <style name="Text.Regular16.listElementDescription">
-        <item name="android:color">?attr/colorOnPrimary</item>
+        <item name="android:color">?attr/mainTextColor</item>
     </style>
 
     <!--Элемент списка местоположений активный-->
     <style name="Text.Regular16.listPlacesActive">
-        <item name="android:color">?attr/colorOnPrimary</item>
+        <item name="android:color">?attr/mainTextColor</item>
     </style>
 
     <!--Элемент списка неактивный-->
     <style name="Text.Regular16.listPlacesInactive">
-        <item name="android:color">?attr/colorOnTertiary</item>
+        <item name="android:color">?attr/mainTextColor</item>
     </style>
 
     <!--Заголовок раздела вакансий-->
     <style name="Text.Medium22.vacancyHeader">
-        <item name="android:color">?attr/colorOnPrimary</item>
+        <item name="android:color">?attr/mainTextColor</item>
     </style>
 
     <!--Часть раздела вакансии-->
     <style name="Text.Medium16.vacancyChapter">
-        <item name="android:color">?attr/colorOnPrimary</item>
+        <item name="android:color">?attr/mainTextColor</item>
     </style>
 
     <!--Содержимое части раздела вакансии-->
     <style name="Text.Regular16.vacancyContent">
-        <item name="android:color">?attr/colorOnPrimary</item>
+        <item name="android:color">?attr/mainTextColor</item>
     </style>
 
     <!--Текст ошибки-->
     <style name="Text.Medium22.errorText">
-        <item name="android:color">?attr/colorOnPrimary</item>
         <item name="android:gravity">center</item>
-        =======
-        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColor">?attr/mainTextColor</item>
     </style>
 
     <style name="Text.Hint">
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
-        <item name="android:textColor">@color/hint_text</item>
+        <item name="android:textColor">?attr/mainTextColor</item>
     </style>
 
     <!--  В EditText понадобится настроить только padding  -->
@@ -87,11 +85,11 @@
         <item name="android:inputType">text</item>
         <item name="android:maxLines">1</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textColorHint">@color/gray</item>
+        <item name="android:textColor">?attr/mainTextColor</item>
+        <item name="android:textColorHint">?attr/formsHintColor</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textColorHighlight">@color/gray</item>
+        <item name="android:textColorHighlight">?attr/formsHintColor</item>
         <item name="android:textCursorDrawable">@null</item>
     </style>
 
@@ -100,26 +98,26 @@
         <item name="android:textColorHint">@color/gray</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="boxBackgroundColor">@color/edit_text</item>
+        <item name="boxBackgroundColor">?attr/formsBackgroundColor</item>
         <item name="hintTextAppearance">@style/Text.Hint</item>
-        <item name="hintTextColor">@color/blue</item>
+        <item name="hintTextColor">?attr/formsHintColor</item>
         <item name="hintAnimationEnabled">false</item>
         <item name="boxCornerRadiusTopStart">@dimen/edittext_corner_radius</item>
         <item name="boxCornerRadiusTopEnd">@dimen/edittext_corner_radius</item>
         <item name="boxCornerRadiusBottomEnd">@dimen/edittext_corner_radius</item>
         <item name="boxCornerRadiusBottomStart">@dimen/edittext_corner_radius</item>
-        <item name="placeholderTextAppearance">@color/gray</item>
+        <item name="placeholderTextAppearance">?attr/formsHintColor</item>
         <item name="boxStrokeWidth">0dp</item>
         <item name="boxStrokeWidthFocused">0dp</item>
     </style>
 
     <style name="TextInputEditText" parent="Widget.Material3.TextInputLayout.FilledBox">
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">?attr/formsTextColor</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:maxLines">1</item>
-        <item name="colorControlActivated">@color/blue</item>
-        <item name="android:textColorHighlight">@color/gray</item>
+        <item name="colorControlActivated">?attr/formsActivatedHighlightColor</item>
+        <item name="android:textColorHighlight">?attr/formsHintColor</item>
         <item name="android:textCursorDrawable">@null</item>
         <item name="android:singleLine">true</item>
         <item name="android:textSize">16sp</item>
@@ -138,17 +136,17 @@
         <item name="fontFamily">@font/ys_display_medium</item>
     </style>
     <style name="Button.Blue">
-        <item name="backgroundTint">@color/blue</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="backgroundTint">?attr/selectButtonColor</item>
+        <item name="android:textColor">?attr/selectButtonTextColor</item>
     </style>
 
     <style name="Button.Red">
-        <item name="backgroundTint">@color/red</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="backgroundTint">?attr/dismissButtonColor</item>
+        <item name="android:textColor">?attr/dismissButtonTextColor</item>
     </style>
 
     <style name="Button.Transparent">
         <item name="android:stateListAnimator">@null</item>
-        <item name="android:textColor">@color/red</item>
+        <item name="android:textColor">?attr/dismissButtonTextColor</item>
     </style>
 </resources>

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorOnSecondary"
+    android:background="?attr/colorBackground"
     tools:context=".team.ui.fragments.TeamFragment">
 
     <TextView
@@ -15,7 +15,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="19dp"
         style="@style/Text.Medium22"
-        android:color="?attr/colorOnPrimary"
         android:text="@string/team"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,7 +27,6 @@
         android:layout_marginTop="32dp"
         android:gravity="start"
         style="@style/Text.Bold32"
-        android:color="?attr/colorOnPrimary"
         android:text="@string/applicationTeamText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/teamText" />
@@ -40,7 +38,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         style="@style/Text.Medium16"
-        android:color="?attr/colorOnPrimary"
         android:gravity="start"
         android:text="@string/APolyakovName"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +50,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         style="@style/Text.Medium16"
-        android:color="?attr/colorOnPrimary"
         android:gravity="start"
         android:text="@string/AZinchenkoName"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +62,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         style="@style/Text.Medium16"
-        android:color="?attr/colorOnPrimary"
         android:gravity="start"
         android:text="@string/AKochekovName"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +74,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         style="@style/Text.Medium16"
-        android:color="?attr/colorOnPrimary"
         android:gravity="start"
         android:text="@string/NRyabcevName"
         app:layout_constraintStart_toStartOf="parent"
