@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.common.di
 
 import android.content.Context
+import androidx.room.Room
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -9,6 +10,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import ru.practicum.android.diploma.common.data.db.AppDatabase
 import ru.practicum.android.diploma.common.data.network.HHService
 import ru.practicum.android.diploma.common.data.network.NetworkClient
 import ru.practicum.android.diploma.common.data.network.RetrofitNetworkClient
@@ -40,4 +42,11 @@ class DataModule {
     @Singleton
     fun providesSearchRepository(networkClient: NetworkClient): HHSearchRepository =
         HHSearchRepositoryImpl(networkClient)
+
+    @Provides
+    @Singleton
+    fun providesAppDatabase(@ApplicationContext context: Context): AppDatabase =
+        Room.databaseBuilder(context, AppDatabase::class.java, "database.db")
+            .addMigrations()
+            .build()
 }

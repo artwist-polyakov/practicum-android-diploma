@@ -55,7 +55,7 @@ class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::infl
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
 
         if (uiMode == Configuration.UI_MODE_NIGHT_NO) {
-            window.statusBarColor = ContextCompat.getColor(this, R.color.white)
+            window.statusBarColor = ContextCompat.getColor(this, R.color.whiteDay)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 window.insetsController?.setSystemBarsAppearance(
                     WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
@@ -65,7 +65,7 @@ class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::infl
                 window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             }
         } else {
-            window.statusBarColor = ContextCompat.getColor(this, R.color.black)
+            window.statusBarColor = ContextCompat.getColor(this, R.color.blackDay)
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
                 window.decorView.systemUiVisibility = 0
             }

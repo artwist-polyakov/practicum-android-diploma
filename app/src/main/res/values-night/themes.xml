@@ -1,20 +1,60 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.PracticumAndroidDiploma" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.PracticumAndroidDiploma" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!--Black[Day]-->
-        <item name="colorPrimary">@color/black</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimary">@color/blackNight</item>
+        <item name="colorOnPrimary">@color/whiteNight</item>
         <!--White[Day]-->
-        <item name="colorSecondary">@color/white</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!--Universal-->
-        <item name="android:textColorTertiary">@color/black</item>
-        <item name="android:textColorTertiaryInverse">@color/white</item>
+        <item name="colorSecondary">@color/whiteNight</item>
+        <item name="colorOnSecondary">@color/blackNight</item>
 
         <item name="textFillColor">@color/blue</item>
         <item name="colorAccent">@color/red</item>
         <item name="colorOnTertiary">@color/gray</item>
-        <item name="colorOnContainer">@color/light_gray</item>
+        <item name="colorOnContainer">@color/lightGray</item>
         <item name="colorOnBackground">@color/background</item>
+    </style>
+
+    <style name="Theme.PracticumAndroidDiploma" parent="Base.Theme.PracticumAndroidDiploma">
+        <item name="colorBackground">@color/whiteNight</item>
+        <item name="colorOnBackground">@color/blackNight</item>
+        <item name="formsBackgroundColor">@color/gray</item>
+        <item name="formsTextColor">@color/blackUniversal</item>
+        <item name="formsHintColor">@color/whiteUniversal</item>
+        <item name="formsLabelColor">@color/blackNight</item>
+        <item name="formsStrokeColor">@android:color/transparent</item>
+        <item name="formsErrorColor">@color/red</item>
+        <item name="formsIconColor">@color/blackUniversal</item>
+        <item name="formsIconTint">@color/blackUniversal</item>
+        <item name="formsActivatedHighlightColor">@color/blue</item>
+
+        <item name="titleColor">@color/blackNight</item>
+        <item name="iconsColor">@color/blackNight</item>
+        <item name="iconsTint">@color/blackNight</item>
+        <item name="iconsBackgroundColorActive">@color/blue</item>
+        <item name="iconsColorActive">@color/whiteUniversal</item>
+
+        <item name="searchResultAnnotationColor">@color/blue</item>
+        <item name="searchResultAnnotationTextColor">@color/whiteUniversal</item>
+
+        <item name="employerFieldColor">@color/lightGray</item>
+        <item name="employerFieldTextColor">@color/blackUniversal</item>
+
+        <item name="mainTextColor">@color/blackNight</item>
+
+        <item name="navBarBackgroundColor">@color/whiteNight</item>
+        <item name="navBarTextColor">@color/gray</item>
+        <item name="navBarIconColor">@color/gray</item>
+        <item name="navBarIconTint">@color/gray</item>
+        <item name="navBarIconActiveColor">@color/blue</item>
+        <item name="navBarTextActiveColor">@color/blue</item>
+
+        <item name="selectButtonColor">@color/blue</item>
+        <item name="selectButtonTextColor">@color/whiteUniversal</item>
+
+        <item name="dismissButtonColor">@color/whiteNight</item>
+        <item name="dismissButtonTextColor">@color/red</item>
+
+        <item name="checkBoxColor">@color/blue</item>
     </style>
 </resources>
