@@ -14,10 +14,4 @@ interface VacancyDao {
 
     @Delete
     suspend fun removeVacancy(data: VacancyEntity)
-
-    @Query("SELECT * FROM vacancies")
-    suspend fun getVacancies(): List<VacancyEntity>
-
-    @Query("SELECT * FROM vacancies WHERE id = :id")
-    suspend fun getVacancy(id: Int): VacancyEntity?
 }
