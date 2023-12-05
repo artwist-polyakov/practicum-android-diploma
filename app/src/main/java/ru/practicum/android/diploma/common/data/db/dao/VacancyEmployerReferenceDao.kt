@@ -19,14 +19,14 @@ interface VacancyEmployerReferenceDao : VacancyDao, EmployerDao {
     @Query("SELECT * FROM vacancy_employer_reference")
     suspend fun getVacanciesWithEmployer(): List<VacancyWithEmployer>
 
-    @Query("SELECT * FROM vacancies")
-    suspend fun getVacancies(): List<VacancyWithEmployer>
+    @Query("SELECT * FROM vacancy_employer_reference")
+    suspend fun getVacancies(): List<VacancyEmployerReference>
 
     @Query("SELECT * FROM vacancy_employer_reference WHERE employerId = :employerId")
-    suspend fun getVacancies(employerId: Int): List<VacancyWithEmployer>
+    suspend fun getVacancies(employerId: Int): List<VacancyEmployerReference>
 
     @Query("SELECT * FROM vacancy_employer_reference WHERE vacancyId = :vacancyId")
-    suspend fun getVacancy(vacancyId: Int): VacancyWithEmployer?
+    suspend fun getVacancy(vacancyId: Int): VacancyEmployerReference?
 
     @Transaction
     suspend fun addVacancy(data: VacancyWithEmployer) {
@@ -49,7 +49,8 @@ interface VacancyEmployerReferenceDao : VacancyDao, EmployerDao {
                 employerId = data.employer.id
             )
         )
-        if (getVacancies(data.employer.id).isEmpty())
+        if (getVacancies(data.employer.id).isEmpty()) {
             removeEmployer(data.employer)
+        }
     }
 }
