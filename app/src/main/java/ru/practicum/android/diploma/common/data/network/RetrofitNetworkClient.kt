@@ -1,7 +1,6 @@
 package ru.practicum.android.diploma.common.data.network
 
 import android.content.Context
-import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
@@ -20,35 +19,23 @@ class RetrofitNetworkClient(
     private val hhService: HHService,
     private val context: Context
 ) : NetworkClient {
-    @Suppress("TooGenericExceptionCaught", "CyclomaticComplexMethod", "SwallowedException")
+    @Suppress("TooGenericExceptionCaught")
     override suspend fun doRequest(dto: Any): Response {
         if (!context.checkInternetReachability()) return Response().apply { resultCode = NO_INTERNET_ERROR }
         return withContext(Dispatchers.IO) {
             try {
-                when (dto) {
-                    is VacanciesSearchRequest -> makeVacancySearchRequest(dto)
-
-                    is AreasRequest -> makeAreasRequest(dto)
-
-                    is SingleVacancyRequest -> makeSingleVacancyRequest(dto)
-
-                    is IndustriesRequest -> makeIndustriesRequest(dto)
-
-                    else -> Response().apply { resultCode = CLIENT_ERROR }
-                }
+                doRequestInternal(dto)
             } catch (e: IOException) {
+                e.printStackTrace()
                 Response().apply { resultCode = NO_INTERNET_ERROR }
             } catch (e: HttpException) {
-                Log.e("NetworkClient", "HTTP ошибка при сетевом запросе: ${e.message}", e)
-                Response().apply { resultCode = e.code() }
+                e.printStackTrace()
+                getHttpExceptionResponse()
             } catch (e: RuntimeException) {
-                Log.e(
-                    "NetworkClient",
-                    "Непредвиденное runtime исключение при выполнении сетевого запроса: ${e.message}",
-                    e
-                )
-                Response().apply { resultCode = CLIENT_ERROR }
+                e.printStackTrace()
+                getRuntimeExceptionResponse()
             } catch (e: Exception) {
+                e.printStackTrace()
                 Response().apply { resultCode = SERVER_ERROR }
             }
         }
@@ -84,6 +71,28 @@ class RetrofitNetworkClient(
         return IndustriesSearchResponse(industries = hhService.getIndustries()).apply {
             resultCode = SUCCESS
         }
+    }
+
+    private suspend fun doRequestInternal(dto: Any): Response {
+        return when (dto) {
+            is VacanciesSearchRequest -> return makeVacancySearchRequest(dto)
+
+            is AreasRequest -> makeAreasRequest(dto)
+
+            is SingleVacancyRequest -> makeSingleVacancyRequest(dto)
+
+            is IndustriesRequest -> makeIndustriesRequest(dto)
+
+            else -> Response().apply { resultCode = CLIENT_ERROR }
+        }
+    }
+
+    private suspend fun getHttpExceptionResponse(): Response {
+        return Response().apply { resultCode = CLIENT_ERROR }
+    }
+
+    private suspend fun getRuntimeExceptionResponse(): Response {
+        return Response().apply { resultCode = CLIENT_ERROR }
     }
 
     companion object {
