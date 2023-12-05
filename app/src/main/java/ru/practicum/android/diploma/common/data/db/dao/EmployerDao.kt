@@ -13,7 +13,7 @@ interface EmployerDao {
     suspend fun addEmployer(data: EmployerEntity)
 
     @Delete
-    suspend fun removeEmployer(data: EmployerEntity)
+    suspend fun removeEmployer(data: EmployerEntity): Int
 
     @Query("SELECT * FROM employers WHERE id = :id")
     suspend fun getEmployer(id: Int): EmployerEntity?

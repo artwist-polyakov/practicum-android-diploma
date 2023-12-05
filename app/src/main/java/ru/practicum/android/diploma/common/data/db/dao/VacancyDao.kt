@@ -13,7 +13,7 @@ interface VacancyDao {
     suspend fun addVacancy(data: VacancyEntity)
 
     @Delete
-    suspend fun removeVacancy(data: VacancyEntity)
+    suspend fun removeVacancy(data: VacancyEntity): Int
 
     @Query("SELECT COUNT(*) > 0 FROM vacancies WHERE id = :id")
     suspend fun contains(id: Int): Boolean
