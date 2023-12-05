@@ -2,6 +2,8 @@ package ru.practicum.android.diploma.search.data.network
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import okio.IOException
+import retrofit2.HttpException
 import ru.practicum.android.diploma.common.data.dto.Resource
 import ru.practicum.android.diploma.common.data.dto.Response
 import ru.practicum.android.diploma.common.data.network.NetworkClient
@@ -50,7 +52,7 @@ class HHSearchRepositoryImpl(
         return handleResponse<IndustriesSearchResponse> { networkClient.doRequest(request) }
     }
 
-    @Suppress("TooGenericExceptionCaught", "SwallowedException")
+    @Suppress("TooGenericExceptionCaught")
     private inline fun <reified T> handleResponse(
         crossinline functionToHandle: suspend () -> Response
     ): Flow<Resource<T>> = flow {
@@ -68,8 +70,18 @@ class HHSearchRepositoryImpl(
                 SERVER_ERROR -> emit(Resource.Error(NetworkErrors.ServerError))
                 else -> emit(Resource.Error(NetworkErrors.UnknownError))
             }
+        } catch (e: IOException) {
+            e.printStackTrace()
+            emit(Resource.Error(NetworkErrors.NoInternet))
+        } catch (e: HttpException) {
+            e.printStackTrace()
+            emit(Resource.Error(NetworkErrors.ClientError))
+        } catch (e: RuntimeException) {
+            e.printStackTrace()
+            emit(Resource.Error(NetworkErrors.ClientError))
         } catch (e: Exception) {
-            emit(Resource.Error(NetworkErrors.UnknownError))
+            e.printStackTrace()
+            emit(Resource.Error(NetworkErrors.ServerError))
         }
     }
 
