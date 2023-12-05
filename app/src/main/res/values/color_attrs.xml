@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="colorBackground" format="color"/>
+    <attr name="colorOnBackground" format="color"/>
+    <attr name="formsBackgroundColor" format="color"/>
+    <attr name="formsTextColor" format="color"/>
+    <attr name="formsHintColor" format="color"/>
+    <attr name="formsLabelColor" format="color"/>
+    <attr name="formsStrokeColor" format="color"/>
+    <attr name="formsErrorColor" format="color"/>
+    <attr name="formsIconColor" format="color"/>
+    <attr name="formsIconTint" format="color"/>
+    <attr name="formsActivatedHighlightColor" format="color"/>
+
+    <attr name="titleColor" format="color"/>
+    <attr name="iconsColor" format="color"/>
+    <attr name="iconsTint" format="color"/>
+    <attr name="iconsBackgroundColorActive" format="color"/>
+    <attr name="iconsColorActive" format="color"/>
+
+    <attr name="searchResultAnnotationColor" format="color"/>
+    <attr name="searchResultAnnotationTextColor" format="color"/>
+
+    <attr name="employerFieldColor" format="color"/>
+    <attr name="employerFieldTextColor" format="color"/>
+
+    <attr name="mainTextColor" format="color"/>
+
+    <attr name="navBarBackgroundColor" format="color"/>
+    <attr name="navBarTextColor" format="color"/>
+    <attr name="navBarIconColor" format="color"/>
+    <attr name="navBarIconTint" format="color"/>
+    <attr name="navBarIconActiveColor" format="color"/>
+    <attr name="navBarTextActiveColor" format="color"/>
+
+    <attr name="selectButtonColor" format="color"/>
+    <attr name="selectButtonTextColor" format="color"/>
+
+    <attr name="dismissButtonColor" format="color"/>
+    <attr name="dismissButtonTextColor" format="color"/>
+
+    <attr name="checkBoxColor" format="color"/>
+
+</resources>
