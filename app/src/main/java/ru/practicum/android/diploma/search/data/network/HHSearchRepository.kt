@@ -17,6 +17,13 @@ interface HHSearchRepository {
     ): Flow<Resource<HHSearchResponse>>
 
     fun getVacancy(id: Int): Flow<Resource<SingleVacancyResponse>>
+
+    fun getSimilarVacancies(
+        id: Int,
+        page: Int = 0,
+        perPage: Int = 20
+    ): Flow<Resource<HHSearchResponse>>
+
     fun getAreas(): Flow<Resource<AreaSearchResponse>>
     fun getIndustries(): Flow<Resource<IndustriesSearchResponse>>
 }

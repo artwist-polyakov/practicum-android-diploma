@@ -7,6 +7,7 @@ import retrofit2.HttpException
 import ru.practicum.android.diploma.common.data.dto.Response
 import ru.practicum.android.diploma.common.data.network.requests.AreasRequest
 import ru.practicum.android.diploma.common.data.network.requests.IndustriesRequest
+import ru.practicum.android.diploma.common.data.network.requests.SimilarVacanciesRequest
 import ru.practicum.android.diploma.common.data.network.requests.SingleVacancyRequest
 import ru.practicum.android.diploma.common.data.network.requests.VacanciesSearchRequest
 import ru.practicum.android.diploma.common.data.network.response.AreaSearchResponse
@@ -61,6 +62,16 @@ class RetrofitNetworkClient(
         }
     }
 
+    private suspend fun makeSimilarVacanciesRequest(dto: SimilarVacanciesRequest): Response {
+        return hhService.searchSimilarVacancies(
+            vacancyId = dto.vacancyId,
+            page = dto.page,
+            perPage = dto.perPage
+        ).apply {
+            resultCode = SUCCESS
+        }
+    }
+
     private suspend fun makeAreasRequest(dto: AreasRequest): Response {
         return AreaSearchResponse(areas = hhService.getAreas()).apply {
             resultCode = SUCCESS
@@ -82,6 +93,8 @@ class RetrofitNetworkClient(
             is SingleVacancyRequest -> makeSingleVacancyRequest(dto)
 
             is IndustriesRequest -> makeIndustriesRequest(dto)
+
+            is SimilarVacanciesRequest -> makeSimilarVacanciesRequest(dto)
 
             else -> Response().apply { resultCode = CLIENT_ERROR }
         }

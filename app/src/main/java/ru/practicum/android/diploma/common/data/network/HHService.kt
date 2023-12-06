@@ -33,6 +33,17 @@ interface HHService {
         "Authorization: Bearer ${BuildConfig.HH_ACCESS_TOKEN}",
         "HH-User-Agent: Practicum HH Client/1.0 (master@artwist.ru)"
     )
+    @GET("vacancies{vacancy_id}/similar_vacancies")
+    suspend fun searchSimilarVacancies(
+        @Path("vacancy_id") vacancyId: Int,
+        @Query("page") page: Int = 0,
+        @Query("per_page") perPage: Int = 20,
+    ): HHSearchResponse
+
+    @Headers(
+        "Authorization: Bearer ${BuildConfig.HH_ACCESS_TOKEN}",
+        "HH-User-Agent: Practicum HH Client/1.0 (master@artwist.ru)"
+    )
     @GET("vacancies/{vacancy_id}")
     suspend fun getVacancy(
         @Path("vacancy_id") vacancyId: Int
