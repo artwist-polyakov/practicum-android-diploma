@@ -26,6 +26,6 @@ interface HHSearchRepository {
         perPage: Int = 20
     ): Flow<Resource<HHSearchResponse>>
 
-    fun getAreas(forId:Int? = null): Flow<Resource<AreaSearchResponse>>
-    fun getIndustries(forId:Int? = null): Flow<Resource<IndustriesSearchResponse>>
+    fun getAreas(forId: Int? = null): Flow<Resource<AreaSearchResponse>>
+    fun getIndustries(forId: Int? = null): Flow<Resource<IndustriesSearchResponse>>
 }

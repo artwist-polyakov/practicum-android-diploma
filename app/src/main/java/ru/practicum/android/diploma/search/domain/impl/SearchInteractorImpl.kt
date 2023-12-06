@@ -12,7 +12,7 @@ import ru.practicum.android.diploma.search.domain.models.VacanciesSearchResult
 class SearchInteractorImpl(
     private val repository: HHSearchRepository,
     private val converter: SearchResultConverter
-): SearchInteractor {
+) : SearchInteractor {
     override suspend fun searchVacancies(
         text: String?,
         page: Int,
@@ -21,15 +21,15 @@ class SearchInteractorImpl(
         salary: Int?,
         onlyWithSalary: Boolean
     ): Flow<Resource<VacanciesSearchResult>> = repository.getVacancies(
-            query = text,
-            page = page,
-            area = area,
-            industry = industry,
-            salary = salary,
-            onlyWithSalary = onlyWithSalary
-        ).map { result ->
-            converter.mapSearchResponce(result)
-        }
+        query = text,
+        page = page,
+        area = area,
+        industry = industry,
+        salary = salary,
+        onlyWithSalary = onlyWithSalary
+    ).map { result ->
+        converter.mapSearchResponce(result)
+    }
 
 
     override fun searchSimilarVacancies(vacancyId: Int, page: Int): Flow<Resource<VacanciesSearchResult>> =

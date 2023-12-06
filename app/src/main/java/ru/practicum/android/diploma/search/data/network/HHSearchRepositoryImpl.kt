@@ -59,12 +59,12 @@ class HHSearchRepositoryImpl(
         return handleResponse<HHSearchResponse> { networkClient.doRequest(request) }
     }
 
-    override fun getAreas(forId:Int?): Flow<Resource<AreaSearchResponse>> {
+    override fun getAreas(forId: Int?): Flow<Resource<AreaSearchResponse>> {
         val request = AreasRequest()
         return handleResponse<AreaSearchResponse> { networkClient.doRequest(request) }
     }
 
-    override fun getIndustries(forId:Int?): Flow<Resource<IndustriesSearchResponse>> {
+    override fun getIndustries(forId: Int?): Flow<Resource<IndustriesSearchResponse>> {
         val request = IndustriesRequest()
         return handleResponse<IndustriesSearchResponse> { networkClient.doRequest(request) }
     }
