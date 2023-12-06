@@ -33,7 +33,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
 //            repo.getVacancies(query = "android")
 //                .collect {
 //                    it.data?.items?.forEach { vacancy ->
-//                        Log.d("SearchFragment", "vacancy: ${vacancy.name}")
+//                        Log.d("SearchFragment", "vacancy: ${vacancy.contacts?.phones?.firstOrNull()?.number}")
 //                    }
 //                }
 //            repo.getAreas()
@@ -46,6 +46,18 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
 //                .collect {
 //                    it.data?.industries?.forEach { industry ->
 //                        Log.d("SearchFragment", "industry: ${industry.name}")
+//                    }
+//                }
+//            repo.getVacancy(90190128)
+//                .collect {
+//                    it.data?.vacancy?.let { vacancy ->
+//                        Log.d("SearchFragment", "vacancy: ${vacancy.description}")
+//                    }
+//                }
+//            repo.getSimilarVacancies(90190128)
+//                .collect {
+//                    it.data?.items?.forEach { vacancy ->
+//                        Log.d("SearchFragment", "vacancy similar: ${vacancy.name}")
 //                    }
 //                }
 //        }

@@ -9,6 +9,7 @@ import ru.practicum.android.diploma.common.data.dto.Response
 import ru.practicum.android.diploma.common.data.network.NetworkClient
 import ru.practicum.android.diploma.common.data.network.requests.AreasRequest
 import ru.practicum.android.diploma.common.data.network.requests.IndustriesRequest
+import ru.practicum.android.diploma.common.data.network.requests.SimilarVacanciesRequest
 import ru.practicum.android.diploma.common.data.network.requests.SingleVacancyRequest
 import ru.practicum.android.diploma.common.data.network.requests.VacanciesSearchRequest
 import ru.practicum.android.diploma.common.data.network.response.AreaSearchResponse
@@ -40,6 +41,19 @@ class HHSearchRepositoryImpl(
     override fun getVacancy(id: Int): Flow<Resource<SingleVacancyResponse>> {
         val request = SingleVacancyRequest(vacancyId = id)
         return handleResponse<SingleVacancyResponse> { networkClient.doRequest(request) }
+    }
+
+    override fun getSimilarVacancies(
+        id: Int,
+        page: Int,
+        perPage: Int
+    ): Flow<Resource<HHSearchResponse>> {
+        val request = SimilarVacanciesRequest(
+            vacancyId = id,
+            page = page,
+            perPage = perPage
+        )
+        return handleResponse<HHSearchResponse> { networkClient.doRequest(request) }
     }
 
     override fun getAreas(): Flow<Resource<AreaSearchResponse>> {
