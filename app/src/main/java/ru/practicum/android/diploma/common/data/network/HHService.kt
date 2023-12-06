@@ -19,7 +19,7 @@ interface HHService {
     )
     @GET("vacancies")
     suspend fun searchVacancies(
-        @Query("text") text: String = "",
+        @Query("text") text: String? = null,
         @Query("page") page: Int = 0,
         @Query("per_page") perPage: Int = 20,
         @Query("area") area: Int? = null,
