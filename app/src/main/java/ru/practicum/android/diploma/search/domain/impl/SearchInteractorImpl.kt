@@ -28,7 +28,7 @@ class SearchInteractorImpl(
             salary = salary,
             onlyWithSalary = onlyWithSalary
         ).map { result ->
-            converter.map(result)
+            converter.mapSearchResponce(result)
         }
 
 
@@ -37,17 +37,17 @@ class SearchInteractorImpl(
             id = vacancyId,
             page = page
         ).map { result ->
-            converter.map(result)
+            converter.mapSearchResponce(result)
         }
 
 
     override fun getIndustries(forId: Int?): Flow<Resource<List<SingleTreeElement>>> =
         repository.getIndustries(forId).map { result ->
-            converter.map(result)
+            converter.mapIndustriesResponse(result)
         }
 
     override fun getAreas(forId: Int?): Flow<Resource<List<SingleTreeElement>>> =
         repository.getAreas(forId).map { result ->
-            converter.map(result)
+            converter.mapAreaResponse(result)
         }
 }

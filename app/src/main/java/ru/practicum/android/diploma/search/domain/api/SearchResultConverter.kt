@@ -12,9 +12,9 @@ import ru.practicum.android.diploma.search.domain.models.VacanciesSearchResult
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
 
 interface SearchResultConverter {
-    fun map(from: Resource<HHSearchResponse>): Resource<VacanciesSearchResult>
-    fun map(from: Resource<AreaSearchResponse>): Resource<List<SingleTreeElement>>
-    fun map(from: Resource<IndustriesSearchResponse>): Resource<List<SingleTreeElement>>
+    fun mapSearchResponce(from: Resource<HHSearchResponse>): Resource<VacanciesSearchResult>
+    fun mapAreaResponse(from: Resource<AreaSearchResponse>): Resource<List<SingleTreeElement>>
+    fun mapIndustriesResponse(from: Resource<IndustriesSearchResponse>): Resource<List<SingleTreeElement>>
     fun map(from: VacancyItemDto): VacancyGeneral
     fun map(from: AreasDto): SingleTreeElement
     fun map(from: IndustriesDto): SingleTreeElement

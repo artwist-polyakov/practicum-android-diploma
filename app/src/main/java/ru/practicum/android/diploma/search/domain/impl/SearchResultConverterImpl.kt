@@ -14,7 +14,7 @@ import ru.practicum.android.diploma.search.domain.models.VacanciesSearchResult
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
 
 class SearchResultConverterImpl : SearchResultConverter {
-    override fun map(from: Resource<HHSearchResponse>): Resource<VacanciesSearchResult> {
+    override fun mapSearchResponce(from: Resource<HHSearchResponse>): Resource<VacanciesSearchResult> {
         return when (from) {
             is Resource.Success -> {
                 Resource.Success(VacanciesSearchResult(
@@ -31,7 +31,7 @@ class SearchResultConverterImpl : SearchResultConverter {
         }
     }
 
-    override fun map(from: Resource<AreaSearchResponse>): Resource<List<SingleTreeElement>> {
+    override fun mapAreaResponse(from: Resource<AreaSearchResponse>): Resource<List<SingleTreeElement>> {
         return when (from) {
             is Resource.Success -> {
                 Resource.Success(from.data?.areas?.map { map(it) } ?: emptyList())
@@ -43,7 +43,7 @@ class SearchResultConverterImpl : SearchResultConverter {
         }
     }
 
-    override fun map(from: Resource<IndustriesSearchResponse>): Resource<List<SingleTreeElement>> {
+    override fun mapIndustriesResponse(from: Resource<IndustriesSearchResponse>): Resource<List<SingleTreeElement>> {
         return when (from) {
             is Resource.Success -> {
                 Resource.Success(from.data?.industries?.map { map(it) } ?: emptyList())
