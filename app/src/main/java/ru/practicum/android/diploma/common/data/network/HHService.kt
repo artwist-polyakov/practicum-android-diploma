@@ -13,8 +13,10 @@ import ru.practicum.android.diploma.common.data.network.response.HHSearchRespons
 // todo реализовать передачу токена
 interface HHService {
 
-    @Headers("Authorization: Bearer ${BuildConfig.HH_ACCESS_TOKEN}",
-        "HH-User-Agent: Practicum HH Client/1.0 (master@artwist.ru)")
+    @Headers(
+        "Authorization: Bearer ${BuildConfig.HH_ACCESS_TOKEN}",
+        "HH-User-Agent: Practicum HH Client/1.0 (master@artwist.ru)"
+    )
     @GET("vacancies")
     suspend fun searchVacancies(
         @Query("text") text: String = "",
@@ -27,8 +29,10 @@ interface HHService {
         @Query("only_with_salary") onlyWithSalary: Boolean = false
     ): HHSearchResponse
 
-    @Headers("Authorization: Bearer ${BuildConfig.HH_ACCESS_TOKEN}",
-        "HH-User-Agent: Practicum HH Client/1.0 (master@artwist.ru)")
+    @Headers(
+        "Authorization: Bearer ${BuildConfig.HH_ACCESS_TOKEN}",
+        "HH-User-Agent: Practicum HH Client/1.0 (master@artwist.ru)"
+    )
     @GET("vacancies/{vacancy_id}")
     suspend fun getVacancy(
         @Path("vacancy_id") vacancyId: Int
