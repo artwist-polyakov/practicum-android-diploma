@@ -33,7 +33,7 @@ interface HHService {
         "Authorization: Bearer ${BuildConfig.HH_ACCESS_TOKEN}",
         "HH-User-Agent: Practicum HH Client/1.0 (master@artwist.ru)"
     )
-    @GET("vacancies{vacancy_id}/similar_vacancies")
+    @GET("vacancies/{vacancy_id}/similar_vacancies")
     suspend fun searchSimilarVacancies(
         @Path("vacancy_id") vacancyId: Int,
         @Query("page") page: Int = 0,
