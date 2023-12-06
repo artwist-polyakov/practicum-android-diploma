@@ -19,7 +19,7 @@ interface HHService {
     )
     @GET("vacancies")
     suspend fun searchVacancies(
-        @Query("text") text: String = "",
+        @Query("text") text: String? = null,
         @Query("page") page: Int = 0,
         @Query("per_page") perPage: Int = 20,
         @Query("area") area: Int? = null,
@@ -54,4 +54,9 @@ interface HHService {
 
     @GET("industries")
     suspend fun getIndustries(): List<IndustriesDto>
+
+    @GET("areas/{area_id}")
+    suspend fun getAreaById(
+        @Path("area_id") areaId: Int
+    ): List<AreasDto>
 }

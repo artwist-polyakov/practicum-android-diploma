@@ -1,7 +1,7 @@
 package ru.practicum.android.diploma.common.data.network.requests
 
 data class VacanciesSearchRequest(
-    val text: String = "",
+    val text: String? = null,
     val page: Int = 0,
     val perPage: Int = 20,
     val searchField: String? = "name",
