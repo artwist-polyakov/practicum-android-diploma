@@ -33,7 +33,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
 //            repo.getVacancies(query = "android")
 //                .collect {
 //                    it.data?.items?.forEach { vacancy ->
-//                        Log.d("SearchFragment", "vacancy: ${vacancy.name}")
+//                        Log.d("SearchFragment1", "vacancy: ${vacancy.contacts?.phones?.firstOrNull()?.number}")
 //                    }
 //                }
 //            repo.getAreas()
