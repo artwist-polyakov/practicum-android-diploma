@@ -1,12 +1,9 @@
 package ru.practicum.android.diploma.search.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.common.ui.BaseFragment
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
@@ -32,13 +29,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         super.onViewCreated(view, savedInstanceState)
 
         // todo  удалить после отладки
-        viewLifecycleOwner.lifecycleScope.launch {
-            interactor.searchVacancies(text = "android")
-                .collect {
-                    it.data?.vacancies?.forEach { vacancy ->
-                        Log.d("SearchFragment", "vacancy: ${vacancy.title}")
-                    }
-                }
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            interactor.searchVacancies(text = "android")
+//                .collect {
+//                    it.data?.vacancies?.forEach { vacancy ->
+//                        Log.d("SearchFragment", "vacancy: ${vacancy.title}")
+//                    }
+//                }
 //            repo.getAreas()
 //                .collect {
 //                    it.data?.areas?.forEach { area ->
@@ -63,6 +60,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
 //                        Log.d("SearchFragment", "vacancy similar: ${vacancy.name}")
 //                    }
 //                }
-        }
+//        }
     }
 }
