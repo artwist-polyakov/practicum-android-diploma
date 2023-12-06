@@ -9,10 +9,12 @@ import ru.practicum.android.diploma.common.data.network.response.SingleVacancyRe
 
 interface HHSearchRepository {
     fun getVacancies(
-        query: String,
+        query: String? = null,
         page: Int = 0,
         perPage: Int = 20,
         salary: Int? = null,
+        area: Int? = null,
+        industry: String? = null,
         onlyWithSalary: Boolean = false
     ): Flow<Resource<HHSearchResponse>>
 
@@ -24,6 +26,6 @@ interface HHSearchRepository {
         perPage: Int = 20
     ): Flow<Resource<HHSearchResponse>>
 
-    fun getAreas(): Flow<Resource<AreaSearchResponse>>
-    fun getIndustries(): Flow<Resource<IndustriesSearchResponse>>
+    fun getAreas(forId:Int? = null): Flow<Resource<AreaSearchResponse>>
+    fun getIndustries(forId:Int? = null): Flow<Resource<IndustriesSearchResponse>>
 }
