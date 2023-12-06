@@ -15,14 +15,4 @@ import javax.inject.Singleton
 @Module
 @InstallIn(ViewModelComponent::class)
 class InteractorModule {
-    @Provides
-    fun providesSearchResultConverter() = SearchResultConverterImpl()
-
-    @Provides
-    @Singleton
-    fun providesSearchInteractor(
-        repository: HHSearchRepository,
-        converter: SearchResultConverter
-    ): SearchInteractor = SearchInteractorImpl(repository, converter)
-
 }
