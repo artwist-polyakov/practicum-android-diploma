@@ -94,7 +94,7 @@
     </style>
 
     <!--! в TextInputLayout обязательно включить атрибут app:placeholderText="Введите сумму" -->
-    <style name="TextInputLayout" parent="Widget.Material3.TextInputLayout.FilledBox">
+    <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="android:textColorHint">@color/gray</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -111,7 +111,7 @@
         <item name="boxStrokeWidthFocused">0dp</item>
     </style>
 
-    <style name="TextInputEditText" parent="Widget.Material3.TextInputLayout.FilledBox">
+    <style name="TextInputEditText" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="android:textColor">?attr/formsTextColor</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -123,6 +123,40 @@
         <item name="android:textSize">16sp</item>
         <item name="android:inputType">number</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="hintTextAppearance">@style/Text.Hint</item>
+        <item name="hintEnabled">false</item>
+    </style>
+
+    <style name="SearchInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textColorHint">?attr/formsHintColor</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="boxBackgroundColor">?attr/formsBackgroundColor</item>
+        <item name="hintTextAppearance">@style/Text.Hint</item>
+        <item name="hintTextColor">@color/blue</item>
+        <item name="hintEnabled">false</item>
+        <item name="hintAnimationEnabled">false</item>
+        <item name="boxCornerRadiusTopStart">@dimen/edittext_corner_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/edittext_corner_radius</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/edittext_corner_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/edittext_corner_radius</item>
+        <item name="placeholderTextAppearance">@color/gray</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+    </style>
+
+    <style name="SearchInputEditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textColor">@color/blackUniversal</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">1</item>
+        <item name="colorControlActivated">@color/blue</item>
+        <item name="android:textColorHighlight">?attr/formsHintColor</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textColorHint">@color/gray</item>
         <item name="hintTextAppearance">@style/Text.Hint</item>
         <item name="hintEnabled">false</item>
     </style>
