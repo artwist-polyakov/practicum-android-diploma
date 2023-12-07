@@ -11,10 +11,6 @@ class FavoritesDBConverterImpl(
     val gsonService: Gson
 ) : FavoritesDBConverter {
 
-    override fun map(from: VacancyWithEmployerDTO): Any {
-        TODO("Not yet implemented")
-    }
-
     override fun map(
         from: List<VacancyWithEmployerDTO>,
         page: Int,
