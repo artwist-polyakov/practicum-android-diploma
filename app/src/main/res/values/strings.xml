@@ -59,5 +59,7 @@
     <string name="vacancyTopText">Вакансия</string>
     <string name="vacancyName">Наименование вакансии</string>
     <string name="salaryText">от мин до макс зарплаты</string>
+    <string name="employerNameText">Наименование работодателя</string>
+    <string name="cityText">Город</string>
 
 </resources>

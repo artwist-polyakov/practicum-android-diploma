@@ -20,6 +20,13 @@
     <dimen name="between_icons">28dp</dimen>
     <dimen name="from_arrow_to_Text">44dp</dimen>
     <dimen name="microTop">4dp</dimen>
+    <dimen name="between_text_card">24dp</dimen>
+    <dimen name="card_corner_radius">12dp</dimen>
+    <dimen name="zero">0dp</dimen>
+    <dimen name="text_in_card">72dp</dimen>
+    <dimen name="city_in_card">42dp</dimen>
+    <dimen name="employer_in_card">48dp</dimen>
+    <dimen name="card_height">80dp</dimen>
 
     <dimen name="navbar_height">64dp</dimen>
     <dimen name="header_height">64dp</dimen>

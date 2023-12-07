@@ -73,5 +73,54 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/vacancyName" />
 
-    
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="@dimen/zero"
+        android:layout_height="@dimen/card_height"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/standart_margin"
+        android:layout_marginTop="@dimen/between_text_card"
+        android:layout_marginEnd="@dimen/standart_margin"
+        android:backgroundTint="?attr/formsBackgroundColor"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/salary">
+
+        <ImageView
+            android:id="@+id/employerLabel"
+            android:layout_width="@dimen/employer_in_card"
+            android:layout_height="@dimen/employer_in_card"
+            android:layout_marginStart="@dimen/standart_margin"
+            android:layout_marginTop="@dimen/standart_margin"
+            android:layout_marginBottom="@dimen/standart_margin"
+            android:src="@drawable/sharing_24px"
+            android:layout_gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="@id/card_view"
+            app:layout_constraintStart_toStartOf="@id/card_view"
+            app:layout_constraintTop_toTopOf="@id/card_view" />
+
+        <TextView
+            android:id="@+id/employerText"
+            style="@style/Text.Medium22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/text_in_card"
+            android:layout_marginTop="@dimen/standart_margin"
+            android:text="@string/employerNameText"
+            app:layout_constraintStart_toEndOf="@id/card_view"
+            app:layout_constraintTop_toBottomOf="@id/card_view" />
+
+        <TextView
+            android:id="@+id/cityText"
+            style="@style/Text.Regular16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/text_in_card"
+            android:layout_marginTop="@dimen/city_in_card"
+            android:text="@string/cityText"
+            app:layout_constraintStart_toEndOf="@id/card_view"
+            app:layout_constraintTop_toBottomOf="@id/card_view" />
+    </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
