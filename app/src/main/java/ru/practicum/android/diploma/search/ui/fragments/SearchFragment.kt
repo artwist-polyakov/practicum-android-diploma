@@ -4,6 +4,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,33 +31,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
             }
         }
 
-        binding.tiSearchField.addTextChangedListener(
-            object : TextWatcher {
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
-
-                override fun onTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    before: Int,
-                    count: Int
-                ) {
-                    viewModel.getVacancies(s.toString())
-                    if (s.toString().isNotEmpty()) {
-                        binding.ivSearchFieldButton.setImageResource(R.drawable.close_24px)
-                    } else {
-                        binding.ivSearchFieldButton.setImageResource(R.drawable.search_24px)
-                    }
-                }
-
-                override fun afterTextChanged(s: Editable?) {}
+        binding.tiSearchField.doOnTextChanged { text, start, before, count ->
+            viewModel.getVacancies(text.toString())
+            if (text.toString().isNotEmpty()) {
+                binding.ivSearchFieldButton.setImageResource(R.drawable.close_24px)
+            } else {
+                binding.ivSearchFieldButton.setImageResource(R.drawable.search_24px)
             }
-        )
+        }
 
         binding.ivSearchFieldButton.setOnClickListener {
             if (binding.tiSearchField.text.toString().isNotEmpty())
