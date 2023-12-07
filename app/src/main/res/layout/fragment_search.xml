@@ -28,10 +28,11 @@
         android:src="@drawable/filter_24px"
         app:layout_constraintBottom_toBottomOf="@id/tv_title"
         app:layout_constraintEnd_toEndOf="@id/tv_title"
-        app:layout_constraintTop_toTopOf="@id/tv_title" />
+        app:layout_constraintTop_toTopOf="@id/tv_title"
+        app:tint="?attr/colorOnBackground" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tl_search_field"
+        android:id="@+id/tl_search_field_layout"
         style="@style/SearchInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,8 +48,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/enter_request"
             android:imeOptions="actionDone"
-            android:textColorHint="?attr/formsHintColor"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColorHint="?attr/formsHintColor" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -59,9 +60,9 @@
         android:padding="12dp"
         android:paddingVertical="8dp"
         android:src="@drawable/search_24px"
-        app:layout_constraintBottom_toBottomOf="@id/tl_search_field"
-        app:layout_constraintEnd_toEndOf="@id/tl_search_field"
-        app:layout_constraintTop_toTopOf="@id/tl_search_field" />
+        app:layout_constraintBottom_toBottomOf="@id/tl_search_field_layout"
+        app:layout_constraintEnd_toEndOf="@id/tl_search_field_layout"
+        app:layout_constraintTop_toTopOf="@id/tl_search_field_layout" />
 
     <LinearLayout
         android:id="@+id/ll_state_layout"
@@ -71,12 +72,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tl_search_field">
+        app:layout_constraintTop_toBottomOf="@id/tl_search_field_layout">
 
         <ImageView
             android:id="@+id/iv_state_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             tools:src="@drawable/image_search" />
 
         <TextView
@@ -85,8 +87,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            tools:text="@string/no_internet" />
+            android:layout_marginHorizontal="@dimen/vacancy_error_text_margin_horizontal"
+            android:layout_marginTop="@dimen/vacancy_error_text_margin_top"
+            android:gravity="center_horizontal"
+            tools:text="@string/no_vacancies" />
     </LinearLayout>
 
     <include
@@ -94,10 +98,10 @@
         layout="@layout/vacancy_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tl_search_field"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toBottomOf="@id/tl_search_field_layout" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
