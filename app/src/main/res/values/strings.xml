@@ -65,6 +65,8 @@
     <string name="_1_3">от 1 года до 3 лет</string>
     <string name="schedule">Полная занятость, удаленная работа</string>
     <string name="description">Описание вакансии</string>
-    <string name="n">* Разные обязанности \n * Еще немного</string>
+    <string name="n">  * Разные обязанности \n* Еще немного</string>
+    <string name="skills">Требования</string>
+    <string name="skills_list">  * Разные требования \n* Еще требования</string>
 
 </resources>
