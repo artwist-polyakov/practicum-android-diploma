@@ -6,8 +6,8 @@ sealed class SearchScreenState {
 
     // todo заменить в двух местах Any, когда будет понятно
     //  нужно ли хранить предыщуие сущности на экране и что отображаем
-    object Loading : SearchScreenState()
-    data class Error(val error: NetworkErrors) : SearchScreenState()
-    data class Empty(val message: String) : SearchScreenState()
+    data object Default : SearchScreenState()
+    data object Loading : SearchScreenState()
+    data class Error(val error: ErrorsSearchScreenStates) : SearchScreenState()
     data class Content(val totalPages: Int, val currentPage: Int, val vacancies: Any) : SearchScreenState()
 }
