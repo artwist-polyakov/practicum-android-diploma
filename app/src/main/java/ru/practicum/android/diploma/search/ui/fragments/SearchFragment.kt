@@ -34,19 +34,19 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     private fun render(state: SearchScreenState) {
         when (state) {
             is SearchScreenState.Content -> {
-                Log.i("SearchFragmentMyLog", "content ${state.vacancies}")
+                Log.i("SearchFragmentContentMyLog", "content ${state.vacancies}")
             }
 
             is SearchScreenState.Error -> {
-                Log.i("SearchFragmentMyLog", "error message ${state.error}")
+                Log.i("SearchFragmentErrorMyLog", "error message ${state.error}")
             }
 
             is SearchScreenState.Loading -> {
-                Log.i("SearchFragmentMyLog", "Loading state")
+                Log.i("SearchFragmentLoadingMyLog", "Loading state")
             }
 
             is SearchScreenState.Empty -> {
-                Log.i("SearchFragmentMyLog", "Empty state")
+                Log.i("SearchFragmentEmptyMyLog", "Empty state")
             }
         }
     }
