@@ -94,7 +94,7 @@
     </style>
 
     <!--! в TextInputLayout обязательно включить атрибут app:placeholderText="Введите сумму" -->
-    <style name="TextInputLayout" parent="Widget.Material3.TextInputLayout.FilledBox">
+    <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="android:textColorHint">@color/gray</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -111,7 +111,7 @@
         <item name="boxStrokeWidthFocused">0dp</item>
     </style>
 
-    <style name="TextInputEditText" parent="Widget.Material3.TextInputLayout.FilledBox">
+    <style name="TextInputEditText" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="android:textColor">?attr/formsTextColor</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
