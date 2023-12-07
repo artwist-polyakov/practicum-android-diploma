@@ -8,7 +8,7 @@
 
     <string name="main">Главная</string>
     <string name="search_for_vacancies">Поиск вакансий</string>
-    <string name="enter_riquest">Введите запрос</string>
+    <string name="enter_request">Введите запрос</string>
 
     <string name="filter_settings">Настройки фильтрации</string>
     <string name="workplace">Место работы</string>
