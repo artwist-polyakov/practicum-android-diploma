@@ -41,8 +41,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         }
 
         binding.ivSearchFieldButton.setOnClickListener {
-            if (binding.tiSearchField.text.toString().isNotEmpty())
+            if (binding.tiSearchField.text.toString().isNotEmpty()) {
                 binding.tiSearchField.text?.clear()
+            }
         }
     }
 
