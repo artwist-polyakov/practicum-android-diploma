@@ -17,23 +17,6 @@ class SearchViewModel @Inject constructor(private val interactor: SearchInteract
     val state: StateFlow<SearchScreenState>
         get() = _state
 
-//    fun getVacancies(query: String) {
-//        viewModelScope.launch {
-//            interactor.searchVacancies(text = query)
-//                .collect { result ->
-//                    if (result.data!!.vacanciesFound > 0) {
-//                        renderState(
-//                            SearchScreenState.Content(
-//                                result.data.totalPages,
-//                                result.data.currentPage,
-//                                result.data.vacancies
-//                            )
-//                        )
-//                    }
-//                }
-//        }
-//    }
-
     fun getVacancies(query: String) {
         viewModelScope.launch {
             interactor.searchVacancies(text = query)
