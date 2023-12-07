@@ -70,7 +70,7 @@ interface VacancyEmployerReferenceDao : VacancyDao, EmployerDao {
          WHERE vac.id = :vacancyId
          ORDER BY vac.lastUpdate DESC"""
     )
-    fun getVacancy(vacancyId: Int): Flow<VacancyWithEmployerDTO?>
+    fun getVacancyWithEmployer(vacancyId: Int): Flow<VacancyWithEmployerDTO?>
 
     @Transaction
     suspend fun addVacancy(vacancy: VacancyEntity, employer: EmployerEntity?) {
