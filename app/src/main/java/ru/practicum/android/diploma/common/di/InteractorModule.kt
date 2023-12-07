@@ -15,10 +15,15 @@ import ru.practicum.android.diploma.search.domain.api.SingleVacancyInteractor
 import ru.practicum.android.diploma.search.domain.impl.FavoritesDBInteractorImpl
 import ru.practicum.android.diploma.search.domain.impl.SearchInteractorImpl
 import ru.practicum.android.diploma.search.domain.impl.SingleVacancyInteractorImpl
+import ru.practicum.android.diploma.vacancy.domain.impl.VacancyInteractor
+import ru.practicum.android.diploma.vacancy.domain.impl.VacancyInteractorImpl
 
 @Module
 @InstallIn(ViewModelComponent::class)
 class InteractorModule {
+    @Provides
+    fun provideVacancyInteractor(): VacancyInteractor = VacancyInteractorImpl()
+
     @Provides
     fun providesSearchInteractor(
         repository: HHSearchRepository,
