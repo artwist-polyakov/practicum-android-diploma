@@ -68,5 +68,13 @@
     <string name="n">  * Разные обязанности \n* Еще немного</string>
     <string name="skills">Требования</string>
     <string name="skills_list">  * Разные требования \n* Еще требования</string>
+    <string name="conditionText">Условия</string>
+    <string name="conditionslist">* Разные условия \n* Еще условия</string>
+    <string name="worker_skills">Ключевые навыки</string>
+    <string name="worker_skill_list">* Разные наыки \n* Еще навыки</string>
+    <string name="e_mail">E-mail</string>
+    <string name="phoneText">Телефон</string>
+    <string name="hrEmail">someEmail@yandex.ru</string>
+    <string name="example_phone">+7-555-XXX-XX-XX</string>
 
 </resources>
