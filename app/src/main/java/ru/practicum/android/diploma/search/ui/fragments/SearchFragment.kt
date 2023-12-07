@@ -31,7 +31,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
             is SearchScreenState.Default -> {
                 Log.i("SearchFragmentContentMyLog", "default stat")
             }
-            
+
             is SearchScreenState.Content -> {
                 Log.i("SearchFragmentContentMyLog", "content ${state.vacancies}")
             }
