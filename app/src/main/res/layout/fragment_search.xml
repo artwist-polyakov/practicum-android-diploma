@@ -64,7 +64,7 @@
         app:layout_constraintTop_toTopOf="@id/tl_search_field" />
 
     <LinearLayout
-        android:id="@+id/state_layout"
+        android:id="@+id/ll_state_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -97,11 +97,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tl_search_field"
+        android:visibility="gone"/>
 
     <ProgressBar
         android:id="@+id/progress_bar"
-        android:layout_width="44dp"
-        android:layout_height="44dp"
+        android:layout_width="@dimen/progressbar_size"
+        android:layout_height="@dimen/progressbar_size"
         android:indeterminateTint="@color/blue"
         android:indeterminateTintMode="src_in"
         app:layout_constraintBottom_toBottomOf="parent"
