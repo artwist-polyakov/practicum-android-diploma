@@ -118,15 +118,18 @@ class SearchViewModel @Inject constructor(
                 searchSettings.copy(currentSalaryOnly = interaction.salaryOnly)
 
             is ViewModelInteractionState.setQuery -> {
+                if (interaction.query.isEmpty()) {
+                    _state.value = SearchScreenState.Error(ErrorsSearchScreenStates.EMPTY); return
+                }
                 searchSettings = searchSettings.copy(currentQuery = interaction.query)
-                searchDebounce(searchSettings)
             }
 
             is ViewModelInteractionState.setPage -> {
                 searchSettings = searchSettings.copy(currentPage = interaction.page)
-                getVacancies(searchSettings)
+                getVacancies(searchSettings); return
             }
         }
+        searchDebounce(searchSettings)
     }
 
     companion object {
