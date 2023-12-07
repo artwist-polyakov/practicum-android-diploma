@@ -16,5 +16,8 @@ interface VacancyDao {
     suspend fun removeVacancy(data: VacancyEntity)
 
     @Query("SELECT COUNT(*) FROM vacancies")
-    fun getVacanciesCount(): Flow<Int>
+    fun getVacanciesCount(): Int
+
+    @Query("SELECT count(*)>0 FROM vacancies WHERE id = :id")
+    fun isVacancyExists(id: Int): Boolean
 }

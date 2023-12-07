@@ -7,7 +7,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import ru.practicum.android.diploma.common.data.db.dto.VacancyWithEmployerDTO
+import ru.practicum.android.diploma.common.data.dto.VacancyWithEmployerDTO
 import ru.practicum.android.diploma.common.data.db.entity.EmployerEntity
 import ru.practicum.android.diploma.common.data.db.entity.VacancyEmployerReference
 import ru.practicum.android.diploma.common.data.db.entity.VacancyEntity
@@ -48,29 +48,16 @@ interface VacancyEmployerReferenceDao : VacancyDao, EmployerDao {
     @Transaction
     @Query(
         """
-         SELECT * 
-         FROM vacancies
-         LEFT JOIN vacancy_employer_reference
-         ON vacancies.id = vacancy_employer_reference.vacancyId
-         LEFT JOIN employers 
-         ON vacancy_employer_reference.employerId = employers.id
-         ORDER BY vacancies.lastUpdate DESC
-         LIMIT :limit OFFSET :page * :limit"""
-    )
-    fun getVacancies(page: Int, limit: Int = DEFAULT_LIMIT): Flow<List<VacancyEmployerReference>>
-
-    @Transaction
-    @Query(
-        """
          SELECT *
          FROM (SELECT * FROM vacancy_employer_reference WHERE employerId = :employerId) as reference
          LEFT JOIN vacancies
          ON reference.vacancyId = vacancies.id
          LEFT JOIN employers 
          ON reference.employerId = employers.id
-         ORDER BY vacancies.lastUpdate DESC"""
+         ORDER BY vacancies.lastUpdate DESC
+         LIMIT :limit OFFSET :page * :limit"""
     )
-    fun getVacancies(employerId: Int): Flow<List<VacancyWithEmployerDTO>>
+    fun getVacancies(employerId: Int, page:Int = 0, limit: Int = DEFAULT_LIMIT): Flow<List<VacancyWithEmployerDTO>>
 
     @Query(
         """
