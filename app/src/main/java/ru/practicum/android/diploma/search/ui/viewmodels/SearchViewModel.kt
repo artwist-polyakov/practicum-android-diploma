@@ -2,17 +2,21 @@ package ru.practicum.android.diploma.search.ui.viewmodels
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import ru.practicum.android.diploma.common.data.dto.Resource
 import ru.practicum.android.diploma.common.domain.models.NetworkErrors
 import ru.practicum.android.diploma.common.ui.BaseViewModel
 import ru.practicum.android.diploma.common.utils.debounce
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
+import ru.practicum.android.diploma.search.domain.models.VacanciesSearchResult
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
 import ru.practicum.android.diploma.search.ui.viewmodels.states.ErrorsSearchScreenStates
 import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchScreenState
-import ru.practicum.android.diploma.search.ui.viewmodels.states.SerchSetingsState
+import ru.practicum.android.diploma.search.ui.viewmodels.states.SerchSettingsState
+import ru.practicum.android.diploma.search.ui.viewmodels.states.ViewModelInteractionState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,7 +24,7 @@ class SearchViewModel @Inject constructor(
     private val interactor: SearchInteractor
 ) : BaseViewModel() {
 
-    private var searchSettings: SerchSetingsState = SerchSetingsState()
+    private var searchSettings: SerchSettingsState = SerchSettingsState()
 
     // todo кажется можно не хранить их тут — так как вакансии будут в стейте
     private var vacancies: MutableList<VacancyGeneral> = mutableListOf()
@@ -34,85 +38,85 @@ class SearchViewModel @Inject constructor(
         viewModelScope,
         true
     ) { text ->
-        getVacancies(text)
+        getVacancies(searchSettings)
     }
 
-    fun getVacancies(query: String, page: Int, ) {
-        if (currentQuery == query) {
-            return
-        }
+    init {
+        checkState()
+    }
 
-        currentQuery = query
-        if (currentQuery.isEmpty()) {
+    private fun checkState() {
+        if (searchSettings.currentQuery.isEmpty()) {
             _state.value = SearchScreenState.Error(ErrorsSearchScreenStates.EMPTY)
-            return
-        }
-
-        _state.value = SearchScreenState.Loading
-
-        viewModelScope.launch {
-            interactor.searchVacancies(text = currentQuery)
-                .collect { result ->
-                    if (result.error is NetworkErrors) {
-                        renderState(
-                            SearchScreenState.Error(
-                                when (result.error) {
-                                    NetworkErrors.ServerError -> ErrorsSearchScreenStates.SERVER_ERROR
-                                    NetworkErrors.NoInternet -> ErrorsSearchScreenStates.NO_INTERNET
-                                    else -> ErrorsSearchScreenStates.SERVER_ERROR
-                                }
-                            )
-                        )
-                    } else if (result.data?.vacancies.isNullOrEmpty()) {
-                        renderState(SearchScreenState.Error(ErrorsSearchScreenStates.NOT_FOUND))
-                    } else if (result.data!!.vacanciesFound > 0) {
-                        currentPage = result.data.currentPage
-                        vacancies = result.data.vacancies.toMutableList()
-                        renderState(
-                            SearchScreenState.Content(
-                                result.data.totalPages,
-                                currentPage,
-                                vacancies.toList()
-                            )
-                        )
-                    }
-                }
         }
     }
 
-    fun addVacancies() {
-        viewModelScope.launch {
-            interactor.searchVacancies(
-                text = currentQuery,
-                page = currentPage
-            )
-                .collect { result ->
-                    if (result.error is NetworkErrors) {
-                        renderState(
-                            SearchScreenState.Error(
-                                when (result.error) {
-                                    NetworkErrors.ServerError -> ErrorsSearchScreenStates.SERVER_ERROR
-                                    NetworkErrors.NoInternet -> ErrorsSearchScreenStates.NO_INTERNET
-                                    else -> ErrorsSearchScreenStates.SERVER_ERROR
-                                }
-                            )
-                        )
-                    } else if (result.data?.vacancies.isNullOrEmpty()) {
-                        renderState(SearchScreenState.Error(ErrorsSearchScreenStates.NOT_FOUND))
-                    } else if (result.data!!.vacanciesFound > 0 && result.data.currentPage > currentPage) {
-                        currentPage = result.data.currentPage
-                        vacancies.addAll(result.data.vacancies)
-                        renderState(
-                            SearchScreenState.Content(
-                                result.data.totalPages,
-                                currentPage,
-                                vacancies.toList()
-                            )
-                        )
-                    }
+    private fun chargeInteractorSearch(): suspend () -> Flow<Resource<VacanciesSearchResult>> = {
+        interactor.searchVacancies(
+            text = searchSettings.currentQuery,
+            page = searchSettings.currentPage,
+            area = searchSettings.currentRegion,
+            industry = searchSettings.currentIndustry,
+            salary = searchSettings.currentSalary,
+            onlyWithSalary = searchSettings.currentSalaryOnly
+        )
+    }
+
+    private fun handleSearchResponse(result: Resource<VacanciesSearchResult>) {
+        when (result) {
+            is Resource.Success -> {
+                if (result.data?.vacancies.isNullOrEmpty()) {
+                    _state.value = SearchScreenState.Error(ErrorsSearchScreenStates.NOT_FOUND)
+                } else if (result.data!!.vacanciesFound > 0) {
+                    vacancies = result.data.vacancies.toMutableList()
+                    _state.value = SearchScreenState.Content(
+                        result.data.totalPages,
+                        result.data.currentPage,
+                        vacancies.toList()
+                    )
                 }
+            }
+
+            is Resource.Error -> {
+                _state.value = SearchScreenState.Error(
+                    when (result.error) {
+                        NetworkErrors.ServerError -> ErrorsSearchScreenStates.SERVER_ERROR
+                        NetworkErrors.NoInternet -> ErrorsSearchScreenStates.NO_INTERNET
+                        else -> ErrorsSearchScreenStates.SERVER_ERROR
+                    }
+                )
+            }
         }
     }
+
+    private fun getVacancies(settings: SerchSettingsState) {
+        if (!settings.currentQuery.isEmpty()) {
+            _state.value = SearchScreenState.Loading
+            viewModelScope.launch {
+                chargeInteractorSearch().invoke()
+                    .collect { result ->
+                        handleSearchResponse(result)
+                        renderState(_state.value)
+                    }
+            }
+        }
+
+    }
+
+    fun handleInteraction(interaction: ViewModelInteractionState) {
+        when (interaction) {
+            is ViewModelInteractionState.setRegion -> searchSettings = searchSettings.copy(currentRegion = interaction.region)
+            is ViewModelInteractionState.setIndustry -> searchSettings = searchSettings.copy(currentIndustry = interaction.industry)
+            is ViewModelInteractionState.setSalary -> searchSettings = searchSettings.copy(currentSalary = interaction.salary)
+            is ViewModelInteractionState.setSalaryOnly -> searchSettings = searchSettings.copy(currentSalaryOnly = interaction.salaryOnly)
+            is ViewModelInteractionState.setQuery -> searchSettings = searchSettings.copy(currentQuery = interaction.query)
+            is ViewModelInteractionState.setPage -> {
+                searchSettings = searchSettings.copy(currentPage = interaction.page)
+                getVacancies(searchSettings)
+            }
+        }
+    }
+
 
     private suspend fun renderState(state: SearchScreenState) {
         _state.emit(state)

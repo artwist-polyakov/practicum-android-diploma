@@ -1,7 +1,5 @@
 package ru.practicum.android.diploma.search.ui.viewmodels.states
 
-import ru.practicum.android.diploma.common.domain.models.NetworkErrors
-
 sealed class SearchScreenState {
 
     // todo заменить в двух местах Any, когда будет понятно
