@@ -1,10 +1,14 @@
 package ru.practicum.android.diploma.search.ui.fragments
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.common.ui.BaseFragment
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 import ru.practicum.android.diploma.search.ui.viewmodels.SearchViewModel
@@ -15,33 +19,90 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     override val viewModel: SearchViewModel by viewModels()
 
     override fun initViews() {
-        viewModel.getVacancies("android")
+        binding.tiSearchField.requestFocus()
     }
 
+    // Блок для подписок (клики, viewModel)
     override fun subscribe() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collect { state ->
                 render(state)
             }
         }
+
+        binding.tiSearchField.addTextChangedListener(
+            object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    before: Int,
+                    count: Int
+                ) {
+                    viewModel.getVacancies(s.toString())
+                    if (s.toString().isNotEmpty()) {
+                        binding.ivSearchFieldButton.setImageResource(R.drawable.close_24px)
+                    } else {
+                        binding.ivSearchFieldButton.setImageResource(R.drawable.search_24px)
+                    }
+                }
+
+                override fun afterTextChanged(s: Editable?) {}
+            }
+        )
+
+        binding.ivSearchFieldButton.setOnClickListener {
+            if (binding.tiSearchField.text.toString().isNotEmpty())
+                binding.tiSearchField.text?.clear()
+        }
     }
 
     private fun render(state: SearchScreenState) {
         when (state) {
+            is SearchScreenState.Default -> {
+                binding.progressBar.visibility = View.GONE
+                binding.vacancyList.root.visibility = View.GONE
+                binding.llStateLayout.visibility = View.VISIBLE
+                binding.tvStateText.visibility = View.GONE
+                binding.ivStateImage.visibility = View.VISIBLE
+                binding.ivStateImage.setImageResource(R.drawable.image_search)
+                Log.i("SearchFragmentDefaultMyLog", "Default state")
+            }
+
             is SearchScreenState.Content -> {
-                Log.i("SearchFragmentContentMyLog", "content ${state.vacancies}")
+                binding.progressBar.visibility = View.GONE
+                binding.vacancyList.root.visibility = View.VISIBLE
+                binding.llStateLayout.visibility = View.GONE
+                Log.i("SearchFragmentContentMyLog", "Content state: ${state.vacancies}")
             }
 
             is SearchScreenState.Error -> {
-                Log.i("SearchFragmentErrorMyLog", "error message ${state.error}")
+                binding.progressBar.visibility = View.GONE
+                binding.vacancyList.root.visibility = View.GONE
+                binding.llStateLayout.visibility = View.VISIBLE
+                binding.tvStateText.apply {
+                    visibility = View.VISIBLE
+                    text = resources.getString(state.error.messageResource)
+                }
+                binding.ivStateImage.apply {
+                    visibility = View.VISIBLE
+                    binding.ivStateImage.setImageResource(state.error.imageResource)
+                }
+                Log.i("SearchFragmentErrorMyLog", "Error state")
             }
 
             is SearchScreenState.Loading -> {
+                binding.progressBar.visibility = View.VISIBLE
+                binding.vacancyList.root.visibility = View.GONE
+                binding.llStateLayout.visibility = View.GONE
                 Log.i("SearchFragmentLoadingMyLog", "Loading state")
-            }
-
-            is SearchScreenState.Empty -> {
-                Log.i("SearchFragmentEmptyMyLog", "Empty state")
             }
         }
     }
