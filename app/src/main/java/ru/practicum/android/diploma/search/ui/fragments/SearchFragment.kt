@@ -31,7 +31,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
 
     private fun render(state: SearchScreenState) {
         when (state) {
-
             is SearchScreenState.Content -> {
                 Log.i("SearchFragmentContentMyLog", "content ${state.vacancies}")
             }
