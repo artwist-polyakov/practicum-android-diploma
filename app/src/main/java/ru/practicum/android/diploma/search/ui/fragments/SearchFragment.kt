@@ -28,6 +28,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
 
     private fun render(state: SearchScreenState) {
         when (state) {
+            is SearchScreenState.Default -> {
+                Log.i("SearchFragmentContentMyLog", "default stat")
+            }
+            
             is SearchScreenState.Content -> {
                 Log.i("SearchFragmentContentMyLog", "content ${state.vacancies}")
             }
@@ -39,6 +43,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
             is SearchScreenState.Loading -> {
                 Log.i("SearchFragmentLoadingMyLog", "Loading state")
             }
+
         }
     }
 }
