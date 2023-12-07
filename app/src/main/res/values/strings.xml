@@ -76,5 +76,8 @@
     <string name="phoneText">Телефон</string>
     <string name="hrEmail">someEmail@yandex.ru</string>
     <string name="example_phone">+7-555-XXX-XX-XX</string>
+    <string name="comment_text">Комментарий</string>
+    <string name="job_comment">Некий комментарий</string>
+    <string name="similar_vacations">Похожие вакансии</string>
 
 </resources>

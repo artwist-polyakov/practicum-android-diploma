@@ -355,5 +355,46 @@
             android:text="@string/example_phone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/phoneText" />
+
+        <TextView
+            android:id="@+id/commentText"
+            style="@style/Text.Medium16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standart_margin"
+            android:layout_marginTop="@dimen/standart_margin"
+            android:color="?attr/mainTextColor"
+            android:text="@string/comment_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/phone" />
+
+        <TextView
+            android:id="@+id/comment"
+            style="@style/Text.Regular16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standart_margin"
+            android:layout_marginTop="@dimen/microTop"
+            android:color="?attr/mainTextColor"
+            android:text="@string/job_comment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/commentText" />
+
+        <Button
+            android:id="@+id/newPlaylistButton"
+            android:layout_width="@dimen/zero"
+            android:layout_height="@dimen/similarVacation"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/between_text_card"
+            android:backgroundTint="?attr/textFillColor"
+            style="@style/Text.Medium16"
+            android:text="@string/similar_vacations"
+            android:textAllCaps="false"
+            android:textColor="?attr/colorOnSecondary"
+            android:textSize="14sp"
+            app:cornerRadius="54dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/comment"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
