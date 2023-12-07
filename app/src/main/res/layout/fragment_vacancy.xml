@@ -94,7 +94,7 @@
             android:layout_marginStart="@dimen/standart_margin"
             android:layout_marginTop="@dimen/standart_margin"
             android:layout_marginBottom="@dimen/standart_margin"
-            android:src="@drawable/sharing_24px"
+            android:src="@drawable/employer_logo"
             android:layout_gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="@id/card_view"
             app:layout_constraintStart_toStartOf="@id/card_view"
@@ -122,5 +122,78 @@
             app:layout_constraintStart_toEndOf="@id/card_view"
             app:layout_constraintTop_toBottomOf="@id/card_view" />
     </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/experienceText"
+        style="@style/Text.Medium16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/standart_margin"
+        android:layout_marginTop="@dimen/between_text_card"
+        android:color="?attr/mainTextColor"
+        android:text="@string/expirience_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_view" />
+
+    <TextView
+        android:id="@+id/experience"
+        style="@style/Text.Regular16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/standart_margin"
+        android:layout_marginTop="@dimen/microTop"
+        android:color="?attr/mainTextColor"
+        android:text="@string/_1_3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/experienceText" />
+
+    <TextView
+        android:id="@+id/schedule"
+        style="@style/Text.Regular16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/standart_margin"
+        android:layout_marginTop="@dimen/image_margin_medium"
+        android:color="?attr/mainTextColor"
+        android:text="@string/schedule"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/experience" />
+
+    <TextView
+        android:id="@+id/descriptionText"
+        style="@style/Text.Medium22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/standart_margin"
+        android:layout_marginTop="@dimen/big_top"
+        android:color="?attr/mainTextColor"
+        android:text="@string/description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/schedule" />
+
+    <TextView
+        android:id="@+id/jobFunctionsText"
+        style="@style/Text.Medium16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/standart_margin"
+        android:layout_marginTop="@dimen/standart_margin"
+        android:color="?attr/mainTextColor"
+        android:text="@string/description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/descriptionText" />
+
+    <TextView
+        android:id="@+id/jobFunctions"
+        style="@style/Text.Regular16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/standart_margin"
+        android:layout_marginTop="@dimen/standart_margin"
+        android:color="?attr/mainTextColor"
+        android:text="@string/n"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/jobFunctionsText" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

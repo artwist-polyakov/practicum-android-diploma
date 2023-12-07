@@ -61,5 +61,10 @@
     <string name="salaryText">от мин до макс зарплаты</string>
     <string name="employerNameText">Наименование работодателя</string>
     <string name="cityText">Город</string>
+    <string name="expirience_text">Требуемый опыт</string>
+    <string name="_1_3">от 1 года до 3 лет</string>
+    <string name="schedule">Полная занятость, удаленная работа</string>
+    <string name="description">Описание вакансии</string>
+    <string name="n">* Разные обязанности \n * Еще немного</string>
 
 </resources>
