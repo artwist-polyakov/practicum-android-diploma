@@ -10,8 +10,11 @@ import ru.practicum.android.diploma.search.domain.api.FavoritesDBConverter
 import ru.practicum.android.diploma.search.domain.api.FavoritesDBInteractor
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
 import ru.practicum.android.diploma.search.domain.api.SearchResultConverter
+import ru.practicum.android.diploma.search.domain.api.SingleVacancyConverter
+import ru.practicum.android.diploma.search.domain.api.SingleVacancyInteractor
 import ru.practicum.android.diploma.search.domain.impl.FavoritesDBInteractorImpl
 import ru.practicum.android.diploma.search.domain.impl.SearchInteractorImpl
+import ru.practicum.android.diploma.search.domain.impl.SingleVacancyInteractorImpl
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -27,4 +30,11 @@ class InteractorModule {
         database: AppDatabase,
         converter: FavoritesDBConverter
     ): FavoritesDBInteractor = FavoritesDBInteractorImpl(database, converter)
+
+    @Provides
+    fun providesSingleVacancyInteractor(
+        repository: HHSearchRepository,
+        converter: SingleVacancyConverter,
+        database: AppDatabase
+    ): SingleVacancyInteractor = SingleVacancyInteractorImpl(repository, converter, database)
 }
