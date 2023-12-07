@@ -1,7 +1,5 @@
 package ru.practicum.android.diploma.vacancy.domain.models
 
-import com.google.gson.annotations.SerializedName
-
 /**
  * DTO для отдельной вакансии
  *

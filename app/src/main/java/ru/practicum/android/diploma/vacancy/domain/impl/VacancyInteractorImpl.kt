@@ -24,32 +24,19 @@ class VacancyInteractorImpl : VacancyInteractor {
                 responsibility = "Разработка новых функций, поддержка существующего кода"
             ),
             salary = Salary(
-                from = 100000,
-                to = 150000,
-                currency = "RUB",
-                gross = true
+                from = 100_000, to = 150_000, currency = "RUB", gross = true
             ),
             employer = Employer(
-                id = 123,
-                name = "ООО Рога и Копыта",
-                logoUrls = Logo(
+                id = 123, name = "ООО Рога и Копыта", logoUrls = Logo(
                     original = "https://example.com/original.jpg",
                     little = "https://example.com/little.jpg",
                     medium = "https://example.com/medium.jpg"
                 )
             ),
-            contacts = Contacts(
-
-            ),
-            keySkills = listOf(
-                IdName("6", "Kotlin"),
-                IdName("7", "Android SDK"),
-                IdName("8", "MVVM")
-            )
+            contacts = null,
+            keySkills = null
         )
-
-        val isVacancyAvailable = true // или false в зависимости от логики
-
+        val isVacancyAvailable = true
         return Pair(vacancyItem, isVacancyAvailable)
     }
 }
