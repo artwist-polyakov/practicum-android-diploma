@@ -9,6 +9,7 @@ import ru.practicum.android.diploma.common.data.dto.Response
 import ru.practicum.android.diploma.common.data.network.NetworkClient
 import ru.practicum.android.diploma.common.data.network.requests.AreasRequest
 import ru.practicum.android.diploma.common.data.network.requests.IndustriesRequest
+import ru.practicum.android.diploma.common.data.network.requests.SimilarVacanciesRequest
 import ru.practicum.android.diploma.common.data.network.requests.SingleVacancyRequest
 import ru.practicum.android.diploma.common.data.network.requests.VacanciesSearchRequest
 import ru.practicum.android.diploma.common.data.network.response.AreaSearchResponse
@@ -21,10 +22,12 @@ class HHSearchRepositoryImpl(
     private val networkClient: NetworkClient
 ) : HHSearchRepository {
     override fun getVacancies(
-        query: String,
+        query: String?,
         page: Int,
         perPage: Int,
         salary: Int?,
+        area: Int?,
+        industry: String?,
         onlyWithSalary: Boolean
     ): Flow<Resource<HHSearchResponse>> {
         val request = VacanciesSearchRequest(
@@ -32,6 +35,7 @@ class HHSearchRepositoryImpl(
             page = page,
             perPage = perPage,
             salary = salary,
+            area = area,
             onlyWithSalary = onlyWithSalary
         )
         return handleResponse<HHSearchResponse> { networkClient.doRequest(request) }
@@ -42,12 +46,25 @@ class HHSearchRepositoryImpl(
         return handleResponse<SingleVacancyResponse> { networkClient.doRequest(request) }
     }
 
-    override fun getAreas(): Flow<Resource<AreaSearchResponse>> {
+    override fun getSimilarVacancies(
+        id: Int,
+        page: Int,
+        perPage: Int
+    ): Flow<Resource<HHSearchResponse>> {
+        val request = SimilarVacanciesRequest(
+            vacancyId = id,
+            page = page,
+            perPage = perPage
+        )
+        return handleResponse<HHSearchResponse> { networkClient.doRequest(request) }
+    }
+
+    override fun getAreas(forId: Int?): Flow<Resource<AreaSearchResponse>> {
         val request = AreasRequest()
         return handleResponse<AreaSearchResponse> { networkClient.doRequest(request) }
     }
 
-    override fun getIndustries(): Flow<Resource<IndustriesSearchResponse>> {
+    override fun getIndustries(forId: Int?): Flow<Resource<IndustriesSearchResponse>> {
         val request = IndustriesRequest()
         return handleResponse<IndustriesSearchResponse> { networkClient.doRequest(request) }
     }
