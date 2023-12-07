@@ -20,7 +20,6 @@ class FavoritesDBInteractorImpl(
         }
     }
 
-
     override suspend fun isVacancyFavorite(vacancyId: Int): Boolean =
         database.vacancyDao().isVacancyExists(vacancyId)
 }

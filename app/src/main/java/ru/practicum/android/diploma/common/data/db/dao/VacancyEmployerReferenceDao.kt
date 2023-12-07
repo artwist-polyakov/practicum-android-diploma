@@ -7,10 +7,10 @@ import androidx.room.Query
 import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import ru.practicum.android.diploma.common.data.dto.VacancyWithEmployerDTO
 import ru.practicum.android.diploma.common.data.db.entity.EmployerEntity
 import ru.practicum.android.diploma.common.data.db.entity.VacancyEmployerReference
 import ru.practicum.android.diploma.common.data.db.entity.VacancyEntity
+import ru.practicum.android.diploma.common.data.dto.VacancyWithEmployerDTO
 
 @Dao
 interface VacancyEmployerReferenceDao : VacancyDao, EmployerDao {
@@ -57,7 +57,7 @@ interface VacancyEmployerReferenceDao : VacancyDao, EmployerDao {
          ORDER BY vacancies.lastUpdate DESC
          LIMIT :limit OFFSET :page * :limit"""
     )
-    fun getVacancies(employerId: Int, page:Int = 0, limit: Int = DEFAULT_LIMIT): Flow<List<VacancyWithEmployerDTO>>
+    fun getVacancies(employerId: Int, page: Int = 0, limit: Int = DEFAULT_LIMIT): Flow<List<VacancyWithEmployerDTO>>
 
     @Query(
         """
