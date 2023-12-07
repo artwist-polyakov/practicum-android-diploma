@@ -96,7 +96,7 @@ class SearchViewModel @Inject constructor(
                 chargeInteractorSearch().invoke()
                     .collect { result ->
                         handleSearchResponse(result)
-                        renderState(_state.value)
+                        _state.emit(_state.value)
                     }
             }
         }
@@ -127,11 +127,6 @@ class SearchViewModel @Inject constructor(
                 getVacancies(searchSettings)
             }
         }
-    }
-
-
-    private suspend fun renderState(state: SearchScreenState) {
-        _state.emit(state)
     }
 
     companion object {
