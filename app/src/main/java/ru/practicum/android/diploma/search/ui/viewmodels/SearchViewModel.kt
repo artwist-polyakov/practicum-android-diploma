@@ -26,11 +26,12 @@ class SearchViewModel @Inject constructor(
         get() = _state
 
     fun getVacancies(query: String) {
-        if (latestQuery == query)
+        if (latestQuery == query) {
             return
+        }
 
         latestQuery = query
-        if (latestQuery.isEmpty()){
+        if (latestQuery.isEmpty()) {
             _state.value = SearchScreenState.Default
             return
         }
@@ -41,13 +42,15 @@ class SearchViewModel @Inject constructor(
             interactor.searchVacancies(text = latestQuery)
                 .collect { result ->
                     if (result.error is NetworkErrors) {
-                        renderState(SearchScreenState.Error(
-                            when (result.error) {
-                                NetworkErrors.ServerError -> ErrorsSearchScreenStates.SERVER_ERROR
-                                NetworkErrors.NoInternet -> ErrorsSearchScreenStates.NO_INTERNET
-                                else -> ErrorsSearchScreenStates.SERVER_ERROR   // TODO: Change to another error
-                            }
-                        ))
+                        renderState(
+                            SearchScreenState.Error(
+                                when (result.error) {
+                                    NetworkErrors.ServerError -> ErrorsSearchScreenStates.SERVER_ERROR
+                                    NetworkErrors.NoInternet -> ErrorsSearchScreenStates.NO_INTERNET
+                                    else -> ErrorsSearchScreenStates.SERVER_ERROR
+                                }
+                            )
+                        )
                     } else if (result.data?.vacancies.isNullOrEmpty()) {
                         renderState(SearchScreenState.Error(ErrorsSearchScreenStates.NOT_FOUND))
                     } else if (result.data!!.vacanciesFound > 0) {
@@ -64,6 +67,7 @@ class SearchViewModel @Inject constructor(
                 }
         }
     }
+
     fun addVacancies() {
         viewModelScope.launch {
             interactor.searchVacancies(
@@ -72,13 +76,15 @@ class SearchViewModel @Inject constructor(
             )
                 .collect { result ->
                     if (result.error is NetworkErrors) {
-                        renderState(SearchScreenState.Error(
-                            when (result.error) {
-                                NetworkErrors.ServerError -> ErrorsSearchScreenStates.SERVER_ERROR
-                                NetworkErrors.NoInternet -> ErrorsSearchScreenStates.NO_INTERNET
-                                else -> ErrorsSearchScreenStates.SERVER_ERROR   // TODO: Change to another error
-                            }
-                        ))
+                        renderState(
+                            SearchScreenState.Error(
+                                when (result.error) {
+                                    NetworkErrors.ServerError -> ErrorsSearchScreenStates.SERVER_ERROR
+                                    NetworkErrors.NoInternet -> ErrorsSearchScreenStates.NO_INTERNET
+                                    else -> ErrorsSearchScreenStates.SERVER_ERROR
+                                }
+                            )
+                        )
                     } else if (result.data?.vacancies.isNullOrEmpty()) {
                         renderState(SearchScreenState.Error(ErrorsSearchScreenStates.NOT_FOUND))
                     } else if (result.data!!.vacanciesFound > 0 && result.data.currentPage > latestPage) {
