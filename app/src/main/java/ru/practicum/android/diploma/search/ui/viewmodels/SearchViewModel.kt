@@ -33,12 +33,12 @@ class SearchViewModel @Inject constructor(
     val state: StateFlow<SearchScreenState>
         get() = _state
 
-    private val searchDebounce = debounce<String>(
+    private val searchDebounce = debounce<SerchSettingsState>(
         SEARCH_DEBOUNCE_DELAY,
         viewModelScope,
         true
-    ) { text ->
-        getVacancies(searchSettings)
+    ) {
+        getVacancies(it)
     }
 
     init {
@@ -117,8 +117,10 @@ class SearchViewModel @Inject constructor(
             is ViewModelInteractionState.setSalaryOnly -> searchSettings =
                 searchSettings.copy(currentSalaryOnly = interaction.salaryOnly)
 
-            is ViewModelInteractionState.setQuery -> searchSettings =
-                searchSettings.copy(currentQuery = interaction.query)
+            is ViewModelInteractionState.setQuery -> {
+                searchSettings = searchSettings.copy(currentQuery = interaction.query)
+                searchDebounce(searchSettings)
+            }
 
             is ViewModelInteractionState.setPage -> {
                 searchSettings = searchSettings.copy(currentPage = interaction.page)
