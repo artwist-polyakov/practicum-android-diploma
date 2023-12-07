@@ -30,7 +30,8 @@ class SearchViewModel @Inject constructor(private val interactor: SearchInteract
                             SearchScreenState.Content(
                                 result.data.totalPages,
                                 result.data.currentPage,
-                                result.data.vacancies
+                                (result.data.vacancies
+                                    )
                             )
                         )
                     }
