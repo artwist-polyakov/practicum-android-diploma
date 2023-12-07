@@ -14,11 +14,7 @@ import ru.practicum.android.diploma.common.data.db.AppDatabase
 import ru.practicum.android.diploma.common.data.network.HHService
 import ru.practicum.android.diploma.common.data.network.NetworkClient
 import ru.practicum.android.diploma.common.data.network.RetrofitNetworkClient
-import ru.practicum.android.diploma.search.data.network.HHSearchRepository
-import ru.practicum.android.diploma.search.data.network.HHSearchRepositoryImpl
-import ru.practicum.android.diploma.search.domain.api.SearchInteractor
 import ru.practicum.android.diploma.search.domain.api.SearchResultConverter
-import ru.practicum.android.diploma.search.domain.impl.SearchInteractorImpl
 import ru.practicum.android.diploma.search.domain.impl.SearchResultConverterImpl
 import javax.inject.Singleton
 
@@ -44,11 +40,6 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun providesSearchRepository(networkClient: NetworkClient): HHSearchRepository =
-        HHSearchRepositoryImpl(networkClient)
-
-    @Provides
-    @Singleton
     fun providesAppDatabase(@ApplicationContext context: Context): AppDatabase =
         Room.databaseBuilder(context, AppDatabase::class.java, "database.db")
             .addMigrations()
@@ -56,12 +47,4 @@ class DataModule {
 
     @Provides
     fun providesSearchResultConverter(): SearchResultConverter = SearchResultConverterImpl()
-
-    @Provides
-    @Singleton
-    fun providesSearchInteractor(
-        repository: HHSearchRepository,
-        converter: SearchResultConverter
-    ): SearchInteractor = SearchInteractorImpl(repository, converter)
-
 }
