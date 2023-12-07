@@ -18,14 +18,18 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
     lateinit var networkClient: NetworkClient
 
     override fun initViews() {
-        viewModel.getVacancy(1511) // Mock data
+        viewModel.getVacancy(MOCK_ID)
     }
 
     override fun subscribe() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.state.collect {state ->
+            viewModel.state.collect { state ->
                 Log.i("VacancyMyLog", "mock data $state")
             }
         }
+    }
+
+    companion object {
+        private const val MOCK_ID = 1221 // Моковый id
     }
 }
