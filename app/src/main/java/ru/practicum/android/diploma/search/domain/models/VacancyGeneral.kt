@@ -13,4 +13,4 @@ data class VacancyGeneral(
     val salaryFrom: Int? = null,
     val salaryTo: Int? = null,
     val salaryCurrency: String? = null,
-): Parcelable
+) : Parcelable

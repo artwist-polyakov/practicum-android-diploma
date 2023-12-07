@@ -22,7 +22,6 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
     override fun initViews() {
         val id = arguments?.getString("id") ?: null
         id?.let {
-            Log.d("VacancyMyLog", "id $it")
             viewModel.getVacancy(it.toInt())
         }
 
@@ -31,7 +30,7 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
     override fun subscribe() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collect { state ->
-                Log.i("VacancyMyLog", "mock data $state")
+                Log.d("VacancyMyLog", "mock data $state")
             }
         }
     }

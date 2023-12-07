@@ -28,10 +28,7 @@ class SearchViewModel @Inject constructor(private val interactor: SearchInteract
                     } else if (result.data!!.vacanciesFound > 0) {
                         renderState(
                             SearchScreenState.Content(
-                                result.data.totalPages,
-                                result.data.currentPage,
-                                (result.data.vacancies
-                                    )
+                                result.data
                             )
                         )
                     }

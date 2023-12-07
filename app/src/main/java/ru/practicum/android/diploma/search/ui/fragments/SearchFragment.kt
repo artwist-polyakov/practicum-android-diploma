@@ -32,9 +32,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     private fun render(state: SearchScreenState) {
         when (state) {
             is SearchScreenState.Content -> {
-                Log.i("SearchFragmentContentMyLog", "content ${state.vacancies}")
+                Log.i("SearchFragmentContentMyLog", "content ${state.data.vacancies}")
                 val bundle = Bundle().apply {
-                    putString("id", state.vacancies[0].id.toString())
+                    putString("id", state.data.vacancies[0].id.toString())
                 }
                 findNavController().navigate(R.id.action_searchFragment_to_vacancyFragment, bundle)
 
