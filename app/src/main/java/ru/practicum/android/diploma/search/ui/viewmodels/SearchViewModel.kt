@@ -105,11 +105,21 @@ class SearchViewModel @Inject constructor(
 
     fun handleInteraction(interaction: ViewModelInteractionState) {
         when (interaction) {
-            is ViewModelInteractionState.setRegion -> searchSettings = searchSettings.copy(currentRegion = interaction.region)
-            is ViewModelInteractionState.setIndustry -> searchSettings = searchSettings.copy(currentIndustry = interaction.industry)
-            is ViewModelInteractionState.setSalary -> searchSettings = searchSettings.copy(currentSalary = interaction.salary)
-            is ViewModelInteractionState.setSalaryOnly -> searchSettings = searchSettings.copy(currentSalaryOnly = interaction.salaryOnly)
-            is ViewModelInteractionState.setQuery -> searchSettings = searchSettings.copy(currentQuery = interaction.query)
+            is ViewModelInteractionState.setRegion ->
+                searchSettings = searchSettings.copy(currentRegion = interaction.region)
+
+            is ViewModelInteractionState.setIndustry ->
+                searchSettings = searchSettings.copy(currentIndustry = interaction.industry)
+
+            is ViewModelInteractionState.setSalary -> searchSettings =
+                searchSettings.copy(currentSalary = interaction.salary)
+
+            is ViewModelInteractionState.setSalaryOnly -> searchSettings =
+                searchSettings.copy(currentSalaryOnly = interaction.salaryOnly)
+
+            is ViewModelInteractionState.setQuery -> searchSettings =
+                searchSettings.copy(currentQuery = interaction.query)
+
             is ViewModelInteractionState.setPage -> {
                 searchSettings = searchSettings.copy(currentPage = interaction.page)
                 getVacancies(searchSettings)

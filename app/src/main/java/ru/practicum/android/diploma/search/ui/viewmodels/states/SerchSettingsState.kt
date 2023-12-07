@@ -6,5 +6,5 @@ data class SerchSettingsState(
     val currentRegion: Int? = null,
     val currentSalary: Int = 0,
     val currentIndustry: String = "",
-    var currentSalaryOnly: Boolean = false,
+    val currentSalaryOnly: Boolean = false,
 )
