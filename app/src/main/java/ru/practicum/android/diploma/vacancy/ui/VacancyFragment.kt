@@ -46,8 +46,4 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
             viewModel.getVacancy(it.toInt())
         }
     }
-
-    companion object {
-        private const val MOCK_ID = 90274177 // Моковый id
-    }
 }

@@ -1,8 +1,10 @@
 package ru.practicum.android.diploma.search.domain.impl
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.common.data.db.AppDatabase
 import ru.practicum.android.diploma.common.data.dto.Resource
 import ru.practicum.android.diploma.common.domain.models.NetworkErrors
@@ -34,8 +36,10 @@ class SingleVacancyInteractorImpl(
         }
     }
 
-    fun isVacancyFavorite(vacancyId: Int): Boolean {
-        return db.vacancyDao().isVacancyExists(vacancyId)
+    private suspend fun isVacancyFavorite(vacancyId: Int): Boolean {
+        return withContext(Dispatchers.IO) {
+            db.vacancyDao().isVacancyExists(vacancyId)
+        }
     }
 
     override suspend fun interactWithVacancyFavor(vacancyId: Int): Boolean {

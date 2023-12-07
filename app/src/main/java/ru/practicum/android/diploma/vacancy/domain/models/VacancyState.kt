@@ -1,9 +1,10 @@
 package ru.practicum.android.diploma.vacancy.domain.models
 
+import ru.practicum.android.diploma.search.domain.models.DetailedVacancyItem
+
 sealed interface VacancyState {
     data class Content(
-        val vacancy: VacancyItem,
-        val isFavorite: Boolean
+        val vacancy: DetailedVacancyItem,
     ) : VacancyState
 
     object Loading : VacancyState
