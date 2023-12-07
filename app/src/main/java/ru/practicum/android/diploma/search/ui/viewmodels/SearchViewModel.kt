@@ -15,7 +15,7 @@ import ru.practicum.android.diploma.search.domain.models.VacanciesSearchResult
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
 import ru.practicum.android.diploma.search.ui.viewmodels.states.ErrorsSearchScreenStates
 import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchScreenState
-import ru.practicum.android.diploma.search.ui.viewmodels.states.SerchSettingsState
+import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchSettingsState
 import ru.practicum.android.diploma.search.ui.viewmodels.states.ViewModelInteractionState
 import javax.inject.Inject
 
@@ -24,7 +24,7 @@ class SearchViewModel @Inject constructor(
     private val interactor: SearchInteractor
 ) : BaseViewModel() {
 
-    private var searchSettings: SerchSettingsState = SerchSettingsState()
+    private var searchSettings: SearchSettingsState = SearchSettingsState()
 
     // todo кажется можно не хранить их тут — так как вакансии будут в стейте
     private var vacancies: MutableList<VacancyGeneral> = mutableListOf()
@@ -33,7 +33,7 @@ class SearchViewModel @Inject constructor(
     val state: StateFlow<SearchScreenState>
         get() = _state
 
-    private val searchDebounce = debounce<SerchSettingsState>(
+    private val searchDebounce = debounce<SearchSettingsState>(
         SEARCH_DEBOUNCE_DELAY,
         viewModelScope,
         true
@@ -89,7 +89,7 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    private fun getVacancies(settings: SerchSettingsState) {
+    private fun getVacancies(settings: SearchSettingsState) {
         if (!settings.currentQuery.isEmpty()) {
             _state.value = SearchScreenState.Loading
             viewModelScope.launch {
