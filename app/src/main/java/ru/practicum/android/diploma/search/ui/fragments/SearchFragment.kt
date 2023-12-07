@@ -1,7 +1,5 @@
 package ru.practicum.android.diploma.search.ui.fragments
 
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import androidx.core.widget.doOnTextChanged
