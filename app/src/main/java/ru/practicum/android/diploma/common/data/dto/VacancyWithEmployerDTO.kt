@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.common.data.db.dto
+package ru.practicum.android.diploma.common.data.dto
 
 data class VacancyWithEmployerDTO(
     val vacancyId: Int,

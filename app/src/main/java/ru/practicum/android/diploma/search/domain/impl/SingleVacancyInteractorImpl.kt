@@ -1,0 +1,56 @@
+package ru.practicum.android.diploma.search.domain.impl
+
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import ru.practicum.android.diploma.common.data.db.AppDatabase
+import ru.practicum.android.diploma.common.data.dto.Resource
+import ru.practicum.android.diploma.common.domain.models.NetworkErrors
+import ru.practicum.android.diploma.search.data.network.HHSearchRepository
+import ru.practicum.android.diploma.search.domain.api.SingleVacancyConverter
+import ru.practicum.android.diploma.search.domain.api.SingleVacancyInteractor
+import ru.practicum.android.diploma.search.domain.models.DetailedVacancyItem
+
+class SingleVacancyInteractorImpl(
+    private val repository: HHSearchRepository,
+    private val vacancyConverter: SingleVacancyConverter,
+    private val db: AppDatabase
+) : SingleVacancyInteractor {
+    override suspend fun getVacancy(id: Int): Flow<Resource<DetailedVacancyItem>> {
+        val isFavorite = isVacancyFavorite(id)
+        when (isFavorite) {
+            true -> {
+                return db.vacancyEmployerReferenceDao().getVacancyWithEmployer(id).map {
+                    it.let {
+                        it?.let { vacancyConverter.map(it, isFavorite) }
+                            ?: Resource.Error(NetworkErrors.UnknownError)
+                    }
+                }
+            }
+
+            false -> {
+                return repository.getVacancy(id).map { vacancyConverter.map(it, isFavorite) }
+            }
+        }
+    }
+
+    fun isVacancyFavorite(vacancyId: Int): Boolean {
+        return db.vacancyDao().isVacancyExists(vacancyId)
+    }
+
+    override suspend fun interactWithVacancyFavor(vacancyId: Int): Boolean {
+        if (isVacancyFavorite(vacancyId)) {
+            db.vacancyDao().removeVacancyById(vacancyId)
+        } else {
+            val vacancy = repository.getVacancy(vacancyId).first()
+            if (vacancy is Resource.Success) {
+                vacancy.data?.vacancy?.let {
+                    val pair = vacancyConverter.map(it)
+                    db.vacancyEmployerReferenceDao().addVacancy(pair.first, pair.second)
+                    return true
+                }
+            }
+        }
+        return false
+    }
+}
