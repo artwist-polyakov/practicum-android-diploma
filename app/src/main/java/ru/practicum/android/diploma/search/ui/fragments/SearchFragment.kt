@@ -39,10 +39,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
             is SearchScreenState.Loading -> {
                 Log.i("SearchFragmentLoadingMyLog", "Loading state")
             }
-
-            is SearchScreenState.Empty -> {
-                Log.i("SearchFragmentEmptyMyLog", "Empty state")
-            }
         }
     }
 }
