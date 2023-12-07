@@ -4,9 +4,13 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import ru.practicum.android.diploma.common.data.db.AppDatabase
 import ru.practicum.android.diploma.search.data.network.HHSearchRepository
+import ru.practicum.android.diploma.search.domain.api.FavoritesDBConverter
+import ru.practicum.android.diploma.search.domain.api.FavoritesDBInteractor
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
 import ru.practicum.android.diploma.search.domain.api.SearchResultConverter
+import ru.practicum.android.diploma.search.domain.impl.FavoritesDBInteractorImpl
 import ru.practicum.android.diploma.search.domain.impl.SearchInteractorImpl
 
 @Module
@@ -17,4 +21,10 @@ class InteractorModule {
         repository: HHSearchRepository,
         converter: SearchResultConverter
     ): SearchInteractor = SearchInteractorImpl(repository, converter)
+
+    @Provides
+    fun providesFavoritesDbInteractor(
+        database: AppDatabase,
+        converter: FavoritesDBConverter
+    ): FavoritesDBInteractor = FavoritesDBInteractorImpl(database, converter)
 }
