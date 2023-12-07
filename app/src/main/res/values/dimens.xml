@@ -12,7 +12,7 @@
 
     <dimen name="image_margin_small">4dp</dimen>
     <dimen name="image_margin_medium">8dp</dimen>
-    <dimen name="standart_margin">16dp</dimen>
+    <dimen name="standard_margin">16dp</dimen>
 
     <dimen name="navbar_height">64dp</dimen>
     <dimen name="header_height">64dp</dimen>
@@ -22,4 +22,6 @@
     <dimen name="vacancy_item_padding">8dp</dimen>
     <dimen name="vacancy_item_image_size">48dp</dimen>
     <dimen name="vacancy_item_margin">12dp</dimen>
+    <dimen name="vacancy_error_text_margin_horizontal">48dp</dimen>
+    <dimen name="vacancy_error_text_margin_top">16dp</dimen>
 </resources>
