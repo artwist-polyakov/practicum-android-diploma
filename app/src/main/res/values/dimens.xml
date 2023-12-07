@@ -16,6 +16,10 @@
     <dimen name="top_margin">20dp</dimen>
     <dimen name="little_top">16dp</dimen>
     <dimen name="big_top">32dp</dimen>
+    <dimen name="right_margin">20dp</dimen>
+    <dimen name="between_icons">28dp</dimen>
+    <dimen name="from_arrow_to_Text">44dp</dimen>
+    <dimen name="microTop">4dp</dimen>
 
     <dimen name="navbar_height">64dp</dimen>
     <dimen name="header_height">64dp</dimen>

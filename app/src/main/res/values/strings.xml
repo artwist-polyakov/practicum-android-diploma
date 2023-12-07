@@ -56,5 +56,8 @@
     <string name="AZinchenkoName">Алексей Зинченко</string>
     <string name="AKochekovName">Антон Кочеков</string>
     <string name="NRyabcevName">Николай Рябцев</string>
+    <string name="vacancyTopText">Вакансия</string>
+    <string name="vacancyName">Наименование вакансии</string>
+    <string name="salaryText">от мин до макс зарплаты</string>
 
 </resources>

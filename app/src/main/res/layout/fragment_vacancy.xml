@@ -3,17 +3,75 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/colorBackground">
 
     <ImageView
+        android:id="@+id/backArrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/arrow_back_24px"
-        android:layout_marginTop="@dimen/top_margin"
         android:layout_marginStart="@dimen/standart_margin"
+        android:layout_marginTop="@dimen/top_margin"
+        android:src="@drawable/arrow_back_24px"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:tint="?attr/iconsColor" />
 
+    <TextView
+        style="@style/Text.Medium22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/standart_margin"
+        android:layout_marginTop="@dimen/top_margin"
+        android:color="?attr/mainTextColor"
+        android:text="@string/vacancyTopText"
+        app:layout_constraintStart_toEndOf="@id/backArrow"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/likeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginEnd="@dimen/right_margin"
+        android:src="@drawable/favorites_inactive_24px"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="?attr/iconsColor" />
 
+    <ImageView
+        android:id="@+id/shareButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginEnd="@dimen/between_icons"
+        android:src="@drawable/sharing_24px"
+        app:layout_constraintEnd_toStartOf="@id/likeButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/vacancyName"
+        style="@style/Text.Bold32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/standart_margin"
+        android:layout_marginTop="@dimen/from_arrow_to_Text"
+        android:color="?attr/mainTextColor"
+        android:text="@string/vacancyName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backArrow" />
+
+    <TextView
+        android:id="@+id/salary"
+        style="@style/Text.Medium22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/standart_margin"
+        android:layout_marginTop="@dimen/microTop"
+        android:color="?attr/mainTextColor"
+        android:text="@string/salaryText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vacancyName" />
+
+    
 </androidx.constraintlayout.widget.ConstraintLayout>
