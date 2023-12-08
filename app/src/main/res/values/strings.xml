@@ -82,5 +82,9 @@
     <string name="contact_chapter">Контакты</string>
     <string name="contact_person_text">Контактное лицо</string>
     <string name="Irina">Ирина</string>
+    <string name="from">От&#160;</string>
+    <string name="min_salary_text">минимума&#160;</string>
+    <string name="to_string"><![CDATA[до&#160;]]></string>
+    <string name="to_max_salary">максимума</string>
 
 </resources>

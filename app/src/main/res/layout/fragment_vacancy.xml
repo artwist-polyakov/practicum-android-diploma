@@ -64,17 +64,55 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/b_back_arrow" />
 
-        <TextView
-            android:id="@+id/tv_salary"
+        <LinearLayout
+            android:id="@+id/salary_block"
             style="@style/Text.Medium22"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/standart_margin"
             android:layout_marginTop="@dimen/microTop"
             android:color="?attr/mainTextColor"
+            android:orientation="horizontal"
             android:text="@string/salaryText"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_vacancy_name" />
+            app:layout_constraintTop_toBottomOf="@id/tv_vacancy_name">
+
+            <TextView
+                android:id="@+id/tv_from_text"
+                style="@style/Text.Medium22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/zero"
+                android:color="?attr/mainTextColor"
+                android:text="@string/from" />
+
+            <TextView
+                android:id="@+id/tv_min_salary_text"
+                style="@style/Text.Medium22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/zero"
+                android:color="?attr/mainTextColor"
+                android:text="@string/min_salary_text" />
+
+            <TextView
+                android:id="@+id/tv_to_text"
+                style="@style/Text.Medium22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/zero"
+                android:color="?attr/mainTextColor"
+                android:text="@string/to_string" />
+
+            <TextView
+                android:id="@+id/tv_max_salary_text"
+                style="@style/Text.Medium22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/zero"
+                android:color="?attr/mainTextColor"
+                android:text="@string/to_max_salary" />
+        </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view"
@@ -88,7 +126,7 @@
             app:cardCornerRadius="@dimen/card_corner_radius"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_salary">
+            app:layout_constraintTop_toBottomOf="@id/salary_block">
 
             <ImageView
                 android:id="@+id/employer_label"
