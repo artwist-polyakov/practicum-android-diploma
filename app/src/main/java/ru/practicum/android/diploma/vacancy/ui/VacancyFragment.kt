@@ -30,19 +30,23 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
     override fun subscribe() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collect { state ->
-                Log.d("VacancyMyLog", "mock data $state")
+                Log.d(MYLOG, "mock data $state")
             }
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.i("VacancyMyLog", "onViewCreated")
+        Log.i(MYLOG, "onViewCreated")
         val id = arguments?.getString("id") ?: null
-        Log.d("VacancyMyLog", "id $id")
+        Log.d(MYLOG, "id $id")
         id?.let {
-            Log.d("VacancyMyLog", "id $it")
+            Log.d(MYLOG, "id $it")
             viewModel.getVacancy(it.toInt())
         }
+    }
+
+    companion object {
+        const val MYLOG = "VacancyMyLog"
     }
 }
