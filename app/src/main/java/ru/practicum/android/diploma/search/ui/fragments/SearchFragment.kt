@@ -1,13 +1,10 @@
 package ru.practicum.android.diploma.search.ui.fragments
 
-import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.common.ui.BaseFragment
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 import ru.practicum.android.diploma.search.ui.viewmodels.SearchViewModel
@@ -33,10 +30,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         when (state) {
             is SearchScreenState.Content -> {
                 Log.i("SearchFragmentContentMyLog", "content ${state.data.vacancies}")
-                val bundle = Bundle().apply {
-                    putString("id", state.data.vacancies[0].id.toString())
-                }
-                findNavController().navigate(R.id.action_searchFragment_to_vacancyFragment, bundle)
+//                val bundle = Bundle().apply {
+//                    putString("id", state.data.vacancies[0].id.toString())
+//                }
+//                findNavController().navigate(R.id.action_searchFragment_to_vacancyFragment, bundle)
 
             }
 
