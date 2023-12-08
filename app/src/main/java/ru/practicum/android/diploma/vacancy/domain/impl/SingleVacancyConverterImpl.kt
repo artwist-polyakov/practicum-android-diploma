@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.search.domain.impl
+package ru.practicum.android.diploma.vacancy.domain.impl
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -9,8 +9,8 @@ import ru.practicum.android.diploma.common.data.dto.VacancyItemDto
 import ru.practicum.android.diploma.common.data.dto.VacancyWithEmployerDTO
 import ru.practicum.android.diploma.common.data.network.response.SingleVacancyResponse
 import ru.practicum.android.diploma.common.domain.models.NetworkErrors
-import ru.practicum.android.diploma.search.domain.api.SingleVacancyConverter
-import ru.practicum.android.diploma.search.domain.models.DetailedVacancyItem
+import ru.practicum.android.diploma.vacancy.domain.api.SingleVacancyConverter
+import ru.practicum.android.diploma.vacancy.domain.models.DetailedVacancyItem
 
 class SingleVacancyConverterImpl(
     private val gson: Gson
