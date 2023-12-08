@@ -2,12 +2,12 @@ package ru.practicum.android.diploma.search.domain.impl
 
 import ru.practicum.android.diploma.common.data.dto.AreasDto
 import ru.practicum.android.diploma.common.data.dto.IndustriesDto
-import ru.practicum.android.diploma.common.domain.models.NetworkResult
 import ru.practicum.android.diploma.common.data.dto.VacancyItemDto
 import ru.practicum.android.diploma.common.data.network.response.AreaSearchResponse
 import ru.practicum.android.diploma.common.data.network.response.HHSearchResponse
 import ru.practicum.android.diploma.common.data.network.response.IndustriesSearchResponse
 import ru.practicum.android.diploma.common.domain.models.NetworkErrors
+import ru.practicum.android.diploma.common.domain.models.NetworkResult
 import ru.practicum.android.diploma.search.domain.api.SearchResultConverter
 import ru.practicum.android.diploma.search.domain.models.SingleTreeElement
 import ru.practicum.android.diploma.search.domain.models.VacanciesSearchResult
@@ -32,7 +32,8 @@ class SearchResultConverterImpl : SearchResultConverter {
         }
     }
 
-    override fun mapAreaResponse(from: NetworkResult<AreaSearchResponse>): NetworkResult<List<SingleTreeElement>> {
+    override fun mapAreaResponse(from: NetworkResult<AreaSearchResponse>):
+        NetworkResult<List<SingleTreeElement>> {
         return when (from) {
             is NetworkResult.Success -> {
                 NetworkResult.Success(from.data?.areas?.map { map(it) } ?: emptyList())
@@ -44,7 +45,8 @@ class SearchResultConverterImpl : SearchResultConverter {
         }
     }
 
-    override fun mapIndustriesResponse(from: NetworkResult<IndustriesSearchResponse>): NetworkResult<List<SingleTreeElement>> {
+    override fun mapIndustriesResponse(from: NetworkResult<IndustriesSearchResponse>):
+        NetworkResult<List<SingleTreeElement>> {
         return when (from) {
             is NetworkResult.Success -> {
                 NetworkResult.Success(from.data?.industries?.map { map(it) } ?: emptyList())

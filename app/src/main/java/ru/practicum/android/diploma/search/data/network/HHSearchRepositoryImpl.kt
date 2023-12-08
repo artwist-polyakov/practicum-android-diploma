@@ -4,7 +4,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okio.IOException
 import retrofit2.HttpException
-import ru.practicum.android.diploma.common.domain.models.NetworkResult
 import ru.practicum.android.diploma.common.data.dto.Response
 import ru.practicum.android.diploma.common.data.network.NetworkClient
 import ru.practicum.android.diploma.common.data.network.requests.AreasRequest
@@ -17,6 +16,7 @@ import ru.practicum.android.diploma.common.data.network.response.HHSearchRespons
 import ru.practicum.android.diploma.common.data.network.response.IndustriesSearchResponse
 import ru.practicum.android.diploma.common.data.network.response.SingleVacancyResponse
 import ru.practicum.android.diploma.common.domain.models.NetworkErrors
+import ru.practicum.android.diploma.common.domain.models.NetworkResult
 
 class HHSearchRepositoryImpl(
     private val networkClient: NetworkClient
