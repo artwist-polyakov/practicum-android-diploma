@@ -1,6 +1,8 @@
 package ru.practicum.android.diploma.vacancy.ui
 
+import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,18 +20,33 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
     lateinit var networkClient: NetworkClient
 
     override fun initViews() {
-        viewModel.getVacancy(MOCK_ID)
+        val id = arguments?.getString("id") ?: null
+        id?.let {
+            viewModel.getVacancy(it.toInt())
+        }
+
     }
 
     override fun subscribe() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collect { state ->
-                Log.i("VacancyMyLog", "mock data $state")
+                Log.d(MYLOG, "mock data $state")
             }
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.i(MYLOG, "onViewCreated")
+        val id = arguments?.getString("id") ?: null
+        Log.d(MYLOG, "id $id")
+        id?.let {
+            Log.d(MYLOG, "id $it")
+            viewModel.getVacancy(it.toInt())
+        }
+    }
+
     companion object {
-        private const val MOCK_ID = 1221 // Моковый id
+        const val MYLOG = "VacancyMyLog"
     }
 }
