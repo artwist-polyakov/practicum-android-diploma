@@ -32,7 +32,8 @@ class SearchResultConverterImpl : SearchResultConverter {
         }
     }
 
-    override fun mapAreaResponse(from: NetworkResult<AreaSearchResponse>): NetworkResult<List<SingleTreeElement>> {
+    override fun mapAreaResponse(from: NetworkResult<AreaSearchResponse>):
+        NetworkResult<List<SingleTreeElement>> {
         return when (from) {
             is NetworkResult.Success -> {
                 NetworkResult.Success(from.data?.areas?.map { map(it) } ?: emptyList())
@@ -44,7 +45,8 @@ class SearchResultConverterImpl : SearchResultConverter {
         }
     }
 
-    override fun mapIndustriesResponse(from: NetworkResult<IndustriesSearchResponse>): NetworkResult<List<SingleTreeElement>> {
+    override fun mapIndustriesResponse(from: NetworkResult<IndustriesSearchResponse>):
+        NetworkResult<List<SingleTreeElement>> {
         return when (from) {
             is NetworkResult.Success -> {
                 NetworkResult.Success(from.data?.industries?.map { map(it) } ?: emptyList())
