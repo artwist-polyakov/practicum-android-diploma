@@ -65,7 +65,7 @@
     <string name="_1_3">от 1 года до 3 лет</string>
     <string name="schedule">Полная занятость, удаленная работа</string>
     <string name="description">Описание вакансии</string>
-    <string name="n">  * Разные обязанности \n* Еще немного</string>
+    <string name="jobFunctions">  * Разные обязанности \n* Еще немного</string>
     <string name="skills">Требования</string>
     <string name="skills_list">  * Разные требования \n* Еще требования</string>
     <string name="conditionText">Условия</string>
@@ -79,5 +79,8 @@
     <string name="comment_text">Комментарий</string>
     <string name="job_comment">Некий комментарий</string>
     <string name="similar_vacations">Похожие вакансии</string>
+    <string name="contact_chapter">Контакты</string>
+    <string name="contact_person_text">Контактное лицо</string>
+    <string name="Irina">Ирина</string>
 
 </resources>

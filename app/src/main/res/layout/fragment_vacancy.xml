@@ -112,6 +112,7 @@
                 android:layout_marginStart="@dimen/text_in_card"
                 android:layout_marginTop="@dimen/standart_margin"
                 android:text="@string/employerNameText"
+                android:textColor="?attr/colorTertiary"
                 app:layout_constraintStart_toEndOf="@id/card_view"
                 app:layout_constraintTop_toBottomOf="@id/card_view" />
 
@@ -123,6 +124,7 @@
                 android:layout_marginStart="@dimen/text_in_card"
                 android:layout_marginTop="@dimen/city_in_card"
                 android:text="@string/cityText"
+                android:textColor="?attr/colorTertiary"
                 app:layout_constraintStart_toEndOf="@id/card_view"
                 app:layout_constraintTop_toBottomOf="@id/card_view" />
         </androidx.cardview.widget.CardView>
@@ -195,7 +197,7 @@
             android:layout_marginStart="@dimen/standart_margin"
             android:layout_marginTop="@dimen/microTop"
             android:color="?attr/mainTextColor"
-            android:text="@string/n"
+            android:text="@string/jobFunctions"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/jobFunctionsText" />
 
@@ -249,7 +251,7 @@
 
         <TextView
             android:id="@+id/workerSkillsText"
-            style="@style/Text.Medium16"
+            style="@style/Text.Medium22"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/standart_margin"
@@ -265,7 +267,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/standart_margin"
-            android:layout_marginTop="@dimen/microTop"
+            android:layout_marginTop="@dimen/standart_margin"
             android:color="?attr/mainTextColor"
             android:text="@string/worker_skill_list"
             app:layout_constraintStart_toStartOf="parent"
@@ -280,7 +282,7 @@
             android:layout_marginStart="@dimen/standart_margin"
             android:layout_marginTop="@dimen/big_top"
             android:color="?attr/mainTextColor"
-            android:text="@string/description"
+            android:text="@string/contact_chapter"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/workerSkills" />
 
@@ -292,7 +294,7 @@
             android:layout_marginStart="@dimen/standart_margin"
             android:layout_marginTop="@dimen/standart_margin"
             android:color="?attr/mainTextColor"
-            android:text="@string/worker_skills"
+            android:text="@string/contact_person_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/contactsText" />
 
@@ -304,7 +306,7 @@
             android:layout_marginStart="@dimen/standart_margin"
             android:layout_marginTop="@dimen/microTop"
             android:color="?attr/mainTextColor"
-            android:text="@string/worker_skill_list"
+            android:text="@string/Irina"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/contactPersonText" />
 
@@ -327,7 +329,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/standart_margin"
             android:layout_marginTop="@dimen/microTop"
-            android:color="?attr/mainTextColor"
+            android:color="?attr/textFillColor"
             android:text="@string/hrEmail"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/eMailText" />
@@ -351,7 +353,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/standart_margin"
             android:layout_marginTop="@dimen/microTop"
-            android:color="?attr/mainTextColor"
+            android:color="?attr/textFillColor"
             android:text="@string/example_phone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/phoneText" />
@@ -382,19 +384,20 @@
 
         <Button
             android:id="@+id/newPlaylistButton"
+            style="@style/Text.Medium16"
             android:layout_width="@dimen/zero"
             android:layout_height="@dimen/similarVacation"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/between_text_card"
             android:backgroundTint="?attr/textFillColor"
-            style="@style/Text.Medium16"
             android:text="@string/similar_vacations"
             android:textAllCaps="false"
             android:textColor="?attr/colorOnSecondary"
             android:textSize="14sp"
+            android:visibility="gone"
             app:cornerRadius="54dp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/comment"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/comment" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
