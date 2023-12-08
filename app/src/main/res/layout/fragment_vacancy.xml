@@ -6,11 +6,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="?attr/colorBackground">
 
         <ImageView
-            android:id="@+id/bBackArrow"
+            android:id="@+id/b_back_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/standart_margin"
@@ -28,11 +28,11 @@
             android:layout_marginTop="@dimen/top_margin"
             android:color="?attr/mainTextColor"
             android:text="@string/vacancyTopText"
-            app:layout_constraintStart_toEndOf="@id/bBackArrow"
+            app:layout_constraintStart_toEndOf="@id/b_back_arrow"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/bLikeButton"
+            android:id="@+id/b_like_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/top_margin"
@@ -43,17 +43,17 @@
             app:tint="?attr/iconsColor" />
 
         <ImageView
-            android:id="@+id/bShareButton"
+            android:id="@+id/b_share_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/top_margin"
             android:layout_marginEnd="@dimen/between_icons"
             android:src="@drawable/sharing_24px"
-            app:layout_constraintEnd_toStartOf="@id/bLikeButton"
+            app:layout_constraintEnd_toStartOf="@id/b_like_button"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvVacancyName"
+            android:id="@+id/tv_vacancy_name"
             style="@style/Text.Bold32"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,10 +62,10 @@
             android:color="?attr/mainTextColor"
             android:text="@string/vacancyName"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bBackArrow" />
+            app:layout_constraintTop_toBottomOf="@id/b_back_arrow" />
 
         <TextView
-            android:id="@+id/tvSalary"
+            android:id="@+id/tv_salary"
             style="@style/Text.Medium22"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
             android:color="?attr/mainTextColor"
             android:text="@string/salaryText"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvVacancyName" />
+            app:layout_constraintTop_toBottomOf="@id/tv_vacancy_name" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view"
@@ -88,10 +88,10 @@
             app:cardCornerRadius="@dimen/card_corner_radius"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvSalary">
+            app:layout_constraintTop_toBottomOf="@id/tv_salary">
 
             <ImageView
-                android:id="@+id/employerLabel"
+                android:id="@+id/employer_label"
                 android:layout_width="@dimen/employer_in_card"
                 android:layout_height="@dimen/employer_in_card"
                 android:layout_gravity="center_vertical"
@@ -104,7 +104,7 @@
                 app:layout_constraintTop_toTopOf="@id/card_view" />
 
             <TextView
-                android:id="@+id/tvEmployerText"
+                android:id="@+id/tv_employer_text"
                 style="@style/Text.Medium22"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
                 app:layout_constraintTop_toBottomOf="@id/card_view" />
 
             <TextView
-                android:id="@+id/tvCityText"
+                android:id="@+id/tv_city_text"
                 style="@style/Text.Regular16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -129,7 +129,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/tvExperienceText"
+            android:id="@+id/tv_experience_text"
             style="@style/Text.Medium16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -141,7 +141,7 @@
             app:layout_constraintTop_toBottomOf="@id/card_view" />
 
         <TextView
-            android:id="@+id/tvExperience"
+            android:id="@+id/tv_experience"
             style="@style/Text.Regular16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -150,10 +150,10 @@
             android:color="?attr/mainTextColor"
             android:text="@string/_1_3"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvExperienceText" />
+            app:layout_constraintTop_toBottomOf="@id/tv_experience_text" />
 
         <TextView
-            android:id="@+id/tvSchedule"
+            android:id="@+id/tv_schedule"
             style="@style/Text.Regular16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -162,10 +162,10 @@
             android:color="?attr/mainTextColor"
             android:text="@string/schedule"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvExperience" />
+            app:layout_constraintTop_toBottomOf="@id/tv_experience" />
 
         <TextView
-            android:id="@+id/tvDescriptionText"
+            android:id="@+id/tv_description_text"
             style="@style/Text.Medium22"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -174,10 +174,10 @@
             android:color="?attr/mainTextColor"
             android:text="@string/description"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvSchedule" />
+            app:layout_constraintTop_toBottomOf="@id/tv_schedule" />
 
         <TextView
-            android:id="@+id/tvJobFunctionsText"
+            android:id="@+id/tv_iob_functions_text"
             style="@style/Text.Medium16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -186,10 +186,10 @@
             android:color="?attr/mainTextColor"
             android:text="@string/description"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvDescriptionText" />
+            app:layout_constraintTop_toBottomOf="@id/tv_description_text" />
 
         <TextView
-            android:id="@+id/tvJobFunctions"
+            android:id="@+id/tv_job_functions"
             style="@style/Text.Regular16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -198,10 +198,10 @@
             android:color="?attr/mainTextColor"
             android:text="@string/jobFunctions"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvJobFunctionsText" />
+            app:layout_constraintTop_toBottomOf="@id/tv_iob_functions_text" />
 
         <TextView
-            android:id="@+id/tvJobSkillsText"
+            android:id="@+id/tv_job_skills_text"
             style="@style/Text.Medium16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -210,10 +210,10 @@
             android:color="?attr/mainTextColor"
             android:text="@string/skills"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvJobFunctions" />
+            app:layout_constraintTop_toBottomOf="@id/tv_job_functions" />
 
         <TextView
-            android:id="@+id/tvJobSkills"
+            android:id="@+id/tv_job_skills"
             style="@style/Text.Regular16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -222,10 +222,10 @@
             android:color="?attr/mainTextColor"
             android:text="@string/skills_list"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvJobSkillsText" />
+            app:layout_constraintTop_toBottomOf="@id/tv_job_skills_text" />
 
         <TextView
-            android:id="@+id/tvJobConditionText"
+            android:id="@+id/tv_job_condition_text"
             style="@style/Text.Medium16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -234,10 +234,10 @@
             android:color="?attr/mainTextColor"
             android:text="@string/conditionText"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvJobSkills" />
+            app:layout_constraintTop_toBottomOf="@id/tv_job_skills" />
 
         <TextView
-            android:id="@+id/tvJobCondition"
+            android:id="@+id/tv_job_condition"
             style="@style/Text.Regular16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -246,10 +246,10 @@
             android:color="?attr/mainTextColor"
             android:text="@string/conditionslist"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvJobConditionText" />
+            app:layout_constraintTop_toBottomOf="@id/tv_job_condition_text" />
 
         <TextView
-            android:id="@+id/tvWorkerSkillsText"
+            android:id="@+id/tv_worker_skills_text"
             style="@style/Text.Medium22"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -258,10 +258,10 @@
             android:color="?attr/mainTextColor"
             android:text="@string/worker_skills"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvJobCondition" />
+            app:layout_constraintTop_toBottomOf="@id/tv_job_condition" />
 
         <TextView
-            android:id="@+id/tvWorkerSkills"
+            android:id="@+id/tv_worker_skills"
             style="@style/Text.Regular16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -270,11 +270,11 @@
             android:color="?attr/mainTextColor"
             android:text="@string/worker_skill_list"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvWorkerSkillsText" />
+            app:layout_constraintTop_toBottomOf="@id/tv_worker_skills_text" />
 
 
         <TextView
-            android:id="@+id/tvContactsText"
+            android:id="@+id/tv_contacts_text"
             style="@style/Text.Medium22"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -283,10 +283,10 @@
             android:color="?attr/mainTextColor"
             android:text="@string/contact_chapter"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvWorkerSkills" />
+            app:layout_constraintTop_toBottomOf="@id/tv_worker_skills" />
 
         <TextView
-            android:id="@+id/tvContactPersonText"
+            android:id="@+id/tv_contact_person_text"
             style="@style/Text.Medium16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -295,10 +295,10 @@
             android:color="?attr/mainTextColor"
             android:text="@string/contact_person_text"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvContactsText" />
+            app:layout_constraintTop_toBottomOf="@id/tv_contacts_text" />
 
         <TextView
-            android:id="@+id/tvContactPerson"
+            android:id="@+id/tv_contact_person"
             style="@style/Text.Regular16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -307,10 +307,10 @@
             android:color="?attr/mainTextColor"
             android:text="@string/Irina"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvContactPersonText" />
+            app:layout_constraintTop_toBottomOf="@id/tv_contact_person_text" />
 
         <TextView
-            android:id="@+id/tvEMailText"
+            android:id="@+id/tv_e_mail_text"
             style="@style/Text.Medium16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -319,22 +319,22 @@
             android:color="?attr/mainTextColor"
             android:text="@string/e_mail"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvContactPerson" />
+            app:layout_constraintTop_toBottomOf="@id/tv_contact_person" />
 
         <TextView
-            android:id="@+id/tvEMail"
+            android:id="@+id/tv_e_mail"
             style="@style/Text.Regular16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/standart_margin"
             android:layout_marginTop="@dimen/microTop"
-            android:textColor="?attr/textFillColor"
             android:text="@string/hrEmail"
+            android:textColor="?attr/textFillColor"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvEMailText" />
+            app:layout_constraintTop_toBottomOf="@id/tv_e_mail_text" />
 
         <TextView
-            android:id="@+id/tvPhoneText"
+            android:id="@+id/tv_phone_text"
             style="@style/Text.Medium16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -343,22 +343,22 @@
             android:color="?attr/mainTextColor"
             android:text="@string/phoneText"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvEMail" />
+            app:layout_constraintTop_toBottomOf="@id/tv_e_mail" />
 
         <TextView
-            android:id="@+id/tvPhone"
+            android:id="@+id/tv_phone"
             style="@style/Text.Regular16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/standart_margin"
             android:layout_marginTop="@dimen/microTop"
-            android:textColor="?attr/textFillColor"
             android:text="@string/example_phone"
+            android:textColor="?attr/textFillColor"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvPhoneText" />
+            app:layout_constraintTop_toBottomOf="@id/tv_phone_text" />
 
         <TextView
-            android:id="@+id/tvCommentText"
+            android:id="@+id/tv_comment_text"
             style="@style/Text.Medium16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -367,10 +367,10 @@
             android:color="?attr/mainTextColor"
             android:text="@string/comment_text"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvPhone" />
+            app:layout_constraintTop_toBottomOf="@id/tv_phone" />
 
         <TextView
-            android:id="@+id/tvComment"
+            android:id="@+id/tv_comment"
             style="@style/Text.Regular16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -379,10 +379,10 @@
             android:color="?attr/mainTextColor"
             android:text="@string/job_comment"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvCommentText" />
+            app:layout_constraintTop_toBottomOf="@id/tv_comment_text" />
 
         <Button
-            android:id="@+id/bSimilarVacations"
+            android:id="@+id/b_similar_vacations"
             style="@style/Text.Medium16"
             android:layout_width="@dimen/zero"
             android:layout_height="@dimen/similarVacation"
@@ -397,6 +397,6 @@
             app:cornerRadius="54dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvComment" />
+            app:layout_constraintTop_toBottomOf="@id/tv_comment" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
