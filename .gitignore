@@ -1,7 +1,9 @@
 # IntelliJ
 *.iml
+
 /.idea/caches
 /.idea/libraries
+/.idea/shelf
 /.idea/modules.xml
 /.idea/workspace.xml
 /.idea/navEditor.xml
@@ -10,6 +12,11 @@
 /.idea/gradle.xml
 /.idea/compiler.xml
 /.idea/misc.xml
+
+# added by Poliakov 04.12.2023
+.idea/codeStyles
+/.idea/migrations.xml
+.idea/deploymentTargetDropDown.xml
 
 # Gradle files
 .gradle/

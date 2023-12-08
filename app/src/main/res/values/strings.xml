@@ -1,3 +1,60 @@
 <resources>
     <string name="app_name">Practicum-Android-Diploma</string>
+
+    <!--    Общие строки        -->
+    <string name="no_internet">Нет интернета</string>
+    <string name="server_error">Ошибка сервера</string>
+    <string name="no_vacancies">Не удалось получить список вакансий</string>
+
+    <string name="main">Главная</string>
+    <string name="search_for_vacancies">Поиск вакансий</string>
+    <string name="enter_riquest">Введите запрос</string>
+
+    <string name="filter_settings">Настройки фильтрации</string>
+    <string name="workplace">Место работы</string>
+    <string name="industry">Отрасль</string>
+    <string name="expected_salary">Ожидаемая зарплата</string>
+    <string name="enter_amount">Введите сумму</string>
+    <string name="dont_show_empty_amount">Не показывать без зарплаты</string>
+    <string name="country">Страна</string>
+    <string name="region">Регион</string>
+    <string name="location_selection">Выбор места работы</string>
+    <string name="select">Выбрать</string>
+    <string name="country_selection">Выбор страны</string>
+    <string name="region_selection">Выбор региона</string>
+    <string name="enter_region">Введите регион</string>
+    <string name="region_error">Такого региона нет</string>
+    <string name="region_empty_list">Не удалось получить список</string>
+    <string name="industry_selection">Выбор отрасли</string>
+    <string name="enter_industry">Введите отрасль</string>
+    <string name="apply">Применить</string>
+    <string name="reset">Сбросить</string>
+
+    <string name="vacancy">Вакансия</string>
+    <string name="salary_from">От %s</string> <!-- Строка вида:  От 999 999 ₽  -->
+    <string name="expirience_period">От $1%s $2%s до $3%s $4%s</string> <!-- Строка вида:  От 2 лет до 5 лет  -->
+    <string name="vacancy_description">Описание вакансии</string>
+    <string name="required_expirience">Требуемый опыт</string>
+    <string name="responsibilites">Обязанности</string>
+    <string name="requirements">Требования</string>
+    <string name="conditions">Условия</string>
+    <string name="key_skills">Ключевые навыки</string>
+    <string name="contacts">Контакты</string>
+    <string name="contact_person">Контактное лицо</string>
+    <string name="email">E-mail</string>
+    <string name="phone_number">Телефон</string>
+    <string name="comment">Комментарий</string>
+    <string name="similar_vacancies">Похожие вакансии</string>
+
+
+    <string name="favorite">Избранное</string>
+    <string name="empty_list">Список пуст</string>
+
+    <string name="team">Команда</string>
+    <string name="applicationTeamText">Над приложением работали</string>
+    <string name="APolyakovName">Александр Поляков</string>
+    <string name="AZinchenkoName">Алексей Зинченко</string>
+    <string name="AKochekovName">Антон Кочеков</string>
+    <string name="NRyabcevName">Николай Рябцев</string>
+
 </resources>
