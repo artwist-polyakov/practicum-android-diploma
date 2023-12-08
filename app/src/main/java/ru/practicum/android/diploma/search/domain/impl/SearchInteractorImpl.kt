@@ -2,7 +2,7 @@ package ru.practicum.android.diploma.search.domain.impl
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ru.practicum.android.diploma.common.data.dto.Resource
+import ru.practicum.android.diploma.common.domain.models.NetworkResult
 import ru.practicum.android.diploma.search.data.network.HHSearchRepository
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
 import ru.practicum.android.diploma.search.domain.api.SearchResultConverter
@@ -20,7 +20,7 @@ class SearchInteractorImpl(
         industry: String?,
         salary: Int?,
         onlyWithSalary: Boolean
-    ): Flow<Resource<VacanciesSearchResult>> = repository.getVacancies(
+    ): Flow<NetworkResult<VacanciesSearchResult>> = repository.getVacancies(
         query = text,
         page = page,
         area = area,
@@ -32,7 +32,7 @@ class SearchInteractorImpl(
     }
 
 
-    override fun searchSimilarVacancies(vacancyId: Int, page: Int): Flow<Resource<VacanciesSearchResult>> =
+    override fun searchSimilarVacancies(vacancyId: Int, page: Int): Flow<NetworkResult<VacanciesSearchResult>> =
         repository.getSimilarVacancies(
             id = vacancyId,
             page = page
@@ -41,12 +41,12 @@ class SearchInteractorImpl(
         }
 
 
-    override fun getIndustries(forId: Int?): Flow<Resource<List<SingleTreeElement>>> =
+    override fun getIndustries(forId: Int?): Flow<NetworkResult<List<SingleTreeElement>>> =
         repository.getIndustries(forId).map { result ->
             converter.mapIndustriesResponse(result)
         }
 
-    override fun getAreas(forId: Int?): Flow<Resource<List<SingleTreeElement>>> =
+    override fun getAreas(forId: Int?): Flow<NetworkResult<List<SingleTreeElement>>> =
         repository.getAreas(forId).map { result ->
             converter.mapAreaResponse(result)
         }

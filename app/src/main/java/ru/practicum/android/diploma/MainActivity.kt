@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.root.ui
+package ru.practicum.android.diploma
 
 import android.content.res.Configuration
 import android.os.Build
@@ -14,7 +14,7 @@ import ru.practicum.android.diploma.common.ui.BaseActivity
 import ru.practicum.android.diploma.databinding.ActivityRootBinding
 
 @AndroidEntryPoint
-class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::inflate) {
+class MainActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::inflate) {
 
     override fun initViews() = with(binding) {
         // Пример использования access token для HeadHunter API

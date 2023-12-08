@@ -2,7 +2,7 @@ package ru.practicum.android.diploma.search.domain.impl
 
 import ru.practicum.android.diploma.common.data.dto.AreasDto
 import ru.practicum.android.diploma.common.data.dto.IndustriesDto
-import ru.practicum.android.diploma.common.data.dto.Resource
+import ru.practicum.android.diploma.common.domain.models.NetworkResult
 import ru.practicum.android.diploma.common.data.dto.VacancyItemDto
 import ru.practicum.android.diploma.common.data.network.response.AreaSearchResponse
 import ru.practicum.android.diploma.common.data.network.response.HHSearchResponse
@@ -14,10 +14,10 @@ import ru.practicum.android.diploma.search.domain.models.VacanciesSearchResult
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
 
 class SearchResultConverterImpl : SearchResultConverter {
-    override fun mapSearchResponce(from: Resource<HHSearchResponse>): Resource<VacanciesSearchResult> {
+    override fun mapSearchResponce(from: NetworkResult<HHSearchResponse>): NetworkResult<VacanciesSearchResult> {
         return when (from) {
-            is Resource.Success -> {
-                Resource.Success(VacanciesSearchResult(
+            is NetworkResult.Success -> {
+                NetworkResult.Success(VacanciesSearchResult(
                     vacanciesFound = from.data?.found ?: 0,
                     totalPages = from.data?.pages ?: 0,
                     currentPage = from.data?.page ?: 0,
@@ -25,32 +25,32 @@ class SearchResultConverterImpl : SearchResultConverter {
                 ))
             }
 
-            is Resource.Error -> {
-                Resource.Error(from.error ?: NetworkErrors.UnknownError)
+            is NetworkResult.Error -> {
+                NetworkResult.Error(from.error ?: NetworkErrors.UnknownError)
             }
         }
     }
 
-    override fun mapAreaResponse(from: Resource<AreaSearchResponse>): Resource<List<SingleTreeElement>> {
+    override fun mapAreaResponse(from: NetworkResult<AreaSearchResponse>): NetworkResult<List<SingleTreeElement>> {
         return when (from) {
-            is Resource.Success -> {
-                Resource.Success(from.data?.areas?.map { map(it) } ?: emptyList())
+            is NetworkResult.Success -> {
+                NetworkResult.Success(from.data?.areas?.map { map(it) } ?: emptyList())
             }
 
-            is Resource.Error -> {
-                Resource.Error(from.error ?: NetworkErrors.UnknownError)
+            is NetworkResult.Error -> {
+                NetworkResult.Error(from.error ?: NetworkErrors.UnknownError)
             }
         }
     }
 
-    override fun mapIndustriesResponse(from: Resource<IndustriesSearchResponse>): Resource<List<SingleTreeElement>> {
+    override fun mapIndustriesResponse(from: NetworkResult<IndustriesSearchResponse>): NetworkResult<List<SingleTreeElement>> {
         return when (from) {
-            is Resource.Success -> {
-                Resource.Success(from.data?.industries?.map { map(it) } ?: emptyList())
+            is NetworkResult.Success -> {
+                NetworkResult.Success(from.data?.industries?.map { map(it) } ?: emptyList())
             }
 
-            is Resource.Error -> {
-                Resource.Error(from.error ?: NetworkErrors.UnknownError)
+            is NetworkResult.Error -> {
+                NetworkResult.Error(from.error ?: NetworkErrors.UnknownError)
             }
         }
     }
