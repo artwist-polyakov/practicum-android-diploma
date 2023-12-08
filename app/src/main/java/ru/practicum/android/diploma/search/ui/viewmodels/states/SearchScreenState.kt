@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.search.ui.viewmodels.states
 
 import ru.practicum.android.diploma.common.domain.models.NetworkErrors
+import ru.practicum.android.diploma.search.domain.models.VacanciesSearchResult
 
 sealed class SearchScreenState {
 
@@ -9,5 +10,7 @@ sealed class SearchScreenState {
     object Loading : SearchScreenState()
     data class Error(val error: NetworkErrors) : SearchScreenState()
     data class Empty(val message: String) : SearchScreenState()
-    data class Content(val totalPages: Int, val currentPage: Int, val vacancies: Any) : SearchScreenState()
+    data class Content(
+        val data: VacanciesSearchResult
+    ) : SearchScreenState()
 }

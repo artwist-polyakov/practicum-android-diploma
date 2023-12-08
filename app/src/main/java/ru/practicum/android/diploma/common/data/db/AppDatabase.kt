@@ -10,7 +10,7 @@ import ru.practicum.android.diploma.common.data.db.entity.VacancyEmployerReferen
 import ru.practicum.android.diploma.common.data.db.entity.VacancyEntity
 
 @Database(
-    version = 0,
+    version = 1,
     entities = [
         VacancyEntity::class,
         EmployerEntity::class,
