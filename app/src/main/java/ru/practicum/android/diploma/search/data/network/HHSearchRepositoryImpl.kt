@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okio.IOException
 import retrofit2.HttpException
-import ru.practicum.android.diploma.common.data.dto.Resource
+import ru.practicum.android.diploma.common.domain.models.NetworkResult
 import ru.practicum.android.diploma.common.data.dto.Response
 import ru.practicum.android.diploma.common.data.network.NetworkClient
 import ru.practicum.android.diploma.common.data.network.requests.AreasRequest
@@ -29,7 +29,7 @@ class HHSearchRepositoryImpl(
         area: Int?,
         industry: String?,
         onlyWithSalary: Boolean
-    ): Flow<Resource<HHSearchResponse>> {
+    ): Flow<NetworkResult<HHSearchResponse>> {
         val request = VacanciesSearchRequest(
             text = query,
             page = page,
@@ -41,7 +41,7 @@ class HHSearchRepositoryImpl(
         return handleResponse<HHSearchResponse> { networkClient.doRequest(request) }
     }
 
-    override fun getVacancy(id: Int): Flow<Resource<SingleVacancyResponse>> {
+    override fun getVacancy(id: Int): Flow<NetworkResult<SingleVacancyResponse>> {
         val request = SingleVacancyRequest(vacancyId = id)
         return handleResponse<SingleVacancyResponse> { networkClient.doRequest(request) }
     }
@@ -50,7 +50,7 @@ class HHSearchRepositoryImpl(
         id: Int,
         page: Int,
         perPage: Int
-    ): Flow<Resource<HHSearchResponse>> {
+    ): Flow<NetworkResult<HHSearchResponse>> {
         val request = SimilarVacanciesRequest(
             vacancyId = id,
             page = page,
@@ -59,12 +59,12 @@ class HHSearchRepositoryImpl(
         return handleResponse<HHSearchResponse> { networkClient.doRequest(request) }
     }
 
-    override fun getAreas(forId: Int?): Flow<Resource<AreaSearchResponse>> {
+    override fun getAreas(forId: Int?): Flow<NetworkResult<AreaSearchResponse>> {
         val request = AreasRequest()
         return handleResponse<AreaSearchResponse> { networkClient.doRequest(request) }
     }
 
-    override fun getIndustries(forId: Int?): Flow<Resource<IndustriesSearchResponse>> {
+    override fun getIndustries(forId: Int?): Flow<NetworkResult<IndustriesSearchResponse>> {
         val request = IndustriesRequest()
         return handleResponse<IndustriesSearchResponse> { networkClient.doRequest(request) }
     }
@@ -72,33 +72,33 @@ class HHSearchRepositoryImpl(
     @Suppress("TooGenericExceptionCaught")
     private inline fun <reified T> handleResponse(
         crossinline functionToHandle: suspend () -> Response
-    ): Flow<Resource<T>> = flow {
+    ): Flow<NetworkResult<T>> = flow {
         try {
             val response = functionToHandle()
             when (response.resultCode) {
-                NO_INTERNET_ERROR -> emit(Resource.Error(NetworkErrors.NoInternet))
+                NO_INTERNET_ERROR -> emit(NetworkResult.Error(NetworkErrors.NoInternet))
                 SUCCESS -> {
                     val data =
                         response as? T ?: throw ClassCastException("Невозможно преобразовать результат к ${T::class}")
-                    emit(Resource.Success(data))
+                    emit(NetworkResult.Success(data))
                 }
 
-                CLIENT_ERROR -> emit(Resource.Error(NetworkErrors.ClientError))
-                SERVER_ERROR -> emit(Resource.Error(NetworkErrors.ServerError))
-                else -> emit(Resource.Error(NetworkErrors.UnknownError))
+                CLIENT_ERROR -> emit(NetworkResult.Error(NetworkErrors.ClientError))
+                SERVER_ERROR -> emit(NetworkResult.Error(NetworkErrors.ServerError))
+                else -> emit(NetworkResult.Error(NetworkErrors.UnknownError))
             }
         } catch (e: IOException) {
             e.printStackTrace()
-            emit(Resource.Error(NetworkErrors.NoInternet))
+            emit(NetworkResult.Error(NetworkErrors.NoInternet))
         } catch (e: HttpException) {
             e.printStackTrace()
-            emit(Resource.Error(NetworkErrors.ClientError))
+            emit(NetworkResult.Error(NetworkErrors.ClientError))
         } catch (e: RuntimeException) {
             e.printStackTrace()
-            emit(Resource.Error(NetworkErrors.ClientError))
+            emit(NetworkResult.Error(NetworkErrors.ClientError))
         } catch (e: Exception) {
             e.printStackTrace()
-            emit(Resource.Error(NetworkErrors.ServerError))
+            emit(NetworkResult.Error(NetworkErrors.ServerError))
         }
     }
 

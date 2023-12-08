@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.common
+package ru.practicum.android.diploma
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
