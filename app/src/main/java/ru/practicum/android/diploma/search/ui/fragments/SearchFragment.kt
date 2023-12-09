@@ -27,13 +27,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     }
 
     override val viewModel: SearchViewModel by viewModels()
-    private val onVacancyClickDebounce = debounce<VacancyGeneral>(
-        CLICK_DEBOUNCE_DELAY,
-        viewLifecycleOwner.lifecycleScope,
-        false
-    ) { data ->
-        // Open vacancy description fragment
-    }
+    private lateinit var onVacancyClickDebounce: (VacancyGeneral) -> Unit
     private val vacancyListAdapter = VacancyAdapter(
         object : VacancyAdapter.VacancyClickListener {
             override fun onClick(data: VacancyGeneral) {
@@ -43,6 +37,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     )
 
     override fun initViews() {
+        onVacancyClickDebounce = debounce<VacancyGeneral>(
+            CLICK_DEBOUNCE_DELAY,
+            viewLifecycleOwner.lifecycleScope,
+            false
+        ) { data ->
+            // Open vacancy description fragment
+        }
         binding.vacancyList.root.apply {
             layoutManager = LinearLayoutManager(context)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
