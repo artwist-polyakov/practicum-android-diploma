@@ -1,10 +1,16 @@
 package ru.practicum.android.diploma.search.ui.fragments
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.RoundedCorner
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.*
+import coil.transform.RoundedCornersTransformation
+import com.google.android.material.imageview.ShapeableImageView
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
 
@@ -51,15 +57,20 @@ class VacancyViewHolder(
             .inflate(R.layout.vacancy_list_item, parent, false)
     ) {
 
-    private var companyLogo: ImageView = itemView.findViewById(R.id.company_image)
+    private var companyLogo: ShapeableImageView = itemView.findViewById(R.id.company_image)
     private var companyName: TextView = itemView.findViewById(R.id.company_name)
     private var vacancyTitle: TextView = itemView.findViewById(R.id.vacancy_name)
     private var vacancySalary: TextView = itemView.findViewById(R.id.vacancy_salary)
+    private val radius = itemView.resources.getDimension(R.dimen.vacancy_logo_corner_radius)
     fun bind(data: VacancyGeneral) {
-//        Glide.with(itemView)
-//            .load(data.employerLogo)
-//            .into(companyLogo)
-
+        companyLogo.load(data.employerLogo){
+            placeholder(R.drawable.placeholder_48px)
+        }
+        val shapeAppearanceModel = companyLogo.shapeAppearanceModel.toBuilder()
+            .setAllCornerSizes(radius)
+            .build()
+        companyLogo.shapeAppearanceModel = shapeAppearanceModel
+        
         vacancyTitle.text = data.title
         companyName.text = data.employerName
         vacancySalary.text = parseSalary(data)
@@ -67,7 +78,7 @@ class VacancyViewHolder(
         itemView.setOnClickListener { clickListener.onClick(data) }
     }
 
-    fun parseSalary(data: VacancyGeneral): String {
+    private fun parseSalary(data: VacancyGeneral): String {
         var list: MutableList<String> = mutableListOf()
         data.salaryFrom?.let {
             list.add(itemView.resources.getString(R.string.salary_from, it.toString()))
