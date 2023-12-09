@@ -25,18 +25,18 @@ class VacancyAdapter(private val clickListener: VacancyClickListener) :
         fun onClick(data: VacancyGeneral)
     }
 
-    fun setData(data: List<VacancyGeneral>){
+    fun setData(data: List<VacancyGeneral>) {
         dataList.clear()
         dataList.addAll(data)
         notifyDataSetChanged()
     }
 
-    fun addData(data: List<VacancyGeneral>){
+    fun addData(data: List<VacancyGeneral>) {
         dataList.addAll(data)
         notifyDataSetChanged()
     }
 
-    fun clear(){
+    fun clear() {
         dataList.clear()
         notifyDataSetChanged()
     }
@@ -67,7 +67,7 @@ class VacancyViewHolder(
         itemView.setOnClickListener { clickListener.onClick(data) }
     }
 
-    fun parseSalary(data: VacancyGeneral): String{
+    fun parseSalary(data: VacancyGeneral): String {
         var list: MutableList<String> = mutableListOf()
         data.salaryFrom?.let {
             list.add(itemView.resources.getString(R.string.salary_from, it.toString()))
@@ -75,7 +75,7 @@ class VacancyViewHolder(
         data.salaryTo?.let {
             list.add(itemView.resources.getString(R.string.salary_to, it.toString()))
         }
-        if (list.isEmpty()){
+        if (list.isEmpty()) {
             list.add(itemView.resources.getString(R.string.salary_not_specified))
         } else {
             data.salaryCurrency?.let { list.add(data.salaryCurrency) }

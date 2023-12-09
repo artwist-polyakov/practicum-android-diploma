@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.search.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -24,6 +23,10 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     private val interactor: SearchInteractor
 ) : BaseViewModel() {
+
+    companion object {
+        private const val SEARCH_DEBOUNCE_DELAY = 2000L
+    }
 
     private var searchSettings: SearchSettingsState = SearchSettingsState()
 
@@ -102,12 +105,12 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun handleSearchSettings(searchSettings: SearchSettingsState) {
-        if (searchSettings.currentQuery.isEmpty()){
+        if (searchSettings.currentQuery.isEmpty()) {
             _state.value = SearchScreenState.Default
         }
 
-        if (searchSettings.currentPage > 0){
-            getVacancies(searchSettings);
+        if (searchSettings.currentPage > 0) {
+            getVacancies(searchSettings)
         } else {
             vacancies.clear()
             searchDebounce(searchSettings)
@@ -135,9 +138,5 @@ class SearchViewModel @Inject constructor(
                 searchSettings.copy(currentPage = interaction.page)
         }
         handleSearchSettings(searchSettings)
-    }
-
-    companion object {
-        private const val SEARCH_DEBOUNCE_DELAY = 2000L
     }
 }

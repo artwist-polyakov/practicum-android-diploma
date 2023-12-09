@@ -9,5 +9,9 @@ sealed class SearchScreenState {
     data object Default : SearchScreenState()
     data object Loading : SearchScreenState()
     data class Error(val error: ErrorsSearchScreenStates) : SearchScreenState()
-    data class Content(val totalPages: Int, val currentPage: Int, val vacancies: List<VacancyGeneral>) : SearchScreenState()
+    data class Content(
+        val totalPages: Int,
+        val currentPage: Int,
+        val vacancies: List<VacancyGeneral>
+    ) : SearchScreenState()
 }

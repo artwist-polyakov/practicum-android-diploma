@@ -1,10 +1,8 @@
 package ru.practicum.android.diploma.search.ui.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -24,9 +22,18 @@ import ru.practicum.android.diploma.search.ui.viewmodels.states.ViewModelInterac
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(FragmentSearchBinding::inflate) {
 
-    private val CLICK_DEBOUNCE_DELAY = 10L
+    companion object {
+        private const val CLICK_DEBOUNCE_DELAY = 10L
+    }
+
     override val viewModel: SearchViewModel by viewModels()
-    private lateinit var onVacancyClickDebounce: (VacancyGeneral) -> Unit
+    private val onVacancyClickDebounce = debounce<VacancyGeneral>(
+        CLICK_DEBOUNCE_DELAY,
+        viewLifecycleOwner.lifecycleScope,
+        false
+    ) { data ->
+        // Open vacancy description fragment
+    }
     private val vacancyListAdapter = VacancyAdapter(
         object : VacancyAdapter.VacancyClickListener {
             override fun onClick(data: VacancyGeneral) {
@@ -36,20 +43,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     )
 
     override fun initViews() {
-        onVacancyClickDebounce = debounce<VacancyGeneral>(
-            CLICK_DEBOUNCE_DELAY,
-            viewLifecycleOwner.lifecycleScope,
-            false
-        ) { data ->
-            // Open vacancy description fragment
-        }
-
         binding.vacancyList.root.apply {
             layoutManager = LinearLayoutManager(context)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = vacancyListAdapter
         }
-
     }
 
     override fun subscribe() {
@@ -78,22 +76,22 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     private fun render(state: SearchScreenState) {
         when (state) {
             is SearchScreenState.Content -> {
-                Log.i("SearchFragmentContentMyLog", "content ${state.vacancies}")
+                Log.d("SearchFragmentContentMyLog", "content ${state.vacancies}")
                 showData(state.vacancies)
             }
 
             is SearchScreenState.Error -> {
-                Log.i("SearchFragmentErrorMyLog", "error message ${state.error}")
+                Log.d("SearchFragmentErrorMyLog", "error message ${state.error}")
                 showProblem(state.error)
             }
 
             is SearchScreenState.Loading -> {
-                Log.i("SearchFragmentLoadingMyLog", "Loading state")
+                Log.d("SearchFragmentLoadingMyLog", "Loading state")
                 showProgressBar()
             }
 
             is SearchScreenState.Default -> {
-                Log.i("SearchFragmentLoadingMyLog", "Default state")
+                Log.d("SearchFragmentLoadingMyLog", "Default state")
                 showDefault()
             }
         }
@@ -129,18 +127,19 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         binding.progressBar.visibility = View.VISIBLE
     }
 
-    private fun showData(){
+    private fun showData() {
         binding.llProblemLayout.visibility = View.GONE
         binding.progressBar.visibility = View.GONE
 
         binding.vacancyList.root.visibility = View.VISIBLE
     }
+
     private fun showData(vacancies: List<VacancyGeneral>) {
         showData()
         vacancyListAdapter.setData(vacancies)
     }
 
-    private fun addData(vacancies: List<VacancyGeneral>){
+    private fun addData(vacancies: List<VacancyGeneral>) {
         showData()
         vacancyListAdapter.addData(vacancies)
     }
