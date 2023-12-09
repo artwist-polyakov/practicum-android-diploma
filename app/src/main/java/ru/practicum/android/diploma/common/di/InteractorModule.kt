@@ -33,8 +33,10 @@ class InteractorModule {
     @Provides
     fun providesFavoritesDbInteractor(
         database: AppDatabase,
-        converter: FavoritesDBConverter
-    ): FavoritesDBInteractor = FavoritesDBInteractorImpl(database, converter)
+        converter: FavoritesDBConverter,
+        repository: HHSearchRepository,
+        converterSingle: SingleVacancyConverter
+    ): FavoritesDBInteractor = FavoritesDBInteractorImpl(database, converter, repository, converterSingle)
 
     @Provides
     fun providesSingleVacancyInteractor(
