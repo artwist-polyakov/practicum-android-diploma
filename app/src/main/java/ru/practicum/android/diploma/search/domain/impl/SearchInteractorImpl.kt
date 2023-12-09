@@ -3,7 +3,7 @@ package ru.practicum.android.diploma.search.domain.impl
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ru.practicum.android.diploma.common.data.dto.Resource
-import ru.practicum.android.diploma.search.data.network.HHSearchRepository
+import ru.practicum.android.diploma.search.data.HHSearchRepository
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
 import ru.practicum.android.diploma.search.domain.api.SearchResultConverter
 import ru.practicum.android.diploma.search.domain.models.SingleTreeElement
