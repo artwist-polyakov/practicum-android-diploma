@@ -3,6 +3,7 @@ package ru.practicum.android.diploma.vacancy.ui
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +21,7 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
     lateinit var networkClient: NetworkClient
 
     override fun initViews() {
-        val id = arguments?.getString("id") ?: null
+        val id = arguments?.getString(ARG_ID) ?: null
         id?.let {
             viewModel.getVacancy(it.toInt())
         }
@@ -38,15 +39,18 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i(MYLOG, "onViewCreated")
-        val id = arguments?.getString("id") ?: null
-        Log.d(MYLOG, "id $id")
+        val id = arguments?.getString(ARG_ID) ?: null
+        Log.d(MYLOG, "$ARG_ID $id")
         id?.let {
-            Log.d(MYLOG, "id $it")
+            Log.d(MYLOG, "$ARG_ID $it")
             viewModel.getVacancy(it.toInt())
         }
     }
 
     companion object {
         const val MYLOG = "VacancyMyLog"
+        const val ARG_ID = "id"
+        fun setId(id: Int): Bundle =
+            bundleOf(ARG_ID to id)
     }
 }

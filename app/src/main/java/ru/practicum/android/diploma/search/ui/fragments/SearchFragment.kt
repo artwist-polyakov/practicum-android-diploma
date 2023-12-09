@@ -6,6 +6,7 @@ import android.view.View
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -18,6 +19,7 @@ import ru.practicum.android.diploma.search.ui.viewmodels.SearchViewModel
 import ru.practicum.android.diploma.search.ui.viewmodels.states.ErrorsSearchScreenStates
 import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchScreenState
 import ru.practicum.android.diploma.search.ui.viewmodels.states.ViewModelInteractionState
+import ru.practicum.android.diploma.vacancy.ui.VacancyFragment
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(FragmentSearchBinding::inflate) {
@@ -44,7 +46,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
             viewLifecycleOwner.lifecycleScope,
             false
         ) { data ->
-            // Open vacancy description fragment
+            findNavController().navigate(
+                R.id.action_searchFragment_to_vacancyFragment,
+                VacancyFragment.setId(data.id)
+            )
         }
         binding.vacancyList.root.apply {
             layoutManager = LinearLayoutManager(context)
