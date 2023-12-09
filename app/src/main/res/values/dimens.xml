@@ -40,4 +40,7 @@
 
     <dimen name="vacancy_logo_corner_radius">12dp</dimen>
     <dimen name="vacancy_logo_stroke_width">1dp</dimen>
+    <dimen name="vacancy_count_horizontal_padding">12dp</dimen>
+    <dimen name="vacancy_count_vertical_padding">4dp</dimen>
+    <dimen name="vacancy_count_margin">8dp</dimen>
 </resources>

@@ -12,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.common.ui.BaseActivity
 import ru.practicum.android.diploma.databinding.ActivityRootBinding
+import java.util.Locale
 
 @AndroidEntryPoint
 class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::inflate) {
@@ -22,6 +23,7 @@ class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::infl
 
         manageBottomNavigation()
         setStatusBarColor()
+        setRussianLocale()
     }
 
 //    private fun networkRequestExample(accessToken: String) {
@@ -71,4 +73,11 @@ class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::infl
             }
         }
     }
+
+    private fun setRussianLocale() {
+        val locale = Locale("ru")
+        Locale.setDefault(locale)
+        baseContext.resources.configuration.setLocale(locale)
+    }
+
 }
