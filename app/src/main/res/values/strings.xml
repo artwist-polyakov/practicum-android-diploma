@@ -56,5 +56,35 @@
     <string name="AZinchenkoName">Алексей Зинченко</string>
     <string name="AKochekovName">Антон Кочеков</string>
     <string name="NRyabcevName">Николай Рябцев</string>
+    <string name="vacancyTopText">Вакансия</string>
+    <string name="vacancyName">Наименование вакансии</string>
+    <string name="salaryText">от мин до макс зарплаты</string>
+    <string name="employerNameText">Наименование работодателя</string>
+    <string name="cityText">Город</string>
+    <string name="expirience_text">Требуемый опыт</string>
+    <string name="_1_3">от 1 года до 3 лет</string>
+    <string name="schedule">Полная занятость, удаленная работа</string>
+    <string name="description">Описание вакансии</string>
+    <string name="jobFunctions">  * Разные обязанности \n* Еще немного</string>
+    <string name="skills">Требования</string>
+    <string name="skills_list">  * Разные требования \n* Еще требования</string>
+    <string name="conditionText">Условия</string>
+    <string name="conditionslist">* Разные условия \n* Еще условия</string>
+    <string name="worker_skills">Ключевые навыки</string>
+    <string name="worker_skill_list">* Разные наыки \n* Еще навыки</string>
+    <string name="e_mail">E-mail</string>
+    <string name="phoneText">Телефон</string>
+    <string name="hrEmail">someEmail@yandex.ru</string>
+    <string name="example_phone">+7-555-XXX-XX-XX</string>
+    <string name="comment_text">Комментарий</string>
+    <string name="job_comment">Некий комментарий</string>
+    <string name="similar_vacations">Похожие вакансии</string>
+    <string name="contact_chapter">Контакты</string>
+    <string name="contact_person_text">Контактное лицо</string>
+    <string name="irina">Ирина</string>
+    <string name="from_salary">@{java.lang.Character.toUpperCase(string.charAt(0)) + string.substring(1)}</string>
+    <string name="min_salary_text">минимума&#160;</string>
+    <string name="to_string"><![CDATA[до&#160;]]></string>
+    <string name="to_max_salary">максимума</string>
 
 </resources>

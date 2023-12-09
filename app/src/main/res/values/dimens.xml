@@ -13,6 +13,21 @@
     <dimen name="image_margin_small">4dp</dimen>
     <dimen name="image_margin_medium">8dp</dimen>
     <dimen name="standart_margin">16dp</dimen>
+    <dimen name="top_margin">20dp</dimen>
+    <dimen name="little_top">16dp</dimen>
+    <dimen name="big_top">32dp</dimen>
+    <dimen name="right_margin">20dp</dimen>
+    <dimen name="between_icons">28dp</dimen>
+    <dimen name="from_arrow_to_Text">44dp</dimen>
+    <dimen name="microTop">4dp</dimen>
+    <dimen name="between_text_card">24dp</dimen>
+    <dimen name="card_corner_radius">12dp</dimen>
+    <dimen name="zero">0dp</dimen>
+    <dimen name="text_in_card">72dp</dimen>
+    <dimen name="city_in_card">42dp</dimen>
+    <dimen name="employer_in_card">48dp</dimen>
+    <dimen name="card_height">80dp</dimen>
+    <dimen name="similarVacation">60dp</dimen>
 
     <dimen name="navbar_height">64dp</dimen>
     <dimen name="header_height">64dp</dimen>
