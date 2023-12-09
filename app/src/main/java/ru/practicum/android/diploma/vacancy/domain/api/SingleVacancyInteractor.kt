@@ -7,5 +7,5 @@ import ru.practicum.android.diploma.vacancy.domain.models.DetailedVacancyItem
 interface SingleVacancyInteractor {
     suspend fun getVacancy(id: Int): Flow<Resource<DetailedVacancyItem>>
     suspend fun interactWithVacancyFavor(vacancyId: Int): Boolean
-    fun shareVacancy(url:String)
+    fun shareVacancy(url: String)
 }
