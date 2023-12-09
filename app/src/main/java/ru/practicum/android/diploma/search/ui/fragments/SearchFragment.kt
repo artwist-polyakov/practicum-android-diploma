@@ -36,9 +36,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
             viewLifecycleOwner.lifecycleScope,
             false
         ) { data ->
+            val bundle = Bundle().apply {
+                putInt(VacancyFragment.ARG_ID, data.id)
+            }
             findNavController().navigate(
                 R.id.action_searchFragment_to_vacancyFragment,
-                VacancyFragment.setId(data.id)
+                bundle
             )
         }
         binding.vacancyList.root.apply {
@@ -141,7 +144,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     }
 
     private fun showData(vacancies: List<VacancyGeneral>) {
-        showData()
+        with(binding) {
+            llProblemLayout.visibility = View.GONE
+            progressBar.visibility = View.GONE
+            vacancyList.root.visibility = View.VISIBLE
+        }
         vacancyListAdapter.setData(vacancies)
     }
 

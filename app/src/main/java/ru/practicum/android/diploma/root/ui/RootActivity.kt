@@ -17,16 +17,9 @@ import ru.practicum.android.diploma.databinding.ActivityRootBinding
 class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::inflate) {
 
     override fun initViews() = with(binding) {
-        // Пример использования access token для HeadHunter API
-        // networkRequestExample(accessToken = BuildConfig.HH_ACCESS_TOKEN)
-
         manageBottomNavigation()
         setStatusBarColor()
     }
-
-//    private fun networkRequestExample(accessToken: String) {
-//        // ...
-//    }
 
     /**
      * Метод управляет видимостью элементов и назначением текста на Header
@@ -40,7 +33,7 @@ class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::infl
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.filterFragment, R.id.vacancyFragment -> bottomNavigationView.visibility = View.GONE
+                R.id.filterFragment, R.id.vacancyFragment, R.id.similarVacanciesFragment -> bottomNavigationView.visibility = View.GONE
                 else -> bottomNavigationView.visibility = View.VISIBLE
             }
         }

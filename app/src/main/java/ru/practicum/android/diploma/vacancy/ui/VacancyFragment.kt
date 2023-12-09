@@ -6,6 +6,7 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -22,50 +23,38 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(FragmentVacancyBinding::inflate) {
     override val viewModel: VacancyViewModel by viewModels()
-    private val bottomNavigator: BottomNavigationView by lazy {
-        requireActivity().findViewById(R.id.bottom_navigation_view)
-    }
+    private var id: Int? = null
 
     @Inject
     lateinit var networkClient: NetworkClient
 
     override fun initViews() {
-        val id = arguments?.getString(ARG_ID) ?: null
+        id = arguments?.getInt(ARG_ID)
         id?.let {
-            viewModel.getVacancy(it.toInt())
+            viewModel.getVacancy(it)
         }
-
     }
 
     override fun subscribe() {
+        binding.btnToSimilarVacations.setOnClickListener {
+            val bundle = Bundle().apply {
+                putInt(ARG_ID, id ?: 0)
+            }
+            Log.d(MYLOG, "vacancyId $id")
+            findNavController().navigate(R.id.action_vacancyFragment_to_similarVacanciesFragment, bundle)
+        }
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collect { state ->
-                if (state is VacancyState.Content) vacancyDrawer(state.vacancy)
+                if (state is VacancyState.Content) fetchScreen(state.vacancy)
                 Log.d(MYLOG, "mock data $state")
             }
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        Log.i(MYLOG, "onViewCreated")
-        val id = arguments?.getString(ARG_ID) ?: null
-        Log.d(MYLOG, "$ARG_ID $id")
-        id?.let {
-            Log.d(MYLOG, "$ARG_ID $it")
-            viewModel.getVacancy(it.toInt())
-        }
-
-    }
-
-    fun vacancyDrawer(item: DetailedVacancyItem) {
-        // панель навигации
-        bottomNavigator.visibility = View.GONE
-
+    fun fetchScreen(item: DetailedVacancyItem) {
         // отрабатываем стрелку назад
         val fragmentmanager = requireActivity().supportFragmentManager
         binding.bBackArrow.setOnClickListener {
-            bottomNavigator.visibility = View.VISIBLE
             fragmentmanager.popBackStack()
         }
 
