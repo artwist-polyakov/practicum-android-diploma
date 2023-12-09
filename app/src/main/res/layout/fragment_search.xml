@@ -77,16 +77,18 @@
             android:id="@+id/iv_state_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:src="@drawable/image_search" />
+            android:layout_gravity="center_horizontal"
+            tools:src="@drawable/image_cat" />
 
         <TextView
             android:id="@+id/tv_state_text"
             style="@style/Text.Medium22"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
             android:layout_marginTop="16dp"
-            tools:text="@string/no_internet" />
+            android:layout_marginHorizontal="44dp"
+            tools:text="@string/no_vacancies" />
     </LinearLayout>
 
     <include
