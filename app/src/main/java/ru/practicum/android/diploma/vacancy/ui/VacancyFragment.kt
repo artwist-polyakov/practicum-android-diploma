@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.room.util.appendPlaceholders
 import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -22,7 +21,9 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(FragmentVacancyBinding::inflate) {
     override val viewModel: VacancyViewModel by viewModels()
-    private lateinit var bottomNavigator: BottomNavigationView
+    private val bottomNavigator: BottomNavigationView by lazy {
+        requireActivity().findViewById(R.id.bottom_navigation_view)
+    }
 
     @Inject
     lateinit var networkClient: NetworkClient
@@ -57,23 +58,22 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
     }
 
     fun vacancyDrawer(item: DetailedVacancyItem) {
-        //панель навигации
-        bottomNavigator = requireActivity().findViewById(R.id.bottom_navigation_view)
+        // панель навигации
         bottomNavigator.visibility = View.GONE
 
-        //отрабатываем стрелку назад
+        // отрабатываем стрелку назад
         val fragmentmanager = requireActivity().supportFragmentManager
         binding.bBackArrow.setOnClickListener {
             bottomNavigator.visibility = View.VISIBLE
             fragmentmanager.popBackStack()
         }
 
-        //Отрабатываем кнопку "поделиться"
-        val url="https://hh.ru/vacancy/ " + item.id
+        // Отрабатываем кнопку "поделиться"
+        val url = "https://hh.ru/vacancy/ " + item.id
         binding.bShareButton.setOnClickListener {
             viewModel.shareVacancy(url)
         }
-// Отрисовка вакансии
+        // Отрисовка вакансии
         with(binding) {
             tvVacancyName.text = item.title
             tvMinSalaryText.text = item.salaryFrom.toString()
