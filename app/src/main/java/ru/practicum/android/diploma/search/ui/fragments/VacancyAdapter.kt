@@ -8,6 +8,9 @@ import coil.load
 import com.google.android.material.imageview.ShapeableImageView
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.Locale
 
 class VacancyAdapter(private val clickListener: VacancyClickListener) :
     RecyclerView.Adapter<VacancyViewHolder>() {
@@ -72,19 +75,26 @@ class VacancyViewHolder(
         itemView.setOnClickListener { clickListener.onClick(data) }
     }
 
+    private fun formatSalary(value: Int): String {
+        val decimalFormat = DecimalFormat("###,###,###,###,###", DecimalFormatSymbols(Locale.ENGLISH))
+        return decimalFormat.format(value).replace(",", " ")
+    }
+
     private fun parseSalary(data: VacancyGeneral): String {
-        var list: MutableList<String> = mutableListOf()
-        data.salaryFrom?.let {
-            list.add(itemView.resources.getString(R.string.salary_from, it.toString()))
-        }
-        data.salaryTo?.let {
-            list.add(itemView.resources.getString(R.string.salary_to, it.toString()))
-        }
-        if (list.isEmpty()) {
-            list.add(itemView.resources.getString(R.string.salary_not_specified))
+        if (data.salaryFrom == null || data.salaryTo == null){
+            if (data.salaryFrom != null) {
+                return itemView.resources.getString(R.string.salary_from, formatSalary(data.salaryFrom))
+            } else if (data.salaryTo != null) {
+                return itemView.resources.getString(R.string.salary_to, formatSalary(data.salaryTo))
+            } else {
+                return itemView.resources.getString(R.string.salary_not_specified)
+            }
         } else {
-            data.salaryCurrency?.let { list.add(data.salaryCurrency) }
+            return itemView.resources.getString(
+                R.string.salary_from_to,
+                formatSalary(data.salaryFrom),
+                formatSalary(data.salaryTo)
+            )
         }
-        return list.joinToString(" ")
     }
 }
