@@ -27,11 +27,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     }
 
     override val viewModel: SearchViewModel by viewModels()
-    private lateinit var onVacancyClickDebounce: (VacancyGeneral) -> Unit
+    private var onVacancyClickDebounce: ((VacancyGeneral) -> Unit)? = null
     private val vacancyListAdapter = VacancyAdapter(
         object : VacancyAdapter.VacancyClickListener {
             override fun onClick(data: VacancyGeneral) {
-                onVacancyClickDebounce(data)
+                onVacancyClickDebounce?.let {
+                    onVacancyClickDebounce!!(data)
+                }
             }
         }
     )
