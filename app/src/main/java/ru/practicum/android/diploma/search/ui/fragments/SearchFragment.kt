@@ -15,6 +15,7 @@ import ru.practicum.android.diploma.common.ui.BaseFragment
 import ru.practicum.android.diploma.common.utils.debounce
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
+import ru.practicum.android.diploma.search.ui.adapter.VacancyAdapter
 import ru.practicum.android.diploma.search.ui.viewmodels.SearchViewModel
 import ru.practicum.android.diploma.search.ui.viewmodels.states.ErrorsSearchScreenStates
 import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchScreenState
@@ -23,22 +24,11 @@ import ru.practicum.android.diploma.vacancy.ui.VacancyFragment
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(FragmentSearchBinding::inflate) {
-
-    companion object {
-        private const val CLICK_DEBOUNCE_DELAY = 10L
-    }
-
     override val viewModel: SearchViewModel by viewModels()
     private var onVacancyClickDebounce: ((VacancyGeneral) -> Unit)? = null
-    private val vacancyListAdapter = VacancyAdapter(
-        object : VacancyAdapter.VacancyClickListener {
-            override fun onClick(data: VacancyGeneral) {
-                onVacancyClickDebounce?.let {
-                    onVacancyClickDebounce!!(data)
-                }
-            }
-        }
-    )
+    private val vacancyListAdapter = VacancyAdapter { data ->
+        onVacancyClickDebounce?.invoke(data)
+    }
 
     override fun initViews() {
         onVacancyClickDebounce = debounce<VacancyGeneral>(
@@ -111,10 +101,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
     private fun showDefault() {
         with(binding) {
             vacancyList.root.visibility = View.GONE
@@ -142,7 +128,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         with(binding) {
             llProblemLayout.visibility = View.GONE
             vacancyList.root.visibility = View.GONE
-
             progressBar.visibility = View.VISIBLE
         }
     }
@@ -151,7 +136,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         with(binding) {
             llProblemLayout.visibility = View.GONE
             progressBar.visibility = View.GONE
-
             vacancyList.root.visibility = View.VISIBLE
         }
     }
@@ -164,5 +148,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     private fun addData(vacancies: List<VacancyGeneral>) {
         showData()
         vacancyListAdapter.addData(vacancies)
+    }
+
+    companion object {
+        private const val CLICK_DEBOUNCE_DELAY = 500L
     }
 }
