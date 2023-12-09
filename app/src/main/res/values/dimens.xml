@@ -22,4 +22,6 @@
     <dimen name="vacancy_item_padding">8dp</dimen>
     <dimen name="vacancy_item_image_size">48dp</dimen>
     <dimen name="vacancy_item_margin">12dp</dimen>
+
+    <dimen name="vacancy_logo_roundcorners">12dp</dimen>
 </resources>
