@@ -47,8 +47,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/enter_request"
             android:imeOptions="actionDone"
-            android:textColorHint="?attr/formsHintColor"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColorHint="?attr/formsHintColor" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -64,7 +64,7 @@
         app:layout_constraintTop_toTopOf="@id/tl_search_field" />
 
     <LinearLayout
-        android:id="@+id/ll_state_layout"
+        android:id="@+id/ll_problem_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -77,7 +77,8 @@
             android:id="@+id/iv_state_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:src="@drawable/image_search" />
+            android:layout_gravity="center_horizontal"
+            tools:src="@drawable/image_cat" />
 
         <TextView
             android:id="@+id/tv_state_text"
@@ -85,7 +86,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginHorizontal="44dp"
             android:layout_marginTop="16dp"
+            android:gravity="center_horizontal"
             tools:text="@string/no_internet" />
     </LinearLayout>
 
@@ -93,11 +96,12 @@
         android:id="@+id/vacancy_list"
         layout="@layout/vacancy_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tl_search_field"
-        android:visibility="gone"/>
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <ProgressBar
         android:id="@+id/progress_bar"

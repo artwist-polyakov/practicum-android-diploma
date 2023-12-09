@@ -6,13 +6,16 @@
     android:layout_height="wrap_content"
     android:paddingVertical="@dimen/vacancy_item_padding">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/company_image"
         android:layout_width="@dimen/vacancy_item_image_size"
         android:layout_height="@dimen/vacancy_item_image_size"
+        android:scaleType="fitCenter"
         android:src="@drawable/placeholder_48px"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/lightGray"
+        app:strokeWidth="@dimen/vacancy_logo_stroke_width" />
 
     <LinearLayout
         android:layout_width="0dp"
