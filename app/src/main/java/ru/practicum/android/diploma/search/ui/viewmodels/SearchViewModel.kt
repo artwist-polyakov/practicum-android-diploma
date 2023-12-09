@@ -25,9 +25,6 @@ class SearchViewModel @Inject constructor(
 ) : BaseViewModel() {
     private var searchSettings: SearchSettingsState = SearchSettingsState()
 
-    // todo кажется можно не хранить их тут — так как вакансии будут в стейте
-    private var vacancies: MutableList<VacancyGeneral> = mutableListOf()
-
     private var _state = MutableStateFlow<SearchScreenState>(SearchScreenState.Error(ErrorsSearchScreenStates.EMPTY))
     val state: StateFlow<SearchScreenState>
         get() = _state
@@ -107,7 +104,6 @@ class SearchViewModel @Inject constructor(
         if (searchSettings.currentPage > 0) {
             getVacancies(searchSettings)
         } else {
-            vacancies.clear()
             searchDebounce(searchSettings)
         }
     }
