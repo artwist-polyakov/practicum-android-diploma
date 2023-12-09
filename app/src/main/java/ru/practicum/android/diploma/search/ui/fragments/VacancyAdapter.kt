@@ -1,15 +1,10 @@
 package ru.practicum.android.diploma.search.ui.fragments
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.RoundedCorner
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import coil.*
-import coil.transform.RoundedCornersTransformation
 import com.google.android.material.imageview.ShapeableImageView
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
@@ -63,17 +58,16 @@ class VacancyViewHolder(
     private var vacancySalary: TextView = itemView.findViewById(R.id.vacancy_salary)
     private val radius = itemView.resources.getDimension(R.dimen.vacancy_logo_corner_radius)
     fun bind(data: VacancyGeneral) {
-        companyLogo.load(data.employerLogo){
+        vacancyTitle.text = data.title
+        vacancySalary.text = parseSalary(data)
+        companyName.text = data.employerName
+        companyLogo.load(data.employerLogo) {
             placeholder(R.drawable.placeholder_48px)
         }
         val shapeAppearanceModel = companyLogo.shapeAppearanceModel.toBuilder()
             .setAllCornerSizes(radius)
             .build()
         companyLogo.shapeAppearanceModel = shapeAppearanceModel
-        
-        vacancyTitle.text = data.title
-        companyName.text = data.employerName
-        vacancySalary.text = parseSalary(data)
 
         itemView.setOnClickListener { clickListener.onClick(data) }
     }
