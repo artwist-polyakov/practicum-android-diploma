@@ -16,10 +16,10 @@ import ru.practicum.android.diploma.common.data.network.NetworkClient
 import ru.practicum.android.diploma.common.data.network.RetrofitNetworkClient
 import ru.practicum.android.diploma.search.domain.api.FavoritesDBConverter
 import ru.practicum.android.diploma.search.domain.api.SearchResultConverter
-import ru.practicum.android.diploma.search.domain.api.SingleVacancyConverter
 import ru.practicum.android.diploma.search.domain.impl.FavoritesDBConverterImpl
 import ru.practicum.android.diploma.search.domain.impl.SearchResultConverterImpl
-import ru.practicum.android.diploma.search.domain.impl.SingleVacancyConverterImpl
+import ru.practicum.android.diploma.vacancy.domain.api.SingleVacancyConverter
+import ru.practicum.android.diploma.vacancy.domain.impl.SingleVacancyConverterImpl
 import javax.inject.Singleton
 
 @Module
