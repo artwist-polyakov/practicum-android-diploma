@@ -77,11 +77,11 @@ class VacancyViewHolder(
 
     private fun formatSalary(value: Int): String {
         val decimalFormat = DecimalFormat("###,###,###,###,###", DecimalFormatSymbols(Locale.ENGLISH))
-        return decimalFormat.format(value).replace(",", " ")
+        return decimalFormat.format(value).replace(",", " ").toString()
     }
 
     private fun parseSalary(data: VacancyGeneral): String {
-        if (data.salaryFrom == null || data.salaryTo == null){
+        if (data.salaryFrom == null || data.salaryTo == null) {
             if (data.salaryFrom != null) {
                 return itemView.resources.getString(R.string.salary_from, formatSalary(data.salaryFrom))
             } else if (data.salaryTo != null) {
