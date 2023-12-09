@@ -393,7 +393,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_comment_text" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/b_similar_vacations"
             style="@style/Text.Medium16"
             android:layout_width="@dimen/zero"
@@ -405,8 +405,7 @@
             android:textAllCaps="false"
             android:textColor="?attr/colorOnSecondary"
             android:textSize="14sp"
-            android:visibility="gone"
-            app:cornerRadius="54dp"
+            app:cornerRadius="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_comment" />
