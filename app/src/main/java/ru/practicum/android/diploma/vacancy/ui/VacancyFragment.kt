@@ -67,22 +67,23 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
             fragmentmanager.popBackStack()
         }
 // Отрисовка вакансии
-        binding.tvVacancyName.text = item.title
-        binding.tvMinSalaryText.text = item.salaryFrom.toString()
-        binding.tvMaxSalaryText.text = item.salaryTo.toString()
-        binding.employerLabel.load(item.employerLogo) {
-            placeholder(R.drawable.placeholder_48px)
-            transformations(RoundedCornersTransformation(R.dimen.vacancy_logo_roundcorners.toFloat()))
+        with(binding) {
+            tvVacancyName.text = item.title
+            tvMinSalaryText.text = item.salaryFrom.toString()
+            tvMaxSalaryText.text = item.salaryTo.toString()
+            employerLabel.load(item.employerLogo) {
+                placeholder(R.drawable.placeholder_48px)
+                transformations(RoundedCornersTransformation(R.dimen.vacancy_logo_roundcorners.toFloat()))
+            }
+            tvEmployerText.text = item.employerName
+            tvCityText.text = item.area
+            tvExperience.text = item.experience
+            tvSchedule.text = item.schedule
+            tvJobFunctions.text = item.description
+            tvJobSkills.text = item.keySkills.toString()
+            tv_job_condition.text = item.
+
         }
-        binding.tvEmployerText.text = item.employerName
-        binding.tvCityText.text = item.area
-        binding.tvExperience.text = item.experience
-        binding.tvSchedule.text = item.schedule
-        binding.tvJobFunctions.text = item.description
-        binding.tvJobSkills.text = item.keySkills.toString()
-        binding.tv_job_condition.text = item.
-
-
     }
 
     companion object {
