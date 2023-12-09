@@ -62,7 +62,11 @@ class VacancyViewHolder(
     private val radius = itemView.resources.getDimension(R.dimen.vacancy_logo_corner_radius)
     fun bind(data: VacancyGeneral) {
         vacancyTitle.text = data.title
-        vacancySalary.text = parseSalary(data)
+        vacancySalary.text = parseSalary(
+            data.salaryFrom,
+            data.salaryTo,
+            data.salaryCurrency
+        )
         companyName.text = data.employerName
         companyLogo.load(data.employerLogo) {
             placeholder(R.drawable.placeholder_48px)
@@ -81,20 +85,26 @@ class VacancyViewHolder(
         return decimalFormat.format(value).replace(",", " ").toString()
     }
 
-    private fun parseSalary(data: VacancyGeneral): String {
-        if (data.salaryFrom == null || data.salaryTo == null) {
-            if (data.salaryFrom != null) {
-                return itemView.resources.getString(R.string.salary_from, formatSalary(data.salaryFrom))
-            } else if (data.salaryTo != null) {
-                return itemView.resources.getString(R.string.salary_to, formatSalary(data.salaryTo))
+    private fun parseSalary(
+        from: Int?,
+        to: Int?,
+        currency: String?
+    ): String {
+        val usedCurrency = currency ?: ""
+        return if (from == null || to == null) {
+            if (from != null) {
+                itemView.resources.getString(R.string.salary_from, formatSalary(from), usedCurrency)
+            } else if (to != null) {
+                itemView.resources.getString(R.string.salary_to, formatSalary(to), usedCurrency)
             } else {
-                return itemView.resources.getString(R.string.salary_not_specified)
+                itemView.resources.getString(R.string.salary_not_specified)
             }
         } else {
-            return itemView.resources.getString(
+            itemView.resources.getString(
                 R.string.salary_from_to,
-                formatSalary(data.salaryFrom),
-                formatSalary(data.salaryTo)
+                formatSalary(from),
+                formatSalary(to),
+                usedCurrency
             )
         }
     }
