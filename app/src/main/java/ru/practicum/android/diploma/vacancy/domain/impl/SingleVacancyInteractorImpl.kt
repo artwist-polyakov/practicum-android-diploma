@@ -8,6 +8,7 @@ import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.common.data.db.AppDatabase
 import ru.practicum.android.diploma.common.data.dto.Resource
 import ru.practicum.android.diploma.search.data.network.HHSearchRepository
+import ru.practicum.android.diploma.vacancy.domain.api.ExternalNavigator
 import ru.practicum.android.diploma.vacancy.domain.api.SingleVacancyConverter
 import ru.practicum.android.diploma.vacancy.domain.api.SingleVacancyInteractor
 import ru.practicum.android.diploma.vacancy.domain.models.DetailedVacancyItem
@@ -15,7 +16,8 @@ import ru.practicum.android.diploma.vacancy.domain.models.DetailedVacancyItem
 class SingleVacancyInteractorImpl(
     private val repository: HHSearchRepository,
     private val vacancyConverter: SingleVacancyConverter,
-    private val db: AppDatabase
+    private val db: AppDatabase,
+    private val externalNavigator: ExternalNavigator
 ) : SingleVacancyInteractor {
     override suspend fun getVacancy(id: Int): Flow<Resource<DetailedVacancyItem>> {
         val isFavorite = isVacancyFavorite(id)
@@ -52,5 +54,9 @@ class SingleVacancyInteractorImpl(
             }
         }
         return false
+    }
+
+    override fun shareVacancy(url: String) {
+        externalNavigator.shareVacancy(url)
     }
 }

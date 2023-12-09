@@ -67,6 +67,12 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
             bottomNavigator.visibility = View.VISIBLE
             fragmentmanager.popBackStack()
         }
+
+        //Отрабатываем кнопку "поделиться"
+        val url="https://hh.ru/vacancy/ " + item.id
+        binding.bShareButton.setOnClickListener {
+            viewModel.shareVacancy(url)
+        }
 // Отрисовка вакансии
         with(binding) {
             tvVacancyName.text = item.title

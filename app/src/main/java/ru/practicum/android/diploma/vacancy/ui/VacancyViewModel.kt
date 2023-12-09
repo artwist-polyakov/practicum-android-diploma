@@ -44,4 +44,8 @@ class VacancyViewModel @Inject constructor(private val interactor: SingleVacancy
         }
         _state.emit(_state.value)
     }
+
+    fun shareVacancy(url:String) {
+
+    }
 }
