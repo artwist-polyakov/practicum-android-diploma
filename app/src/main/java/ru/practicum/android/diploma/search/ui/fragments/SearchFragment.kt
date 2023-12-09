@@ -65,7 +65,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
             }
         }
 
-        with(binding){
+        with(binding) {
             tiSearchField.doOnTextChanged { text, _, _, _ ->
                 viewModel.handleInteraction(ViewModelInteractionState.setQuery(text.toString()))
                 if (text.toString().isNotEmpty()) {
@@ -116,7 +116,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     }
 
     private fun showDefault() {
-        with(binding){
+        with(binding) {
             vacancyList.root.visibility = View.GONE
             progressBar.visibility = View.GONE
 
@@ -127,7 +127,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     }
 
     private fun showProblem(error: ErrorsSearchScreenStates) {
-        with(binding){
+        with(binding) {
             vacancyList.root.visibility = View.GONE
             progressBar.visibility = View.GONE
 
@@ -139,7 +139,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     }
 
     private fun showProgressBar() {
-        with(binding){
+        with(binding) {
             llProblemLayout.visibility = View.GONE
             vacancyList.root.visibility = View.GONE
 
@@ -148,7 +148,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     }
 
     private fun showData() {
-        with(binding){
+        with(binding) {
             llProblemLayout.visibility = View.GONE
             progressBar.visibility = View.GONE
 
