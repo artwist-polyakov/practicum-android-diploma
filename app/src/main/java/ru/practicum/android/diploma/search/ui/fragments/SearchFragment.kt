@@ -65,18 +65,22 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
             }
         }
 
-        binding.tiSearchField.doOnTextChanged { text, _, _, _ ->
-            viewModel.handleInteraction(ViewModelInteractionState.setQuery(text.toString()))
-            if (text.toString().isNotEmpty()) {
-                binding.ivSearchFieldButton.setImageResource(R.drawable.close_24px)
-            } else {
-                binding.ivSearchFieldButton.setImageResource(R.drawable.search_24px)
+        with(binding){
+            tiSearchField.doOnTextChanged { text, _, _, _ ->
+                viewModel.handleInteraction(ViewModelInteractionState.setQuery(text.toString()))
+                if (text.toString().isNotEmpty()) {
+                    ivSearchFieldButton.setImageResource(R.drawable.close_24px)
+                } else {
+                    ivSearchFieldButton.setImageResource(R.drawable.search_24px)
+                }
             }
-        }
 
-        binding.ivSearchFieldButton.setOnClickListener {
-            if (binding.tiSearchField.text.toString().isNotEmpty()) {
-                binding.tiSearchField.text?.clear()
+            ivSearchFieldButton.setOnClickListener {
+                if (tiSearchField.text.toString().isNotEmpty()) {
+                    tiSearchField.text?.clear()
+                }
+            }
+
             }
         }
     }
@@ -110,36 +114,44 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     }
 
     private fun showDefault() {
-        binding.vacancyList.root.visibility = View.GONE
-        binding.progressBar.visibility = View.GONE
+        with(binding){
+            vacancyList.root.visibility = View.GONE
+            progressBar.visibility = View.GONE
 
-        binding.llProblemLayout.visibility = View.VISIBLE
-        binding.ivStateImage.setImageResource(R.drawable.image_search)
-        binding.tvStateText.visibility = View.GONE
+            llProblemLayout.visibility = View.VISIBLE
+            ivStateImage.setImageResource(R.drawable.image_search)
+            tvStateText.visibility = View.GONE
+        }
     }
 
     private fun showProblem(error: ErrorsSearchScreenStates) {
-        binding.vacancyList.root.visibility = View.GONE
-        binding.progressBar.visibility = View.GONE
+        with(binding){
+            vacancyList.root.visibility = View.GONE
+            progressBar.visibility = View.GONE
 
-        binding.llProblemLayout.visibility = View.VISIBLE
-        binding.ivStateImage.setImageResource(error.imageResource)
-        binding.tvStateText.visibility = View.VISIBLE
-        binding.tvStateText.text = getString(error.messageResource)
+            llProblemLayout.visibility = View.VISIBLE
+            ivStateImage.setImageResource(error.imageResource)
+            tvStateText.visibility = View.VISIBLE
+            tvStateText.text = getString(error.messageResource)
+        }
     }
 
     private fun showProgressBar() {
-        binding.llProblemLayout.visibility = View.GONE
-        binding.vacancyList.root.visibility = View.GONE
+        with(binding){
+            llProblemLayout.visibility = View.GONE
+            vacancyList.root.visibility = View.GONE
 
-        binding.progressBar.visibility = View.VISIBLE
+            progressBar.visibility = View.VISIBLE
+        }
     }
 
     private fun showData() {
-        binding.llProblemLayout.visibility = View.GONE
-        binding.progressBar.visibility = View.GONE
+        with(binding){
+            llProblemLayout.visibility = View.GONE
+            progressBar.visibility = View.GONE
 
-        binding.vacancyList.root.visibility = View.VISIBLE
+            vacancyList.root.visibility = View.VISIBLE
+        }
     }
 
     private fun showData(vacancies: List<VacancyGeneral>) {
