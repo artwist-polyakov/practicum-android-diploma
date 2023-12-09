@@ -47,8 +47,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/enter_request"
             android:imeOptions="actionDone"
-            android:textColorHint="?attr/formsHintColor"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColorHint="?attr/formsHintColor" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -85,10 +85,10 @@
             style="@style/Text.Medium22"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
             android:layout_marginHorizontal="44dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center_horizontal"
             tools:text="@string/no_internet" />
     </LinearLayout>
 
@@ -96,11 +96,12 @@
         android:id="@+id/vacancy_list"
         layout="@layout/vacancy_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tl_search_field"
-        android:visibility="gone"/>
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
