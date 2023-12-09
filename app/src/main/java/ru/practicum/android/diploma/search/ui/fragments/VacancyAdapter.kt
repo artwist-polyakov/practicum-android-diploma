@@ -66,6 +66,7 @@ class VacancyViewHolder(
         companyName.text = data.employerName
         companyLogo.load(data.employerLogo) {
             placeholder(R.drawable.placeholder_48px)
+            error(R.drawable.placeholder_48px)
         }
         val shapeAppearanceModel = companyLogo.shapeAppearanceModel.toBuilder()
             .setAllCornerSizes(radius)
