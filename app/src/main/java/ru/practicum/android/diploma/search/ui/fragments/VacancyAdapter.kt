@@ -11,7 +11,7 @@ import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
 class VacancyAdapter(private val clickListener: VacancyClickListener) :
     RecyclerView.Adapter<VacancyViewHolder>() {
 
-    var dataList = ArrayList<VacancyGeneral>()
+    private var dataList = ArrayList<VacancyGeneral>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VacancyViewHolder =
         VacancyViewHolder(parent, clickListener)
 
@@ -23,6 +23,22 @@ class VacancyAdapter(private val clickListener: VacancyClickListener) :
 
     interface VacancyClickListener {
         fun onClick(data: VacancyGeneral)
+    }
+
+    fun setData(data: List<VacancyGeneral>){
+        dataList.clear()
+        dataList.addAll(data)
+        notifyDataSetChanged()
+    }
+
+    fun addData(data: List<VacancyGeneral>){
+        dataList.addAll(data)
+        notifyDataSetChanged()
+    }
+
+    fun clear(){
+        dataList.clear()
+        notifyDataSetChanged()
     }
 }
 

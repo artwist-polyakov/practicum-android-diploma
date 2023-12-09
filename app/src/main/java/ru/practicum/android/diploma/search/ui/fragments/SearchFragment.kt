@@ -92,11 +92,24 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
                 showProgressBar()
             }
 
+            is SearchScreenState.Default -> {
+                Log.i("SearchFragmentLoadingMyLog", "Default state")
+                showDefault()
+            }
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun showDefault() {
+        binding.vacancyList.root.visibility = View.GONE
+        binding.progressBar.visibility = View.GONE
+
+        binding.llProblemLayout.visibility = View.VISIBLE
+        binding.ivStateImage.setImageResource(R.drawable.image_search)
+        binding.tvStateText.visibility = View.GONE
     }
 
     private fun showProblem(error: ErrorsSearchScreenStates) {
@@ -105,12 +118,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
 
         binding.llProblemLayout.visibility = View.VISIBLE
         binding.ivStateImage.setImageResource(error.imageResource)
-        if (error.messageResource < 0) {
-            binding.tvStateText.visibility = View.GONE
-        } else {
-            binding.tvStateText.visibility = View.VISIBLE
-            binding.tvStateText.text = getString(error.messageResource)
-        }
+        binding.tvStateText.visibility = View.VISIBLE
+        binding.tvStateText.text = getString(error.messageResource)
     }
 
     private fun showProgressBar() {
@@ -120,12 +129,19 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         binding.progressBar.visibility = View.VISIBLE
     }
 
-    private fun showData(vacancies: List<VacancyGeneral>) {
+    private fun showData(){
         binding.llProblemLayout.visibility = View.GONE
         binding.progressBar.visibility = View.GONE
 
         binding.vacancyList.root.visibility = View.VISIBLE
-        vacancyListAdapter.dataList.clear()
-        vacancyListAdapter.dataList.addAll(vacancies)
+    }
+    private fun showData(vacancies: List<VacancyGeneral>) {
+        showData()
+        vacancyListAdapter.setData(vacancies)
+    }
+
+    private fun addData(vacancies: List<VacancyGeneral>){
+        showData()
+        vacancyListAdapter.addData(vacancies)
     }
 }
