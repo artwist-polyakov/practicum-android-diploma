@@ -6,6 +6,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.room.util.appendPlaceholders
+import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,6 +37,7 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
     override fun subscribe() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collect { state ->
+                vacancyDrawer(state)
                 Log.d(MYLOG, "mock data $state")
             }
         }
@@ -60,24 +62,25 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
 
         //отрабатываем стрелку назад
         val fragmentmanager = requireActivity().supportFragmentManager
-        binding.b_back_arrow.setOnClickListener(
+        binding.bBackArrow.setOnClickListener {
             bottomNavigator.visibility = View.VISIBLE
             fragmentmanager.popBackStack()
-        )
-
-        //отрисовка вакансии
-        binding.tv_vacancy_name.text=item.title
-        binding.tv_min_salary_text.text=item.salaryFrom
-        binding.tv_max_salary_text.text=item.salaryTo
-        binding.employer_label.load(item.employerLogo) {
+        }
+// Отрисовка вакансии
+        binding.tvVacancyName.text = item.title
+        binding.tvMinSalaryText.text = item.salaryFrom.toString()
+        binding.tvMaxSalaryText.text = item.salaryTo.toString()
+        binding.employerLabel.load(item.employerLogo) {
             placeholder(R.drawable.placeholder_48px)
             transformations(RoundedCornersTransformation(R.dimen.vacancy_logo_roundcorners.toFloat()))
         }
-        binding.tv_employer_text.text=item.employerName
-        binding.tv_city_text.text=item.area
-        binding.tv_experience.text=item.experience
-        binding.tv_schedule.text=item.schedule
-        binding.
+        binding.tvEmployerText.text = item.employerName
+        binding.tvCityText.text = item.area
+        binding.tvExperience.text = item.experience
+        binding.tvSchedule.text = item.schedule
+        binding.tvJobFunctions.text = item.description
+        binding.tvJobSkills.text = item.keySkills.toString()
+        binding.tv_job_condition.text = item.
 
 
     }
