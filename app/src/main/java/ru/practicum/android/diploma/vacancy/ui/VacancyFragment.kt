@@ -16,6 +16,7 @@ import ru.practicum.android.diploma.common.data.network.NetworkClient
 import ru.practicum.android.diploma.common.ui.BaseFragment
 import ru.practicum.android.diploma.databinding.FragmentVacancyBinding
 import ru.practicum.android.diploma.vacancy.domain.models.DetailedVacancyItem
+import ru.practicum.android.diploma.vacancy.domain.models.VacancyState
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -37,7 +38,7 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
     override fun subscribe() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collect { state ->
-                vacancyDrawer(state)
+                if (state is VacancyState.Content) vacancyDrawer(state.vacancy)
                 Log.d(MYLOG, "mock data $state")
             }
         }
@@ -78,11 +79,9 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
             tvEmployerText.text = item.employerName
             tvCityText.text = item.area
             tvExperience.text = item.experience
-            tvSchedule.text = item.schedule
+            tvSchedule.text = item.schedule + " " + item.employment
             tvJobFunctions.text = item.description
             tvJobSkills.text = item.keySkills.toString()
-            tv_job_condition.text = item.
-
         }
     }
 
