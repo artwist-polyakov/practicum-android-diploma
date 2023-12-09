@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.vacancy.data.ExternalNavigator
+package ru.practicum.android.diploma.vacancy.data.sharing
 
 import android.app.Application
 import android.content.Intent
