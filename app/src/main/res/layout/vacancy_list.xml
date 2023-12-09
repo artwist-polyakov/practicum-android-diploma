@@ -6,4 +6,5 @@
     android:layout_height="wrap_content"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
     app:reverseLayout="false"
+    tools:itemCount="4"
     tools:listitem="@layout/vacancy_list_item" />

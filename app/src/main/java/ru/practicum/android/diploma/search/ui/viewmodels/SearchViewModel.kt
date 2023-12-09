@@ -23,11 +23,6 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     private val interactor: SearchInteractor
 ) : BaseViewModel() {
-
-    companion object {
-        private const val SEARCH_DEBOUNCE_DELAY = 2000L
-    }
-
     private var searchSettings: SearchSettingsState = SearchSettingsState()
 
     // todo кажется можно не хранить их тут — так как вакансии будут в стейте
@@ -138,5 +133,9 @@ class SearchViewModel @Inject constructor(
                 searchSettings.copy(currentPage = interaction.page)
         }
         handleSearchSettings(searchSettings)
+    }
+
+    companion object {
+        private const val SEARCH_DEBOUNCE_DELAY = 2000L
     }
 }
