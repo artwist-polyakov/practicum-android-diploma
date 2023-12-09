@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.search.ui.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -47,7 +48,7 @@ class SearchViewModel @Inject constructor(
 
     private fun checkState() {
         if (searchSettings.currentQuery.isEmpty()) {
-            _state.value = SearchScreenState.Error(ErrorsSearchScreenStates.EMPTY)
+            _state.value = SearchScreenState.Default
         }
     }
 
@@ -68,11 +69,10 @@ class SearchViewModel @Inject constructor(
                 if (result.data?.vacancies.isNullOrEmpty()) {
                     _state.value = SearchScreenState.Error(ErrorsSearchScreenStates.NOT_FOUND)
                 } else if (result.data!!.vacanciesFound > 0) {
-                    vacancies = result.data.vacancies.toMutableList()
                     _state.value = SearchScreenState.Content(
                         result.data.totalPages,
                         result.data.currentPage,
-                        vacancies.toList()
+                        result.data.vacancies.toList()
                     )
                 }
             }
@@ -80,7 +80,6 @@ class SearchViewModel @Inject constructor(
             is Resource.Error -> {
                 _state.value = SearchScreenState.Error(
                     when (result.error) {
-                        NetworkErrors.ServerError -> ErrorsSearchScreenStates.SERVER_ERROR
                         NetworkErrors.NoInternet -> ErrorsSearchScreenStates.NO_INTERNET
                         else -> ErrorsSearchScreenStates.SERVER_ERROR
                     }
@@ -90,7 +89,7 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun getVacancies(settings: SearchSettingsState) {
-        if (!settings.currentQuery.isEmpty()) {
+        if (settings.currentQuery.isNotEmpty()) {
             _state.value = SearchScreenState.Loading
             viewModelScope.launch {
                 chargeInteractorSearch().invoke()
@@ -100,7 +99,19 @@ class SearchViewModel @Inject constructor(
                     }
             }
         }
+    }
 
+    private fun handleSearchSettings(searchSettings: SearchSettingsState) {
+        if (searchSettings.currentQuery.isEmpty()){
+            _state.value = SearchScreenState.Default
+        }
+
+        if (searchSettings.currentPage > 0){
+            getVacancies(searchSettings);
+        } else {
+            vacancies.clear()
+            searchDebounce(searchSettings)
+        }
     }
 
     fun handleInteraction(interaction: ViewModelInteractionState) {
@@ -117,19 +128,13 @@ class SearchViewModel @Inject constructor(
             is ViewModelInteractionState.setSalaryOnly -> searchSettings =
                 searchSettings.copy(currentSalaryOnly = interaction.salaryOnly)
 
-            is ViewModelInteractionState.setQuery -> {
-                if (interaction.query.isEmpty()) {
-                    _state.value = SearchScreenState.Error(ErrorsSearchScreenStates.EMPTY); return
-                }
-                searchSettings = searchSettings.copy(currentQuery = interaction.query)
-            }
+            is ViewModelInteractionState.setQuery -> searchSettings =
+                searchSettings.copy(currentQuery = interaction.query)
 
-            is ViewModelInteractionState.setPage -> {
-                searchSettings = searchSettings.copy(currentPage = interaction.page)
-                getVacancies(searchSettings); return
-            }
+            is ViewModelInteractionState.setPage -> searchSettings =
+                searchSettings.copy(currentPage = interaction.page)
         }
-        searchDebounce(searchSettings)
+        handleSearchSettings(searchSettings)
     }
 
     companion object {
