@@ -10,6 +10,7 @@ import ru.practicum.android.diploma.common.data.dto.Resource
 import ru.practicum.android.diploma.search.data.network.HHSearchRepository
 import ru.practicum.android.diploma.vacancy.domain.api.ExternalNavigator
 import ru.practicum.android.diploma.search.data.HHSearchRepository
+import ru.practicum.android.diploma.vacancy.domain.api.ExternalNavigator
 import ru.practicum.android.diploma.vacancy.domain.api.SingleVacancyConverter
 import ru.practicum.android.diploma.vacancy.domain.api.SingleVacancyInteractor
 import ru.practicum.android.diploma.vacancy.domain.models.DetailedVacancyItem
