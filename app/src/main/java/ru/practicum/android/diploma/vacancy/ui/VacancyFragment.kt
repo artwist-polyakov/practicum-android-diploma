@@ -3,10 +3,11 @@ package ru.practicum.android.diploma.vacancy.ui
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
-import androidx.core.view.isVisible
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import coil.transform.RoundedCornersTransformation
 import dagger.hilt.android.AndroidEntryPoint
@@ -61,6 +62,7 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collect { state ->
+                Log.i(MYLOG, "state = $state")
                 renderState(state)
             }
         }
@@ -68,7 +70,7 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
 
     private fun fetchScreen(item: DetailedVacancyItem) {
         url = "https://hh.ru/vacancy/ " + item.id
-        // Отрисовка вакансии
+
         with(binding) {
             tvVacancyName.text = item.title
             tvSalary.text = when {
@@ -87,9 +89,13 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
                 )
             }
 
-            employerLabel.load(item.employerLogo) {
+            ivEmployerLogo.load(item.employerLogo) {
                 placeholder(R.drawable.placeholder_48px)
-                transformations(RoundedCornersTransformation(R.dimen.button_radius.toFloat()))
+                transformations(
+                    RoundedCornersTransformation(
+                        radius = resources.getDimensionPixelSize(R.dimen.button_radius).toFloat()
+                    )
+                )
             }
 
             tvDescriptionText.text = Html.fromHtml(item.description, Html.FROM_HTML_MODE_COMPACT)
@@ -97,7 +103,14 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
             tvCityText.text = item.area
             tvExperience.text = item.experience
             tvSchedule.text = getString(R.string.schedule, item.schedule, item.employment)
-            tvKeySkillsDescription.text = item.keySkills.toString()
+            if (item.keySkills?.isEmpty() == true) {
+                rvKeySkills.visibility = View.GONE
+                tvKeySkillsTitle.visibility = View.GONE
+            } else {
+                rvKeySkills.layoutManager = LinearLayoutManager(requireContext())
+                val adapter = KeySkillsAdapter(item.keySkills ?: emptyList())
+                rvKeySkills.adapter = adapter
+            }
         }
     }
 
@@ -105,13 +118,21 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
         when (state) {
             is VacancyState.Content -> {
                 fetchScreen(state.vacancy)
-                clBody.isVisible = true
-                progressBar.isVisible = false
+                clBody.visibility = View.VISIBLE
+                progressBar.visibility = View.GONE
+                tvStateError.visibility = View.GONE
+            }
+
+            is VacancyState.Loading -> {
+                clBody.visibility = View.GONE
+                progressBar.visibility = View.VISIBLE
+                tvStateError.visibility = View.GONE
             }
 
             else -> {
-                clBody.isVisible = false
-                progressBar.isVisible = true
+                clBody.visibility = View.GONE
+                progressBar.visibility = View.GONE
+                tvStateError.visibility = View.VISIBLE
             }
         }
     }

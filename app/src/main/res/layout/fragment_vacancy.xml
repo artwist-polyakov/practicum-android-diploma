@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -53,8 +53,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_header">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_body"
@@ -100,7 +102,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_salary">
 
                 <ImageView
-                    android:id="@+id/employer_label"
+                    android:id="@+id/iv_employer_logo"
                     android:layout_width="@dimen/employer_in_card"
                     android:layout_height="@dimen/employer_in_card"
                     android:layout_gravity="center_vertical"
@@ -184,7 +186,7 @@
 
             <TextView
                 android:id="@+id/tv_description_text"
-                style="@style/Text.Regular19"
+                style="@style/Text.Regular16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/standart_margin"
@@ -204,16 +206,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_description_text" />
 
-            <TextView
-                android:id="@+id/tv_key_skills_description"
-                style="@style/Text.Regular19"
-                android:layout_width="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_key_skills"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/standart_margin"
-                android:color="?attr/mainTextColor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_key_skills_title"
-                tools:text="[Навык1\nНавык2]" />
+                tools:itemCount="3"
+                tools:listitem="@layout/key_skill_item" />
 
             <TextView
                 android:id="@+id/tv_contacts_text"
@@ -224,7 +225,7 @@
                 android:color="?attr/mainTextColor"
                 android:text="@string/contact_chapter"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_key_skills_description" />
+                app:layout_constraintTop_toBottomOf="@id/rv_key_skills" />
 
             <TextView
                 android:id="@+id/tv_contact_person_text"
@@ -310,9 +311,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/microTop"
                 android:color="?attr/mainTextColor"
-                android:text="@string/job_comment"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_comment_text" />
+                app:layout_constraintTop_toBottomOf="@id/tv_comment_text"
+                tools:text="[Текст комментария]" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_to_similar_vacations"
@@ -342,5 +343,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_header" />
-</LinearLayout>
+        app:layout_constraintTop_toBottomOf="@id/ll_header"
+        tools:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_state_error"
+        style="@style/Text.Medium22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/standart_margin"
+        android:gravity="center_horizontal"
+        android:text="@string/server_error"
+        app:drawableTopCompat="@drawable/image_cat"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_header"
+        tools:visibility="gone" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

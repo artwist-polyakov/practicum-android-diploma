@@ -144,11 +144,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     }
 
     private fun showData(vacancies: List<VacancyGeneral>) {
-        with(binding) {
-            llProblemLayout.visibility = View.GONE
-            progressBar.visibility = View.GONE
-            vacancyList.root.visibility = View.VISIBLE
-        }
+        showData()
         vacancyListAdapter.setData(vacancies)
     }
 
