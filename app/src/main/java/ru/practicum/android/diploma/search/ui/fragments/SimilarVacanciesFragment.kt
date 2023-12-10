@@ -80,15 +80,18 @@ class SimilarVacanciesFragment :
                 showProblem(state.error)
             }
 
-            is SearchScreenState.Loading -> {
+            is SearchScreenState.Default -> {
                 Log.d("SimilarFragmentLoadingMyLog", "Loading state")
                 showProgressBar()
             }
 
-            is SearchScreenState.Default -> {
-                Log.d("SimilarFragmentLoadingMyLog", "Default state")
-                showDefault()
-            }
+            else -> showDefault()
+
+//
+//            is SearchScreenState.Default -> {
+//                Log.d("SimilarFragmentLoadingMyLog", "Default state")
+//                showDefault()
+//            }
         }
     }
 

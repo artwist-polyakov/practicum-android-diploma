@@ -23,11 +23,6 @@ import ru.practicum.android.diploma.vacancy.ui.VacancyFragment
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(FragmentSearchBinding::inflate) {
-
-    companion object {
-        private const val CLICK_DEBOUNCE_DELAY = 10L
-    }
-
     override val viewModel: SearchViewModel by viewModels()
     private var onVacancyClickDebounce: ((VacancyGeneral) -> Unit)? = null
     private val vacancyListAdapter = VacancyAdapter(
@@ -43,7 +38,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
                 onVacancyClickDebounce?.let {
                     onVacancyClickDebounce!!(data)
                 }
-    }
+            }
         }
     )
 
@@ -126,10 +121,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
     private fun showDefault() {
         with(binding) {
             vacancyList.root.visibility = View.GONE
@@ -186,9 +177,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
                 setPadding(0, binding.vacancyCount.measuredHeight, 0, 0)
                 clipToPadding = false
 
-            vacancyList.root.visibility = View.VISIBLE
+                vacancyList.root.visibility = View.VISIBLE
+            }
         }
-
     }
 
     private fun showData(vacancies: List<VacancyGeneral>) {
@@ -206,10 +197,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
             )
             measure(0, 0)
         }
-    private fun addData(vacancies: List<VacancyGeneral>) {
-        showData()
-        vacancyListAdapter.addData(vacancies)
     }
+
+//    private fun addData(vacancies: List<VacancyGeneral>) {
+//        showData()
+//        vacancyListAdapter.addData(vacancies)
+//    }
 
     companion object {
         private const val CLICK_DEBOUNCE_DELAY = 500L
