@@ -80,8 +80,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
                 } else {
                     ivSearchFieldButton.setImageResource(R.drawable.search_24px)
                 }
+                vacancyListAdapter.clearPageCounter()
             }
-
+            // todo просчитать другие сценарии зануления числа страниц в адаптере
             ivSearchFieldButton.setOnClickListener {
                 if (tiSearchField.text.toString().isNotEmpty()) {
                     tiSearchField.text?.clear()
@@ -197,9 +198,5 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
             measure(0, 0)
         }
         showData()
-    }
-
-    private fun addData(content: SearchScreenState.Content) {
-        vacancyListAdapter.addData(content.vacancies)
     }
 }

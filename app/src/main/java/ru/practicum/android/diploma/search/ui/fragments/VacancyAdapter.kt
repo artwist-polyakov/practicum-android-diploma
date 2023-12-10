@@ -3,6 +3,7 @@ package ru.practicum.android.diploma.search.ui.fragments
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.google.android.material.imageview.ShapeableImageView
@@ -38,21 +39,17 @@ class VacancyAdapter(private val scrollController: ListScrollListener,
     }
 
     fun setData(data: List<VacancyGeneral>, pageNum: Int = 0) {
+        val diffCallback = VacancyDiffCallback(dataList, data)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
         dataList.clear()
         dataList.addAll(data)
         currentPage = pageNum
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 
-    fun addData(data: List<VacancyGeneral>) {
-        dataList.addAll(data)
-        notifyDataSetChanged()
-    }
-
-    fun clear() {
-        dataList.clear()
+    fun clearPageCounter() {
         currentPage = 0
-        notifyDataSetChanged()
     }
 }
 
