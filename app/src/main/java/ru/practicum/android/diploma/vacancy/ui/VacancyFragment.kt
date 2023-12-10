@@ -81,7 +81,7 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
             tvMaxSalaryText.text = item.salaryTo.toString()
             employerLabel.load(item.employerLogo) {
                 placeholder(R.drawable.placeholder_48px)
-                transformations(RoundedCornersTransformation(R.dimen.vacancy_logo_roundcorners.toFloat()))
+                transformations(RoundedCornersTransformation(R.dimen.button_radius.toFloat()))
             }
             tvEmployerText.text = item.employerName
             tvCityText.text = item.area

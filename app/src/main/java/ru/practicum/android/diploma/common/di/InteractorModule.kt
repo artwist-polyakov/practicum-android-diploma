@@ -12,6 +12,7 @@ import ru.practicum.android.diploma.search.data.HHSearchRepository
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
 import ru.practicum.android.diploma.search.domain.api.SearchResultConverter
 import ru.practicum.android.diploma.search.domain.impl.SearchInteractorImpl
+import ru.practicum.android.diploma.vacancy.domain.api.ExternalNavigator
 import ru.practicum.android.diploma.vacancy.domain.api.SingleVacancyConverter
 import ru.practicum.android.diploma.vacancy.domain.api.SingleVacancyInteractor
 import ru.practicum.android.diploma.vacancy.domain.impl.SingleVacancyInteractorImpl
@@ -33,15 +34,14 @@ class InteractorModule {
     @Provides
     fun providesFavoritesDbInteractor(
         database: AppDatabase,
-        converter: FavoritesDBConverter,
-        repository: HHSearchRepository,
-        converterSingle: SingleVacancyConverter
-    ): FavoritesDBInteractor = FavoritesDBInteractorImpl(database, converter, repository, converterSingle)
+        converter: FavoritesDBConverter
+    ): FavoritesDBInteractor = FavoritesDBInteractorImpl(database, converter)
 
     @Provides
     fun providesSingleVacancyInteractor(
         repository: HHSearchRepository,
         converter: SingleVacancyConverter,
-        database: AppDatabase
-    ): SingleVacancyInteractor = SingleVacancyInteractorImpl(repository, converter, database)
+        database: AppDatabase,
+        externalNavigator: ExternalNavigator
+    ): SingleVacancyInteractor = SingleVacancyInteractorImpl(repository, converter, database, externalNavigator)
 }

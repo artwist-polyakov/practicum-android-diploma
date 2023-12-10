@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -323,9 +324,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/microTop"
             android:color="?attr/mainTextColor"
-            android:text="@string/irina"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_contact_person_text" />
+            app:layout_constraintTop_toBottomOf="@id/tv_contact_person_text"
+            tools:text="Ирина" />
 
         <TextView
             android:id="@+id/tv_e_mail_text"
@@ -396,11 +397,11 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/b_similar_vacations"
             style="@style/Text.Medium16"
-            android:background="@drawable/round_corners_12"
             android:layout_width="@dimen/zero"
             android:layout_height="@dimen/similarVacation"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/between_text_card"
+            android:background="@drawable/round_corners_12"
             android:text="@string/similar_vacations"
             android:textAllCaps="false"
             android:textColor="?attr/colorOnSecondary"
