@@ -40,6 +40,7 @@ class SimilarVacanciesViewModel @Inject constructor(private val interactor: Sear
                     _state.value = SearchScreenState.Content(
                         result.data.totalPages,
                         result.data.currentPage,
+                        result.data.vacancies.toList().size,
                         result.data.vacancies.toList()
                     )
                 }
