@@ -1,7 +1,9 @@
 package ru.practicum.android.diploma.vacancy.ui
 
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -13,7 +15,6 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.common.data.network.NetworkClient
 import ru.practicum.android.diploma.common.ui.BaseFragment
 import ru.practicum.android.diploma.databinding.FragmentVacancyBinding
-import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
 import ru.practicum.android.diploma.vacancy.domain.models.DetailedVacancyItem
 import ru.practicum.android.diploma.vacancy.domain.models.VacancyState
 import javax.inject.Inject
@@ -45,23 +46,22 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
             )
         }
 
-        binding.bBackArrow.setOnClickListener {
+        binding.ivArrowBack.setOnClickListener {
             findNavController().popBackStack()
         }
 
-        binding.bShareButton.setOnClickListener {
+        binding.ivShareButton.setOnClickListener {
             Log.i(MYLOG, "url = $url")
             viewModel.shareVacancy(url)
         }
 
-        binding.bLikeButton.setOnClickListener {
+        binding.ivLikeButton.setOnClickListener {
             // добавить обработчик
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collect { state ->
-                if (state is VacancyState.Content) fetchScreen(state.vacancy)
-                Log.d(MYLOG, "mock data $state")
+                renderState(state)
             }
         }
     }
@@ -71,24 +71,54 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
         // Отрисовка вакансии
         with(binding) {
             tvVacancyName.text = item.title
-            tvMinSalaryText.text = item.salaryFrom.toString()
-            tvMaxSalaryText.text = item.salaryTo.toString()
+            tvSalary.text = when {
+                item.salaryFrom == null -> getString(R.string.salary_not_specified)
+                item.salaryTo == null -> getString(
+                    R.string.salary_from,
+                    item.salaryFrom.toString(),
+                    item.salaryCurrency
+                )
+
+                else -> getString(
+                    R.string.salary_from_to,
+                    item.salaryFrom.toString(),
+                    item.salaryTo.toString(),
+                    item.salaryCurrency
+                )
+            }
+
             employerLabel.load(item.employerLogo) {
                 placeholder(R.drawable.placeholder_48px)
                 transformations(RoundedCornersTransformation(R.dimen.button_radius.toFloat()))
             }
+
+            tvDescriptionText.text = Html.fromHtml(item.description, Html.FROM_HTML_MODE_COMPACT)
             tvEmployerText.text = item.employerName
             tvCityText.text = item.area
             tvExperience.text = item.experience
-            tvSchedule.text = item.schedule + " " + item.employment
-            tvJobFunctions.text = item.description
-            tvJobSkills.text = item.keySkills.toString()
+            tvSchedule.text = getString(R.string.schedule, item.schedule, item.employment)
+            tvKeySkillsDescription.text = item.keySkills.toString()
+        }
+    }
+
+    private fun renderState(state: VacancyState) = with(binding) {
+        when (state) {
+            is VacancyState.Content -> {
+                fetchScreen(state.vacancy)
+                clBody.isVisible = true
+                progressBar.isVisible = false
+            }
+
+            else -> {
+                clBody.isVisible = false
+                progressBar.isVisible = true
+            }
         }
     }
 
     companion object {
         const val MYLOG = "VacancyMyLog"
         const val ARG_ID = "id"
-        const val CLICK_DEBOUNCE_DELAY_10MS = 10L
+        const val CLICK_DEBOUNCE_DELAY_500MS = 500L
     }
 }

@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.search.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,19 +24,14 @@ class SimilarVacanciesViewModel @Inject constructor(private val interactor: Sear
 
     fun getVacancyList(id: Int) {
         viewModelScope.launch {
-            try {
-                interactor.searchSimilarVacancies(id)
-                    .collect {result ->
-                        provideResponse(result)
-                    }
-
-            } catch (e: Exception) {
-                Log.e("Coroutine Exception", e.stackTraceToString())
-            }
+            interactor.searchSimilarVacancies(id)
+                .collect { result ->
+                    provideResponse(result)
+                }
         }
     }
 
-    private fun provideResponse(result : Resource<VacanciesSearchResult>) {
+    private fun provideResponse(result: Resource<VacanciesSearchResult>) {
         when (result) {
             is Resource.Success -> {
                 if (result.data?.vacancies.isNullOrEmpty()) {

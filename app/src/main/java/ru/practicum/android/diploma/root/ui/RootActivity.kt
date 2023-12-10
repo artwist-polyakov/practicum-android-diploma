@@ -33,7 +33,9 @@ class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::infl
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.filterFragment, R.id.vacancyFragment, R.id.similarVacanciesFragment -> bottomNavigationView.visibility = View.GONE
+                R.id.filterFragment, R.id.vacancyFragment, R.id.similarVacanciesFragment ->
+                    bottomNavigationView.visibility = View.GONE
+
                 else -> bottomNavigationView.visibility = View.VISIBLE
             }
         }
