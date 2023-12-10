@@ -5,8 +5,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ru.practicum.android.diploma.common.data.network.NetworkClient
-import ru.practicum.android.diploma.search.data.network.HHSearchRepository
-import ru.practicum.android.diploma.search.data.network.HHSearchRepositoryImpl
+import ru.practicum.android.diploma.search.data.HHSearchRepository
+import ru.practicum.android.diploma.search.data.HHSearchRepositoryImpl
 import javax.inject.Singleton
 
 @Module

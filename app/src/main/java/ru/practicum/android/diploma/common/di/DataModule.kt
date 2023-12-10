@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.common.di
 
+import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.google.gson.Gson
@@ -14,10 +15,12 @@ import ru.practicum.android.diploma.common.data.db.AppDatabase
 import ru.practicum.android.diploma.common.data.network.HHService
 import ru.practicum.android.diploma.common.data.network.NetworkClient
 import ru.practicum.android.diploma.common.data.network.RetrofitNetworkClient
-import ru.practicum.android.diploma.search.domain.api.FavoritesDBConverter
+import ru.practicum.android.diploma.favorites.domain.api.FavoritesDBConverter
+import ru.practicum.android.diploma.favorites.domain.impl.FavoritesDBConverterImpl
 import ru.practicum.android.diploma.search.domain.api.SearchResultConverter
-import ru.practicum.android.diploma.search.domain.impl.FavoritesDBConverterImpl
 import ru.practicum.android.diploma.search.domain.impl.SearchResultConverterImpl
+import ru.practicum.android.diploma.vacancy.data.sharing.ExternalNavigatorImpl
+import ru.practicum.android.diploma.vacancy.domain.api.ExternalNavigator
 import ru.practicum.android.diploma.vacancy.domain.api.SingleVacancyConverter
 import ru.practicum.android.diploma.vacancy.domain.impl.SingleVacancyConverterImpl
 import javax.inject.Singleton
@@ -57,4 +60,7 @@ class DataModule {
 
     @Provides
     fun providesSingleVacancyConverter(): SingleVacancyConverter = SingleVacancyConverterImpl(gson = provideGson())
+
+    @Provides
+    fun providesExternalNavigator(): ExternalNavigator = ExternalNavigatorImpl(application = Application())
 }

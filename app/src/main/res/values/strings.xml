@@ -33,7 +33,7 @@
     <string name="vacancy">Вакансия</string>
     <string name="salary_from">от %s %s</string>
     <string name="salary_to">до %s %s</string>
-    <string name="salary_from_to">от %s то %s %s</string>
+    <string name="salary_from_to">от %s до %s %s</string>
     <string name="salary_not_specified">Зарплата не указана</string>
     <string name="expirience_period">От $1%s $2%s до $3%s $4%s</string> <!-- Строка вида:  От 2 лет до 5 лет  -->
     <string name="vacancy_description">Описание вакансии</string>
@@ -83,8 +83,7 @@
     <string name="similar_vacations">Похожие вакансии</string>
     <string name="contact_chapter">Контакты</string>
     <string name="contact_person_text">Контактное лицо</string>
-    <string name="irina">Ирина</string>
-    <string name="from_salary">@{java.lang.Character.toUpperCase(string.charAt(0)) + string.substring(1)}</string>
+    <string name="from_salary">От&#160;</string>
     <string name="min_salary_text">минимума&#160;</string>
     <string name="to_string"><![CDATA[до&#160;]]></string>
     <string name="to_max_salary">максимума</string>
