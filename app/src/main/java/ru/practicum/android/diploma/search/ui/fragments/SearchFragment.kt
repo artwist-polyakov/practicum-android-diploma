@@ -111,7 +111,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
                 if (state.forPage == 0) {
                     showCentralProgressBar()
                 } else {
-                    showBottomProgressBar()
+//                    showBottomProgressBar()
                 }
             }
 

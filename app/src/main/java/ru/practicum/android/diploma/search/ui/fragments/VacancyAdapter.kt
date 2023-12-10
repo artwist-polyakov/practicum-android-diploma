@@ -21,7 +21,7 @@ class VacancyAdapter(private val scrollController: ListScrollListener,
         VacancyViewHolder(parent, clickListener)
 
     override fun onBindViewHolder(holder: VacancyViewHolder, position: Int) {
-        if (position == dataList.size - 1) {
+        if (position == dataList.size - 3) {
             scrollController.onScrollToBottom(currentPage + 1)
         }
         holder.bind(dataList[position])
