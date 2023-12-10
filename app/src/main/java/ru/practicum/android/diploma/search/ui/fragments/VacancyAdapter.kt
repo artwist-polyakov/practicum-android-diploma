@@ -13,8 +13,10 @@ import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.Locale
 
-class VacancyAdapter(private val scrollController: ListScrollListener,
-                     private val clickListener: VacancyClickListener) :
+class VacancyAdapter(
+    private val scrollController: ListScrollListener,
+    private val clickListener: VacancyClickListener
+) :
     RecyclerView.Adapter<VacancyViewHolder>() {
     private var currentPage: Int = 0
     private var dataList = ArrayList<VacancyGeneral>()
@@ -22,7 +24,7 @@ class VacancyAdapter(private val scrollController: ListScrollListener,
         VacancyViewHolder(parent, clickListener)
 
     override fun onBindViewHolder(holder: VacancyViewHolder, position: Int) {
-        if (position == dataList.size - 3) {
+        if (position == dataList.size - LOADING_THRESHOLD) {
             scrollController.onScrollToBottom(currentPage + 1)
         }
         holder.bind(dataList[position])
@@ -50,6 +52,10 @@ class VacancyAdapter(private val scrollController: ListScrollListener,
 
     fun clearPageCounter() {
         currentPage = 0
+    }
+
+    companion object {
+        private const val LOADING_THRESHOLD = 3
     }
 }
 

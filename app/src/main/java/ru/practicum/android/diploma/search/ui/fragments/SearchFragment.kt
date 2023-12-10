@@ -162,15 +162,15 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         }
     }
 
-    private fun showBottomProgressBar() {
-        with(binding) {
-            llProblemLayout.visibility = View.GONE
-            vacancyList.root.visibility = View.VISIBLE
-            vacancyCount.visibility = View.VISIBLE
-
-            pbBottomProgressBar.visibility = View.VISIBLE
-        }
-    }
+//    private fun showBottomProgressBar() {
+//        with(binding) {
+//            llProblemLayout.visibility = View.GONE
+//            vacancyList.root.visibility = View.VISIBLE
+//            vacancyCount.visibility = View.VISIBLE
+//
+//            pbBottomProgressBar.visibility = View.VISIBLE
+//        }
+//    }
 
     private fun showData() {
         with(binding) {
