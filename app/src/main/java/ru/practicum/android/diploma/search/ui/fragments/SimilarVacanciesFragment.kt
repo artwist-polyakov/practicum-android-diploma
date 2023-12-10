@@ -1,14 +1,17 @@
 package ru.practicum.android.diploma.search.ui.fragments
 
+import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.common.ui.BaseFragment
+import ru.practicum.android.diploma.common.utils.debounce
 import ru.practicum.android.diploma.databinding.FragmentSimilarVacanciesBinding
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
 import ru.practicum.android.diploma.search.ui.adapter.VacancyAdapter
@@ -44,6 +47,23 @@ class SimilarVacanciesFragment :
             viewModel.state.collect { state ->
                 renderState(state)
             }
+        }
+        onVacancyClickDebounce = debounce(
+            CLICK_DEBOUNCE_DELAY_10MS,
+            viewLifecycleOwner.lifecycleScope,
+            false
+        ) { data ->
+            val bundle = Bundle().apply {
+                putInt(VacancyFragment.ARG_ID, data.id)
+            }
+            findNavController().navigate(
+                R.id.action_similarVacanciesFragment_to_vacancyFragment,
+                bundle
+            )
+        }
+
+        binding.ivArrowBack.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 
@@ -123,5 +143,9 @@ class SimilarVacanciesFragment :
     private fun addData(vacancies: List<VacancyGeneral>) {
         showData()
         vacancyListAdapter.addData(vacancies)
+    }
+
+    companion object {
+        private const val CLICK_DEBOUNCE_DELAY_10MS = 10L
     }
 }

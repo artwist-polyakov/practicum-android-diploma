@@ -2,20 +2,18 @@ package ru.practicum.android.diploma.vacancy.ui
 
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import coil.load
 import coil.transform.RoundedCornersTransformation
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.common.data.network.NetworkClient
 import ru.practicum.android.diploma.common.ui.BaseFragment
 import ru.practicum.android.diploma.databinding.FragmentVacancyBinding
+import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
 import ru.practicum.android.diploma.vacancy.domain.models.DetailedVacancyItem
 import ru.practicum.android.diploma.vacancy.domain.models.VacancyState
 import javax.inject.Inject
@@ -24,6 +22,7 @@ import javax.inject.Inject
 class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(FragmentVacancyBinding::inflate) {
     override val viewModel: VacancyViewModel by viewModels()
     private var id: Int? = null
+    private var url: String = ""
 
     @Inject
     lateinit var networkClient: NetworkClient
@@ -40,9 +39,25 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
             val bundle = Bundle().apply {
                 putInt(ARG_ID, id ?: 0)
             }
-            Log.d(MYLOG, "vacancyId $id")
-            findNavController().navigate(R.id.action_vacancyFragment_to_similarVacanciesFragment, bundle)
+            findNavController().navigate(
+                R.id.action_vacancyFragment_to_similarVacanciesFragment,
+                bundle
+            )
         }
+
+        binding.bBackArrow.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        binding.bShareButton.setOnClickListener {
+            Log.i(MYLOG, "url = $url")
+            viewModel.shareVacancy(url)
+        }
+
+        binding.bLikeButton.setOnClickListener {
+            // добавить обработчик
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collect { state ->
                 if (state is VacancyState.Content) fetchScreen(state.vacancy)
@@ -51,18 +66,8 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
         }
     }
 
-    fun fetchScreen(item: DetailedVacancyItem) {
-        // отрабатываем стрелку назад
-        val fragmentmanager = requireActivity().supportFragmentManager
-        binding.bBackArrow.setOnClickListener {
-            fragmentmanager.popBackStack()
-        }
-
-        // Отрабатываем кнопку "поделиться"
-        val url = "https://hh.ru/vacancy/ " + item.id
-        binding.bShareButton.setOnClickListener {
-            viewModel.shareVacancy(url)
-        }
+    private fun fetchScreen(item: DetailedVacancyItem) {
+        url = "https://hh.ru/vacancy/ " + item.id
         // Отрисовка вакансии
         with(binding) {
             tvVacancyName.text = item.title
@@ -84,7 +89,6 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
     companion object {
         const val MYLOG = "VacancyMyLog"
         const val ARG_ID = "id"
-        fun setId(id: Int): Bundle =
-            bundleOf(ARG_ID to id)
+        const val CLICK_DEBOUNCE_DELAY_10MS = 10L
     }
 }
