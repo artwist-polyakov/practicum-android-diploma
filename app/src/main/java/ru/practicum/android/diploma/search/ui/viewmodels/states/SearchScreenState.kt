@@ -12,6 +12,7 @@ sealed class SearchScreenState {
     data class Content(
         val totalPages: Int,
         val currentPage: Int,
+        val totalVacancies: Int,
         val vacancies: List<VacancyGeneral>
     ) : SearchScreenState()
 }

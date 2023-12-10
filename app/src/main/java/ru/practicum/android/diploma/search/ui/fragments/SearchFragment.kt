@@ -91,7 +91,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         when (state) {
             is SearchScreenState.Content -> {
                 Log.d("SearchFragmentContentMyLog", "content ${state.vacancies}")
-                showData(state.vacancies)
+                showData(state)
             }
 
             is SearchScreenState.Error -> {
@@ -118,6 +118,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     private fun showDefault() {
         with(binding) {
             vacancyList.root.visibility = View.GONE
+            vacancyCount.visibility = View.GONE
             progressBar.visibility = View.GONE
 
             llProblemLayout.visibility = View.VISIBLE
@@ -129,6 +130,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     private fun showProblem(error: ErrorsSearchScreenStates) {
         with(binding) {
             vacancyList.root.visibility = View.GONE
+            vacancyCount.visibility = View.GONE
             progressBar.visibility = View.GONE
 
             llProblemLayout.visibility = View.VISIBLE
@@ -142,6 +144,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         with(binding) {
             llProblemLayout.visibility = View.GONE
             vacancyList.root.visibility = View.GONE
+            vacancyCount.visibility = View.GONE
 
             progressBar.visibility = View.VISIBLE
         }
@@ -152,17 +155,30 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
             llProblemLayout.visibility = View.GONE
             progressBar.visibility = View.GONE
 
-            vacancyList.root.visibility = View.VISIBLE
+            vacancyCount.visibility = View.VISIBLE
+            with(vacancyList.root) {
+                visibility = View.VISIBLE
+                setPadding(0, binding.vacancyCount.measuredHeight, 0, 0)
+                clipToPadding = false
+            }
+
         }
     }
 
-    private fun showData(vacancies: List<VacancyGeneral>) {
+    private fun showData(content: SearchScreenState.Content) {
+        vacancyListAdapter.setData(content.vacancies)
+        binding.vacancyCount.apply {
+            text = resources.getQuantityString(
+                R.plurals.founded_vacancies,
+                content.totalVacancies,
+                content.totalVacancies
+            )
+            measure(0, 0)
+        }
         showData()
-        vacancyListAdapter.setData(vacancies)
     }
 
-    private fun addData(vacancies: List<VacancyGeneral>) {
-        showData()
-        vacancyListAdapter.addData(vacancies)
+    private fun addData(content: SearchScreenState.Content) {
+        vacancyListAdapter.addData(content.vacancies)
     }
 }

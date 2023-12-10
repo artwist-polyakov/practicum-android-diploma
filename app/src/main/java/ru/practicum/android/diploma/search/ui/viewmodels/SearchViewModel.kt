@@ -75,6 +75,7 @@ class SearchViewModel @Inject constructor(
                     _state.value = SearchScreenState.Content(
                         result.data.totalPages,
                         result.data.currentPage,
+                        result.data.vacanciesFound,
                         result.data.vacancies.toList()
                     )
                 }

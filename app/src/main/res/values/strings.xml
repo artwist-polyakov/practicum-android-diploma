@@ -33,7 +33,7 @@
     <string name="vacancy">Вакансия</string>
     <string name="salary_from">от %s %s</string>
     <string name="salary_to">до %s %s</string>
-    <string name="salary_from_to">от %s то %s %s</string>
+    <string name="salary_from_to">от %s до %s %s</string>
     <string name="salary_not_specified">Зарплата не указана</string>
     <string name="expirience_period">От $1%s $2%s до $3%s $4%s</string> <!-- Строка вида:  От 2 лет до 5 лет  -->
     <string name="vacancy_description">Описание вакансии</string>
@@ -48,7 +48,6 @@
     <string name="phone_number">Телефон</string>
     <string name="comment">Комментарий</string>
     <string name="similar_vacancies">Похожие вакансии</string>
-
 
     <string name="favorite">Избранное</string>
     <string name="empty_list">Список пуст</string>
