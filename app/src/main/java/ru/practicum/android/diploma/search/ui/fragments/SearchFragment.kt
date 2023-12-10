@@ -101,7 +101,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
 
             is SearchScreenState.Loading -> {
                 Log.d("SearchFragmentLoadingMyLog", "Loading state")
-                showProgressBar()
+                if (state.forPage == 0) {
+                    showCentralProgressBar()
+                } else {
+                    showBottomProgressBar()
+                }
             }
 
             is SearchScreenState.Default -> {
@@ -140,13 +144,23 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         }
     }
 
-    private fun showProgressBar() {
+    private fun showCentralProgressBar() {
         with(binding) {
             llProblemLayout.visibility = View.GONE
             vacancyList.root.visibility = View.GONE
             vacancyCount.visibility = View.GONE
 
             progressBar.visibility = View.VISIBLE
+        }
+    }
+
+    private fun showBottomProgressBar() {
+        with(binding) {
+            llProblemLayout.visibility = View.GONE
+            vacancyList.root.visibility = View.VISIBLE
+            vacancyCount.visibility = View.VISIBLE
+
+            pbBottomProgressBar.visibility = View.VISIBLE
         }
     }
 
