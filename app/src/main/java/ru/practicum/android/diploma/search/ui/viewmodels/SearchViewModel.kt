@@ -12,6 +12,7 @@ import ru.practicum.android.diploma.common.ui.BaseViewModel
 import ru.practicum.android.diploma.common.utils.debounce
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
 import ru.practicum.android.diploma.search.domain.models.VacanciesSearchResult
+import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
 import ru.practicum.android.diploma.search.ui.viewmodels.states.ErrorsSearchScreenStates
 import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchScreenState
 import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchSettingsState
@@ -23,7 +24,7 @@ class SearchViewModel @Inject constructor(
     private val interactor: SearchInteractor
 ) : BaseViewModel() {
     private var searchSettings: SearchSettingsState = SearchSettingsState()
-
+    private var vacancies: MutableList<VacancyGeneral> = mutableListOf()
     private var _state = MutableStateFlow<SearchScreenState>(SearchScreenState.Error(ErrorsSearchScreenStates.EMPTY))
     val state: StateFlow<SearchScreenState>
         get() = _state
@@ -110,9 +111,10 @@ class SearchViewModel @Inject constructor(
                         getVacancies(searchSettings)
                     }
                 }
-                else -> {}
+                else -> Unit
             }
         } else {
+            vacancies.clear()
             searchDebounce(searchSettings)
         }
     }

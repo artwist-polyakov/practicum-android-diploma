@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SimilarVacanciesViewModel @Inject constructor(private val interactor: SearchInteractor) : BaseViewModel() {
-    private var _state = MutableStateFlow<SearchScreenState>(SearchScreenState.Loading)
+    private var _state = MutableStateFlow<SearchScreenState>(SearchScreenState.Default)
     val state: StateFlow<SearchScreenState>
         get() = _state
 
