@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.search.data.network
+package ru.practicum.android.diploma.search.data
 
 import kotlinx.coroutines.flow.Flow
 import ru.practicum.android.diploma.common.data.dto.Resource

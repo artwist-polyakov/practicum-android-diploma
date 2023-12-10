@@ -8,7 +8,6 @@ import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.common.data.db.AppDatabase
 import ru.practicum.android.diploma.common.data.dto.Resource
 import ru.practicum.android.diploma.search.data.network.HHSearchRepository
-import ru.practicum.android.diploma.vacancy.domain.api.ExternalNavigator
 import ru.practicum.android.diploma.vacancy.domain.api.SingleVacancyConverter
 import ru.practicum.android.diploma.vacancy.domain.api.SingleVacancyInteractor
 import ru.practicum.android.diploma.vacancy.domain.models.DetailedVacancyItem
@@ -21,16 +20,6 @@ class SingleVacancyInteractorImpl(
 ) : SingleVacancyInteractor {
     override suspend fun getVacancy(id: Int): Flow<Resource<DetailedVacancyItem>> {
         val isFavorite = isVacancyFavorite(id)
-
-        // todo забрать этот код в интерактор избранного
-
-//                return db.vacancyEmployerReferenceDao().getVacancyWithEmployer(id).map {
-//                    it.let {
-//                        it?.let { vacancyConverter.map(it, isFavorite) }
-//                            ?: Resource.Error(NetworkErrors.UnknownError)
-//                    }
-//                }
-//            }
         return repository.getVacancy(id).map { vacancyConverter.map(it, isFavorite) }
     }
 
