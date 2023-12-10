@@ -42,7 +42,8 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
                 putInt(ARG_ID, id ?: 0)
             }
             findNavController().navigate(
-                R.id.action_vacancyFragment_to_similarVacanciesFragment, bundle
+                R.id.action_vacancyFragment_to_similarVacanciesFragment,
+                bundle
             )
         }
 
