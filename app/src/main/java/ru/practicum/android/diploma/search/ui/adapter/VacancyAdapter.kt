@@ -23,18 +23,14 @@ class VacancyAdapter(private val clickListener: (VacancyGeneral) -> Unit) :
         fun bind(data: VacancyGeneral) = with(binding) {
             vacancyName.text = data.title
             vacancySalary.text = parseSalary(
-                data.salaryFrom,
-                data.salaryTo,
-                data.salaryCurrency
+                data.salaryFrom, data.salaryTo, data.salaryCurrency
             )
             companyName.text = data.employerName
             companyImage.load(data.employerLogo) {
                 placeholder(R.drawable.placeholder_48px)
                 error(R.drawable.placeholder_48px)
             }
-            val shapeAppearanceModel = companyImage.shapeAppearanceModel.toBuilder()
-                .setAllCornerSizes(radius)
-                .build()
+            val shapeAppearanceModel = companyImage.shapeAppearanceModel.toBuilder().setAllCornerSizes(radius).build()
             companyImage.shapeAppearanceModel = shapeAppearanceModel
 
             itemView.setOnClickListener { clickListener(data) }

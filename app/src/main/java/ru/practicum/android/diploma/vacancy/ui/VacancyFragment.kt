@@ -70,7 +70,6 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
 
     private fun fetchScreen(item: DetailedVacancyItem) {
         url = "https://hh.ru/vacancy/ " + item.id
-
         with(binding) {
             tvVacancyName.text = item.title
             tvSalary.text = when {
@@ -88,7 +87,6 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
                     item.salaryCurrency
                 )
             }
-
             ivEmployerLogo.load(item.employerLogo) {
                 placeholder(R.drawable.placeholder_48px)
                 transformations(
@@ -97,7 +95,6 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
                     )
                 )
             }
-
             tvDescriptionText.text = Html.fromHtml(item.description, Html.FROM_HTML_MODE_COMPACT)
             tvEmployerText.text = item.employerName
             tvCityText.text = item.area
@@ -108,8 +105,7 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
                 tvKeySkillsTitle.visibility = View.GONE
             } else {
                 rvKeySkills.layoutManager = LinearLayoutManager(requireContext())
-                val adapter = KeySkillsAdapter(item.keySkills ?: emptyList())
-                rvKeySkills.adapter = adapter
+                rvKeySkills.adapter = KeySkillsAdapter(item.keySkills ?: emptyList())
             }
         }
     }
