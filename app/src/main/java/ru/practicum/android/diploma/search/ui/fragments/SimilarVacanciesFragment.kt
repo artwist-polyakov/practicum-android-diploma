@@ -49,7 +49,7 @@ class SimilarVacanciesFragment :
             }
         }
         onVacancyClickDebounce = debounce(
-            CLICK_DEBOUNCE_DELAY_10MS,
+            CLICK_DEBOUNCE_DELAY_500MS,
             viewLifecycleOwner.lifecycleScope,
             false
         ) { data ->
@@ -146,6 +146,6 @@ class SimilarVacanciesFragment :
     }
 
     companion object {
-        private const val CLICK_DEBOUNCE_DELAY_10MS = 10L
+        private const val CLICK_DEBOUNCE_DELAY_500MS = 500L
     }
 }
