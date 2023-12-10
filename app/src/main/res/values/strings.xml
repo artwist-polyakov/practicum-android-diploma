@@ -50,7 +50,6 @@
     <string name="similar_vacancies">Похожие вакансии</string>
 
 
-
     <string name="favorite">Избранное</string>
     <string name="empty_list">Список пуст</string>
 
@@ -85,8 +84,7 @@
     <string name="similar_vacations">Похожие вакансии</string>
     <string name="contact_chapter">Контакты</string>
     <string name="contact_person_text">Контактное лицо</string>
-    <string name="irina">Ирина</string>
-    <string name="from_salary">@{java.lang.Character.toUpperCase(string.charAt(0)) + string.substring(1)}</string>
+    <string name="from_salary">От&#160;</string>
     <string name="min_salary_text">минимума&#160;</string>
     <string name="to_string"><![CDATA[до&#160;]]></string>
     <string name="to_max_salary">максимума</string>
