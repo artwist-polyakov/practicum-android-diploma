@@ -31,6 +31,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     override val viewModel: SearchViewModel by viewModels()
     private var onVacancyClickDebounce: ((VacancyGeneral) -> Unit)? = null
     private val vacancyListAdapter = VacancyAdapter(
+        object : VacancyAdapter.ListScrollListener {
+            override fun onScrollToBottom(nextPage: Int) {
+                viewModel.handleInteraction(ViewModelInteractionState.setPage(nextPage))
+            }
+        },
+
+        // кликлистенер
         object : VacancyAdapter.VacancyClickListener {
             override fun onClick(data: VacancyGeneral) {
                 onVacancyClickDebounce?.let {
@@ -168,7 +175,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         with(binding) {
             llProblemLayout.visibility = View.GONE
             progressBar.visibility = View.GONE
-
+            pbBottomProgressBar.visibility = View.GONE
             vacancyCount.visibility = View.VISIBLE
             with(vacancyList.root) {
                 visibility = View.VISIBLE
@@ -180,7 +187,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     }
 
     private fun showData(content: SearchScreenState.Content) {
-        vacancyListAdapter.setData(content.vacancies)
+        vacancyListAdapter.setData(content.vacancies, content.currentPage)
         binding.vacancyCount.apply {
             text = resources.getQuantityString(
                 R.plurals.founded_vacancies,
