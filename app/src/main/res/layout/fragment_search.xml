@@ -97,11 +97,26 @@
         layout="@layout/vacancy_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:clipToPadding="false"
         android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tl_search_field"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tl_search_field" />
+
+    <TextView
+        android:id="@+id/vacancy_count"
+        style="@style/Text.Regular16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/vacancy_count_background"
+        android:paddingHorizontal="@dimen/vacancy_count_horizontal_padding"
+        android:paddingVertical="@dimen/vacancy_count_vertical_padding"
+        android:textColor="@color/whiteUniversal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/vacancy_list"
+        tools:text="@string/no_vacancies" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
