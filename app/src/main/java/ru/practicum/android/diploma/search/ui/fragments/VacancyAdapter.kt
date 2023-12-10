@@ -3,6 +3,7 @@ package ru.practicum.android.diploma.search.ui.fragments
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.google.android.material.imageview.ShapeableImageView
@@ -12,14 +13,20 @@ import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.Locale
 
-class VacancyAdapter(private val clickListener: VacancyClickListener) :
+class VacancyAdapter(
+    private val scrollController: ListScrollListener,
+    private val clickListener: VacancyClickListener
+) :
     RecyclerView.Adapter<VacancyViewHolder>() {
-
+    private var currentPage: Int = 0
     private var dataList = ArrayList<VacancyGeneral>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VacancyViewHolder =
         VacancyViewHolder(parent, clickListener)
 
     override fun onBindViewHolder(holder: VacancyViewHolder, position: Int) {
+        if (position == dataList.size - LOADING_THRESHOLD) {
+            scrollController.onScrollToBottom(currentPage + 1)
+        }
         holder.bind(dataList[position])
     }
 
@@ -29,20 +36,26 @@ class VacancyAdapter(private val clickListener: VacancyClickListener) :
         fun onClick(data: VacancyGeneral)
     }
 
-    fun setData(data: List<VacancyGeneral>) {
-        dataList.clear()
-        dataList.addAll(data)
-        notifyDataSetChanged()
+    interface ListScrollListener {
+        fun onScrollToBottom(nextPage: Int)
     }
 
-    fun addData(data: List<VacancyGeneral>) {
+    fun setData(data: List<VacancyGeneral>, pageNum: Int = 0) {
+        val diffCallback = VacancyDiffCallback(dataList, data)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
+        dataList.clear()
         dataList.addAll(data)
-        notifyDataSetChanged()
+        currentPage = pageNum
+        diffResult.dispatchUpdatesTo(this)
     }
 
-    fun clear() {
-        dataList.clear()
-        notifyDataSetChanged()
+    fun clearPageCounter() {
+        currentPage = 0
+    }
+
+    companion object {
+        private const val LOADING_THRESHOLD = 3
     }
 }
 
