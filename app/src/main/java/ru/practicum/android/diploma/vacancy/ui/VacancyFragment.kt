@@ -42,8 +42,7 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
                 putInt(ARG_ID, id ?: 0)
             }
             findNavController().navigate(
-                R.id.action_vacancyFragment_to_similarVacanciesFragment,
-                bundle
+                R.id.action_vacancyFragment_to_similarVacanciesFragment, bundle
             )
         }
 
@@ -72,21 +71,7 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
         url = "https://hh.ru/vacancy/ " + item.id
         with(binding) {
             tvVacancyName.text = item.title
-            tvSalary.text = when {
-                item.salaryFrom == null -> getString(R.string.salary_not_specified)
-                item.salaryTo == null -> getString(
-                    R.string.salary_from,
-                    item.salaryFrom.toString(),
-                    item.salaryCurrency
-                )
-
-                else -> getString(
-                    R.string.salary_from_to,
-                    item.salaryFrom.toString(),
-                    item.salaryTo.toString(),
-                    item.salaryCurrency
-                )
-            }
+            fetchSalary(item)
             ivEmployerLogo.load(item.employerLogo) {
                 placeholder(R.drawable.placeholder_48px)
                 transformations(
@@ -107,6 +92,19 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
                 rvKeySkills.layoutManager = LinearLayoutManager(requireContext())
                 rvKeySkills.adapter = KeySkillsAdapter(item.keySkills ?: emptyList())
             }
+        }
+    }
+
+    private fun fetchSalary(item: DetailedVacancyItem) = with(binding) {
+        tvSalary.text = when {
+            item.salaryFrom == null -> getString(R.string.salary_not_specified)
+            item.salaryTo == null -> getString(
+                R.string.salary_from, item.salaryFrom.toString(), item.salaryCurrency
+            )
+
+            else -> getString(
+                R.string.salary_from_to, item.salaryFrom.toString(), item.salaryTo.toString(), item.salaryCurrency
+            )
         }
     }
 
