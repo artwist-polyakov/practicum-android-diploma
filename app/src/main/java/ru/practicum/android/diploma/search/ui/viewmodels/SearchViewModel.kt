@@ -67,7 +67,9 @@ class SearchViewModel @Inject constructor(
                         result.data.totalPages,
                         result.data.currentPage,
                         result.data.vacanciesFound,
-                        result.data.vacancies.toList()
+                        vacancies.apply {
+                            addAll(result.data.vacancies)
+                        }
                     )
                 }
             }
@@ -85,7 +87,7 @@ class SearchViewModel @Inject constructor(
 
     private fun getVacancies(settings: SearchSettingsState) {
         if (settings.currentQuery.isNotEmpty()) {
-            _state.value = SearchScreenState.Loading
+            _state.value = SearchScreenState.Loading(settings.currentPage)
             viewModelScope.launch {
                 chargeInteractorSearch().invoke()
                     .collect { result ->
@@ -102,7 +104,14 @@ class SearchViewModel @Inject constructor(
         }
 
         if (searchSettings.currentPage > 0) {
-            getVacancies(searchSettings)
+            when (_state.value) {
+                is SearchScreenState.Content -> {
+                    if (searchSettings.currentPage < (_state.value as SearchScreenState.Content).totalPages) {
+                        getVacancies(searchSettings)
+                    }
+                }
+                else -> {}
+            }
         } else {
             searchDebounce(searchSettings)
         }
@@ -110,20 +119,33 @@ class SearchViewModel @Inject constructor(
 
     fun handleInteraction(interaction: ViewModelInteractionState) {
         when (interaction) {
-            is ViewModelInteractionState.setRegion ->
+            is ViewModelInteractionState.setRegion -> {
+                searchSettings = searchSettings.copy(currentPage = 0)
                 searchSettings = searchSettings.copy(currentRegion = interaction.region)
+            }
 
-            is ViewModelInteractionState.setIndustry ->
+            is ViewModelInteractionState.setIndustry -> {
+                searchSettings = searchSettings.copy(currentPage = 0)
                 searchSettings = searchSettings.copy(currentIndustry = interaction.industry)
+            }
 
-            is ViewModelInteractionState.setSalary -> searchSettings =
-                searchSettings.copy(currentSalary = interaction.salary)
+            is ViewModelInteractionState.setSalary -> {
+                searchSettings = searchSettings.copy(currentPage = 0)
+                searchSettings =
+                    searchSettings.copy(currentSalary = interaction.salary)
+            }
 
-            is ViewModelInteractionState.setSalaryOnly -> searchSettings =
-                searchSettings.copy(currentSalaryOnly = interaction.salaryOnly)
+            is ViewModelInteractionState.setSalaryOnly -> {
+                searchSettings = searchSettings.copy(currentPage = 0)
+                searchSettings =
+                    searchSettings.copy(currentSalaryOnly = interaction.salaryOnly)
+            }
 
-            is ViewModelInteractionState.setQuery -> searchSettings =
-                searchSettings.copy(currentQuery = interaction.query)
+            is ViewModelInteractionState.setQuery -> {
+                searchSettings = searchSettings.copy(currentPage = 0)
+                searchSettings =
+                    searchSettings.copy(currentQuery = interaction.query)
+            }
 
             is ViewModelInteractionState.setPage -> searchSettings =
                 searchSettings.copy(currentPage = interaction.page)

@@ -15,7 +15,6 @@ import ru.practicum.android.diploma.common.ui.BaseFragment
 import ru.practicum.android.diploma.common.utils.debounce
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
-import ru.practicum.android.diploma.search.ui.adapter.VacancyAdapter
 import ru.practicum.android.diploma.search.ui.viewmodels.SearchViewModel
 import ru.practicum.android.diploma.search.ui.viewmodels.states.ErrorsSearchScreenStates
 import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchScreenState
@@ -25,11 +24,28 @@ import ru.practicum.android.diploma.vacancy.ui.VacancyFragment
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(FragmentSearchBinding::inflate) {
 
+    companion object {
+        private const val CLICK_DEBOUNCE_DELAY = 10L
+    }
+
     override val viewModel: SearchViewModel by viewModels()
     private var onVacancyClickDebounce: ((VacancyGeneral) -> Unit)? = null
-    private val vacancyListAdapter = VacancyAdapter { data ->
-        onVacancyClickDebounce?.invoke(data)
+    private val vacancyListAdapter = VacancyAdapter(
+        object : VacancyAdapter.ListScrollListener {
+            override fun onScrollToBottom(nextPage: Int) {
+                viewModel.handleInteraction(ViewModelInteractionState.setPage(nextPage))
+            }
+        },
+
+        // кликлистенер
+        object : VacancyAdapter.VacancyClickListener {
+            override fun onClick(data: VacancyGeneral) {
+                onVacancyClickDebounce?.let {
+                    onVacancyClickDebounce!!(data)
+                }
     }
+        }
+    )
 
     override fun initViews() {
         onVacancyClickDebounce = debounce<VacancyGeneral>(
@@ -67,8 +83,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
                 } else {
                     ivSearchFieldButton.setImageResource(R.drawable.search_24px)
                 }
+                vacancyListAdapter.clearPageCounter()
             }
-
+            // todo просчитать другие сценарии зануления числа страниц в адаптере
             ivSearchFieldButton.setOnClickListener {
                 if (tiSearchField.text.toString().isNotEmpty()) {
                     tiSearchField.text?.clear()
@@ -95,7 +112,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
 
             is SearchScreenState.Loading -> {
                 Log.d("SearchFragmentLoadingMyLog", "Loading state")
-                showProgressBar()
+                if (state.forPage == 0) {
+                    showCentralProgressBar()
+                } else {
+//                    showBottomProgressBar()
+                }
             }
 
             is SearchScreenState.Default -> {
@@ -134,22 +155,40 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         }
     }
 
-    private fun showProgressBar() {
+    private fun showCentralProgressBar() {
         with(binding) {
             llProblemLayout.visibility = View.GONE
             vacancyList.root.visibility = View.GONE
+            vacancyCount.visibility = View.GONE
 
             progressBar.visibility = View.VISIBLE
         }
     }
 
+//    private fun showBottomProgressBar() {
+//        with(binding) {
+//            llProblemLayout.visibility = View.GONE
+//            vacancyList.root.visibility = View.VISIBLE
+//            vacancyCount.visibility = View.VISIBLE
+//
+//            pbBottomProgressBar.visibility = View.VISIBLE
+//        }
+//    }
+
     private fun showData() {
         with(binding) {
             llProblemLayout.visibility = View.GONE
             progressBar.visibility = View.GONE
+            pbBottomProgressBar.visibility = View.GONE
+            vacancyCount.visibility = View.VISIBLE
+            with(vacancyList.root) {
+                visibility = View.VISIBLE
+                setPadding(0, binding.vacancyCount.measuredHeight, 0, 0)
+                clipToPadding = false
 
             vacancyList.root.visibility = View.VISIBLE
         }
+
     }
 
     private fun showData(vacancies: List<VacancyGeneral>) {
@@ -157,6 +196,16 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         vacancyListAdapter.setData(vacancies)
     }
 
+    private fun showData(content: SearchScreenState.Content) {
+        vacancyListAdapter.setData(content.vacancies, content.currentPage)
+        binding.vacancyCount.apply {
+            text = resources.getQuantityString(
+                R.plurals.founded_vacancies,
+                content.totalVacancies,
+                content.totalVacancies
+            )
+            measure(0, 0)
+        }
     private fun addData(vacancies: List<VacancyGeneral>) {
         showData()
         vacancyListAdapter.addData(vacancies)
