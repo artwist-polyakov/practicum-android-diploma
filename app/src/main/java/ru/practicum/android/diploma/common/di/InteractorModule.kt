@@ -5,12 +5,12 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import ru.practicum.android.diploma.common.data.db.AppDatabase
-import ru.practicum.android.diploma.search.data.network.HHSearchRepository
-import ru.practicum.android.diploma.search.domain.api.FavoritesDBConverter
-import ru.practicum.android.diploma.search.domain.api.FavoritesDBInteractor
+import ru.practicum.android.diploma.favorites.domain.api.FavoritesDBConverter
+import ru.practicum.android.diploma.favorites.domain.api.FavoritesDBInteractor
+import ru.practicum.android.diploma.favorites.domain.impl.FavoritesDBInteractorImpl
+import ru.practicum.android.diploma.search.data.HHSearchRepository
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
 import ru.practicum.android.diploma.search.domain.api.SearchResultConverter
-import ru.practicum.android.diploma.search.domain.impl.FavoritesDBInteractorImpl
 import ru.practicum.android.diploma.search.domain.impl.SearchInteractorImpl
 import ru.practicum.android.diploma.vacancy.domain.api.ExternalNavigator
 import ru.practicum.android.diploma.vacancy.domain.api.SingleVacancyConverter
@@ -34,8 +34,10 @@ class InteractorModule {
     @Provides
     fun providesFavoritesDbInteractor(
         database: AppDatabase,
-        converter: FavoritesDBConverter
-    ): FavoritesDBInteractor = FavoritesDBInteractorImpl(database, converter)
+        converter: FavoritesDBConverter,
+        repository: HHSearchRepository,
+        converterSingle: SingleVacancyConverter
+    ): FavoritesDBInteractor = FavoritesDBInteractorImpl(database, converter, repository, converterSingle)
 
     @Provides
     fun providesSingleVacancyInteractor(
