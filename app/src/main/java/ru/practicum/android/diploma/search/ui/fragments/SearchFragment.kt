@@ -31,19 +31,20 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
                 viewModel.handleInteraction(ViewModelInteractionState.setPage(nextPage))
             }
         },
-
-        // кликлистенер
-        object : VacancyAdapter.VacancyClickListener {
-            override fun onClick(data: VacancyGeneral) {
-                onVacancyClickDebounce?.let {
-                    onVacancyClickDebounce!!(data)
-                }
-            }
-        }
-    )
+    ) { data ->
+        onVacancyClickDebounce?.invoke(data)
+    }
 
     override fun initViews() {
-        onVacancyClickDebounce = debounce<VacancyGeneral>(
+        binding.vacancyList.root.apply {
+            layoutManager = LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = vacancyListAdapter
+        }
+    }
+
+    override fun subscribe() {
+        onVacancyClickDebounce = debounce(
             CLICK_DEBOUNCE_DELAY,
             viewLifecycleOwner.lifecycleScope,
             false
@@ -56,14 +57,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
                 bundle
             )
         }
-        binding.vacancyList.root.apply {
-            layoutManager = LinearLayoutManager(context)
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            adapter = vacancyListAdapter
-        }
-    }
 
-    override fun subscribe() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collect { state ->
                 render(state)
@@ -97,7 +91,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         when (state) {
             is SearchScreenState.Content -> {
                 Log.d("SearchFragmentContentMyLog", "content ${state.vacancies}")
-                showData(state.vacancies)
+                showData(state)
             }
 
             is SearchScreenState.Error -> {
@@ -176,15 +170,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
                 visibility = View.VISIBLE
                 setPadding(0, binding.vacancyCount.measuredHeight, 0, 0)
                 clipToPadding = false
-
-                vacancyList.root.visibility = View.VISIBLE
             }
-        }
-    }
 
-    private fun showData(vacancies: List<VacancyGeneral>) {
-        showData()
-        vacancyListAdapter.setData(vacancies)
+        }
     }
 
     private fun showData(content: SearchScreenState.Content) {
@@ -197,6 +185,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
             )
             measure(0, 0)
         }
+        showData()
     }
 
 //    private fun addData(vacancies: List<VacancyGeneral>) {

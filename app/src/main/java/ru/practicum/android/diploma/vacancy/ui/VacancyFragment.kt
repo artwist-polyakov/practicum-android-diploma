@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.common.data.network.NetworkClient
 import ru.practicum.android.diploma.common.ui.BaseFragment
+import ru.practicum.android.diploma.common.utils.formatSalary
 import ru.practicum.android.diploma.databinding.FragmentVacancyBinding
 import ru.practicum.android.diploma.vacancy.domain.models.DetailedVacancyItem
 import ru.practicum.android.diploma.vacancy.domain.models.VacancyState
@@ -100,11 +101,14 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
         tvSalary.text = when {
             item.salaryFrom == null -> getString(R.string.salary_not_specified)
             item.salaryTo == null -> getString(
-                R.string.salary_from, item.salaryFrom.toString(), item.salaryCurrency
+                R.string.salary_from, item.salaryFrom.formatSalary(), item.salaryCurrency
             )
 
             else -> getString(
-                R.string.salary_from_to, item.salaryFrom.toString(), item.salaryTo.toString(), item.salaryCurrency
+                R.string.salary_from_to,
+                item.salaryFrom.formatSalary(),
+                item.salaryTo.formatSalary(),
+                item.salaryCurrency
             )
         }
     }

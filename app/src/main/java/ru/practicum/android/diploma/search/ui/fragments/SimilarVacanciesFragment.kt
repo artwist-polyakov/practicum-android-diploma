@@ -14,10 +14,10 @@ import ru.practicum.android.diploma.common.ui.BaseFragment
 import ru.practicum.android.diploma.common.utils.debounce
 import ru.practicum.android.diploma.databinding.FragmentSimilarVacanciesBinding
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
-import ru.practicum.android.diploma.search.ui.adapter.VacancyAdapter
 import ru.practicum.android.diploma.search.ui.viewmodels.SimilarVacanciesViewModel
 import ru.practicum.android.diploma.search.ui.viewmodels.states.ErrorsSearchScreenStates
 import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchScreenState
+import ru.practicum.android.diploma.search.ui.viewmodels.states.ViewModelInteractionState
 import ru.practicum.android.diploma.vacancy.ui.VacancyFragment
 
 @AndroidEntryPoint
@@ -25,7 +25,13 @@ class SimilarVacanciesFragment :
     BaseFragment<FragmentSimilarVacanciesBinding, SimilarVacanciesViewModel>(FragmentSimilarVacanciesBinding::inflate) {
     override val viewModel: SimilarVacanciesViewModel by viewModels()
     private var onVacancyClickDebounce: ((VacancyGeneral) -> Unit)? = null
-    private val vacancyListAdapter = VacancyAdapter { data ->
+    private val vacancyListAdapter = VacancyAdapter(
+        object : VacancyAdapter.ListScrollListener {
+            override fun onScrollToBottom(nextPage: Int) {
+                viewModel.handleInteraction(ViewModelInteractionState.setPage(nextPage))
+            }
+        },
+    ) { data ->
         onVacancyClickDebounce?.invoke(data)
     }
 
@@ -141,11 +147,6 @@ class SimilarVacanciesFragment :
             vacancyList.root.visibility = View.VISIBLE
         }
         vacancyListAdapter.setData(vacancies)
-    }
-
-    private fun addData(vacancies: List<VacancyGeneral>) {
-        showData()
-        vacancyListAdapter.addData(vacancies)
     }
 
     companion object {
