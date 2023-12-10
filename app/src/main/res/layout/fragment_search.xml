@@ -97,11 +97,10 @@
         layout="@layout/vacancy_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:clipToPadding="false"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tl_search_field" />
 
     <TextView
@@ -127,7 +126,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/vacancy_list" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
         android:id="@+id/pb_bottom_progress_bar"
@@ -136,7 +135,7 @@
         android:indeterminateTint="@color/blue"
         android:indeterminateTintMode="src_in"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="vacancy_list"
+        android:paddingBottom="@dimen/navbar_height"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
