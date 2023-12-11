@@ -10,10 +10,12 @@
     <dimen name="image_padding_medium">8dp</dimen>
     <dimen name="button_padding_vertical">20dp</dimen>
 
+    <dimen name="negative_margin_medium">-8dp</dimen>
     <dimen name="image_margin_small">4dp</dimen>
     <dimen name="image_margin_medium">8dp</dimen>
     <dimen name="standart_margin">16dp</dimen>
     <dimen name="top_margin">20dp</dimen>
+
     <dimen name="little_top">16dp</dimen>
     <dimen name="big_top">32dp</dimen>
     <dimen name="right_margin">20dp</dimen>

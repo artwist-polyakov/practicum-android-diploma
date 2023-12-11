@@ -27,7 +27,7 @@
         android:layout_marginTop="@dimen/big_top"
         android:gravity="start"
         style="@style/Text.Bold32"
-        android:text="@string/applicationTeamText"
+        android:text="@string/application_team_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/teamText" />
 
