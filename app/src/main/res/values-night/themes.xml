@@ -13,6 +13,7 @@
         <item name="colorOnTertiary">@color/gray</item>
         <item name="colorOnContainer">@color/lightGray</item>
         <item name="colorOnBackground">@color/background</item>
+        <item name="thumbIcon">#00FFFFFF</item>
     </style>
 
     <style name="Theme.PracticumAndroidDiploma" parent="Base.Theme.PracticumAndroidDiploma">
