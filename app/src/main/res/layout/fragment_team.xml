@@ -1,43 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorBackground"
     tools:context=".team.ui.fragments.TeamFragment">
 
     <TextView
         android:id="@+id/teamText"
+        style="@style/Text.Medium22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/standart_margin"
         android:layout_marginTop="@dimen/top_margin"
-        style="@style/Text.Medium22"
         android:text="@string/team"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/appTeamText"
+        style="@style/Text.Bold32"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/standart_margin"
         android:layout_marginTop="@dimen/big_top"
         android:gravity="start"
-        style="@style/Text.Bold32"
         android:text="@string/application_team_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/teamText" />
 
     <TextView
         android:id="@+id/APolyakovName"
+        style="@style/Text.Medium16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/standart_margin"
         android:layout_marginTop="@dimen/big_top"
-        style="@style/Text.Medium16"
         android:gravity="start"
         android:text="@string/APolyakovName"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,11 +40,10 @@
 
     <TextView
         android:id="@+id/AZinchenkoName"
+        style="@style/Text.Medium16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/standart_margin"
         android:layout_marginTop="@dimen/little_top"
-        style="@style/Text.Medium16"
         android:gravity="start"
         android:text="@string/AZinchenkoName"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,11 +51,10 @@
 
     <TextView
         android:id="@+id/ACochekovName"
+        style="@style/Text.Medium16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/standart_margin"
         android:layout_marginTop="@dimen/little_top"
-        style="@style/Text.Medium16"
         android:gravity="start"
         android:text="@string/AKochekovName"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,11 +62,10 @@
 
     <TextView
         android:id="@+id/NRyabcevName"
+        style="@style/Text.Medium16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/standart_margin"
         android:layout_marginTop="@dimen/little_top"
-        style="@style/Text.Medium16"
         android:gravity="start"
         android:text="@string/NRyabcevName"
         app:layout_constraintStart_toStartOf="parent"
