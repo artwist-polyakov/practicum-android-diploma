@@ -61,7 +61,9 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
             }
 
             ivLikeButton.setOnClickListener {
-                viewModel.interactWithLike(id ?: 0)
+                id?.let {
+                    viewModel.interactWithLike(it)
+                }
             }
         }
 
