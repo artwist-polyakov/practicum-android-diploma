@@ -31,6 +31,17 @@ class VacancyViewModel @Inject constructor(private val interactor: SingleVacancy
         }
     }
 
+    fun interactWithLike(vacancyID: Int) {
+        viewModelScope.launch {
+            val result = interactor.interactWithVacancyFavor(vacancyID)
+            var currentVacancy = (state.value as? VacancyState.Content)?.vacancy
+            currentVacancy  = currentVacancy?.copy(favorite = result)
+            currentVacancy?.let {
+                _state.value = VacancyState.Content(it)
+            }
+        }
+    }
+
     private suspend fun processResult(result: Resource<DetailedVacancyItem>) {
         when (result) {
             is Resource.Success -> {
@@ -43,7 +54,7 @@ class VacancyViewModel @Inject constructor(private val interactor: SingleVacancy
                 _state.value = VacancyState.ConnectionError
             }
         }
-        _state.emit(_state.value)
+//        _state.emit(_state.value)
     }
 
     fun shareVacancy(url: String) {

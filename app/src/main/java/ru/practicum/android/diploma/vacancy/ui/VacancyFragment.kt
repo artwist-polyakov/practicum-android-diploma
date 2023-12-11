@@ -63,7 +63,7 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
             }
 
             ivLikeButton.setOnClickListener {
-                // добавить обработчик
+                viewModel.interactWithLike(id ?: 0)
             }
         }
 
@@ -101,6 +101,13 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
                 rvKeySkills.layoutManager = LinearLayoutManager(requireContext())
                 rvKeySkills.adapter = KeySkillsAdapter(item.keySkills ?: emptyList())
             }
+            ivLikeButton.setImageResource(
+                if (item.favorite) {
+                    R.drawable.favorites_active_24px
+                } else {
+                    R.drawable.favorites_inactive_24px
+                }
+            )
         }
     }
 

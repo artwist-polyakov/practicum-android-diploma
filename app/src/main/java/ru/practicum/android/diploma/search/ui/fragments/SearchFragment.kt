@@ -46,6 +46,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         onVacancyClickDebounce = debounce(
             CLICK_DEBOUNCE_DELAY,
             viewLifecycleOwner.lifecycleScope,
+            false,
             false
         ) { data ->
             val bundle = Bundle().apply {
