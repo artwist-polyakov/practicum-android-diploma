@@ -12,5 +12,5 @@
     <color name="lightGray">#E6E8EB</color>
     <color name="background">#80AEAFB4</color>
 
-    <color name="htmlText">#1A1B22</color>
+    <color name="htmlText">@color/blackDay</color>
 </resources>

@@ -122,7 +122,7 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
 
     private fun fetchWebview(item: DetailedVacancyItem) {
         val colorInt = ContextCompat.getColor(requireContext(), R.color.htmlText)
-        val colorHex = String.format(COLOR_LOCALE, colorInt)
+        val colorHex = String.format(COLOR_LOCALE, COLOR_FORMAT and colorInt)
         val modifiedHtmlContent = getString(R.string.html_content, CssStyle.getStyle(colorHex), item.description)
         if (item.description != null) {
             binding.wvDescription.loadDataWithBaseURL(null, modifiedHtmlContent, TXT_HTML, UTF_8, null)
@@ -158,6 +158,7 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
         const val TXT_HTML = "text/html"
         const val UTF_8 = "utf-8"
         const val COLOR_LOCALE = "#%06X"
+        const val COLOR_FORMAT = 0xFFFFFF
         const val CLICK_DEBOUNCE_DELAY_500MS = 500L
     }
 }
