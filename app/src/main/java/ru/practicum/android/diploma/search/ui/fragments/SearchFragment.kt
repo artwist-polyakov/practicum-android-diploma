@@ -37,7 +37,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
 
     override fun initViews() {
         binding.vacancyList.root.apply {
-            layoutManager = LinearLayoutManager(context)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = vacancyListAdapter
         }

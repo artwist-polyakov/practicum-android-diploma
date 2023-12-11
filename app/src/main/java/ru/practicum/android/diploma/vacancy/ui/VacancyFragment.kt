@@ -42,27 +42,29 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
     }
 
     override fun subscribe() {
-        binding.btnToSimilarVacations.setOnClickListener {
-            val bundle = Bundle().apply {
-                putInt(ARG_ID, id ?: 0)
+        with(binding) {
+            btnToSimilarVacations.setOnClickListener {
+                val bundle = Bundle().apply {
+                    putInt(ARG_ID, id ?: 0)
+                }
+                findNavController().navigate(
+                    R.id.action_vacancyFragment_to_similarVacanciesFragment,
+                    bundle
+                )
             }
-            findNavController().navigate(
-                R.id.action_vacancyFragment_to_similarVacanciesFragment,
-                bundle
-            )
-        }
 
-        binding.ivArrowBack.setOnClickListener {
-            findNavController().popBackStack()
-        }
+            ivArrowBack.setOnClickListener {
+                findNavController().popBackStack()
+            }
 
-        binding.ivShareButton.setOnClickListener {
-            Log.i(MYLOG, "url = $url")
-            viewModel.shareVacancy(url)
-        }
+            ivShareButton.setOnClickListener {
+                Log.i(MYLOG, "url = $url")
+                viewModel.shareVacancy(url)
+            }
 
-        binding.ivLikeButton.setOnClickListener {
-            // добавить обработчик
+            ivLikeButton.setOnClickListener {
+                // добавить обработчик
+            }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
