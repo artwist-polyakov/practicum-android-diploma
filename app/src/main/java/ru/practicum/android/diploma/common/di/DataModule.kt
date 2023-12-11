@@ -62,5 +62,5 @@ class DataModule {
     fun providesSingleVacancyConverter(): SingleVacancyConverter = SingleVacancyConverterImpl(gson = provideGson())
 
     @Provides
-    fun providesExternalNavigator(): ExternalNavigator = ExternalNavigatorImpl(application = Application())
+    fun providesExternalNavigator(@ApplicationContext context: Context): ExternalNavigator = ExternalNavigatorImpl(context = context)
 }
