@@ -37,7 +37,7 @@ class VacancyAdapter(
             itemView.setOnClickListener { clickListener(data) }
         }
 
-        fun showLoadingInicator() {
+        fun showLoadingIndicator() {
             binding.pbLoadingBar.visibility = View.VISIBLE
         }
 
@@ -83,7 +83,8 @@ class VacancyAdapter(
             scrollController.onScrollToBottom(currentPage + 1)
         }
         holder.bind(dataList[position])
-        holder.showLoadingInicator()
+        if (position % 2 == 0) holder.showLoadingIndicator() else holder.hideLoadingIndicator()
+
     }
 
     override fun getItemCount(): Int = dataList.size
