@@ -1,9 +1,10 @@
 package ru.practicum.android.diploma.vacancy.ui
 
+import android.graphics.Color
 import android.os.Bundle
-import android.text.Html
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -15,6 +16,7 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.common.data.network.NetworkClient
 import ru.practicum.android.diploma.common.ui.BaseFragment
+import ru.practicum.android.diploma.common.utils.CssStyle
 import ru.practicum.android.diploma.common.utils.formatSalary
 import ru.practicum.android.diploma.databinding.FragmentVacancyBinding
 import ru.practicum.android.diploma.vacancy.domain.models.DetailedVacancyItem
@@ -31,6 +33,8 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
     lateinit var networkClient: NetworkClient
 
     override fun initViews() {
+        binding.wvDescription.setBackgroundColor(Color.TRANSPARENT) // установка цвета из атрибутов не отрабатывается
+
         id = arguments?.getInt(ARG_ID)
         id?.let {
             viewModel.getVacancy(it)
@@ -74,6 +78,7 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
         with(binding) {
             tvVacancyName.text = item.title
             fetchSalary(item)
+            fetchWebview(item)
             ivEmployerLogo.load(item.employerLogo) {
                 placeholder(R.drawable.placeholder_48px)
                 transformations(
@@ -82,7 +87,7 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
                     )
                 )
             }
-            tvDescriptionText.text = Html.fromHtml(item.description, Html.FROM_HTML_MODE_COMPACT)
+
             tvEmployerText.text = item.employerName
             tvCityText.text = item.area
             tvExperience.text = item.experience
@@ -113,6 +118,15 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
         }
     }
 
+    private fun fetchWebview(item: DetailedVacancyItem) {
+        val colorInt = ContextCompat.getColor(requireContext(), R.color.htmlText)
+        val colorHex = String.format(COLOR_LOCALE, colorInt)
+        val modifiedHtmlContent = getString(R.string.html_content, CssStyle.getStyle(colorHex), item.description)
+        if (item.description != null) {
+            binding.wvDescription.loadDataWithBaseURL(null, modifiedHtmlContent, TXT_HTML, UTF_8, null)
+        }
+    }
+
     private fun renderState(state: VacancyState) = with(binding) {
         when (state) {
             is VacancyState.Content -> {
@@ -139,6 +153,9 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
     companion object {
         const val MYLOG = "VacancyMyLog"
         const val ARG_ID = "id"
+        const val TXT_HTML = "text/html"
+        const val UTF_8 = "utf-8"
+        const val COLOR_LOCALE = "#%06X"
         const val CLICK_DEBOUNCE_DELAY_500MS = 500L
     }
 }

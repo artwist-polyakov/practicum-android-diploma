@@ -92,12 +92,6 @@ class SimilarVacanciesFragment :
             }
 
             else -> showDefault()
-
-//
-//            is SearchScreenState.Default -> {
-//                Log.d("SimilarFragmentLoadingMyLog", "Default state")
-//                showDefault()
-//            }
         }
     }
 
@@ -127,8 +121,8 @@ class SimilarVacanciesFragment :
     private fun showProgressBar() {
         with(binding) {
             llProblemLayout.visibility = View.GONE
-            vacancyList.root.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
+            vacancyList.root.visibility = View.GONE
         }
     }
 
@@ -141,11 +135,7 @@ class SimilarVacanciesFragment :
     }
 
     private fun showData(vacancies: List<VacancyGeneral>) {
-        with(binding) {
-            llProblemLayout.visibility = View.GONE
-            progressBar.visibility = View.GONE
-            vacancyList.root.visibility = View.VISIBLE
-        }
+        showData()
         vacancyListAdapter.setData(vacancies)
     }
 
