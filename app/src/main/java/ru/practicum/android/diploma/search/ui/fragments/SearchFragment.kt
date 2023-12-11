@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.common.ui.BaseFragment
 import ru.practicum.android.diploma.common.utils.debounce
+import ru.practicum.android.diploma.common.utils.showCustomSnackbar
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
 import ru.practicum.android.diploma.search.ui.viewmodels.SearchViewModel
@@ -92,7 +93,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
             }
 
             is SearchScreenState.Error -> {
-                showProblem(state.error)
+                showProblem(state.error, state.showSnackBar)
             }
 
             is SearchScreenState.Loading -> {
@@ -117,8 +118,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         }
     }
 
-    private fun showProblem(error: ErrorsSearchScreenStates) {
+    private fun showProblem(error: ErrorsSearchScreenStates, showSnackbar: Boolean = false) {
         vacancyListAdapter.setScrollLoadingEnabled(false)
+        if (showSnackbar) {
+            binding.root.showCustomSnackbar(getString(error.messageResource))
+            return
+        }
         with(binding) {
             vacancyList.root.visibility = View.GONE
             vacancyCount.visibility = View.GONE
@@ -157,7 +162,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     }
 
     private fun showData(content: SearchScreenState.Content) {
-        vacancyListAdapter.setScrollLoadingEnabled((content.currentPage != content.totalPages-1))
+        vacancyListAdapter.setScrollLoadingEnabled((content.currentPage != content.totalPages - 1))
         vacancyListAdapter.setData(content.vacancies, content.currentPage)
         binding.vacancyCount.apply {
             text = resources.getQuantityString(
