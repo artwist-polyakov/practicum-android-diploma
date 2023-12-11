@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.common.di
 
-import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.google.gson.Gson
@@ -62,5 +61,7 @@ class DataModule {
     fun providesSingleVacancyConverter(): SingleVacancyConverter = SingleVacancyConverterImpl(gson = provideGson())
 
     @Provides
-    fun providesExternalNavigator(): ExternalNavigator = ExternalNavigatorImpl(application = Application())
+    fun providesExternalNavigator(@ApplicationContext context: Context): ExternalNavigator = ExternalNavigatorImpl(
+        context = context
+    )
 }
