@@ -99,8 +99,11 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
                 rvKeySkills.adapter = KeySkillsAdapter(item.keySkills ?: emptyList())
             }
             ivLikeButton.setImageResource(
-                if (item.favorite) R.drawable.favorites_active_24px
-                else R.drawable.favorites_inactive_24px
+                if (item.favorite) {
+                    R.drawable.favorites_active_24px
+                } else {
+                    R.drawable.favorites_inactive_24px
+                }
             )
         }
     }
