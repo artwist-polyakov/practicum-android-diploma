@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.vacancy.domain.impl
 
-import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first

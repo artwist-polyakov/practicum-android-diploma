@@ -2,7 +2,6 @@ package ru.practicum.android.diploma.vacancy.ui
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -58,7 +57,6 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
             }
 
             ivShareButton.setOnClickListener {
-                Log.i(MYLOG, "url = $url")
                 viewModel.shareVacancy(url)
             }
 
@@ -69,7 +67,6 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collect { state ->
-                Log.i(MYLOG, "state = $state")
                 renderState(state)
             }
         }

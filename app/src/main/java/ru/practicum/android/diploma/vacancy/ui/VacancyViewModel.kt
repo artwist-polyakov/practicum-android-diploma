@@ -35,7 +35,7 @@ class VacancyViewModel @Inject constructor(private val interactor: SingleVacancy
         viewModelScope.launch {
             val result = interactor.interactWithVacancyFavor(vacancyID)
             var currentVacancy = (state.value as? VacancyState.Content)?.vacancy
-            currentVacancy  = currentVacancy?.copy(favorite = result)
+            currentVacancy = currentVacancy?.copy(favorite = result)
             currentVacancy?.let {
                 _state.value = VacancyState.Content(it)
             }
