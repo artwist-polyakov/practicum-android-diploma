@@ -23,11 +23,6 @@ import ru.practicum.android.diploma.vacancy.ui.VacancyFragment
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(FragmentSearchBinding::inflate) {
-
-    companion object {
-        private const val CLICK_DEBOUNCE_DELAY = 10L
-    }
-
     override val viewModel: SearchViewModel by viewModels()
     private var onVacancyClickDebounce: ((VacancyGeneral) -> Unit)? = null
     private val vacancyListAdapter = VacancyAdapter(
@@ -36,36 +31,33 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
                 viewModel.handleInteraction(ViewModelInteractionState.setPage(nextPage))
             }
         },
-
-        // кликлистенер
-        object : VacancyAdapter.VacancyClickListener {
-            override fun onClick(data: VacancyGeneral) {
-                onVacancyClickDebounce?.let {
-                    onVacancyClickDebounce!!(data)
-                }
-            }
-        }
-    )
+    ) { data ->
+        onVacancyClickDebounce?.invoke(data)
+    }
 
     override fun initViews() {
-        onVacancyClickDebounce = debounce<VacancyGeneral>(
-            CLICK_DEBOUNCE_DELAY,
-            viewLifecycleOwner.lifecycleScope,
-            false
-        ) { data ->
-            findNavController().navigate(
-                R.id.action_searchFragment_to_vacancyFragment,
-                VacancyFragment.setId(data.id)
-            )
-        }
         binding.vacancyList.root.apply {
-            layoutManager = LinearLayoutManager(context)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = vacancyListAdapter
         }
     }
 
     override fun subscribe() {
+        onVacancyClickDebounce = debounce(
+            CLICK_DEBOUNCE_DELAY,
+            viewLifecycleOwner.lifecycleScope,
+            false,
+            false
+        ) { data ->
+            val bundle = Bundle().apply {
+                putInt(VacancyFragment.ARG_ID, data.id)
+            }
+            findNavController().navigate(
+                R.id.action_searchFragment_to_vacancyFragment,
+                bundle
+            )
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collect { state ->
                 render(state)
@@ -84,9 +76,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
             }
             // todo просчитать другие сценарии зануления числа страниц в адаптере
             ivSearchFieldButton.setOnClickListener {
-                if (tiSearchField.text.toString().isNotEmpty()) {
-                    tiSearchField.text?.clear()
-                }
+                if (tiSearchField.text.toString().isNotEmpty()) tiSearchField.text?.clear()
             }
 
             ivFilter.setOnClickListener {
@@ -121,10 +111,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
                 showDefault()
             }
         }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun showDefault() {
@@ -198,5 +184,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
             measure(0, 0)
         }
         showData()
+    }
+
+//    private fun addData(vacancies: List<VacancyGeneral>) {
+//        showData()
+//        vacancyListAdapter.addData(vacancies)
+//    }
+
+    companion object {
+        private const val CLICK_DEBOUNCE_DELAY = 500L
     }
 }
