@@ -4,12 +4,15 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import ru.practicum.android.diploma.common.data.db.entity.EmployerEntity
 import ru.practicum.android.diploma.common.data.db.entity.VacancyEntity
+import ru.practicum.android.diploma.common.data.dto.ContactsDto
+import ru.practicum.android.diploma.common.data.dto.PhoneDto
 import ru.practicum.android.diploma.common.data.dto.Resource
 import ru.practicum.android.diploma.common.data.dto.VacancyItemDto
 import ru.practicum.android.diploma.common.data.dto.VacancyWithEmployerDTO
 import ru.practicum.android.diploma.common.data.network.response.SingleVacancyResponse
 import ru.practicum.android.diploma.common.domain.models.NetworkErrors
 import ru.practicum.android.diploma.vacancy.domain.api.SingleVacancyConverter
+import ru.practicum.android.diploma.vacancy.domain.models.Contacts
 import ru.practicum.android.diploma.vacancy.domain.models.DetailedVacancyItem
 
 class SingleVacancyConverterImpl(
@@ -32,8 +35,19 @@ class SingleVacancyConverterImpl(
     override fun map(from: VacancyWithEmployerDTO, isFavorite: Boolean): Resource<DetailedVacancyItem> {
         val typeLogo = object : TypeToken<Map<String, String>>() {}.type
         val logoMap: Map<String, String> = gson.fromJson(from.logosJSON, typeLogo)
-        val typeKeySkills = object : TypeToken<List<String>>() {}.type
-        val keySkills: List<String>? = gson.fromJson(from.keySkillsJSON, typeKeySkills)
+        val keySkills: List<String>? = gson.fromJson(from.keySkillsJSON, object : TypeToken<List<String>>() {}.type)
+        val phones: ContactsDto? = gson.fromJson(from.phonesJSON, object : TypeToken<ContactsDto>() {}.type)
+        val contact: Contacts?
+        var listOfPhones: List<Pair<String, String>>? = null
+        if (phones != null) {
+            listOfPhones = phones.phones?.map { phoneDtoToPhone(it) }
+        }
+        contact = Contacts(
+            name = from.contactName,
+            email = from.contactEmail,
+            phones = listOfPhones
+        )
+
         return with(from) {
             Resource.Success(
                 data =
@@ -52,6 +66,7 @@ class SingleVacancyConverterImpl(
                     schedule = schedule,
                     description = jobDescription,
                     keySkills = keySkills,
+                    contacts = contact,
                     favorite = isFavorite
                 )
             )
@@ -112,8 +127,19 @@ class SingleVacancyConverterImpl(
                 schedule = schedule?.name,
                 description = description,
                 keySkills = keySkills?.map { it.name ?: "" },
+                contacts = from.contacts,
                 favorite = isFavorite
+            )
+        }
+    }
 
+    private fun phoneDtoToPhone(from: PhoneDto): Pair<String, String> {
+        return with(from) {
+            Pair(
+                from.comment ?: "",
+                (from.country ?: "").toString()
+                    + " " + (from.city ?: "").toString()
+                    + " " + (from.number ?: "").toString()
             )
         }
     }

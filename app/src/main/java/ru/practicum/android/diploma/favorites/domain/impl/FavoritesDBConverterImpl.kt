@@ -2,10 +2,13 @@ package ru.practicum.android.diploma.favorites.domain.impl
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import ru.practicum.android.diploma.common.data.dto.ContactsDto
+import ru.practicum.android.diploma.common.data.dto.PhoneDto
 import ru.practicum.android.diploma.common.data.dto.VacancyWithEmployerDTO
 import ru.practicum.android.diploma.favorites.domain.api.FavoritesDBConverter
 import ru.practicum.android.diploma.search.domain.models.VacanciesSearchResult
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
+import ru.practicum.android.diploma.vacancy.domain.models.Contacts
 import ru.practicum.android.diploma.vacancy.domain.models.DetailedVacancyItem
 
 class FavoritesDBConverterImpl(
@@ -30,6 +33,18 @@ class FavoritesDBConverterImpl(
     override fun map(from: VacancyWithEmployerDTO): DetailedVacancyItem {
         val type = object : TypeToken<Map<String, String>>() {}.type
         val logoMap: Map<String, String> = gsonService.fromJson(from.logosJSON, type)
+        val typePhones = object : TypeToken<ContactsDto>() {}.type
+        val phones: ContactsDto? = gsonService.fromJson(from.phonesJSON, typePhones)
+        val contact: Contacts?
+        var listOfPhones: List<Pair<String, String>>? = null
+        if (phones != null) {
+            listOfPhones = phones.phones?.map { phoneDtoToPhone(it) }
+        }
+        contact = Contacts(
+            name = from.contactName,
+            email = from.contactEmail,
+            phones = listOfPhones
+        )
         return with(from) {
             DetailedVacancyItem(
                 id = vacancyId,
@@ -46,6 +61,7 @@ class FavoritesDBConverterImpl(
                 schedule = schedule,
                 description = jobDescription,
                 keySkills = gsonService.fromJson(keySkillsJSON, Array<String>::class.java).toList(),
+                contacts = contact,
                 favorite = true
             )
         }
@@ -64,6 +80,17 @@ class FavoritesDBConverterImpl(
                 salaryFrom = salaryFrom,
                 salaryTo = salaryTo,
                 salaryCurrency = currency,
+            )
+        }
+    }
+
+    private fun phoneDtoToPhone(from: PhoneDto): Pair<String, String> {
+        return with(from) {
+            Pair(
+                from.comment ?: "",
+                (from.country ?: "").toString() +
+                    " " + (from.city ?: "").toString() +
+                    " " + (from.number ?: "").toString()
             )
         }
     }

@@ -15,5 +15,6 @@ data class DetailedVacancyItem(
     val schedule: String?,
     val description: String?,
     val keySkills: List<String>?,
+    val contacts: Contacts?,
     val favorite: Boolean = false
 )

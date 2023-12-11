@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.common.data.dto
 
 import com.google.gson.annotations.SerializedName
+import ru.practicum.android.diploma.vacancy.domain.models.Contacts
 
 /**
  * DTO для отдельной вакансии
@@ -21,6 +22,6 @@ data class VacancyItemDto(
     val snippet: SnippetDto?,
     val salary: SalaryDto?,
     val employer: EmployerDto?,
-    val contacts: ContactsDto?,
+    val contacts: Contacts?,
     @SerializedName("key_skills") val keySkills: List<IdNameDto>?,
 )
