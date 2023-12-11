@@ -18,7 +18,7 @@
     <style name="Theme.PracticumAndroidDiploma" parent="Base.Theme.PracticumAndroidDiploma">
         <item name="colorBackground">@color/whiteNight</item>
         <item name="colorOnBackground">@color/blackNight</item>
-        <item name="formsBackgroundColor">@color/gray</item>
+        <item name="formsBackgroundColor">@color/lightGray</item>
         <item name="formsTextColor">@color/blackUniversal</item>
         <item name="formsHintColor">@color/whiteUniversal</item>
         <item name="formsLabelColor">@color/blackNight</item>
