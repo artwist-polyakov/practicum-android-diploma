@@ -54,7 +54,6 @@ class VacancyViewModel @Inject constructor(private val interactor: SingleVacancy
                 _state.value = VacancyState.ConnectionError
             }
         }
-//        _state.emit(_state.value)
     }
 
     fun shareVacancy(url: String) {

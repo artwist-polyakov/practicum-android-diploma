@@ -186,11 +186,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         showData()
     }
 
-//    private fun addData(vacancies: List<VacancyGeneral>) {
-//        showData()
-//        vacancyListAdapter.addData(vacancies)
-//    }
-
     companion object {
         private const val CLICK_DEBOUNCE_DELAY = 500L
     }

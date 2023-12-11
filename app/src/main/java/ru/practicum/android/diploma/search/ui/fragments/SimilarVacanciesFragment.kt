@@ -83,44 +83,27 @@ class SimilarVacanciesFragment :
 
             is SearchScreenState.Error -> {
                 Log.d("SimilarFragmentErrorMyLog", "error message ${state.error}")
-                showProblem(state.error)
+                showEror(state.error)
             }
 
-            is SearchScreenState.Default -> {
-                Log.d("SimilarFragmentLoadingMyLog", "Loading state")
-                showProgressBar()
-            }
-
-            else -> showDefault()
+            else -> showProgressBar()
         }
     }
 
-    private fun showDefault() {
+    private fun showEror(error: ErrorsSearchScreenStates) {
         with(binding) {
             vacancyList.root.visibility = View.GONE
             progressBar.visibility = View.GONE
 
-            llProblemLayout.visibility = View.VISIBLE
-            ivStateImage.setImageResource(R.drawable.image_search)
-            tvStateText.visibility = View.GONE
-        }
-    }
-
-    private fun showProblem(error: ErrorsSearchScreenStates) {
-        with(binding) {
-            vacancyList.root.visibility = View.GONE
-            progressBar.visibility = View.GONE
-
-            llProblemLayout.visibility = View.VISIBLE
-            ivStateImage.setImageResource(error.imageResource)
-            tvStateText.visibility = View.VISIBLE
-            tvStateText.text = getString(error.messageResource)
+            tvErrorMessage.visibility = View.VISIBLE
+            tvErrorMessage.text = getString(error.messageResource)
+            tvErrorMessage.setCompoundDrawablesWithIntrinsicBounds(0, error.imageResource, 0, 0)
         }
     }
 
     private fun showProgressBar() {
         with(binding) {
-            llProblemLayout.visibility = View.GONE
+            tvErrorMessage.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
             vacancyList.root.visibility = View.GONE
         }
@@ -128,7 +111,7 @@ class SimilarVacanciesFragment :
 
     private fun showData() {
         with(binding) {
-            llProblemLayout.visibility = View.GONE
+            tvErrorMessage.visibility = View.GONE
             progressBar.visibility = View.GONE
             vacancyList.root.visibility = View.VISIBLE
         }

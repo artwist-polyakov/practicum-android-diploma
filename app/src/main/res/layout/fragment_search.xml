@@ -98,9 +98,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tl_search_field" />
 
     <TextView
@@ -126,7 +126,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tl_search_field" />
 
     <ProgressBar
         android:id="@+id/pb_bottom_progress_bar"
@@ -134,8 +134,8 @@
         android:layout_height="@dimen/progressbar_size"
         android:indeterminateTint="@color/blue"
         android:indeterminateTintMode="src_in"
-        android:visibility="gone"
         android:paddingBottom="@dimen/navbar_height"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
