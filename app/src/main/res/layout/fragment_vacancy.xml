@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/app_name"
             android:padding="@dimen/image_padding_medium"
+            android:paddingStart="0dp"
             android:src="@drawable/arrow_back_24px" />
 
         <TextView
@@ -304,11 +305,13 @@
                 android:layout_height="@dimen/similarVacation"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/between_text_card"
+                android:layout_marginBottom="@dimen/between_text_card"
                 android:background="@drawable/round_corners_12"
                 android:text="@string/similar_vacancies"
                 android:textAllCaps="false"
                 android:textColor="?attr/colorOnSecondary"
                 app:cornerRadius="@dimen/card_corner_radius"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_comment" />

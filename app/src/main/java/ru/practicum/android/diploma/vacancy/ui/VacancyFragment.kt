@@ -26,7 +26,6 @@ import javax.inject.Inject
 class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(FragmentVacancyBinding::inflate) {
     override val viewModel: VacancyViewModel by viewModels()
     private var id: Int? = null
-    private var url: String = ""
 
     @Inject
     lateinit var networkClient: NetworkClient
@@ -57,7 +56,7 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
             }
 
             ivShareButton.setOnClickListener {
-                viewModel.shareVacancy(url)
+                viewModel.shareVacancy(id ?: 0)
             }
 
             ivLikeButton.setOnClickListener {
@@ -75,7 +74,6 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
     }
 
     private fun fetchScreen(item: DetailedVacancyItem) {
-        url = "https://hh.ru/vacancy/ " + item.id
         with(binding) {
             tvVacancyName.text = item.title
             fetchSalary(item)
@@ -101,11 +99,8 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
                 rvKeySkills.adapter = KeySkillsAdapter(item.keySkills ?: emptyList())
             }
             ivLikeButton.setImageResource(
-                if (item.favorite) {
-                    R.drawable.favorites_active_24px
-                } else {
-                    R.drawable.favorites_inactive_24px
-                }
+                if (item.favorite) R.drawable.favorites_active_24px
+                else R.drawable.favorites_inactive_24px
             )
         }
     }

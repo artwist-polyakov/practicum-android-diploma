@@ -6,29 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".search.ui.fragments.SearchFragment">
 
-    <TextView
-        android:id="@+id/tv_title"
-        style="@style/Text.Medium22"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/ll_header"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingVertical="@dimen/image_padding_medium"
-        android:text="@string/search_for_vacancies"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/iv_filter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:padding="@dimen/image_padding_small"
-        android:src="@drawable/filter_24px"
-        app:layout_constraintBottom_toBottomOf="@id/tv_title"
-        app:layout_constraintEnd_toEndOf="@id/tv_title"
-        app:layout_constraintTop_toTopOf="@id/tv_title" />
+        <TextView
+            style="@style/Text.Medium22"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/search_for_vacancies" />
+
+        <ImageView
+            android:id="@+id/iv_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/app_name"
+            android:padding="@dimen/image_padding_medium"
+            android:src="@drawable/filter_24px" />
+    </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tl_search_field"
@@ -38,7 +41,7 @@
         android:paddingVertical="@dimen/image_padding_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title">
+        app:layout_constraintTop_toBottomOf="@+id/ll_header">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ti_search_field"
@@ -56,6 +59,7 @@
         android:id="@+id/iv_search_field_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
         android:padding="@dimen/icon_padding"
         android:paddingVertical="@dimen/image_padding_medium"
         android:src="@drawable/search_24px"
@@ -78,6 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/app_name"
             tools:src="@drawable/image_cat" />
 
         <TextView

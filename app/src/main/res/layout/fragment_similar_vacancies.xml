@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/app_name"
             android:padding="@dimen/image_padding_medium"
+            android:paddingStart="0dp"
             android:src="@drawable/arrow_back_24px" />
 
         <TextView

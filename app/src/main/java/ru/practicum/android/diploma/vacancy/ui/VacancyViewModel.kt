@@ -56,7 +56,10 @@ class VacancyViewModel @Inject constructor(private val interactor: SingleVacancy
         }
     }
 
-    fun shareVacancy(url: String) {
-        interactor.shareVacancy(url)
+    fun shareVacancy(id: Int) {
+        interactor.shareVacancy(BASE_URL + id.toString())
+    }
+    companion object{
+        const val BASE_URL = "https://hh.ru/vacancy/"
     }
 }
