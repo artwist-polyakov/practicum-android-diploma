@@ -88,26 +88,18 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     private fun render(state: SearchScreenState) {
         when (state) {
             is SearchScreenState.Content -> {
-                Log.d("SearchFragmentContentMyLog", "content ${state.vacancies}")
                 showData(state)
             }
 
             is SearchScreenState.Error -> {
-                Log.d("SearchFragmentErrorMyLog", "error message ${state.error}")
                 showProblem(state.error)
             }
 
             is SearchScreenState.Loading -> {
-                Log.d("SearchFragmentLoadingMyLog", "Loading state")
-                if (state.forPage == 0) {
-                    showCentralProgressBar()
-                } else {
-//                    showBottomProgressBar()
-                }
+                if (state.forPage == 0) showCentralProgressBar()
             }
 
             is SearchScreenState.Default -> {
-                Log.d("SearchFragmentLoadingMyLog", "Default state")
                 showDefault()
             }
         }
@@ -126,6 +118,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     }
 
     private fun showProblem(error: ErrorsSearchScreenStates) {
+        vacancyListAdapter.setScrollLoadingEnabled(false)
         with(binding) {
             vacancyList.root.visibility = View.GONE
             vacancyCount.visibility = View.GONE
@@ -148,16 +141,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         }
     }
 
-//    private fun showBottomProgressBar() {
-//        with(binding) {
-//            llProblemLayout.visibility = View.GONE
-//            vacancyList.root.visibility = View.VISIBLE
-//            vacancyCount.visibility = View.VISIBLE
-//
-//            pbBottomProgressBar.visibility = View.VISIBLE
-//        }
-//    }
-
     private fun showData() {
         with(binding) {
             llProblemLayout.visibility = View.GONE
@@ -174,6 +157,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     }
 
     private fun showData(content: SearchScreenState.Content) {
+        vacancyListAdapter.setScrollLoadingEnabled((content.currentPage != content.totalPages-1))
         vacancyListAdapter.setData(content.vacancies, content.currentPage)
         binding.vacancyCount.apply {
             text = resources.getQuantityString(

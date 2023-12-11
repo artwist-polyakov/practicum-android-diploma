@@ -71,6 +71,7 @@ class VacancyAdapter(
 
     private var currentPage: Int = 0
     private var dataList = ArrayList<VacancyGeneral>()
+    private var showScrollLoading = true
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VacancyViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -83,7 +84,7 @@ class VacancyAdapter(
             scrollController.onScrollToBottom(currentPage + 1)
         }
         holder.bind(dataList[position])
-        if (position == dataList.size - 1) holder.showLoadingIndicator() else holder.hideLoadingIndicator()
+        if ( showScrollLoading && position == dataList.size - 1) holder.showLoadingIndicator() else holder.hideLoadingIndicator()
 
     }
 
@@ -101,6 +102,10 @@ class VacancyAdapter(
 
     fun clearPageCounter() {
         currentPage = 0
+    }
+
+    fun setScrollLoadingEnabled(show: Boolean) {
+        showScrollLoading = show
     }
 
     interface ListScrollListener {
