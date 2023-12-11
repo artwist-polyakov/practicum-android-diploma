@@ -21,6 +21,16 @@ class SingleVacancyInteractorImpl(
 ) : SingleVacancyInteractor {
     override suspend fun getVacancy(id: Int): Flow<Resource<DetailedVacancyItem>> {
         val isFavorite = isVacancyFavorite(id)
+
+        // todo забрать этот код в интерактор избранного
+
+//                return db.vacancyEmployerReferenceDao().getVacancyWithEmployer(id).map {
+//                    it.let {
+//                        it?.let { vacancyConverter.map(it, isFavorite) }
+//                            ?: Resource.Error(NetworkErrors.UnknownError)
+//                    }
+//                }
+//            }
         return repository.getVacancy(id).map { vacancyConverter.map(it, isFavorite) }
     }
 

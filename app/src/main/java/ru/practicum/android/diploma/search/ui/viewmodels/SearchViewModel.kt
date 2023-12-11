@@ -20,21 +20,13 @@ import ru.practicum.android.diploma.search.ui.viewmodels.states.ViewModelInterac
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(
+open class SearchViewModel @Inject constructor(
     private val interactor: SearchInteractor
 ) : BaseViewModel() {
-
-    companion object {
-        private const val SEARCH_DEBOUNCE_DELAY = 2000L
-    }
-
     private var searchSettings: SearchSettingsState = SearchSettingsState()
-
-    // todo кажется можно не хранить их тут — так как вакансии будут в стейте
     private var vacancies: MutableList<VacancyGeneral> = mutableListOf()
-
     private var _state = MutableStateFlow<SearchScreenState>(SearchScreenState.Error(ErrorsSearchScreenStates.EMPTY))
-    val state: StateFlow<SearchScreenState>
+    open val state: StateFlow<SearchScreenState>
         get() = _state
 
     private val searchDebounce = debounce<SearchSettingsState>(
@@ -119,7 +111,8 @@ class SearchViewModel @Inject constructor(
                         getVacancies(searchSettings)
                     }
                 }
-                else -> {}
+
+                else -> Unit
             }
         } else {
             vacancies.clear()
@@ -161,5 +154,9 @@ class SearchViewModel @Inject constructor(
                 searchSettings.copy(currentPage = interaction.page)
         }
         handleSearchSettings(searchSettings)
+    }
+
+    companion object {
+        private const val SEARCH_DEBOUNCE_DELAY = 2000L
     }
 }
