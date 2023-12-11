@@ -49,6 +49,7 @@
             tools:text="от 1 500 $" />
 
         <ProgressBar
+            android:id="@+id/pb_loading_bar"
             android:layout_width="@dimen/progressbar_size"
             android:layout_height="@dimen/progressbar_size"
             android:layout_marginEnd="@dimen/vacancy_item_margin"

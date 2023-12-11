@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.search.ui.fragments
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -34,6 +35,14 @@ class VacancyAdapter(
             companyImage.shapeAppearanceModel = shapeAppearanceModel
 
             itemView.setOnClickListener { clickListener(data) }
+        }
+
+        fun showLoadingInicator() {
+            binding.pbLoadingBar.visibility = View.VISIBLE
+        }
+
+        fun hideLoadingIndicator() {
+            binding.pbLoadingBar.visibility = View.GONE
         }
 
         private fun parseSalary(from: Int?, to: Int?, currency: String?): String {
@@ -74,6 +83,7 @@ class VacancyAdapter(
             scrollController.onScrollToBottom(currentPage + 1)
         }
         holder.bind(dataList[position])
+        holder.showLoadingInicator()
     }
 
     override fun getItemCount(): Int = dataList.size
