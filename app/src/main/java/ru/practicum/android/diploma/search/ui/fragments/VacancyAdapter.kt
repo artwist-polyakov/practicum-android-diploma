@@ -83,7 +83,7 @@ class VacancyAdapter(
             scrollController.onScrollToBottom(currentPage + 1)
         }
         holder.bind(dataList[position])
-        if (position % 2 == 0) holder.showLoadingIndicator() else holder.hideLoadingIndicator()
+        if (position == dataList.size - 1) holder.showLoadingIndicator() else holder.hideLoadingIndicator()
 
     }
 
