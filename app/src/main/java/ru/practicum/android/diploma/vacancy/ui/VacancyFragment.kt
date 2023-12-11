@@ -2,7 +2,6 @@ package ru.practicum.android.diploma.vacancy.ui
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -58,18 +57,18 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
             }
 
             ivShareButton.setOnClickListener {
-                Log.i(MYLOG, "url = $url")
                 viewModel.shareVacancy(url)
             }
 
             ivLikeButton.setOnClickListener {
-                // добавить обработчик
+                id?.let {
+                    viewModel.interactWithLike(it)
+                }
             }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collect { state ->
-                Log.i(MYLOG, "state = $state")
                 renderState(state)
             }
         }
@@ -101,6 +100,13 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
                 rvKeySkills.layoutManager = LinearLayoutManager(requireContext())
                 rvKeySkills.adapter = KeySkillsAdapter(item.keySkills ?: emptyList())
             }
+            ivLikeButton.setImageResource(
+                if (item.favorite) {
+                    R.drawable.favorites_active_24px
+                } else {
+                    R.drawable.favorites_inactive_24px
+                }
+            )
         }
     }
 

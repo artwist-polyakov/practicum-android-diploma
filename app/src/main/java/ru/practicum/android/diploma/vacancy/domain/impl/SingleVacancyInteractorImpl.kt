@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.common.data.db.AppDatabase
 import ru.practicum.android.diploma.common.data.dto.Resource
+import ru.practicum.android.diploma.common.data.dto.VacancyItemDto
 import ru.practicum.android.diploma.search.data.HHSearchRepository
 import ru.practicum.android.diploma.vacancy.domain.api.ExternalNavigator
 import ru.practicum.android.diploma.vacancy.domain.api.SingleVacancyConverter
@@ -19,6 +20,8 @@ class SingleVacancyInteractorImpl(
     private val db: AppDatabase,
     private val externalNavigator: ExternalNavigator
 ) : SingleVacancyInteractor {
+
+    private var currentVacancy: VacancyItemDto? = null
     override suspend fun getVacancy(id: Int): Flow<Resource<DetailedVacancyItem>> {
         val isFavorite = isVacancyFavorite(id)
 
@@ -31,7 +34,9 @@ class SingleVacancyInteractorImpl(
 //                    }
 //                }
 //            }
-        return repository.getVacancy(id).map { vacancyConverter.map(it, isFavorite) }
+        return repository.getVacancy(id).map {
+            currentVacancy = it.data?.vacancy
+            vacancyConverter.map(it, isFavorite) }
     }
 
     private suspend fun isVacancyFavorite(vacancyId: Int): Boolean {
@@ -44,13 +49,10 @@ class SingleVacancyInteractorImpl(
         if (isVacancyFavorite(vacancyId)) {
             db.vacancyDao().removeVacancyById(vacancyId)
         } else {
-            val vacancy = repository.getVacancy(vacancyId).first()
-            if (vacancy is Resource.Success) {
-                vacancy.data?.vacancy?.let {
-                    val pair = vacancyConverter.map(it)
-                    db.vacancyEmployerReferenceDao().addVacancy(pair.first, pair.second)
-                    return true
-                }
+            currentVacancy?.let {
+                val pair = vacancyConverter.map(it)
+                db.vacancyEmployerReferenceDao().addVacancy(pair.first, pair.second)
+                return true
             }
         }
         return false
