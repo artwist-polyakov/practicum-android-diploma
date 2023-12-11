@@ -60,7 +60,6 @@ open class SearchViewModel @Inject constructor(
     }
 
     private fun handleSearchResponse(result: Resource<VacanciesSearchResult>) {
-
         when (result) {
             is Resource.Success -> {
                 if (result.data?.vacancies.isNullOrEmpty()) {

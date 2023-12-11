@@ -1,7 +1,6 @@
 package ru.practicum.android.diploma.search.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
@@ -162,7 +161,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     }
 
     private fun showData(content: SearchScreenState.Content) {
-        vacancyListAdapter.setScrollLoadingEnabled((content.currentPage != content.totalPages - 1))
+        vacancyListAdapter.setScrollLoadingEnabled(content.currentPage != content.totalPages - 1)
         vacancyListAdapter.setData(content.vacancies, content.currentPage)
         binding.vacancyCount.apply {
             text = resources.getQuantityString(
