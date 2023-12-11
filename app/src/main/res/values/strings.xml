@@ -49,6 +49,7 @@
     <string name="phone_number">Телефон</string>
     <string name="comment">Комментарий</string>
     <string name="similar_vacancies">Похожие вакансии</string>
+    <string name="html_content">&lt;html&gt;&lt;head&gt;%s&lt;/head&gt;&lt;body&gt;%s&lt;/body&gt;&lt;/html&gt;</string>
 
     <string name="favorite">Избранное</string>
     <string name="empty_list">Список пуст</string>

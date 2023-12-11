@@ -184,16 +184,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_schedule" />
 
-            <TextView
-                android:id="@+id/tv_description_text"
-                style="@style/Text.Regular16"
-                android:layout_width="wrap_content"
+            <WebView
+                android:id="@+id/wv_description"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/standart_margin"
-                android:color="?attr/mainTextColor"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_description_title"
-                tools:text="[Тело описания]" />
+                app:layout_constraintTop_toBottomOf="@id/tv_description_title" />
 
             <TextView
                 android:id="@+id/tv_key_skills_title"
@@ -204,7 +200,7 @@
                 android:color="?attr/mainTextColor"
                 android:text="@string/worker_skills"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_description_text" />
+                app:layout_constraintTop_toBottomOf="@id/wv_description" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_key_skills"
