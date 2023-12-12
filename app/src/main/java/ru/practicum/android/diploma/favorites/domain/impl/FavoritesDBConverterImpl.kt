@@ -73,6 +73,7 @@ class FavoritesDBConverterImpl(
         return with(from) {
             VacancyGeneral(
                 id = vacancyId,
+                region = city,
                 title = title,
                 employerName = employerName,
                 employerLogo = logoMap.getOrDefault("medium", null),
