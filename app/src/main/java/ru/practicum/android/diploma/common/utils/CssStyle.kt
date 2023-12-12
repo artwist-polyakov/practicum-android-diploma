@@ -16,22 +16,48 @@ object CssStyle {
         val fontSizeHeader = 22
 
         return """
-            <link href="https://db.onlinewebfonts.com/c/ee1831a251980402ea7540f4caf2c63f?family=YS+Display+Medium+Regular" rel="stylesheet">
-            <link href="https://db.onlinewebfonts.com/c/dcd470f69035d68d8d0aba8ed7ba9d6d?family=YS+Display+Regular+Regular" rel="stylesheet">
             <style type="text/css">
+                font-face {
+                   font-family: 'custom_regular';
+                   src: url('file:///android_asset/fonts/ys_display_regular.ttf') format('truetype');
+                 }
+                 @font-face {
+                   font-family: 'custom_medium';
+                   src: url('file:///android_asset/fonts/ys_display_medium.ttf') format('truetype');
+                 }
+                 @font-face {
+                   font-family: 'custom_bold
+                   src: url('file:///android_asset/fonts/ys_display_bold.ttf') format('truetype');
+                 }
+
+            
                 body {
-                    font-weight: lighter;
-                    font-family: 'YS Display Regular Regular';
+                    font-family: 'custom_regular';
                     font-size: ${fontSizeBody}px;
                     color: $mainColorHex;
                 }
                 .title {
-                    font-family: 'YS Display Medium Regular';
+                    font-family: 'custom_medium';
                     font-size: ${fontSizeHeader}px;
                     color: $mainColorHex;
                 }
+                
+                strong {
+                    font-weight: bold;
+                    font-family: 'custom_regular';
+                    font-size: ${fontSizeBody}px;
+                    color: $mainColorHex;
+                }
+                
+                b {
+                    font-weight: bold;
+                    font-family: 'custom_regular';
+                    font-size: ${fontSizeBody}px;
+                    color: $mainColorHex;
+                }
+                
                 a {
-                    font-family: 'YS Display Regular Regular';
+                    font-family: 'custom_regular';
                     font-size: ${fontSizeBody}px;
                     color: $blueColorHex; 
                     text-decoration: none;
@@ -44,16 +70,20 @@ object CssStyle {
                     margin-bottom: 16px;
                 }
                 .contact-info {
-                    font-family: 'YS Display Medium Regular';
+                    font-family: 'custom_medium';
                     font-size: ${fontSizeBody}px;
                 }
                 ul {
-                    margin: 0px;
+                    margin: 12px;
                     padding-left: 16px;
                 }
                 ol {
                     margin: 12px;
-                    padding-left: 24px;
+                    padding-left: 16px;
+                }
+                
+                li {
+                    padding-left: 8px;
                 }
             </style>
             """.trimIndent()

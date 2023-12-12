@@ -21,7 +21,7 @@ data class DetailedVacancyItem(
 ) {
     fun configureHtml(): String {
         val builder: StringBuilder = StringBuilder()
-        builder.append("<span class=\"title\">Описание вакансии</span>")
+        builder.append("<br><span class=\"title\">Описание вакансии</span>")
         builder.append(description)
         if (keySkills.isNullOrEmpty() == false) {
             keySkills?.let {
