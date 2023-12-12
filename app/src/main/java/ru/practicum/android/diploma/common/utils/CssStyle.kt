@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat
 import ru.practicum.android.diploma.R
 import java.util.Locale
 
+@Suppress("detekt.LongMethod", "detekt.style.MagicNumber")
 object CssStyle {
     fun getStyle(context: Context): String {
         val mainColorInt = ContextCompat.getColor(context, R.color.htmlText)
@@ -86,7 +87,7 @@ object CssStyle {
                     padding-left: 8px;
                 }
             </style>
-            """.trimIndent()
+        """.trimIndent()
     }
 
     const val COLOR_LOCALE = "#%06X"

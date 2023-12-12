@@ -19,6 +19,7 @@ data class DetailedVacancyItem(
     val contacts: Contacts?,
     val favorite: Boolean = false
 ) {
+    @Suppress("StringLiteralDuplication")
     fun configureHtml(): String {
         val builder: StringBuilder = StringBuilder()
         builder.append("<br><span class=\"title\">Описание вакансии</span>")
@@ -44,15 +45,15 @@ data class DetailedVacancyItem(
         if (contacts?.name.isNullOrEmpty() == false) {
             contacts?.let {
                 builder.append("<span class=\"title margin\">Контакты</span>")
-                builder.append("<div class=\"margin\"><span class=\"contact-info\">Контактное лицо</span><br>")
+                builder.append("$OPEN_DIV_STR\"margin\"><span class=\"contact-info\">Контактное лицо</span><br>")
                 builder.append(it.name)
-                builder.append("</div>")
-                builder.append("<div class=\"margin\">")
+                builder.append(CLOSE_DIV_STR)
+                builder.append("$OPEN_DIV_STR\"margin\">")
                 builder.append("<span class=\"contact-info\">E-mail</span>")
                 builder.append("<br><a href=\"mailto:${it.email}\">")
                 builder.append(it.email)
                 builder.append("</a><br>")
-                builder.append("</div>")
+                builder.append(CLOSE_DIV_STR)
                 configureHTMLPhones(builder, it.phones)
             }
         }
@@ -70,13 +71,13 @@ data class DetailedVacancyItem(
                 builder.append("<br><a href=\"tel:$cleanPhone\">")
                 builder.append(cleanPhone)
                 builder.append("</a><br>")
-                builder.append("</div>")
+                builder.append(CLOSE_DIV_STR)
                 phone.first?.let { comment ->
-                    builder.append("<div class=\"margin\">")
+                    builder.append("$OPEN_DIV_STR\"margin\">")
                     builder.append("<span class=\"contact-info\">Комментарий</span>")
                     builder.append("<br>")
                     builder.append(comment)
-                    builder.append("<br></div>")
+                    builder.append("<br>$CLOSE_DIV_STR")
                 }
             }
         }
@@ -86,6 +87,11 @@ data class DetailedVacancyItem(
     private fun formatPhoneNumber(phone: String): String {
         val digits = phone.replace(Regex("[^\\d]"), "")
         return digits.replace(Regex("(\\d)(\\d{3})(\\d{3})(\\d{2})(\\d{2})"), "+$1 ($2) $3-$4-$5")
+    }
+
+    companion object {
+        const val CLOSE_DIV_STR = "</div>"
+        const val OPEN_DIV_STR = "<div class="
     }
 
 }
