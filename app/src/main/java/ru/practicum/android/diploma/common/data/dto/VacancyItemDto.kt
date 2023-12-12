@@ -22,6 +22,6 @@ data class VacancyItemDto(
     val snippet: SnippetDto?,
     val salary: SalaryDto?,
     val employer: EmployerDto?,
-    val contacts: Contacts?,
+    val contacts: ContactsDto?,
     @SerializedName("key_skills") val keySkills: List<IdNameDto>?,
 )
