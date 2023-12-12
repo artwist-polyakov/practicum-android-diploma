@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/app_name"
             android:padding="@dimen/image_padding_medium"
+            android:paddingStart="0dp"
             android:src="@drawable/arrow_back_24px" />
 
         <TextView
@@ -44,36 +45,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ll_header" />
 
-
-    <LinearLayout
-        android:id="@+id/ll_problem_layout"
+    <TextView
+        android:id="@+id/tv_error_message"
+        style="@style/Text.Medium22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_marginTop="@dimen/standart_margin"
+        android:gravity="center_horizontal"
+        android:text="@string/no_internet"
+        app:drawableTopCompat="@drawable/image_scull"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ll_header"
-        tools:visibility="gone">
-
-        <ImageView
-            android:id="@+id/iv_state_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            tools:src="@drawable/image_cat" />
-
-        <TextView
-            android:id="@+id/tv_state_text"
-            style="@style/Text.Medium22"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginHorizontal="44dp"
-            android:layout_marginTop="16dp"
-            android:gravity="center_horizontal"
-            tools:text="@string/no_internet" />
-    </LinearLayout>
+        tools:visibility="visible" />
 
     <ProgressBar
         android:id="@+id/progress_bar"

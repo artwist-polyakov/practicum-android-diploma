@@ -26,7 +26,6 @@ import javax.inject.Inject
 class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(FragmentVacancyBinding::inflate) {
     override val viewModel: VacancyViewModel by viewModels()
     private var id: Int? = null
-    private var url: String = ""
 
     @Inject
     lateinit var networkClient: NetworkClient
@@ -57,7 +56,7 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
             }
 
             ivShareButton.setOnClickListener {
-                viewModel.shareVacancy(url)
+                viewModel.shareVacancy(id ?: 0)
             }
 
             ivLikeButton.setOnClickListener {
@@ -75,7 +74,6 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
     }
 
     private fun fetchScreen(item: DetailedVacancyItem) {
-        url = "https://hh.ru/vacancy/ " + item.id
         with(binding) {
             tvVacancyName.text = item.title
             fetchSalary(item)

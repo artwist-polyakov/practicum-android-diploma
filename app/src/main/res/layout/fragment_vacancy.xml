@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/app_name"
             android:padding="@dimen/image_padding_medium"
+            android:paddingStart="0dp"
             android:src="@drawable/arrow_back_24px" />
 
         <TextView
@@ -31,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/standart_margin"
             android:layout_weight="1"
-            android:text="@string/vacancyTopText" />
+            android:text="@string/vacancy" />
 
         <ImageView
             android:id="@+id/iv_share_button"
@@ -60,7 +61,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_body"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +73,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/between_text_card"
-                android:color="?attr/mainTextColor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="[Наименование вакансии]" />
@@ -83,7 +83,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/zero"
-                android:color="?attr/mainTextColor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_vacancy_name"
                 tools:text="[ЗП от %s до %s %s]" />
@@ -121,10 +120,10 @@
                     android:layout_marginStart="@dimen/text_in_card"
                     android:layout_marginTop="@dimen/standart_margin"
                     android:maxLines="1"
-                    android:text="@string/employerNameText"
                     android:textColor="?attr/colorTertiary"
                     app:layout_constraintStart_toEndOf="@id/card_view"
-                    app:layout_constraintTop_toBottomOf="@id/card_view" />
+                    app:layout_constraintTop_toBottomOf="@id/card_view"
+                    tools:text="[Название компании]" />
 
                 <TextView
                     android:id="@+id/tv_city_text"
@@ -133,10 +132,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/text_in_card"
                     android:layout_marginTop="@dimen/city_in_card"
-                    android:text="@string/cityText"
                     android:textColor="?attr/colorTertiary"
                     app:layout_constraintStart_toEndOf="@id/card_view"
-                    app:layout_constraintTop_toBottomOf="@id/card_view" />
+                    app:layout_constraintTop_toBottomOf="@id/card_view"
+                    tools:text="[Город]" />
             </androidx.cardview.widget.CardView>
 
             <TextView
@@ -145,7 +144,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/between_text_card"
-                android:color="?attr/mainTextColor"
                 android:text="@string/required_expirience"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/card_view" />
@@ -156,7 +154,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/microTop"
-                android:color="?attr/mainTextColor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_experience_text"
                 tools:text="[От %s до %s]" />
@@ -167,7 +164,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/image_margin_medium"
-                android:color="?attr/mainTextColor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_experience"
                 tools:text="[График работы]" />
@@ -178,8 +174,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/big_top"
-                android:color="?attr/mainTextColor"
-                android:text="@string/description"
+                android:text="@string/vacancy_description"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_schedule" />
 
@@ -187,6 +182,7 @@
                 android:id="@+id/wv_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/negative_margin_medium"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_description_title" />
 
@@ -196,8 +192,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/between_text_card"
-                android:color="?attr/mainTextColor"
-                android:text="@string/worker_skills"
+                android:text="@string/key_skills"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/wv_description" />
 
@@ -217,8 +212,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/between_text_card"
-                android:color="?attr/mainTextColor"
-                android:text="@string/contact_chapter"
+                android:text="@string/contacts"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rv_key_skills" />
 
@@ -228,8 +222,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/standart_margin"
-                android:color="?attr/mainTextColor"
-                android:text="@string/contact_person_text"
+                android:text="@string/contact_person"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_contacts_text" />
 
@@ -239,10 +232,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/microTop"
-                android:color="?attr/mainTextColor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_contact_person_text"
-                tools:text="Ирина" />
+                tools:text="[Ирина]" />
 
             <TextView
                 android:id="@+id/tv_e_mail_text"
@@ -250,8 +242,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/standart_margin"
-                android:color="?attr/mainTextColor"
-                android:text="@string/e_mail"
+                android:text="@string/email"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_contact_person" />
 
@@ -261,10 +252,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/microTop"
-                android:text="@string/hrEmail"
                 android:textColor="?attr/textFillColor"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_e_mail_text" />
+                app:layout_constraintTop_toBottomOf="@id/tv_e_mail_text"
+                tools:text="[hr_email@email.com]" />
 
             <TextView
                 android:id="@+id/tv_phone_text"
@@ -272,8 +263,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/standart_margin"
-                android:color="?attr/mainTextColor"
-                android:text="@string/phoneText"
+                android:text="@string/phone_number"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_e_mail" />
 
@@ -283,10 +273,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/microTop"
-                android:text="@string/example_phone"
                 android:textColor="?attr/textFillColor"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_phone_text" />
+                app:layout_constraintTop_toBottomOf="@id/tv_phone_text"
+                tools:text="[+74952223344]" />
 
             <TextView
                 android:id="@+id/tv_comment_text"
@@ -294,8 +284,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/standart_margin"
-                android:color="?attr/mainTextColor"
-                android:text="@string/comment_text"
+                android:text="@string/comment"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_phone" />
 
@@ -305,7 +294,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/microTop"
-                android:color="?attr/mainTextColor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_comment_text"
                 tools:text="[Текст комментария]" />
@@ -317,11 +305,13 @@
                 android:layout_height="@dimen/similarVacation"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/between_text_card"
+                android:layout_marginBottom="@dimen/between_text_card"
                 android:background="@drawable/round_corners_12"
-                android:text="@string/similar_vacations"
+                android:text="@string/similar_vacancies"
                 android:textAllCaps="false"
                 android:textColor="?attr/colorOnSecondary"
-                app:cornerRadius="12dp"
+                app:cornerRadius="@dimen/card_corner_radius"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_comment" />

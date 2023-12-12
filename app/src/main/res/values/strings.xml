@@ -6,10 +6,12 @@
     <string name="server_error">Ошибка сервера</string>
     <string name="no_vacancies">Не удалось получить список вакансий</string>
 
+    <!--    Ресурсы для экрана Поиска    -->
     <string name="main">Главная</string>
     <string name="search_for_vacancies">Поиск вакансий</string>
     <string name="enter_request">Введите запрос</string>
 
+    <!--    Ресурсы для экрана Настройки фильтрации    -->
     <string name="filter_settings">Настройки фильтрации</string>
     <string name="workplace">Место работы</string>
     <string name="industry">Отрасль</string>
@@ -30,6 +32,7 @@
     <string name="apply">Применить</string>
     <string name="reset">Сбросить</string>
 
+    <!--    Ресурсы для экрана деталей вакансии    -->
     <string name="vacancy">Вакансия</string>
     <string name="salary_from">от %s %s</string>
     <string name="salary_to">до %s %s</string>
@@ -51,41 +54,16 @@
     <string name="similar_vacancies">Похожие вакансии</string>
     <string name="html_content">&lt;html&gt;&lt;head&gt;%s&lt;/head&gt;&lt;body&gt;%s&lt;/body&gt;&lt;/html&gt;</string>
 
+    <!--    Ресурсы для экрана Избранное    -->
     <string name="favorite">Избранное</string>
     <string name="empty_list">Список пуст</string>
 
+    <!--    Ресурсы для экрана Команда    -->
     <string name="team">Команда</string>
-    <string name="applicationTeamText">Над приложением работали</string>
+    <string name="application_team_text">Над приложением работали</string>
     <string name="APolyakovName">Александр Поляков</string>
     <string name="AZinchenkoName">Алексей Зинченко</string>
     <string name="AKochekovName">Антон Кочеков</string>
     <string name="NRyabcevName">Николай Рябцев</string>
-    <string name="vacancyTopText">Вакансия</string>
-    <string name="vacancyName">Наименование вакансии</string>
-    <string name="salaryText">от мин до макс зарплаты</string>
-    <string name="employerNameText">Наименование работодателя</string>
-    <string name="cityText">Город</string>
-    <string name="_1_3">от 1 года до 3 лет</string>
-    <string name="description">Описание вакансии</string>
-    <string name="jobFunctions">  * Разные обязанности \n* Еще немного</string>
-    <string name="skills">Требования</string>
-    <string name="skills_list">  * Разные требования \n* Еще требования</string>
-    <string name="conditionText">Условия</string>
-    <string name="conditionslist">* Разные условия \n* Еще условия</string>
-    <string name="worker_skills">Ключевые навыки</string>
-    <string name="worker_skill_list">* Разные наыки \n* Еще навыки</string>
-    <string name="e_mail">E-mail</string>
-    <string name="phoneText">Телефон</string>
-    <string name="hrEmail">someEmail@yandex.ru</string>
-    <string name="example_phone">+7-555-XXX-XX-XX</string>
-    <string name="comment_text">Комментарий</string>
-    <string name="job_comment">Некий комментарий</string>
-    <string name="similar_vacations">Похожие вакансии</string>
-    <string name="contact_chapter">Контакты</string>
-    <string name="contact_person_text">Контактное лицо</string>
-    <string name="from_salary">От&#160;</string>
-    <string name="min_salary_text">минимума&#160;</string>
-    <string name="to_string"><![CDATA[до&#160;]]></string>
-    <string name="to_max_salary">максимума</string>
 
 </resources>
