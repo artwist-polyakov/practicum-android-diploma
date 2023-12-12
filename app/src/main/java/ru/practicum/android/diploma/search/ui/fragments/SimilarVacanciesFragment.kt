@@ -25,13 +25,7 @@ class SimilarVacanciesFragment :
     BaseFragment<FragmentSimilarVacanciesBinding, SimilarVacanciesViewModel>(FragmentSimilarVacanciesBinding::inflate) {
     override val viewModel: SimilarVacanciesViewModel by viewModels()
     private var onVacancyClickDebounce: ((VacancyGeneral) -> Unit)? = null
-    private val vacancyListAdapter = VacancyAdapter(
-        object : VacancyAdapter.ListScrollListener {
-            override fun onScrollToBottom(nextPage: Int) {
-                viewModel.handleInteraction(ViewModelInteractionState.setPage(nextPage))
-            }
-        },
-    ) { data ->
+    private val vacancyListAdapter = VacancyAdapter() { data ->
         onVacancyClickDebounce?.invoke(data)
     }
 

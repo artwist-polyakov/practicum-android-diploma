@@ -26,6 +26,7 @@ open class SearchViewModel @Inject constructor(
     private var searchSettings: SearchSettingsState = SearchSettingsState()
     private var vacancies: MutableList<VacancyGeneral> = mutableListOf()
     private var showSnackBar: Boolean = false
+    private var totalPages: Int = 0
     private var _state = MutableStateFlow<SearchScreenState>(SearchScreenState.Error(ErrorsSearchScreenStates.EMPTY))
     open val state: StateFlow<SearchScreenState>
         get() = _state
@@ -62,6 +63,9 @@ open class SearchViewModel @Inject constructor(
     private fun handleSearchResponse(result: Resource<VacanciesSearchResult>) {
         when (result) {
             is Resource.Success -> {
+                result.data?.let {
+                    totalPages = it.totalPages
+                }
                 if (result.data?.vacancies.isNullOrEmpty()) {
                     showSnackBar = false
                     _state.value = SearchScreenState.Error(ErrorsSearchScreenStates.NOT_FOUND, showSnackBar)
@@ -108,14 +112,8 @@ open class SearchViewModel @Inject constructor(
         }
 
         if (searchSettings.currentPage > 0) {
-            when (_state.value) {
-                is SearchScreenState.Content -> {
-                    if (searchSettings.currentPage < (_state.value as SearchScreenState.Content).totalPages) {
+            if (searchSettings.currentPage < totalPages) {
                         getVacancies(searchSettings)
-                    }
-                }
-
-                else -> Unit
             }
         } else {
             vacancies.clear()
@@ -149,6 +147,7 @@ open class SearchViewModel @Inject constructor(
             }
 
             is ViewModelInteractionState.setQuery -> {
+                showSnackBar = false
                 newSearchSettings = newSearchSettings.copy(currentPage = 0)
                 newSearchSettings =
                     newSearchSettings.copy(currentQuery = interaction.query)
@@ -162,6 +161,9 @@ open class SearchViewModel @Inject constructor(
             handleSearchSettings(searchSettings)
         }
     }
+    fun giveMyPageToReload(): Int =
+        searchSettings.currentPage
+
 
     companion object {
         private const val SEARCH_DEBOUNCE_DELAY = 2000L

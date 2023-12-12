@@ -12,7 +12,6 @@ import ru.practicum.android.diploma.databinding.VacancyListItemBinding
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
 
 class VacancyAdapter(
-    private val scrollController: ListScrollListener,
     private val clickListener: (VacancyGeneral) -> Unit
 ) : RecyclerView.Adapter<VacancyAdapter.VacancyViewHolder>() {
 
@@ -80,9 +79,6 @@ class VacancyAdapter(
     }
 
     override fun onBindViewHolder(holder: VacancyViewHolder, position: Int) {
-        if (position == dataList.size - LOADING_THRESHOLD) {
-            scrollController.onScrollToBottom(currentPage + 1)
-        }
         holder.bind(dataList[position])
         if (showScrollLoading && position == dataList.size - 1) {
             holder.showLoadingIndicator()
@@ -114,9 +110,5 @@ class VacancyAdapter(
 
     interface ListScrollListener {
         fun onScrollToBottom(nextPage: Int)
-    }
-
-    companion object {
-        private const val LOADING_THRESHOLD = 3
     }
 }
