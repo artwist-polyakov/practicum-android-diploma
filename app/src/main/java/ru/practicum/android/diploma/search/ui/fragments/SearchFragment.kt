@@ -25,13 +25,7 @@ import ru.practicum.android.diploma.vacancy.ui.VacancyFragment
 class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(FragmentSearchBinding::inflate) {
     override val viewModel: SearchViewModel by viewModels()
     private var onVacancyClickDebounce: ((VacancyGeneral) -> Unit)? = null
-    private val vacancyListAdapter = VacancyAdapter(
-        object : VacancyAdapter.ListScrollListener {
-            override fun onScrollToBottom(nextPage: Int) {
-                viewModel.handleInteraction(ViewModelInteractionState.setPage(nextPage))
-            }
-        },
-    ) { data ->
+    private val vacancyListAdapter = VacancyAdapter() { data ->
         onVacancyClickDebounce?.invoke(data)
     }
 
@@ -39,7 +33,24 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         binding.vacancyList.root.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = vacancyListAdapter
+            addOnScrollListener(
+                object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
+                    override fun onScrollStateChanged(
+                        recyclerView: androidx.recyclerview.widget.RecyclerView,
+                        newState: Int
+                    ) {
+                        super.onScrollStateChanged(recyclerView, newState)
+                        if (!recyclerView.canScrollVertically(1)) {
+                            viewModel.handleInteraction(
+                                ViewModelInteractionState.setPage(viewModel.giveMyPageToReload() + 1)
+                            )
+                        }
+                    }
+                }
+            )
         }
+//        updateRefresh()
+
     }
 
     override fun subscribe() {
@@ -88,6 +99,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     private fun render(state: SearchScreenState) {
         when (state) {
             is SearchScreenState.Content -> {
+//                updateRefresh()
                 showData(state)
             }
 
@@ -119,8 +131,17 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
 
     private fun showProblem(error: ErrorsSearchScreenStates, showSnackbar: Boolean = false) {
         vacancyListAdapter.setScrollLoadingEnabled(false)
+        vacancyListAdapter.refreshLastItem()
         if (showSnackbar) {
             binding.root.showCustomSnackbar(getString(error.messageResource))
+            debounce<Boolean>(
+                CLICK_DEBOUNCE_DELAY,
+                viewLifecycleOwner.lifecycleScope,
+                false,
+                false
+            ) {
+                vacancyListAdapter.setScrollLoadingEnabled(it)
+            }.invoke(true)
             return
         }
         with(binding) {
@@ -173,6 +194,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         }
         showData()
     }
+
 
     companion object {
         private const val CLICK_DEBOUNCE_DELAY = 500L
