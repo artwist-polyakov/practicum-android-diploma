@@ -36,6 +36,18 @@ object CssStyle {
                     color: $blueColorHex; 
                     text-decoration: none;
                 }
+                .margin {
+                    margin-top: 16px;
+                    display: block;
+                }
+                .contact-info {
+                    font-family: 'YS Display Medium Regular';
+                    font-size: ${fontSizeBody}px;
+                }
+                ul li {
+                    margin: 0px;
+                    padding-left: 16px;
+                }
             </style>
             """.trimIndent()
     }
@@ -43,41 +55,3 @@ object CssStyle {
     const val COLOR_LOCALE = "#%06X"
     const val COLOR_FORMAT = 0xFFFFFF
 }
-
-
-//object CssStyle {
-//    fun getStyle(context: Context): String {
-//        val mainFontFamilyPath = "file:///res/font/ys_display_regular.ttf"
-//        val headerFontFamilyPath = "file:///res/font/ys_display_medium.ttf"
-//        val boldFontFamilyPath = "file:///res/font/ys_display_bold.ttf"
-//        val colorInt = ContextCompat.getColor(context, R.color.htmlText)
-//        val colorHex = String.format(Locale.US, "#%06X", 0xFFFFFF and colorInt)
-//        val fontSize = 16
-//
-//
-//        return """
-//         <style type="text/css">
-//         @font-face {
-//             font-family: 'CustomFont';
-//             src: url('$mainFontFamilyPath')
-//         }
-//
-//         @font-face {
-//            font-family: 'HeaderFont';
-//            src: url('$headerFontFamilyPath')
-//         }
-//
-//         body {
-//             font-family: 'CustomFont', 'Arial', sans-serif;
-//             font-size: ${fontSize}px;
-//             color: $colorHex;
-//         }
-//         h1 {
-//             font-family: 'HeaderFont', 'Arial', sans-serif;
-//             font-size: 22px;
-//             color: $colorHex;
-//         }
-//         </style>
-//         """.trimIndent()
-//    }
-//}

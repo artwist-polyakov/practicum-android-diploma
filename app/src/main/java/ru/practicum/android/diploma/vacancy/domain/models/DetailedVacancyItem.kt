@@ -1,5 +1,7 @@
 package ru.practicum.android.diploma.vacancy.domain.models
 
+import android.util.Log
+
 @Suppress("Detekt.DataClassContainsFunctions")
 data class DetailedVacancyItem(
     val id: Int,
@@ -18,39 +20,39 @@ data class DetailedVacancyItem(
     val keySkills: List<String>?,
     val contacts: Contacts?,
     val favorite: Boolean = false
-
-
 ) {
-
     fun configureHtml(): String {
         val builder: StringBuilder = StringBuilder()
         builder.append(description)
-        builder.append("<br><br>")
         keySkills?.let {
-            builder.append("<p class=\"title\">Ключевые навыки:</p>")
+            builder.append("<span class=\"title\">Ключевые навыки</span>")
             builder.append("<ul>")
             for (skill in it) {
                 builder.append("<li>")
                 builder.append(skill)
                 builder.append("</li>")
             }
-            builder.append("</ul><br><br>")
+            builder.append("</ul>")
         }
         configureHTMLContacts(builder)
         return builder.toString()
     }
 
     private fun configureHTMLContacts(builder: StringBuilder): StringBuilder {
-        contacts?.let {
-            builder.append("<p class=\"title\">Контакты:</p>")
-            builder.append("<b>Контактное лицо:</b><br>")
-            builder.append(it.name)
-            builder.append("<br>")
-            builder.append("<b>Email:</b> ")
-            builder.append("<a href=\"mailto:${it.email}\">")
-            builder.append(it.email)
-            builder.append("</a><br>")
-            configureHTMLPhones(builder, it.phones)
+        if (contacts?.name.isNullOrEmpty() == false) {
+            contacts?.let {
+                builder.append("<span class=\"title\">Контакты</span>")
+                builder.append("<div class=\"margin\"><span class=\"contact-info\">Контактное лицо</span><br>")
+                builder.append(it.name)
+                builder.append("</div>")
+                builder.append("<div class=\"margin\">")
+                builder.append("<span class=\"contact-info\">E-mail</span>")
+                builder.append("<br><a href=\"mailto:${it.email}\">")
+                builder.append(it.email)
+                builder.append("</a><br>")
+                builder.append("</div>")
+                configureHTMLPhones(builder, it.phones)
+            }
         }
         return builder
     }
@@ -59,15 +61,19 @@ data class DetailedVacancyItem(
     private fun configureHTMLPhones(builder: StringBuilder, phones: List<Pair<String, String>>?): StringBuilder {
         phones?.let { phones ->
             for (phone in phones) {
-                val cleanPhone = phone.first.replace(Regex("[^+\\d]"), "") // Очистка телефона
-                builder.append("<b>Телефон:</b> ")
-                builder.append("<a href=\"tel:$cleanPhone\">")
+                val cleanPhone = phone.second.replace(Regex("[^+\\d]"), "") // Очистка телефона
+                builder.append("<div class=\"margin\">")
+                builder.append("<span class=\"contact-info\">Телефон</span>")
+                builder.append("<br><a href=\"tel:$cleanPhone\">")
                 builder.append(cleanPhone)
                 builder.append("</a><br>")
-                phone.second?.let { comment ->
-                    builder.append("<b>Комментарий:</b> ")
-                    builder.append(comment)
+                builder.append("</div>")
+                phone.first?.let { comment ->
+                    builder.append("<div class=\"margin\">")
+                    builder.append("<span class=\"contact-info\">Комментарий</span>")
                     builder.append("<br>")
+                    builder.append(comment)
+                    builder.append("<br></div>")
                 }
             }
         }
