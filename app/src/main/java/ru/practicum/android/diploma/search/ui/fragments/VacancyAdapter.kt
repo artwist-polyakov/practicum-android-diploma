@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.search.ui.fragments
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -36,6 +37,14 @@ class VacancyAdapter(
             itemView.setOnClickListener { clickListener(data) }
         }
 
+        fun showLoadingIndicator() {
+            binding.pbLoadingBar.visibility = View.VISIBLE
+        }
+
+        fun hideLoadingIndicator() {
+            binding.pbLoadingBar.visibility = View.GONE
+        }
+
         private fun parseSalary(from: Int?, to: Int?, currency: String?): String {
             val usedCurrency = currency ?: ""
             return when {
@@ -62,6 +71,7 @@ class VacancyAdapter(
 
     private var currentPage: Int = 0
     private var dataList = ArrayList<VacancyGeneral>()
+    private var showScrollLoading = true
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VacancyViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -74,6 +84,12 @@ class VacancyAdapter(
             scrollController.onScrollToBottom(currentPage + 1)
         }
         holder.bind(dataList[position])
+        if (showScrollLoading && position == dataList.size - 1) {
+            holder.showLoadingIndicator()
+        } else {
+            holder.hideLoadingIndicator()
+        }
+
     }
 
     override fun getItemCount(): Int = dataList.size
@@ -90,6 +106,10 @@ class VacancyAdapter(
 
     fun clearPageCounter() {
         currentPage = 0
+    }
+
+    fun setScrollLoadingEnabled(show: Boolean) {
+        showScrollLoading = show
     }
 
     interface ListScrollListener {

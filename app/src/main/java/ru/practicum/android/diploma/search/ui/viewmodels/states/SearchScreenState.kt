@@ -8,7 +8,7 @@ sealed class SearchScreenState {
     //  нужно ли хранить предыщуие сущности на экране и что отображаем
     data object Default : SearchScreenState()
     data class Loading(val forPage: Int = 0) : SearchScreenState()
-    data class Error(val error: ErrorsSearchScreenStates) : SearchScreenState()
+    data class Error(val error: ErrorsSearchScreenStates, val showSnackBar: Boolean = false) : SearchScreenState()
     data class Content(
         val totalPages: Int,
         val currentPage: Int,

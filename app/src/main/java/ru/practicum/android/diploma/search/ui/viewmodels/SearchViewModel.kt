@@ -25,6 +25,7 @@ open class SearchViewModel @Inject constructor(
 ) : BaseViewModel() {
     private var searchSettings: SearchSettingsState = SearchSettingsState()
     private var vacancies: MutableList<VacancyGeneral> = mutableListOf()
+    private var showSnackBar: Boolean = false
     private var _state = MutableStateFlow<SearchScreenState>(SearchScreenState.Error(ErrorsSearchScreenStates.EMPTY))
     open val state: StateFlow<SearchScreenState>
         get() = _state
@@ -62,8 +63,10 @@ open class SearchViewModel @Inject constructor(
         when (result) {
             is Resource.Success -> {
                 if (result.data?.vacancies.isNullOrEmpty()) {
-                    _state.value = SearchScreenState.Error(ErrorsSearchScreenStates.NOT_FOUND)
+                    showSnackBar = false
+                    _state.value = SearchScreenState.Error(ErrorsSearchScreenStates.NOT_FOUND, showSnackBar)
                 } else if (result.data!!.vacanciesFound > 0) {
+                    showSnackBar = result.data.currentPage >= 0
                     _state.value = SearchScreenState.Content(
                         result.data.totalPages,
                         result.data.currentPage,
@@ -80,7 +83,7 @@ open class SearchViewModel @Inject constructor(
                     when (result.error) {
                         NetworkErrors.NoInternet -> ErrorsSearchScreenStates.NO_INTERNET
                         else -> ErrorsSearchScreenStates.SERVER_ERROR
-                    }
+                    }, showSnackBar
                 )
             }
         }
