@@ -7,6 +7,8 @@ import java.util.Locale
 
 @Suppress("detekt.LongMethod", "detekt.style.MagicNumber")
 object CssStyle {
+    const val COLOR_LOCALE = "#%06X"
+    const val COLOR_FORMAT = 0xFFFFFF
     fun getStyle(context: Context): String {
         val mainColorInt = ContextCompat.getColor(context, R.color.htmlText)
         val mainColorHex = String.format(Locale.US, COLOR_LOCALE, COLOR_FORMAT and mainColorInt)
@@ -18,7 +20,7 @@ object CssStyle {
 
         return """
             <style type="text/css">
-                font-face {
+                @font-face {
                    font-family: 'custom_regular';
                    src: url('file:///android_asset/fonts/ys_display_regular.ttf') format('truetype');
                  }
@@ -27,10 +29,9 @@ object CssStyle {
                    src: url('file:///android_asset/fonts/ys_display_medium.ttf') format('truetype');
                  }
                  @font-face {
-                   font-family: 'custom_bold
+                   font-family: 'custom_bold';
                    src: url('file:///android_asset/fonts/ys_display_bold.ttf') format('truetype');
                  }
-
             
                 body {
                     font-family: 'custom_regular';
@@ -89,7 +90,4 @@ object CssStyle {
             </style>
         """.trimIndent()
     }
-
-    const val COLOR_LOCALE = "#%06X"
-    const val COLOR_FORMAT = 0xFFFFFF
 }

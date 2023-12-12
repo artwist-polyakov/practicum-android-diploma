@@ -22,11 +22,10 @@ data class DetailedVacancyItem(
     @Suppress("StringLiteralDuplication")
     fun configureHtml(): String {
         val builder: StringBuilder = StringBuilder()
-        builder.append("<br><span class=\"title\">Описание вакансии</span>")
         builder.append(description)
         if (keySkills.isNullOrEmpty() == false) {
             keySkills?.let {
-                builder.append("<span class=\"title\">Ключевые навыки</span>")
+                builder.append("$OPEN_SPAN_STR\"title\">Ключевые навыки</span>")
                 builder.append("<ul class=\"margin\">")
                 for (skill in it) {
                     builder.append("<li>")
@@ -40,16 +39,15 @@ data class DetailedVacancyItem(
         return builder.toString()
     }
 
-
     private fun configureHTMLContacts(builder: StringBuilder): StringBuilder {
-        if (contacts?.name.isNullOrEmpty() == false) {
+        if (!contacts?.name.isNullOrEmpty()) {
             contacts?.let {
-                builder.append("<span class=\"title margin\">Контакты</span>")
-                builder.append("$OPEN_DIV_STR\"margin\"><span class=\"contact-info\">Контактное лицо</span><br>")
+                builder.append("$OPEN_SPAN_STR\"title margin\">Контакты</span>")
+                builder.append("$DIV_MARGIN<span class=\"contact-info\">Контактное лицо</span><br>")
                 builder.append(it.name)
                 builder.append(CLOSE_DIV_STR)
-                builder.append("$OPEN_DIV_STR\"margin\">")
-                builder.append("<span class=\"contact-info\">E-mail</span>")
+                builder.append(DIV_MARGIN)
+                builder.append("$OPEN_SPAN_STR\"contact-info\">E-mail</span>")
                 builder.append("<br><a href=\"mailto:${it.email}\">")
                 builder.append(it.email)
                 builder.append("</a><br>")
@@ -60,21 +58,19 @@ data class DetailedVacancyItem(
         return builder
     }
 
-
     private fun configureHTMLPhones(builder: StringBuilder, phones: List<Pair<String, String>>?): StringBuilder {
         phones?.let { phones ->
             for (phone in phones) {
-//                val cleanPhone = phone.second.replace(Regex("[^+\\d]"), "") // Очистка телефона
                 val cleanPhone = formatPhoneNumber(phone.second)
-                builder.append("<div class=\"margin\">")
-                builder.append("<span class=\"contact-info\">Телефон</span>")
+                builder.append(DIV_MARGIN)
+                builder.append("$OPEN_SPAN_STR\"contact-info\">Телефон</span>")
                 builder.append("<br><a href=\"tel:$cleanPhone\">")
                 builder.append(cleanPhone)
                 builder.append("</a><br>")
                 builder.append(CLOSE_DIV_STR)
                 phone.first?.let { comment ->
-                    builder.append("$OPEN_DIV_STR\"margin\">")
-                    builder.append("<span class=\"contact-info\">Комментарий</span>")
+                    builder.append(DIV_MARGIN)
+                    builder.append("$OPEN_SPAN_STR\"contact-info\">Комментарий</span>")
                     builder.append("<br>")
                     builder.append(comment)
                     builder.append("<br>$CLOSE_DIV_STR")
@@ -91,7 +87,7 @@ data class DetailedVacancyItem(
 
     companion object {
         const val CLOSE_DIV_STR = "</div>"
-        const val OPEN_DIV_STR = "<div class="
+        const val DIV_MARGIN = "<div class=\"margin\">"
+        const val OPEN_SPAN_STR = "<span class="
     }
-
 }
