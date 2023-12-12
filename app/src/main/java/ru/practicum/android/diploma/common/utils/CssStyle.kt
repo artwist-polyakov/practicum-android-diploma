@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat
 import ru.practicum.android.diploma.R
 import java.util.Locale
 
+@Suppress("detekt.LongMethod", "detekt.style.MagicNumber")
 object CssStyle {
     fun getStyle(context: Context): String {
         val mainColorInt = ContextCompat.getColor(context, R.color.htmlText)
@@ -29,6 +30,8 @@ object CssStyle {
                    font-family: 'custom_bold
                    src: url('file:///android_asset/fonts/ys_display_bold.ttf') format('truetype');
                  }
+
+            
                 body {
                     font-family: 'custom_regular';
                     font-size: ${fontSizeBody}px;
@@ -39,18 +42,21 @@ object CssStyle {
                     font-size: ${fontSizeHeader}px;
                     color: $mainColorHex;
                 }
+                
                 strong {
                     font-weight: bold;
                     font-family: 'custom_regular';
                     font-size: ${fontSizeBody}px;
                     color: $mainColorHex;
                 }
+                
                 b {
                     font-weight: bold;
                     font-family: 'custom_regular';
                     font-size: ${fontSizeBody}px;
                     color: $mainColorHex;
                 }
+                
                 a {
                     font-family: 'custom_regular';
                     font-size: ${fontSizeBody}px;
@@ -68,10 +74,15 @@ object CssStyle {
                     font-family: 'custom_medium';
                     font-size: ${fontSizeBody}px;
                 }
-                ul ol {
+                ul {
                     margin: 12px;
                     padding-left: 16px;
                 }
+                ol {
+                    margin: 12px;
+                    padding-left: 16px;
+                }
+                
                 li {
                     padding-left: 8px;
                 }
