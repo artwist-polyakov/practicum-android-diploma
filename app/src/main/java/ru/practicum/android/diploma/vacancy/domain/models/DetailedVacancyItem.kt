@@ -47,11 +47,13 @@ data class DetailedVacancyItem(
                 builder.append(it.name)
                 builder.append(CLOSE_DIV_STR)
                 builder.append(DIV_MARGIN)
-                builder.append("$OPEN_SPAN_STR\"contact-info\">E-mail</span>")
-                builder.append("<br><a href=\"mailto:${it.email}\">")
-                builder.append(it.email)
-                builder.append("</a><br>")
-                builder.append(CLOSE_DIV_STR)
+                it.email?.let { emailstring ->
+                    builder.append("$OPEN_SPAN_STR\"contact-info\">E-mail</span>")
+                    builder.append("<br><a href=\"mailto:${emailstring}\">")
+                    builder.append(emailstring)
+                    builder.append("</a><br>")
+                    builder.append(CLOSE_DIV_STR)
+                }
                 configureHTMLPhones(builder, it.phones)
             }
         }
