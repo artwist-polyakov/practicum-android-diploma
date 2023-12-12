@@ -1,7 +1,5 @@
 package ru.practicum.android.diploma.vacancy.domain.models
 
-import android.util.Log
-
 @Suppress("Detekt.DataClassContainsFunctions")
 data class DetailedVacancyItem(
     val id: Int,
@@ -24,24 +22,27 @@ data class DetailedVacancyItem(
     fun configureHtml(): String {
         val builder: StringBuilder = StringBuilder()
         builder.append(description)
-        keySkills?.let {
-            builder.append("<span class=\"title\">Ключевые навыки</span>")
-            builder.append("<ul>")
-            for (skill in it) {
-                builder.append("<li>")
-                builder.append(skill)
-                builder.append("</li>")
+        if (keySkills.isNullOrEmpty() == false) {
+            keySkills?.let {
+                builder.append("<span class=\"title\">Ключевые навыки</span>")
+                builder.append("<ul class=\"margin\">")
+                for (skill in it) {
+                    builder.append("<li>")
+                    builder.append(skill)
+                    builder.append("</li>")
+                }
+                builder.append("</ul>")
             }
-            builder.append("</ul>")
+            configureHTMLContacts(builder)
         }
-        configureHTMLContacts(builder)
         return builder.toString()
     }
+
 
     private fun configureHTMLContacts(builder: StringBuilder): StringBuilder {
         if (contacts?.name.isNullOrEmpty() == false) {
             contacts?.let {
-                builder.append("<span class=\"title\">Контакты</span>")
+                builder.append("<span class=\"title margin\">Контакты</span>")
                 builder.append("<div class=\"margin\"><span class=\"contact-info\">Контактное лицо</span><br>")
                 builder.append(it.name)
                 builder.append("</div>")
@@ -61,7 +62,8 @@ data class DetailedVacancyItem(
     private fun configureHTMLPhones(builder: StringBuilder, phones: List<Pair<String, String>>?): StringBuilder {
         phones?.let { phones ->
             for (phone in phones) {
-                val cleanPhone = phone.second.replace(Regex("[^+\\d]"), "") // Очистка телефона
+//                val cleanPhone = phone.second.replace(Regex("[^+\\d]"), "") // Очистка телефона
+                val cleanPhone = formatPhoneNumber(phone.second)
                 builder.append("<div class=\"margin\">")
                 builder.append("<span class=\"contact-info\">Телефон</span>")
                 builder.append("<br><a href=\"tel:$cleanPhone\">")
@@ -79,4 +81,10 @@ data class DetailedVacancyItem(
         }
         return builder
     }
+
+    private fun formatPhoneNumber(phone: String): String {
+        val digits = phone.replace(Regex("[^\\d]"), "")
+        return digits.replace(Regex("(\\d)(\\d{3})(\\d{3})(\\d{2})(\\d{2})"), "+$1 ($2) $3-$4-$5")
+    }
+
 }

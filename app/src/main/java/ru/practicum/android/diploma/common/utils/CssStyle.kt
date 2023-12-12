@@ -40,13 +40,20 @@ object CssStyle {
                     margin-top: 16px;
                     display: block;
                 }
+                .margin-bottom {
+                    margin-bottom: 16px;
+                }
                 .contact-info {
                     font-family: 'YS Display Medium Regular';
                     font-size: ${fontSizeBody}px;
                 }
-                ul li {
+                ul {
                     margin: 0px;
                     padding-left: 16px;
+                }
+                ol {
+                    margin: 12px;
+                    padding-left: 24px;
                 }
             </style>
             """.trimIndent()

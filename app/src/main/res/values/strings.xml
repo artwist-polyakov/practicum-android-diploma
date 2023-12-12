@@ -53,7 +53,7 @@
     <string name="comment">Комментарий</string>
     <string name="similar_vacancies">Похожие вакансии</string>
     <string name="html_content">&lt;html&gt;&lt;head&gt;%s&lt;/head&gt;&lt;body&gt;%s&lt;/body&gt;&lt;/html&gt;</string>
-    <string name="html_title">&lt;p class=&quot;title&quot;&gt;%s&lt;/p&gt;</string>
+    <string name="html_title">&lt;span class=&quot;title margin-bottom&quot;&gt;%s&lt;/span&gt;</string>
 
     <!--    Ресурсы для экрана Избранное    -->
     <string name="favorite">Избранное</string>
