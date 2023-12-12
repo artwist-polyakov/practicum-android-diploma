@@ -91,13 +91,6 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
             tvCityText.text = item.area
             tvExperience.text = item.experience
             tvSchedule.text = getString(R.string.schedule, item.schedule, item.employment)
-            if (item.keySkills?.isEmpty() == true) {
-                rvKeySkills.visibility = View.GONE
-                tvKeySkillsTitle.visibility = View.GONE
-            } else {
-                rvKeySkills.layoutManager = LinearLayoutManager(requireContext())
-                rvKeySkills.adapter = KeySkillsAdapter(item.keySkills ?: emptyList())
-            }
             ivLikeButton.setImageResource(
                 if (item.favorite) {
                     R.drawable.favorites_active_24px
@@ -125,9 +118,14 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
     }
 
     private fun fetchWebview(item: DetailedVacancyItem) {
-        val colorInt = ContextCompat.getColor(requireContext(), R.color.htmlText)
-        val colorHex = String.format(COLOR_LOCALE, COLOR_FORMAT and colorInt)
-        val modifiedHtmlContent = getString(R.string.html_content, CssStyle.getStyle(colorHex), item.description)
+        val vacancyDescription = getString(R.string.html_title, getString(R.string.vacancy_description))
+        val htmlContent = vacancyDescription + item.configureHtml()
+        val modifiedHtmlContent = getString(
+            R.string.html_content,
+            CssStyle.getStyle(requireContext()),
+            htmlContent
+        )
+
         if (item.description != null) {
             binding.wvDescription.loadDataWithBaseURL(null, modifiedHtmlContent, TXT_HTML, UTF_8, null)
         }
@@ -161,8 +159,6 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
         const val ARG_ID = "id"
         const val TXT_HTML = "text/html"
         const val UTF_8 = "utf-8"
-        const val COLOR_LOCALE = "#%06X"
-        const val COLOR_FORMAT = 0xFFFFFF
         const val CLICK_DEBOUNCE_DELAY_500MS = 500L
     }
 }

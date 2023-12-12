@@ -27,7 +27,7 @@ data class DetailedVacancyItem(
         builder.append(description)
         builder.append("<br><br>")
         keySkills?.let {
-            builder.append("<h1>Ключевые навыки:</h1><br>")
+            builder.append("<p class=\"title\">Ключевые навыки:</p>")
             builder.append("<ul>")
             for (skill in it) {
                 builder.append("<li>")
@@ -42,7 +42,7 @@ data class DetailedVacancyItem(
 
     private fun configureHTMLContacts(builder: StringBuilder): StringBuilder {
         contacts?.let {
-            builder.append("<h1>Контакты:</h1><br>")
+            builder.append("<p class=\"title\">Контакты:</p>")
             builder.append("<b>Контактное лицо:</b><br>")
             builder.append(it.name)
             builder.append("<br>")
@@ -53,8 +53,6 @@ data class DetailedVacancyItem(
             configureHTMLPhones(builder, it.phones)
         }
         return builder
-
-
     }
 
 

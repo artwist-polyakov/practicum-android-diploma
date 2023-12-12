@@ -168,135 +168,136 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_experience"
                 tools:text="[График работы]" />
 
-            <TextView
-                android:id="@+id/tv_description_title"
-                style="@style/Text.Medium22"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/big_top"
-                android:text="@string/vacancy_description"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_schedule" />
+            <!--            <TextView-->
+            <!--                android:id="@+id/tv_description_title"-->
+            <!--                style="@style/Text.Medium22"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/big_top"-->
+            <!--                android:text="@string/vacancy_description"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/tv_schedule" />-->
 
             <WebView
                 android:id="@+id/wv_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/negative_margin_medium"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_description_title" />
-
-            <TextView
-                android:id="@+id/tv_key_skills_title"
-                style="@style/Text.Medium22"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/between_text_card"
-                android:text="@string/key_skills"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/wv_description" />
+                app:layout_constraintTop_toBottomOf="@id/tv_schedule" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_key_skills"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/standart_margin"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_key_skills_title"
-                tools:itemCount="3"
-                tools:listitem="@layout/key_skill_item" />
+            <!--            <TextView-->
+            <!--                android:id="@+id/tv_key_skills_title"-->
+            <!--                style="@style/Text.Medium22"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/between_text_card"-->
+            <!--                android:text="@string/key_skills"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/wv_description" />-->
 
-            <TextView
-                android:id="@+id/tv_contacts_text"
-                style="@style/Text.Medium22"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/between_text_card"
-                android:text="@string/contacts"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rv_key_skills" />
+            <!--            <androidx.recyclerview.widget.RecyclerView-->
+            <!--                android:id="@+id/rv_key_skills"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/standart_margin"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/tv_key_skills_title"-->
+            <!--                tools:itemCount="3"-->
+            <!--                tools:listitem="@layout/key_skill_item" />-->
 
-            <TextView
-                android:id="@+id/tv_contact_person_text"
-                style="@style/Text.Medium16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/standart_margin"
-                android:text="@string/contact_person"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_contacts_text" />
+            <!--            <TextView-->
+            <!--                android:id="@+id/tv_contacts_text"-->
+            <!--                style="@style/Text.Medium22"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/between_text_card"-->
+            <!--                android:text="@string/contacts"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/rv_key_skills" />-->
 
-            <TextView
-                android:id="@+id/tv_contact_person"
-                style="@style/Text.Regular16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/microTop"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_contact_person_text"
-                tools:text="[Ирина]" />
+            <!--            <TextView-->
+            <!--                android:id="@+id/tv_contact_person_text"-->
+            <!--                style="@style/Text.Medium16"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/standart_margin"-->
+            <!--                android:text="@string/contact_person"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/tv_contacts_text" />-->
 
-            <TextView
-                android:id="@+id/tv_e_mail_text"
-                style="@style/Text.Medium16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/standart_margin"
-                android:text="@string/email"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_contact_person" />
+            <!--            <TextView-->
+            <!--                android:id="@+id/tv_contact_person"-->
+            <!--                style="@style/Text.Regular16"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/microTop"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/tv_contact_person_text"-->
+            <!--                tools:text="[Ирина]" />-->
 
-            <TextView
-                android:id="@+id/tv_e_mail"
-                style="@style/Text.Regular16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/microTop"
-                android:textColor="?attr/textFillColor"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_e_mail_text"
-                tools:text="[hr_email@email.com]" />
+            <!--            <TextView-->
+            <!--                android:id="@+id/tv_e_mail_text"-->
+            <!--                style="@style/Text.Medium16"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/standart_margin"-->
+            <!--                android:text="@string/email"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/tv_contact_person" />-->
 
-            <TextView
-                android:id="@+id/tv_phone_text"
-                style="@style/Text.Medium16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/standart_margin"
-                android:text="@string/phone_number"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_e_mail" />
+            <!--            <TextView-->
+            <!--                android:id="@+id/tv_e_mail"-->
+            <!--                style="@style/Text.Regular16"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/microTop"-->
+            <!--                android:textColor="?attr/textFillColor"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/tv_e_mail_text"-->
+            <!--                tools:text="[hr_email@email.com]" />-->
 
-            <TextView
-                android:id="@+id/tv_phone"
-                style="@style/Text.Regular16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/microTop"
-                android:textColor="?attr/textFillColor"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_phone_text"
-                tools:text="[+74952223344]" />
+            <!--            <TextView-->
+            <!--                android:id="@+id/tv_phone_text"-->
+            <!--                style="@style/Text.Medium16"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/standart_margin"-->
+            <!--                android:text="@string/phone_number"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/tv_e_mail" />-->
 
-            <TextView
-                android:id="@+id/tv_comment_text"
-                style="@style/Text.Medium16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/standart_margin"
-                android:text="@string/comment"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_phone" />
+            <!--            <TextView-->
+            <!--                android:id="@+id/tv_phone"-->
+            <!--                style="@style/Text.Regular16"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/microTop"-->
+            <!--                android:textColor="?attr/textFillColor"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/tv_phone_text"-->
+            <!--                tools:text="[+74952223344]" />-->
 
-            <TextView
-                android:id="@+id/tv_comment"
-                style="@style/Text.Regular16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/microTop"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_comment_text"
-                tools:text="[Текст комментария]" />
+            <!--            <TextView-->
+            <!--                android:id="@+id/tv_comment_text"-->
+            <!--                style="@style/Text.Medium16"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/standart_margin"-->
+            <!--                android:text="@string/comment"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/tv_phone" />-->
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/tv_comment"-->
+            <!--                style="@style/Text.Regular16"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/microTop"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/tv_comment_text"-->
+            <!--                tools:text="[Текст комментария]" />-->
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_to_similar_vacations"
@@ -314,7 +315,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_comment" />
+                app:layout_constraintTop_toBottomOf="@id/wv_description" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
