@@ -27,6 +27,7 @@ open class SearchViewModel @Inject constructor(
     private var vacancies: MutableList<VacancyGeneral> = mutableListOf()
     private var showSnackBar: Boolean = false
     private var totalPages: Int = 0
+    private var isLastUpdatePage = false
     private var _state = MutableStateFlow<SearchScreenState>(SearchScreenState.Error(ErrorsSearchScreenStates.EMPTY))
     open val state: StateFlow<SearchScreenState>
         get() = _state
@@ -83,6 +84,10 @@ open class SearchViewModel @Inject constructor(
             }
 
             is Resource.Error -> {
+                if (isLastUpdatePage) {
+                    searchSettings = searchSettings.copy(currentPage = searchSettings.currentPage - 1)
+                    isLastUpdatePage = false
+                }
                 _state.value = SearchScreenState.Error(
                     when (result.error) {
                         NetworkErrors.NoInternet -> ErrorsSearchScreenStates.NO_INTERNET
@@ -113,7 +118,7 @@ open class SearchViewModel @Inject constructor(
 
         if (searchSettings.currentPage > 0) {
             if (searchSettings.currentPage < totalPages) {
-                        getVacancies(searchSettings)
+                getVacancies(searchSettings)
             }
         } else {
             vacancies.clear()
@@ -123,6 +128,7 @@ open class SearchViewModel @Inject constructor(
 
     fun handleInteraction(interaction: ViewModelInteractionState) {
         var newSearchSettings = searchSettings
+        isLastUpdatePage = false
         when (interaction) {
             is ViewModelInteractionState.setRegion -> {
                 newSearchSettings = newSearchSettings.copy(currentPage = 0)
@@ -153,8 +159,11 @@ open class SearchViewModel @Inject constructor(
                     newSearchSettings.copy(currentQuery = interaction.query)
             }
 
-            is ViewModelInteractionState.setPage -> newSearchSettings =
-                newSearchSettings.copy(currentPage = interaction.page)
+            is ViewModelInteractionState.setPage -> {
+                isLastUpdatePage = true
+                newSearchSettings =
+                    newSearchSettings.copy(currentPage = interaction.page)
+            }
         }
         if (newSearchSettings != searchSettings) {
             searchSettings = newSearchSettings

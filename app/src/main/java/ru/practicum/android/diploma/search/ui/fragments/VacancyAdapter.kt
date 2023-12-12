@@ -108,7 +108,8 @@ class VacancyAdapter(
         showScrollLoading = show
     }
 
-    interface ListScrollListener {
-        fun onScrollToBottom(nextPage: Int)
+    fun refreshLastItem() {
+        notifyItemChanged(dataList.size - 1)
     }
+
 }

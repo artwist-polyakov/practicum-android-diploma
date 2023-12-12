@@ -8,10 +8,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.common.ui.BaseFragment
@@ -45,7 +41,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
                     ) {
                         super.onScrollStateChanged(recyclerView, newState)
                         if (!recyclerView.canScrollVertically(1)) {
-                            viewModel.handleInteraction(ViewModelInteractionState.setPage(viewModel.giveMyPageToReload()+1))
+                            viewModel.handleInteraction(
+                                ViewModelInteractionState.setPage(viewModel.giveMyPageToReload() + 1)
+                            )
                         }
                     }
                 }
@@ -133,7 +131,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
 
     private fun showProblem(error: ErrorsSearchScreenStates, showSnackbar: Boolean = false) {
         vacancyListAdapter.setScrollLoadingEnabled(false)
-        vacancyListAdapter.notifyDataSetChanged()
+        vacancyListAdapter.refreshLastItem()
         if (showSnackbar) {
             binding.root.showCustomSnackbar(getString(error.messageResource))
             debounce<Boolean>(
@@ -155,10 +153,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
             ivStateImage.setImageResource(error.imageResource)
             tvStateText.visibility = View.VISIBLE
             tvStateText.text = getString(error.messageResource)
-        }
-        CoroutineScope(Dispatchers.IO).launch {
-            delay(5000L)
-            vacancyListAdapter.setScrollLoadingEnabled(true)
         }
     }
 
