@@ -26,7 +26,13 @@ class VacancyAdapter(
                 error(R.drawable.placeholder_48px)
             }
             companyName.text = data.employerName
-            vacancyName.text = data.title
+            val titleBuilder: StringBuilder = StringBuilder()
+            titleBuilder.append(data.title)
+            data.region?.let {
+                titleBuilder.append(", ")
+                titleBuilder.append(it)
+            }
+            vacancyName.text = titleBuilder.toString()
             vacancySalary.text = parseSalary(
                 data.salaryFrom, data.salaryTo, data.salaryCurrency
             )

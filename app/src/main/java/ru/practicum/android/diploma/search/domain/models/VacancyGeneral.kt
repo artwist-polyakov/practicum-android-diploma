@@ -7,6 +7,7 @@ import kotlinx.android.parcel.Parcelize
 data class VacancyGeneral(
     val id: Int,
     val title: String,
+    val region: String?,
     val employerName: String?,
     val employerLogo: String?,
     val haveSalary: Boolean = false,
