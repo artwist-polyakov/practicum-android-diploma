@@ -124,39 +124,43 @@ open class SearchViewModel @Inject constructor(
     }
 
     fun handleInteraction(interaction: ViewModelInteractionState) {
+        var newSearchSettings = searchSettings
         when (interaction) {
             is ViewModelInteractionState.setRegion -> {
-                searchSettings = searchSettings.copy(currentPage = 0)
-                searchSettings = searchSettings.copy(currentRegion = interaction.region)
+                newSearchSettings = newSearchSettings.copy(currentPage = 0)
+                newSearchSettings = newSearchSettings.copy(currentRegion = interaction.region)
             }
 
             is ViewModelInteractionState.setIndustry -> {
-                searchSettings = searchSettings.copy(currentPage = 0)
-                searchSettings = searchSettings.copy(currentIndustry = interaction.industry)
+                newSearchSettings = newSearchSettings.copy(currentPage = 0)
+                newSearchSettings = newSearchSettings.copy(currentIndustry = interaction.industry)
             }
 
             is ViewModelInteractionState.setSalary -> {
-                searchSettings = searchSettings.copy(currentPage = 0)
-                searchSettings =
-                    searchSettings.copy(currentSalary = interaction.salary)
+                newSearchSettings = newSearchSettings.copy(currentPage = 0)
+                newSearchSettings =
+                    newSearchSettings.copy(currentSalary = interaction.salary)
             }
 
             is ViewModelInteractionState.setSalaryOnly -> {
-                searchSettings = searchSettings.copy(currentPage = 0)
-                searchSettings =
-                    searchSettings.copy(currentSalaryOnly = interaction.salaryOnly)
+                newSearchSettings = newSearchSettings.copy(currentPage = 0)
+                newSearchSettings =
+                    newSearchSettings.copy(currentSalaryOnly = interaction.salaryOnly)
             }
 
             is ViewModelInteractionState.setQuery -> {
-                searchSettings = searchSettings.copy(currentPage = 0)
-                searchSettings =
-                    searchSettings.copy(currentQuery = interaction.query)
+                newSearchSettings = newSearchSettings.copy(currentPage = 0)
+                newSearchSettings =
+                    newSearchSettings.copy(currentQuery = interaction.query)
             }
 
-            is ViewModelInteractionState.setPage -> searchSettings =
-                searchSettings.copy(currentPage = interaction.page)
+            is ViewModelInteractionState.setPage -> newSearchSettings =
+                newSearchSettings.copy(currentPage = interaction.page)
         }
-        handleSearchSettings(searchSettings)
+        if (newSearchSettings != searchSettings) {
+            searchSettings = newSearchSettings
+            handleSearchSettings(searchSettings)
+        }
     }
 
     companion object {
