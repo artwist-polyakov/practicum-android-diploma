@@ -127,7 +127,7 @@ class SingleVacancyConverterImpl(
                 schedule = schedule?.name,
                 description = description,
                 keySkills = keySkills?.map { it.name ?: "" },
-                contacts = map(from.contacts?: ContactsDto()),
+                contacts = map(from.contacts ?: ContactsDto()),
                 favorite = isFavorite
             )
         }
