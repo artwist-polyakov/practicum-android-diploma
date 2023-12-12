@@ -127,7 +127,7 @@ class SingleVacancyConverterImpl(
                 schedule = schedule?.name,
                 description = description,
                 keySkills = keySkills?.map { it.name ?: "" },
-                contacts = from.contacts,
+                contacts = map(from.contacts ?: ContactsDto()),
                 favorite = isFavorite
             )
         }
@@ -140,6 +140,17 @@ class SingleVacancyConverterImpl(
                 (from.country ?: "").toString()
                     + " " + (from.city ?: "").toString()
                     + " " + (from.number ?: "").toString()
+            )
+        }
+    }
+
+    private fun map(from: ContactsDto): Contacts {
+        val phones: List<Pair<String, String>>? = from.phones?.map { phoneDtoToPhone(it) }
+        return with(from) {
+            Contacts(
+                name = from.name,
+                email = from.email,
+                phones = phones
             )
         }
     }

@@ -18,61 +18,76 @@ data class DetailedVacancyItem(
     val keySkills: List<String>?,
     val contacts: Contacts?,
     val favorite: Boolean = false
-
-
 ) {
-
+    @Suppress("StringLiteralDuplication")
     fun configureHtml(): String {
         val builder: StringBuilder = StringBuilder()
         builder.append(description)
-        builder.append("<br><br>")
-        keySkills?.let {
-            builder.append("<h1>Ключевые навыки:</h1><br>")
-            builder.append("<ul>")
-            for (skill in it) {
-                builder.append("<li>")
-                builder.append(skill)
-                builder.append("</li>")
+        if (keySkills.isNullOrEmpty() == false) {
+            keySkills?.let {
+                builder.append("$OPEN_SPAN_STR\"title\">Ключевые навыки</span>")
+                builder.append("<ul class=\"margin\">")
+                for (skill in it) {
+                    builder.append("<li>")
+                    builder.append(skill)
+                    builder.append("</li>")
+                }
+                builder.append("</ul>")
             }
-            builder.append("</ul><br><br>")
+            configureHTMLContacts(builder)
         }
-        configureHTMLContacts(builder)
         return builder.toString()
     }
 
     private fun configureHTMLContacts(builder: StringBuilder): StringBuilder {
-        contacts?.let {
-            builder.append("<h1>Контакты:</h1><br>")
-            builder.append("<b>Контактное лицо:</b><br>")
-            builder.append(it.name)
-            builder.append("<br>")
-            builder.append("<b>Email:</b> ")
-            builder.append("<a href=\"mailto:${it.email}\">")
-            builder.append(it.email)
-            builder.append("</a><br>")
-            configureHTMLPhones(builder, it.phones)
+        if (!contacts?.name.isNullOrEmpty()) {
+            contacts?.let {
+                builder.append("$OPEN_SPAN_STR\"title margin\">Контакты</span>")
+                builder.append("$DIV_MARGIN<span class=\"contact-info\">Контактное лицо</span><br>")
+                builder.append(it.name)
+                builder.append(CLOSE_DIV_STR)
+                builder.append(DIV_MARGIN)
+                builder.append("$OPEN_SPAN_STR\"contact-info\">E-mail</span>")
+                builder.append("<br><a href=\"mailto:${it.email}\">")
+                builder.append(it.email)
+                builder.append("</a><br>")
+                builder.append(CLOSE_DIV_STR)
+                configureHTMLPhones(builder, it.phones)
+            }
         }
         return builder
-
-
     }
-
 
     private fun configureHTMLPhones(builder: StringBuilder, phones: List<Pair<String, String>>?): StringBuilder {
         phones?.let { phones ->
             for (phone in phones) {
-                val cleanPhone = phone.first.replace(Regex("[^+\\d]"), "") // Очистка телефона
-                builder.append("<b>Телефон:</b> ")
-                builder.append("<a href=\"tel:$cleanPhone\">")
+                val cleanPhone = formatPhoneNumber(phone.second)
+                builder.append(DIV_MARGIN)
+                builder.append("$OPEN_SPAN_STR\"contact-info\">Телефон</span>")
+                builder.append("<br><a href=\"tel:$cleanPhone\">")
                 builder.append(cleanPhone)
                 builder.append("</a><br>")
-                phone.second?.let { comment ->
-                    builder.append("<b>Комментарий:</b> ")
-                    builder.append(comment)
+                builder.append(CLOSE_DIV_STR)
+                phone.first?.let { comment ->
+                    builder.append(DIV_MARGIN)
+                    builder.append("$OPEN_SPAN_STR\"contact-info\">Комментарий</span>")
                     builder.append("<br>")
+                    builder.append(comment)
+                    builder.append("<br>$CLOSE_DIV_STR")
                 }
             }
         }
         return builder
+    }
+
+    private fun formatPhoneNumber(phone: String): String {
+        val digits = phone.replace(Regex("[^\\d]"), "")
+        return digits.replace(Regex("(\\d)(\\d{3})(\\d{3})(\\d{2})(\\d{2})"), "+$1 ($2) $3-$4-$5")
+    }
+
+    companion object {
+        const val CLOSE_DIV_STR = "</div>"
+        const val DIV_MARGIN = "<div class=\"margin\">"
+        const val OPEN_SPAN_STR = "<span class="
     }
 }
