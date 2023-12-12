@@ -60,6 +60,7 @@ class SearchResultConverterImpl : SearchResultConverter {
             VacancyGeneral(
                 id = id,
                 title = name,
+                region = area?.name,
                 employerName = employer?.name,
                 employerLogo = employer?.logoUrls?.medium,
                 haveSalary = salary != null,
