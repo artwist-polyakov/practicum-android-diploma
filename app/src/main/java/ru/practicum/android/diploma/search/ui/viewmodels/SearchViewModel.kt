@@ -26,6 +26,8 @@ open class SearchViewModel @Inject constructor(
     private var searchSettings: SearchSettingsState = SearchSettingsState()
     private var vacancies: MutableList<VacancyGeneral> = mutableListOf()
     private var showSnackBar: Boolean = false
+    private var totalPages: Int = 0
+    private var isLastUpdatePage = false
     private var _state = MutableStateFlow<SearchScreenState>(SearchScreenState.Error(ErrorsSearchScreenStates.EMPTY))
     open val state: StateFlow<SearchScreenState>
         get() = _state
@@ -62,6 +64,9 @@ open class SearchViewModel @Inject constructor(
     private fun handleSearchResponse(result: Resource<VacanciesSearchResult>) {
         when (result) {
             is Resource.Success -> {
+                result.data?.let {
+                    totalPages = it.totalPages
+                }
                 if (result.data?.vacancies.isNullOrEmpty()) {
                     showSnackBar = false
                     _state.value = SearchScreenState.Error(ErrorsSearchScreenStates.NOT_FOUND, showSnackBar)
@@ -79,6 +84,10 @@ open class SearchViewModel @Inject constructor(
             }
 
             is Resource.Error -> {
+                if (isLastUpdatePage) {
+                    searchSettings = searchSettings.copy(currentPage = searchSettings.currentPage - 1)
+                    isLastUpdatePage = false
+                }
                 _state.value = SearchScreenState.Error(
                     when (result.error) {
                         NetworkErrors.NoInternet -> ErrorsSearchScreenStates.NO_INTERNET
@@ -108,14 +117,8 @@ open class SearchViewModel @Inject constructor(
         }
 
         if (searchSettings.currentPage > 0) {
-            when (_state.value) {
-                is SearchScreenState.Content -> {
-                    if (searchSettings.currentPage < (_state.value as SearchScreenState.Content).totalPages) {
-                        getVacancies(searchSettings)
-                    }
-                }
-
-                else -> Unit
+            if (searchSettings.currentPage < totalPages) {
+                getVacancies(searchSettings)
             }
         } else {
             vacancies.clear()
@@ -124,40 +127,52 @@ open class SearchViewModel @Inject constructor(
     }
 
     fun handleInteraction(interaction: ViewModelInteractionState) {
+        var newSearchSettings = searchSettings
+        isLastUpdatePage = false
         when (interaction) {
             is ViewModelInteractionState.setRegion -> {
-                searchSettings = searchSettings.copy(currentPage = 0)
-                searchSettings = searchSettings.copy(currentRegion = interaction.region)
+                newSearchSettings = newSearchSettings.copy(currentPage = 0)
+                newSearchSettings = newSearchSettings.copy(currentRegion = interaction.region)
             }
 
             is ViewModelInteractionState.setIndustry -> {
-                searchSettings = searchSettings.copy(currentPage = 0)
-                searchSettings = searchSettings.copy(currentIndustry = interaction.industry)
+                newSearchSettings = newSearchSettings.copy(currentPage = 0)
+                newSearchSettings = newSearchSettings.copy(currentIndustry = interaction.industry)
             }
 
             is ViewModelInteractionState.setSalary -> {
-                searchSettings = searchSettings.copy(currentPage = 0)
-                searchSettings =
-                    searchSettings.copy(currentSalary = interaction.salary)
+                newSearchSettings = newSearchSettings.copy(currentPage = 0)
+                newSearchSettings =
+                    newSearchSettings.copy(currentSalary = interaction.salary)
             }
 
             is ViewModelInteractionState.setSalaryOnly -> {
-                searchSettings = searchSettings.copy(currentPage = 0)
-                searchSettings =
-                    searchSettings.copy(currentSalaryOnly = interaction.salaryOnly)
+                newSearchSettings = newSearchSettings.copy(currentPage = 0)
+                newSearchSettings =
+                    newSearchSettings.copy(currentSalaryOnly = interaction.salaryOnly)
             }
 
             is ViewModelInteractionState.setQuery -> {
-                searchSettings = searchSettings.copy(currentPage = 0)
-                searchSettings =
-                    searchSettings.copy(currentQuery = interaction.query)
+                showSnackBar = false
+                newSearchSettings = newSearchSettings.copy(currentPage = 0)
+                newSearchSettings =
+                    newSearchSettings.copy(currentQuery = interaction.query)
             }
 
-            is ViewModelInteractionState.setPage -> searchSettings =
-                searchSettings.copy(currentPage = interaction.page)
+            is ViewModelInteractionState.setPage -> {
+                isLastUpdatePage = true
+                newSearchSettings =
+                    newSearchSettings.copy(currentPage = interaction.page)
+            }
         }
-        handleSearchSettings(searchSettings)
+        if (newSearchSettings != searchSettings) {
+            searchSettings = newSearchSettings
+            handleSearchSettings(searchSettings)
+        }
     }
+    fun giveMyPageToReload(): Int =
+        searchSettings.currentPage
+
 
     companion object {
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
