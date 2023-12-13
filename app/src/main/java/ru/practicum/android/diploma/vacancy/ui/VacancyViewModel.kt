@@ -9,11 +9,10 @@ import ru.practicum.android.diploma.common.data.dto.Resource
 import ru.practicum.android.diploma.common.ui.BaseViewModel
 import ru.practicum.android.diploma.vacancy.domain.api.SingleVacancyInteractor
 import ru.practicum.android.diploma.vacancy.domain.models.DetailedVacancyItem
-import ru.practicum.android.diploma.vacancy.domain.models.VacancyItem
 import ru.practicum.android.diploma.vacancy.domain.models.VacancyState
 import javax.inject.Inject
 
-typealias content = Pair<VacancyItem, Boolean>
+typealias content = Pair<DetailedVacancyItem, Boolean>
 
 @HiltViewModel
 class VacancyViewModel @Inject constructor(private val interactor: SingleVacancyInteractor) : BaseViewModel() {
