@@ -1,10 +1,12 @@
 package ru.practicum.android.diploma.search.ui.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.common.data.dto.Resource
 import ru.practicum.android.diploma.common.domain.models.NetworkErrors
@@ -48,6 +50,27 @@ open class SearchViewModel @Inject constructor(
         if (searchSettings.currentQuery.isEmpty()) {
             _state.value = SearchScreenState.Default
         }
+
+        // todo удалить этот код когда будут реализованы индустрии
+        viewModelScope.launch {
+            interactor.getIndustries()
+                .catch { e ->
+                    // Здесь мы логируем ошибку и, если нужно, можем изменить
+//                    состояние _state
+                    Log.e("SearchViewModel", "Error fetching industries", e)
+                }
+                .collect { resource ->
+                    // Обработка ситуации, когда flow успешно эмитит событие.
+                    when (resource) {
+                        is Resource.Success -> {
+                            Log.d("SearchViewModel", "Industries: ${resource.data}")
+                        }
+
+                        else -> {}
+                    }
+
+                }
+        } // <---- конец удаляемого фрагмента
     }
 
     private fun chargeInteractorSearch(): suspend () -> Flow<Resource<VacanciesSearchResult>> = {
@@ -170,6 +193,7 @@ open class SearchViewModel @Inject constructor(
             handleSearchSettings(searchSettings)
         }
     }
+
     fun giveMyPageToReload(): Int =
         searchSettings.currentPage
 

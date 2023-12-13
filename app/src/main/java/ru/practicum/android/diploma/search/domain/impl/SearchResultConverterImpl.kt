@@ -47,7 +47,7 @@ class SearchResultConverterImpl : SearchResultConverter {
     override fun mapIndustriesResponse(from: Resource<IndustriesSearchResponse>): Resource<List<Industry>> {
         return when (from) {
             is Resource.Success -> {
-                Resource.Success( map(from.data?.industries?: emptyList()) )
+                Resource.Success(map(from.data?.industries ?: emptyList()))
             }
 
             is Resource.Error -> {
@@ -89,7 +89,7 @@ class SearchResultConverterImpl : SearchResultConverter {
         with(from) {
             this.forEach {
                 it.industries?.let { industries ->
-                    result.addAll(industries.map {element ->
+                    result.addAll(industries.map { element ->
                         mapIndustriesDto(element)
                     })
                 }
