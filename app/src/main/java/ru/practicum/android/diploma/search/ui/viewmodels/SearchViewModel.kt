@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.search.ui.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -48,6 +49,24 @@ open class SearchViewModel @Inject constructor(
         if (searchSettings.currentQuery.isEmpty()) {
             _state.value = SearchScreenState.Default
         }
+
+        // todo удалить этот код когда будет реализован фильтр индустрии
+        viewModelScope.launch {
+            interactor.getIndustries()
+                .collect { resource ->
+                    // Обработка ситуации, когда flow успешно эмитит событие.
+                    when (resource) {
+                        is Resource.Success -> {
+                            resource.data?.forEach {
+                                Log.d("SearchViewModel", "Industries: $it")
+                            }
+                        }
+                        else -> {
+                            Log.d("SearchViewModel", "${resource.error}")
+                        }
+                    }
+                }
+        } // <---- конец удаляемого фрагмента
     }
 
     private fun chargeInteractorSearch(): suspend () -> Flow<Resource<VacanciesSearchResult>> = {
@@ -170,6 +189,7 @@ open class SearchViewModel @Inject constructor(
             handleSearchSettings(searchSettings)
         }
     }
+
     fun giveMyPageToReload(): Int =
         searchSettings.currentPage
 

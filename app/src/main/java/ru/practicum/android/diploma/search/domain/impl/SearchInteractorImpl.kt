@@ -6,6 +6,7 @@ import ru.practicum.android.diploma.common.data.dto.Resource
 import ru.practicum.android.diploma.search.data.HHSearchRepository
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
 import ru.practicum.android.diploma.search.domain.api.SearchResultConverter
+import ru.practicum.android.diploma.search.domain.models.Industry
 import ru.practicum.android.diploma.search.domain.models.SingleTreeElement
 import ru.practicum.android.diploma.search.domain.models.VacanciesSearchResult
 
@@ -41,8 +42,8 @@ class SearchInteractorImpl(
         }
 
 
-    override fun getIndustries(forId: Int?): Flow<Resource<List<SingleTreeElement>>> =
-        repository.getIndustries(forId).map { result ->
+    override fun getIndustries(): Flow<Resource<List<Industry>>> =
+        repository.getIndustries().map { result ->
             converter.mapIndustriesResponse(result)
         }
 
