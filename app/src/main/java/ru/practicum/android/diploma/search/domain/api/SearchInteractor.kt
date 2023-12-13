@@ -21,7 +21,7 @@ interface SearchInteractor {
         page: Int = 0
     ): Flow<Resource<VacanciesSearchResult>>
 
-    fun getIndustries(forId: Int? = null): Flow<Resource<List<Industry>>>
+    fun getIndustries(): Flow<Resource<List<Industry>>>
 
     fun getAreas(forId: Int? = null): Flow<Resource<List<SingleTreeElement>>>
 

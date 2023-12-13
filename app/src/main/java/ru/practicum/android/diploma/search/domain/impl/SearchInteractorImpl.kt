@@ -42,8 +42,8 @@ class SearchInteractorImpl(
         }
 
 
-    override fun getIndustries(forId: Int?): Flow<Resource<List<Industry>>> =
-        repository.getIndustries(forId).map { result ->
+    override fun getIndustries(): Flow<Resource<List<Industry>>> =
+        repository.getIndustries().map { result ->
             converter.mapIndustriesResponse(result)
         }
 

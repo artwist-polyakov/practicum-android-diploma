@@ -6,7 +6,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.common.data.dto.Resource
 import ru.practicum.android.diploma.common.domain.models.NetworkErrors
@@ -51,24 +50,21 @@ open class SearchViewModel @Inject constructor(
             _state.value = SearchScreenState.Default
         }
 
-        // todo удалить этот код когда будут реализованы индустрии
+        // todo удалить этот код когда будет реализован фильтр индустрии
         viewModelScope.launch {
             interactor.getIndustries()
-                .catch { e ->
-                    // Здесь мы логируем ошибку и, если нужно, можем изменить
-//                    состояние _state
-                    Log.e("SearchViewModel", "Error fetching industries", e)
-                }
                 .collect { resource ->
                     // Обработка ситуации, когда flow успешно эмитит событие.
                     when (resource) {
                         is Resource.Success -> {
-                            Log.d("SearchViewModel", "Industries: ${resource.data}")
+                            resource.data?.forEach {
+                                Log.d("SearchViewModel", "Industries: $it")
+                            }
                         }
-
-                        else -> {}
+                        else -> {
+                            Log.d("SearchViewModel", "${resource.error}")
+                        }
                     }
-
                 }
         } // <---- конец удаляемого фрагмента
     }
