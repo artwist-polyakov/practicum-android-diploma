@@ -9,6 +9,7 @@ import ru.practicum.android.diploma.common.data.network.response.HHSearchRespons
 import ru.practicum.android.diploma.common.data.network.response.IndustriesSearchResponse
 import ru.practicum.android.diploma.common.domain.models.NetworkErrors
 import ru.practicum.android.diploma.search.domain.api.SearchResultConverter
+import ru.practicum.android.diploma.search.domain.models.Industry
 import ru.practicum.android.diploma.search.domain.models.SingleTreeElement
 import ru.practicum.android.diploma.search.domain.models.VacanciesSearchResult
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
@@ -43,10 +44,10 @@ class SearchResultConverterImpl : SearchResultConverter {
         }
     }
 
-    override fun mapIndustriesResponse(from: Resource<IndustriesSearchResponse>): Resource<List<SingleTreeElement>> {
+    override fun mapIndustriesResponse(from: Resource<IndustriesSearchResponse>): Resource<List<Industry>> {
         return when (from) {
             is Resource.Success -> {
-                Resource.Success(from.data?.industries?.map { map(it) } ?: emptyList())
+                Resource.Success( map(from.data?.industries?: emptyList()) )
             }
 
             is Resource.Error -> {
@@ -83,16 +84,28 @@ class SearchResultConverterImpl : SearchResultConverter {
         }
     }
 
-    override fun map(from: IndustriesDto): SingleTreeElement {
+    override fun map(from: List<IndustriesDto>): List<Industry> {
+        var result: MutableList<Industry> = mutableListOf()
+        with(from) {
+            this.forEach {
+                it.industries?.let { industries ->
+                    result.addAll(industries.map {element ->
+                        mapIndustriesDto(element)
+                    })
+                }
+            }
+        }
+        return result
+    }
+
+    private fun mapIndustriesDto(from: IndustriesDto): Industry {
         return with(from) {
-            SingleTreeElement(
-                id = id,
-                name = name,
-                parent = null,
-                hasChildrens = if (!id.contains(".")) false else true,
-                children = industries?.map { map(it) }
+            Industry(
+                id = this.id,
+                name = this.name
             )
         }
     }
-
 }
+
+
