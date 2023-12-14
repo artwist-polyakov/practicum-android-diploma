@@ -98,8 +98,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_industry"
-        app:placeholderText="@string/enter_amount"
-        app:placeholderTextColor="@color/gray">
+        app:placeholderText="@string/enter_amount">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ti_salary_field"
@@ -107,8 +106,7 @@
             android:hint="@string/expected_salary"
             android:maxLength="25"
             android:maxLines="1"
-            android:singleLine="true"
-            android:textColorHint="?attr/formsHintColor" />
+            android:singleLine="true"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
