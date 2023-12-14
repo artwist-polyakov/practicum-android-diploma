@@ -2,7 +2,7 @@ package ru.practicum.android.diploma.search.ui.viewmodels.states
 
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
 
-sealed class SearchScreenState: BaseScreenState() {
+sealed class SearchScreenState : BaseScreenState() {
 
     // todo заменить в двух местах Any, когда будет понятно
     //  нужно ли хранить предыщуие сущности на экране и что отображаем
