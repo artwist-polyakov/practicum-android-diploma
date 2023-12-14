@@ -31,6 +31,7 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
     override fun subscribe(): Unit = with(binding) {
         inputListener()
         filterFieldListeners()
+        arrowForwardListeners()
 
         ivArrowBack.setOnClickListener {
             findNavController().popBackStack()
@@ -39,6 +40,11 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
         llSalaryChecbox.setOnClickListener {
             checkbox.isChecked = !checkbox.isChecked
             updateButtonBlockVisibility()
+
+            if (checkbox.isChecked) {
+                tiIndustry.setText("IT")
+                tiWorkPlace.setText("USA, LA")
+            }
         }
 
         checkbox.setOnClickListener {
@@ -82,13 +88,40 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
     // Слушатель полей фильтров отрасли и места работы
     private fun filterFieldListeners() = with(binding) {
         tiWorkPlace.doOnTextChanged { text, _, _, _ ->
-            val hintColor = if (text.toString().isEmpty()) defaultHintColor else activeFilterHintColor
+            var hintColor = 0
+            if (text.toString().isEmpty()) {
+                hintColor = defaultHintColor
+                ivArrowForwardLocation.setImageResource(R.drawable.arrow_forward_24px)
+                ivArrowForwardLocation.isClickable = false
+            } else {
+                hintColor = activeFilterHintColor
+                ivArrowForwardLocation.setImageResource(R.drawable.ic_cross_24px)
+                ivArrowForwardLocation.isClickable = true
+            }
             tlWorkPlace.hintTextColor = ColorStateList.valueOf(hintColor)
         }
 
         tiIndustry.doOnTextChanged { text, _, _, _ ->
-            val hintColor = if (text.toString().isEmpty()) defaultHintColor else activeFilterHintColor
+            var hintColor = 0
+            if (text.toString().isEmpty()) {
+                hintColor = defaultHintColor
+                ivArrowForwardIndustry.setImageResource(R.drawable.arrow_forward_24px)
+                ivArrowForwardIndustry.isClickable = false
+            } else {
+                hintColor = activeFilterHintColor
+                ivArrowForwardIndustry.setImageResource(R.drawable.ic_cross_24px)
+                ivArrowForwardIndustry.isClickable = true
+            }
             tlIndustry.hintTextColor = ColorStateList.valueOf(hintColor)
+        }
+    }
+
+    private fun arrowForwardListeners() = with(binding) {
+        ivArrowForwardLocation.setOnClickListener {
+            tiWorkPlace.text = null
+        }
+        ivArrowForwardIndustry.setOnClickListener {
+            tiIndustry.text = null
         }
     }
 
