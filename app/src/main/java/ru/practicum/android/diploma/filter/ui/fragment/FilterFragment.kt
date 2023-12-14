@@ -20,6 +20,8 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
     override fun initViews(): Unit = with(binding) {
         defaultHintColor = ContextCompat.getColor(requireContext(), R.color.inputTextHint)
         activeHintColor = ContextCompat.getColor(requireContext(), R.color.blue)
+
+        tiSalaryField.requestFocus()
     }
 
     override fun subscribe(): Unit = with(binding) {
