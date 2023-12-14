@@ -17,11 +17,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <include
-        android:id="@+id/vacancy_list"
+        android:id="@+id/favorites_list"
         layout="@layout/vacancy_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/standart_margin"
+        android:layout_marginTop="@dimen/between_text_card"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/favorites_header" />
