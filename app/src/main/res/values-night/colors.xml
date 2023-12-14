@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="htmlText">#FDFDFD</color>
+    <color name="htmlText">@color/whiteDay</color>
     <color name="inputTextHint">@color/whiteDay</color>
+    <color name="textHintApearence">@color/whiteDay</color>
+    <color name="formsBackground">@color/blackUniversal</color>
 </resources>

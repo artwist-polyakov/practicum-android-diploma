@@ -34,61 +34,62 @@
             android:text="@string/filter_settings" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_work_place"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tl_work_place"
+        style="@style/TextInputLayout.FilterItem"
+        android:layout_marginStart="-16dp"
         android:layout_marginTop="@dimen/between_text_card"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
         android:paddingVertical="@dimen/image_padding_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_header">
+        app:layout_constraintTop_toBottomOf="@+id/ll_header">
 
-        <TextView
-            style="@style/Text.Regular16.FilterElement"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/workplace" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ti_work_place"
+            style="@style/TextInputEditText.FilterInput"
+            android:hint="@string/workplace"
+            android:maxLines="1"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/app_name"
-            android:padding="@dimen/image_padding_medium"
-            android:paddingEnd="0dp"
-            android:src="@drawable/arrow_forward_24px" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_industry"
-        android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
+        android:contentDescription="@string/app_name"
+        android:padding="@dimen/image_padding_medium"
+        android:paddingEnd="0dp"
+        android:src="@drawable/arrow_forward_24px"
+        app:layout_constraintBottom_toBottomOf="@+id/tl_work_place"
+        app:layout_constraintEnd_toEndOf="@+id/tl_work_place"
+        app:layout_constraintTop_toTopOf="@+id/tl_work_place" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tl_industry"
+        style="@style/TextInputLayout.FilterItem"
+        android:layout_marginStart="-16dp"
         android:paddingVertical="@dimen/image_padding_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_work_place">
+        app:layout_constraintTop_toBottomOf="@+id/tl_work_place">
 
-        <TextView
-            style="@style/Text.Regular16.FilterElement"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/industry" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ti_industry"
+            style="@style/TextInputEditText.FilterInput"
+            android:hint="@string/industry"
+            android:maxLines="1"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/app_name"
-            android:padding="@dimen/image_padding_medium"
-            android:paddingEnd="0dp"
-            android:src="@drawable/arrow_forward_24px" />
-    </LinearLayout>
-
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:padding="@dimen/image_padding_medium"
+        android:paddingEnd="0dp"
+        android:src="@drawable/arrow_forward_24px"
+        app:layout_constraintBottom_toBottomOf="@+id/tl_industry"
+        app:layout_constraintEnd_toEndOf="@+id/tl_industry"
+        app:layout_constraintTop_toTopOf="@+id/tl_industry" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tl_salary"
@@ -97,7 +98,7 @@
         android:paddingVertical="@dimen/image_padding_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_industry"
+        app:layout_constraintTop_toBottomOf="@+id/tl_industry"
         app:placeholderText="@string/enter_amount">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -106,7 +107,7 @@
             android:hint="@string/expected_salary"
             android:maxLength="25"
             android:maxLines="1"
-            android:singleLine="true"/>
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView

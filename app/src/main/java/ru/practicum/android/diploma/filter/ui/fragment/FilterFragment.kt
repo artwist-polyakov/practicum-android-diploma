@@ -17,15 +17,20 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
     override val viewModel by viewModels<FilterViewModel>()
     private var defaultHintColor: Int = 0
     private var activeHintColor: Int = 0
+    private var activeFilterHintColor: Int = 0
     override fun initViews(): Unit = with(binding) {
         defaultHintColor = ContextCompat.getColor(requireContext(), R.color.inputTextHint)
         activeHintColor = ContextCompat.getColor(requireContext(), R.color.blue)
+        activeFilterHintColor = ContextCompat.getColor(requireContext(), R.color.textHintApearence)
 
         tiSalaryField.requestFocus()
+
+        filterFieldManager()
     }
 
     override fun subscribe(): Unit = with(binding) {
         inputListener()
+        filterFieldListeners()
 
         ivArrowBack.setOnClickListener {
             findNavController().popBackStack()
@@ -44,8 +49,16 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
             tiSalaryField.text?.clear()
         }
 
-        llWorkPlace.setOnClickListener {
+        tiWorkPlace.setOnClickListener {
             findNavController().navigate(R.id.action_filterFragment_to_workPlaceFragment)
+        }
+
+        tiIndustry.setOnClickListener { (Unit) }
+
+        btnApply.setOnClickListener { (Unit) }
+
+        btnReset.setOnClickListener {
+            resetFilter()
         }
     }
 
@@ -64,6 +77,37 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
                 tiSalaryField.setSelection(tiSalaryField.text?.length ?: 0)
             }
         }
+    }
+
+    // Слушатель полей фильтров отрасли и места работы
+    private fun filterFieldListeners() = with(binding) {
+        tiWorkPlace.doOnTextChanged { text, _, _, _ ->
+            val hintColor = if (text.toString().isEmpty()) defaultHintColor else activeFilterHintColor
+            tlWorkPlace.hintTextColor = ColorStateList.valueOf(hintColor)
+        }
+
+        tiIndustry.doOnTextChanged { text, _, _, _ ->
+            val hintColor = if (text.toString().isEmpty()) defaultHintColor else activeFilterHintColor
+            tlIndustry.hintTextColor = ColorStateList.valueOf(hintColor)
+        }
+    }
+
+    private fun filterFieldManager() = with(binding) {
+        tiWorkPlace.isFocusable = false
+        tiWorkPlace.isCursorVisible = false
+        tiWorkPlace.keyListener = null
+
+        tiIndustry.isFocusable = false
+        tiIndustry.isCursorVisible = false
+        tiIndustry.keyListener = null
+    }
+
+    private fun resetFilter() = with(binding) {
+        tiWorkPlace.text = null
+        tiIndustry.text = null
+        tiSalaryField.text = null
+        checkbox.isChecked = false
+        llButtonBlock.isVisible = false
     }
 
     private fun updateButtonBlockVisibility() = with(binding) {
