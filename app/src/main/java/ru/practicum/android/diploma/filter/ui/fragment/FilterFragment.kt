@@ -38,16 +38,16 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
         }
 
         llSalaryChecbox.setOnClickListener {
-            checkbox.isChecked = !checkbox.isChecked
+            checkboxHideWithSalary.isChecked = !checkboxHideWithSalary.isChecked
             updateButtonBlockVisibility()
 
-            if (checkbox.isChecked) {
+            if (checkboxHideWithSalary.isChecked) {
                 tiIndustry.setText("IT")
                 tiWorkPlace.setText("USA, LA")
             }
         }
 
-        checkbox.setOnClickListener {
+        checkboxHideWithSalary.setOnClickListener {
             updateButtonBlockVisibility()
         }
 
@@ -139,11 +139,11 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
         tiWorkPlace.text = null
         tiIndustry.text = null
         tiSalaryField.text = null
-        checkbox.isChecked = false
+        checkboxHideWithSalary.isChecked = false
         llButtonBlock.isVisible = false
     }
 
     private fun updateButtonBlockVisibility() = with(binding) {
-        llButtonBlock.isVisible = checkbox.isChecked || tiSalaryField.text.toString().isNotEmpty()
+        llButtonBlock.isVisible = checkboxHideWithSalary.isChecked || tiSalaryField.text.toString().isNotEmpty()
     }
 }

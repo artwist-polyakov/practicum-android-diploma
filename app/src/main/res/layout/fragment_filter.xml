@@ -37,7 +37,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tl_work_place"
         style="@style/TextInputLayout.FilterItem"
-        android:layout_marginStart="-16dp"
+        android:layout_marginStart="@dimen/negative_margin_standard"
         android:layout_marginTop="@dimen/between_text_card"
         android:paddingVertical="@dimen/image_padding_medium"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,7 +67,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tl_industry"
         style="@style/TextInputLayout.FilterItem"
-        android:layout_marginStart="-16dp"
+        android:layout_marginStart="@dimen/negative_margin_standard"
         android:paddingVertical="@dimen/image_padding_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -107,7 +107,7 @@
             android:id="@+id/ti_salary_field"
             style="@style/TextInputEditText"
             android:hint="@string/expected_salary"
-            android:maxLength="25"
+            android:maxLength="13"
             android:maxLines="1"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -145,7 +145,7 @@
             android:text="@string/dont_show_empty_amount" />
 
         <CheckBox
-            android:id="@+id/checkbox"
+            android:id="@+id/checkbox_hide_with_salary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
