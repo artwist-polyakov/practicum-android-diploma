@@ -47,7 +47,7 @@ open class SearchViewModel @Inject constructor(
 
     private fun checkState() {
         if (searchSettings.currentQuery.isEmpty()) {
-            _state.value = SearchScreenState.Default
+            _state.value = SearchScreenState.Default(isFilterEnabled())
         }
 
         // todo удалить этот код когда будет реализован фильтр индустрии
@@ -61,6 +61,7 @@ open class SearchViewModel @Inject constructor(
                                 Log.d("SearchViewModel", "Industries: $it")
                             }
                         }
+
                         else -> {
                             Log.d("SearchViewModel", "${resource.error}")
                         }
@@ -88,7 +89,8 @@ open class SearchViewModel @Inject constructor(
                 }
                 if (result.data?.vacancies.isNullOrEmpty()) {
                     showSnackBar = false
-                    _state.value = SearchScreenState.Error(ErrorsSearchScreenStates.NOT_FOUND, showSnackBar)
+                    _state.value =
+                        SearchScreenState.Error(ErrorsSearchScreenStates.NOT_FOUND, showSnackBar, isFilterEnabled())
                 } else if (result.data!!.vacanciesFound > 0) {
                     showSnackBar = result.data.currentPage >= 0
                     _state.value = SearchScreenState.Content(
@@ -97,7 +99,8 @@ open class SearchViewModel @Inject constructor(
                         result.data.vacanciesFound,
                         vacancies.apply {
                             addAll(result.data.vacancies)
-                        }
+                        },
+                        isFilterEnabled()
                     )
                 }
             }
@@ -111,7 +114,7 @@ open class SearchViewModel @Inject constructor(
                     when (result.error) {
                         NetworkErrors.NoInternet -> ErrorsSearchScreenStates.NO_INTERNET
                         else -> ErrorsSearchScreenStates.SERVER_ERROR
-                    }, showSnackBar
+                    }, showSnackBar, isFilterEnabled()
                 )
             }
         }
@@ -119,12 +122,11 @@ open class SearchViewModel @Inject constructor(
 
     private fun getVacancies(settings: SearchSettingsState) {
         if (settings.currentQuery.isNotEmpty()) {
-            _state.value = SearchScreenState.Loading(settings.currentPage)
+            _state.value = SearchScreenState.Loading(settings.currentPage, isFilterEnabled())
             viewModelScope.launch {
                 chargeInteractorSearch().invoke()
                     .collect { result ->
                         handleSearchResponse(result)
-                        _state.emit(_state.value)
                     }
             }
         }
@@ -132,7 +134,7 @@ open class SearchViewModel @Inject constructor(
 
     private fun handleSearchSettings(searchSettings: SearchSettingsState) {
         if (searchSettings.currentQuery.isEmpty()) {
-            _state.value = SearchScreenState.Default
+            _state.value = SearchScreenState.Default(isFilterEnabled())
         }
 
         if (searchSettings.currentPage > 0) {
@@ -144,6 +146,12 @@ open class SearchViewModel @Inject constructor(
             searchDebounce(searchSettings)
         }
     }
+
+    private fun isFilterEnabled(): Boolean =
+        searchSettings.currentRegion != null ||
+            searchSettings.currentIndustry != null ||
+            searchSettings.currentSalary != null ||
+            searchSettings.currentSalaryOnly != null
 
     fun handleInteraction(interaction: ViewModelInteractionState) {
         var newSearchSettings = searchSettings

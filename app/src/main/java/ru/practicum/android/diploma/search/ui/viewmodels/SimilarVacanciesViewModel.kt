@@ -19,7 +19,7 @@ class SimilarVacanciesViewModel @Inject constructor(private val interactor: Sear
     interactor
 ) {
     private var searchSettings: SearchSettingsState = SearchSettingsState()
-    private var _state = MutableStateFlow<SearchScreenState>(SearchScreenState.Default)
+    private var _state = MutableStateFlow<SearchScreenState>(SearchScreenState.Default())
     override val state: StateFlow<SearchScreenState>
         get() = _state
 
