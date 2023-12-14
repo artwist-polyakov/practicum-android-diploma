@@ -151,7 +151,7 @@ open class SearchViewModel @Inject constructor(
         searchSettings.currentRegion != null ||
             searchSettings.currentIndustry != null ||
             searchSettings.currentSalary != null ||
-            searchSettings.currentSalaryOnly != null
+            searchSettings.currentSalaryOnly
 
     fun handleInteraction(interaction: ViewModelInteractionState) {
         var newSearchSettings = searchSettings
