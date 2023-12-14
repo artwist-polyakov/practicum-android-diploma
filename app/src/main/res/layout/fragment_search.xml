@@ -29,7 +29,8 @@
             android:layout_width="@dimen/filter_icon_side"
             android:layout_height="@dimen/filter_icon_side"
             android:contentDescription="@string/app_name"
-            android:padding="@dimen/image_padding_medium"
+            android:layout_marginEnd="@dimen/filter_end_margin"
+            android:scaleType="center"
             android:src="@drawable/filter_24px" />
     </LinearLayout>
 
