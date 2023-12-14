@@ -17,26 +17,37 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
     override val viewModel by viewModels<FilterViewModel>()
     private var defaultHintColor: Int = 0
     private var activeHintColor: Int = 0
+    private var activeFilterHintColor: Int = 0
     override fun initViews(): Unit = with(binding) {
         defaultHintColor = ContextCompat.getColor(requireContext(), R.color.inputTextHint)
         activeHintColor = ContextCompat.getColor(requireContext(), R.color.blue)
+        activeFilterHintColor = ContextCompat.getColor(requireContext(), R.color.textHintApearence)
 
         tiSalaryField.requestFocus()
+
+        filterFieldManager()
     }
 
     override fun subscribe(): Unit = with(binding) {
         inputListener()
+        filterFieldListeners()
+        arrowForwardListeners()
 
         ivArrowBack.setOnClickListener {
             findNavController().popBackStack()
         }
 
         llSalaryChecbox.setOnClickListener {
-            checkbox.isChecked = !checkbox.isChecked
+            checkboxHideWithSalary.isChecked = !checkboxHideWithSalary.isChecked
             updateButtonBlockVisibility()
+
+            if (checkboxHideWithSalary.isChecked) {
+                tiIndustry.setText("IT")
+                tiWorkPlace.setText("USA, LA")
+            }
         }
 
-        checkbox.setOnClickListener {
+        checkboxHideWithSalary.setOnClickListener {
             updateButtonBlockVisibility()
         }
 
@@ -44,8 +55,16 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
             tiSalaryField.text?.clear()
         }
 
-        llWorkPlace.setOnClickListener {
+        tiWorkPlace.setOnClickListener {
             findNavController().navigate(R.id.action_filterFragment_to_workPlaceFragment)
+        }
+
+        tiIndustry.setOnClickListener { Unit }
+
+        btnApply.setOnClickListener { Unit }
+
+        btnReset.setOnClickListener {
+            resetFilter()
         }
     }
 
@@ -66,7 +85,65 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
         }
     }
 
+    // Слушатель полей фильтров отрасли и места работы
+    private fun filterFieldListeners() = with(binding) {
+        tiWorkPlace.doOnTextChanged { text, _, _, _ ->
+            var hintColor = 0
+            if (text.toString().isEmpty()) {
+                hintColor = defaultHintColor
+                ivArrowForwardLocation.setImageResource(R.drawable.arrow_forward_24px)
+                ivArrowForwardLocation.isClickable = false
+            } else {
+                hintColor = activeFilterHintColor
+                ivArrowForwardLocation.setImageResource(R.drawable.ic_cross_24px)
+                ivArrowForwardLocation.isClickable = true
+            }
+            tlWorkPlace.hintTextColor = ColorStateList.valueOf(hintColor)
+        }
+
+        tiIndustry.doOnTextChanged { text, _, _, _ ->
+            var hintColor = 0
+            if (text.toString().isEmpty()) {
+                hintColor = defaultHintColor
+                ivArrowForwardIndustry.setImageResource(R.drawable.arrow_forward_24px)
+                ivArrowForwardIndustry.isClickable = false
+            } else {
+                hintColor = activeFilterHintColor
+                ivArrowForwardIndustry.setImageResource(R.drawable.ic_cross_24px)
+                ivArrowForwardIndustry.isClickable = true
+            }
+            tlIndustry.hintTextColor = ColorStateList.valueOf(hintColor)
+        }
+    }
+
+    private fun arrowForwardListeners() = with(binding) {
+        ivArrowForwardLocation.setOnClickListener {
+            tiWorkPlace.text = null
+        }
+        ivArrowForwardIndustry.setOnClickListener {
+            tiIndustry.text = null
+        }
+    }
+
+    private fun filterFieldManager() = with(binding) {
+        tiWorkPlace.isFocusable = false
+        tiWorkPlace.isCursorVisible = false
+        tiWorkPlace.keyListener = null
+
+        tiIndustry.isFocusable = false
+        tiIndustry.isCursorVisible = false
+        tiIndustry.keyListener = null
+    }
+
+    private fun resetFilter() = with(binding) {
+        tiWorkPlace.text = null
+        tiIndustry.text = null
+        tiSalaryField.text = null
+        checkboxHideWithSalary.isChecked = false
+        llButtonBlock.isVisible = false
+    }
+
     private fun updateButtonBlockVisibility() = with(binding) {
-        llButtonBlock.isVisible = checkbox.isChecked || tiSalaryField.text.toString().isNotEmpty()
+        llButtonBlock.isVisible = checkboxHideWithSalary.isChecked || tiSalaryField.text.toString().isNotEmpty()
     }
 }
