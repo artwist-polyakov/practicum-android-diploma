@@ -39,7 +39,15 @@
         android:id="@+id/filterFragment"
         android:name="ru.practicum.android.diploma.filter.ui.fragment.FilterFragment"
         android:label="fragment_filter"
-        tools:layout="@layout/fragment_filter" />
+        tools:layout="@layout/fragment_filter">
+        <action
+            android:id="@+id/action_filterFragment_to_workPlaceFragment"
+            app:destination="@id/workPlaceFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/vacancyFragment"
         android:name="ru.practicum.android.diploma.vacancy.ui.VacancyFragment"
@@ -66,4 +74,9 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+    <fragment
+        android:id="@+id/workPlaceFragment"
+        android:name="ru.practicum.android.diploma.filter.ui.fragment.WorkPlaceFragment"
+        android:label="fragment_work_place"
+        tools:layout="@layout/fragment_work_place" />
 </navigation>

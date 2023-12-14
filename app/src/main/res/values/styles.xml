@@ -40,6 +40,11 @@
         <item name="android:color">?attr/mainTextColor</item>
     </style>
 
+    <!--Элемент списка вакансий, описание-->
+    <style name="Text.Regular16.FilterElement">
+        <item name="android:textColor">?attr/formsHintColor</item>
+    </style>
+
     <!--Элемент списка местоположений активный-->
     <style name="Text.Regular16.listPlacesActive">
         <item name="android:color">?attr/mainTextColor</item>
@@ -77,6 +82,7 @@
         <item name="android:textColor">?attr/mainTextColor</item>
     </style>
 
+
     <!--  В EditText понадобится настроить только padding  -->
     <style name="EditTextStyle" parent="@android:style/Widget.EditText">
         <item name="android:layout_width">match_parent</item>
@@ -95,7 +101,6 @@
 
     <!--! в TextInputLayout обязательно включить атрибут app:placeholderText="Введите сумму" -->
     <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
-        <item name="android:textColorHint">@color/gray</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="boxBackgroundColor">?attr/formsBackgroundColor</item>
@@ -106,7 +111,8 @@
         <item name="boxCornerRadiusTopEnd">@dimen/edittext_corner_radius</item>
         <item name="boxCornerRadiusBottomEnd">@dimen/edittext_corner_radius</item>
         <item name="boxCornerRadiusBottomStart">@dimen/edittext_corner_radius</item>
-        <item name="placeholderTextAppearance">?attr/formsHintColor</item>
+        <item name="placeholderTextAppearance">@style/Text.Regular16.FilterElement</item>
+        <item name="placeholderTextColor">?attr/formsHintColor</item>
         <item name="boxStrokeWidth">0dp</item>
         <item name="boxStrokeWidthFocused">0dp</item>
     </style>
@@ -121,6 +127,7 @@
         <item name="android:textCursorDrawable">@null</item>
         <item name="android:singleLine">true</item>
         <item name="android:textSize">16sp</item>
+        <item name="android:textColorHint">?attr/formsHintColor</item>
         <item name="android:inputType">number</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="hintTextAppearance">@style/Text.Hint</item>
@@ -161,13 +168,16 @@
         <item name="hintEnabled">false</item>
     </style>
 
-    <style name="Button" parent="Widget.MaterialComponents.Button">
+    <style name="Button" parent="Widget.AppCompat.Button">
+        <item name="android:layout_height">@dimen/button_height</item>
         <item name="cornerRadius">@dimen/button_radius</item>
         <item name="android:paddingHorizontal">@dimen/image_padding_medium</item>
         <item name="android:paddingVertical">@dimen/button_padding_vertical</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">@dimen/button_text_size</item>
         <item name="fontFamily">@font/ys_display_medium</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:background">@drawable/round_corners_12</item>
     </style>
     <style name="Button.Blue">
         <item name="backgroundTint">?attr/selectButtonColor</item>
@@ -180,6 +190,7 @@
     </style>
 
     <style name="Button.Transparent">
+        <item name="backgroundTint">@android:color/transparent</item>
         <item name="android:stateListAnimator">@null</item>
         <item name="android:textColor">?attr/dismissButtonTextColor</item>
     </style>

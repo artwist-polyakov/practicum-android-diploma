@@ -13,4 +13,5 @@
     <color name="background">#80AEAFB4</color>
 
     <color name="htmlText">@color/blackDay</color>
+    <color name="inputTextHint">@color/gray</color>
 </resources>

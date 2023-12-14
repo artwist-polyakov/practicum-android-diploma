@@ -30,7 +30,7 @@
     <dimen name="city_in_card">42dp</dimen>
     <dimen name="employer_in_card">48dp</dimen>
     <dimen name="card_height">80dp</dimen>
-    <dimen name="similarVacation">60dp</dimen>
+    <dimen name="button_height">60dp</dimen>
 
     <dimen name="navbar_height">64dp</dimen>
     <dimen name="header_height">64dp</dimen>
