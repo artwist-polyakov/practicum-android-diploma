@@ -6,10 +6,12 @@
     <string name="server_error">Ошибка сервера</string>
     <string name="no_vacancies">Не удалось получить список вакансий</string>
 
+    <!--    Ресурсы для экрана Поиска    -->
     <string name="main">Главная</string>
     <string name="search_for_vacancies">Поиск вакансий</string>
-    <string name="enter_riquest">Введите запрос</string>
+    <string name="enter_request">Введите запрос</string>
 
+    <!--    Ресурсы для экрана Настройки фильтрации    -->
     <string name="filter_settings">Настройки фильтрации</string>
     <string name="workplace">Место работы</string>
     <string name="industry">Отрасль</string>
@@ -30,10 +32,15 @@
     <string name="apply">Применить</string>
     <string name="reset">Сбросить</string>
 
+    <!--    Ресурсы для экрана деталей вакансии    -->
     <string name="vacancy">Вакансия</string>
-    <string name="salary_from">От %s</string> <!-- Строка вида:  От 999 999 ₽  -->
-    <string name="expirience_period">От $1%s $2%s до $3%s $4%s</string> <!-- Строка вида:  От 2 лет до 5 лет  -->
+    <string name="salary_from">от %s %s</string>
+    <string name="salary_to">до %s %s</string>
+    <string name="salary_from_to">от %s до %s %s</string>
+    <string name="salary_not_specified">Зарплата не указана</string>
+    <string name="expirience_period">От %s %s до %s %s</string> <!-- Строка вида:  От 2 лет до 5 лет  -->
     <string name="vacancy_description">Описание вакансии</string>
+    <string name="schedule">%s %s</string>
     <string name="required_expirience">Требуемый опыт</string>
     <string name="responsibilites">Обязанности</string>
     <string name="requirements">Требования</string>
@@ -45,13 +52,16 @@
     <string name="phone_number">Телефон</string>
     <string name="comment">Комментарий</string>
     <string name="similar_vacancies">Похожие вакансии</string>
+    <string name="html_content">&lt;html&gt;&lt;head&gt;%s&lt;/head&gt;&lt;body&gt;%s&lt;/body&gt;&lt;/html&gt;</string>
+    <string name="html_title">&lt;span class=&quot;title margin-bottom&quot;&gt;%s&lt;/span&gt;</string>
 
-
+    <!--    Ресурсы для экрана Избранное    -->
     <string name="favorite">Избранное</string>
     <string name="empty_list">Список пуст</string>
 
+    <!--    Ресурсы для экрана Команда    -->
     <string name="team">Команда</string>
-    <string name="applicationTeamText">Над приложением работали</string>
+    <string name="application_team_text">Над приложением работали</string>
     <string name="APolyakovName">Александр Поляков</string>
     <string name="AZinchenkoName">Алексей Зинченко</string>
     <string name="AKochekovName">Антон Кочеков</string>

@@ -1,81 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorBackground"
     tools:context=".team.ui.fragments.TeamFragment">
 
-    <TextView
-        android:id="@+id/teamText"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:id="@+id/ll_header"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="19dp"
-        style="@style/Text.Medium22"
-        android:text="@string/team"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/image_padding_medium"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            style="@style/Text.Medium22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/image_padding_medium"
+            android:text="@string/team"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/appTeamText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:gravity="start"
+        android:id="@+id/app_team_text"
         style="@style/Text.Bold32"
-        android:text="@string/applicationTeamText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/teamText" />
-
-    <TextView
-        android:id="@+id/APolyakovName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="@dimen/between_text_card"
+        android:gravity="start"
+        android:text="@string/application_team_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_header" />
+
+    <TextView
+        android:id="@+id/member1"
         style="@style/Text.Medium16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/big_top"
         android:gravity="start"
         android:text="@string/APolyakovName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appTeamText" />
+        app:layout_constraintTop_toBottomOf="@id/app_team_text" />
 
     <TextView
-        android:id="@+id/AZinchenkoName"
+        android:id="@+id/member2"
+        style="@style/Text.Medium16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        style="@style/Text.Medium16"
+        android:layout_marginTop="@dimen/little_top"
         android:gravity="start"
         android:text="@string/AZinchenkoName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/APolyakovName" />
+        app:layout_constraintTop_toBottomOf="@id/member1" />
 
     <TextView
-        android:id="@+id/ACochekovName"
+        android:id="@+id/member3"
+        style="@style/Text.Medium16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        style="@style/Text.Medium16"
+        android:layout_marginTop="@dimen/little_top"
         android:gravity="start"
         android:text="@string/AKochekovName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/AZinchenkoName" />
+        app:layout_constraintTop_toBottomOf="@id/member2" />
 
     <TextView
-        android:id="@+id/NRyabcevName"
+        android:id="@+id/member4"
+        style="@style/Text.Medium16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        style="@style/Text.Medium16"
+        android:layout_marginTop="@dimen/little_top"
         android:gravity="start"
         android:text="@string/NRyabcevName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ACochekovName" />
+        app:layout_constraintTop_toBottomOf="@id/member3" />
 </androidx.constraintlayout.widget.ConstraintLayout>

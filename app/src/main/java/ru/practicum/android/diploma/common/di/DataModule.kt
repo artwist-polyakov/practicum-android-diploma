@@ -14,8 +14,14 @@ import ru.practicum.android.diploma.common.data.db.AppDatabase
 import ru.practicum.android.diploma.common.data.network.HHService
 import ru.practicum.android.diploma.common.data.network.NetworkClient
 import ru.practicum.android.diploma.common.data.network.RetrofitNetworkClient
-import ru.practicum.android.diploma.search.data.network.HHSearchRepository
-import ru.practicum.android.diploma.search.data.network.HHSearchRepositoryImpl
+import ru.practicum.android.diploma.favorites.domain.api.FavoritesDBConverter
+import ru.practicum.android.diploma.favorites.domain.impl.FavoritesDBConverterImpl
+import ru.practicum.android.diploma.search.domain.api.SearchResultConverter
+import ru.practicum.android.diploma.search.domain.impl.SearchResultConverterImpl
+import ru.practicum.android.diploma.vacancy.data.sharing.ExternalNavigatorImpl
+import ru.practicum.android.diploma.vacancy.domain.api.ExternalNavigator
+import ru.practicum.android.diploma.vacancy.domain.api.SingleVacancyConverter
+import ru.practicum.android.diploma.vacancy.domain.impl.SingleVacancyConverterImpl
 import javax.inject.Singleton
 
 @Module
@@ -40,13 +46,22 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun providesSearchRepository(networkClient: NetworkClient): HHSearchRepository =
-        HHSearchRepositoryImpl(networkClient)
-
-    @Provides
-    @Singleton
     fun providesAppDatabase(@ApplicationContext context: Context): AppDatabase =
         Room.databaseBuilder(context, AppDatabase::class.java, "database.db")
             .addMigrations()
             .build()
+
+    @Provides
+    fun providesSearchResultConverter(): SearchResultConverter = SearchResultConverterImpl()
+
+    @Provides
+    fun providesFavoritesDBConverter(): FavoritesDBConverter = FavoritesDBConverterImpl(gsonService = provideGson())
+
+    @Provides
+    fun providesSingleVacancyConverter(): SingleVacancyConverter = SingleVacancyConverterImpl(gson = provideGson())
+
+    @Provides
+    fun providesExternalNavigator(@ApplicationContext context: Context): ExternalNavigator = ExternalNavigatorImpl(
+        context = context
+    )
 }

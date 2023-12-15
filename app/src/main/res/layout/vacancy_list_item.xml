@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="@dimen/vacancy_item_padding">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/company_image"
+        android:layout_width="@dimen/vacancy_item_image_size"
+        android:layout_height="@dimen/vacancy_item_image_size"
+        android:scaleType="fitCenter"
+        android:src="@drawable/placeholder_48px"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/lightGray"
+        app:strokeWidth="@dimen/vacancy_logo_stroke_width" />
+
+    <LinearLayout
+        android:id="@+id/vacancy_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/vacancy_item_margin"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/company_image"
+        app:layout_constraintTop_toTopOf="@+id/company_image">
+
+        <TextView
+            android:id="@+id/vacancy_name"
+            style="@style/Text.Medium22"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Разработчик платформы данных, Санкт-Петербург" />
+
+        <TextView
+            android:id="@+id/company_name"
+            style="@style/Text.Regular16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Алиса" />
+
+        <TextView
+            android:id="@+id/vacancy_salary"
+            style="@style/Text.Regular16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="от 1 500 $" />
+
+        <ProgressBar
+            android:id="@+id/pb_loading_bar"
+            android:layout_width="@dimen/progressbar_size"
+            android:layout_height="@dimen/progressbar_size"
+            android:layout_marginEnd="@dimen/vacancy_item_margin"
+            android:indeterminateTint="@color/blue"
+            android:indeterminateTintMode="src_in"
+            android:paddingVertical="@dimen/vacancy_item_margin"
+            android:paddingBottom="@dimen/navbar_height"
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

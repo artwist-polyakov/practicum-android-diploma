@@ -12,21 +12,16 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.common.ui.BaseActivity
 import ru.practicum.android.diploma.databinding.ActivityRootBinding
+import java.util.Locale
 
 @AndroidEntryPoint
 class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::inflate) {
 
     override fun initViews() = with(binding) {
-        // Пример использования access token для HeadHunter API
-        // networkRequestExample(accessToken = BuildConfig.HH_ACCESS_TOKEN)
-
         manageBottomNavigation()
         setStatusBarColor()
+        setRussianLocale()
     }
-
-//    private fun networkRequestExample(accessToken: String) {
-//        // ...
-//    }
 
     /**
      * Метод управляет видимостью элементов и назначением текста на Header
@@ -40,7 +35,9 @@ class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::infl
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.filterFragment -> bottomNavigationView.visibility = View.GONE
+                R.id.filterFragment, R.id.vacancyFragment, R.id.similarVacanciesFragment ->
+                    bottomNavigationView.visibility = View.GONE
+
                 else -> bottomNavigationView.visibility = View.VISIBLE
             }
         }
@@ -71,4 +68,11 @@ class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::infl
             }
         }
     }
+
+    private fun setRussianLocale() {
+        val locale = Locale("ru")
+        Locale.setDefault(locale)
+        baseContext.resources.configuration.setLocale(locale)
+    }
+
 }

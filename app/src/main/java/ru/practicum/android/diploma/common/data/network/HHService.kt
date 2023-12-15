@@ -19,7 +19,7 @@ interface HHService {
     )
     @GET("vacancies")
     suspend fun searchVacancies(
-        @Query("text") text: String = "",
+        @Query("text") text: String? = null,
         @Query("page") page: Int = 0,
         @Query("per_page") perPage: Int = 20,
         @Query("area") area: Int? = null,
@@ -27,6 +27,17 @@ interface HHService {
         @Query("industry") industry: Int? = null,
         @Query("salary") salary: Int? = null,
         @Query("only_with_salary") onlyWithSalary: Boolean = false
+    ): HHSearchResponse
+
+    @Headers(
+        "Authorization: Bearer ${BuildConfig.HH_ACCESS_TOKEN}",
+        "HH-User-Agent: Practicum HH Client/1.0 (master@artwist.ru)"
+    )
+    @GET("vacancies/{vacancy_id}/similar_vacancies")
+    suspend fun searchSimilarVacancies(
+        @Path("vacancy_id") vacancyId: Int,
+        @Query("page") page: Int = 0,
+        @Query("per_page") perPage: Int = 20,
     ): HHSearchResponse
 
     @Headers(
@@ -43,4 +54,9 @@ interface HHService {
 
     @GET("industries")
     suspend fun getIndustries(): List<IndustriesDto>
+
+    @GET("areas/{area_id}")
+    suspend fun getAreaById(
+        @Path("area_id") areaId: Int
+    ): List<AreasDto>
 }
