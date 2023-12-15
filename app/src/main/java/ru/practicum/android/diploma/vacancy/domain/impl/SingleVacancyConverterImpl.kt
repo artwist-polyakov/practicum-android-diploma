@@ -55,7 +55,7 @@ class SingleVacancyConverterImpl(
                     id = vacancyId,
                     title = title,
                     employerName = employerName,
-                    employerLogo = logoMap?.getOrDefault("medium", null),
+                    employerLogo = logoMap?.getOrDefault("240", null),
                     area = city,
                     haveSalary = salaryFrom != null || salaryTo != null,
                     salaryFrom = salaryFrom,
