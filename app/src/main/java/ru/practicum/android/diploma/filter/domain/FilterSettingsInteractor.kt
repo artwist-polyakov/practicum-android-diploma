@@ -1,15 +1,18 @@
 package ru.practicum.android.diploma.filter.domain
 
-import ru.practicum.android.diploma.filter.domain.models.FilterFieldValue
+import kotlinx.coroutines.flow.Flow
+import ru.practicum.android.diploma.filter.domain.models.FilterIndustryValue
+import ru.practicum.android.diploma.filter.domain.models.FilterRegionValue
+import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchSettingsState
 
 interface FilterSettingsInteractor {
     fun setRegion(id: Int?, name: String?)
 
-    fun getRegion(): FilterFieldValue
+    fun getRegion(): FilterRegionValue
 
-    fun setIndustry(id: Int?, name: String?)
+    fun setIndustry(id: String?, name: String?)
 
-    fun getIndustry(): FilterFieldValue
+    fun getIndustry(): FilterIndustryValue
 
     fun setSalary(id: Int?)
 
@@ -20,4 +23,6 @@ interface FilterSettingsInteractor {
     fun getWithSalaryOnly(): Boolean
 
     fun resetSettings()
+
+    fun getSearchSettings(): Flow<SearchSettingsState>
 }

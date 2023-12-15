@@ -5,8 +5,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class FilterSettingsDto(
-    val region: FilterItemDto = FilterItemDto(),
-    val industry: FilterItemDto = FilterItemDto(),
+    val region: FilterRegionDto = FilterRegionDto(),
+    val industry: FilterIndustryDto = FilterIndustryDto(),
     val salary: Int? = null,
     val withSalaryOnly: Boolean = false
 ) : Parcelable
