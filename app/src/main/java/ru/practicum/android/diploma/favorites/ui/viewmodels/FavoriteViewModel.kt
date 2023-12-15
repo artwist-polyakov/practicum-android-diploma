@@ -28,7 +28,6 @@ class FavoriteViewModel @Inject constructor(
         get() = _state
 
     init {
-        Log.d("FavoritesViewModel", "init")
         checkState()
     }
 
@@ -36,17 +35,17 @@ class FavoriteViewModel @Inject constructor(
         handleRequest()
     }
 
+    // todo почистить логи
     fun handleRequest(nextPage: Boolean = false) {
         viewModelScope.launch {
             if (currentPage < totalPages || currentPage == 0) {
-                _state.value = FavoritesScreenState.Loading(isBottomIndicator = (currentPage != 0))
+                _state.value = FavoritesScreenState.Loading(isBottomIndicator = currentPage != 0)
 
                 interactor.getFavoritesVacancies(
                     page = currentPage + if (nextPage && currentPage < totalPages) 1 else 0
                 )
                     .catch {
                         _state.value = FavoritesScreenState.Error()
-                        Log.d("FavoritesViewModel", "Error")
                     }
                     .collect {
                         if (it.vacancies.isEmpty()) {
@@ -54,7 +53,6 @@ class FavoriteViewModel @Inject constructor(
                             currentPage = 0
                             vacancies.clear()
                             _state.value = FavoritesScreenState.Empty()
-                            Log.d("FavoritesViewModel", "Favorites is empty")
                         } else {
                             totalPages = it.totalPages
                             currentPage = it.currentPage
@@ -65,7 +63,6 @@ class FavoriteViewModel @Inject constructor(
                                 totalVacancies = it.vacanciesFound,
                                 vacancies = vacancies
                             )
-                            Log.d("FavoritesViewModel", "Favorites is not empty")
                             Log.d("FavoritesViewModel", "Total: ${it.vacanciesFound}")
                             Log.d("FavoritesViewModel", "Vacancies: $vacancies")
                         }
