@@ -11,6 +11,7 @@ import ru.practicum.android.diploma.common.data.dto.Resource
 import ru.practicum.android.diploma.common.domain.models.NetworkErrors
 import ru.practicum.android.diploma.common.ui.BaseViewModel
 import ru.practicum.android.diploma.common.utils.debounce
+import ru.practicum.android.diploma.filter.domain.FilterSettingsInteractor
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
 import ru.practicum.android.diploma.search.domain.models.VacanciesSearchResult
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
@@ -22,7 +23,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 open class SearchViewModel @Inject constructor(
-    private val interactor: SearchInteractor
+    private val interactor: SearchInteractor,
+    private val sharedPrefsInteractor: FilterSettingsInteractor
 ) : BaseViewModel() {
     private var searchSettings: SearchSettingsState = SearchSettingsState()
     private var vacancies: MutableList<VacancyGeneral> = mutableListOf()
@@ -68,6 +70,10 @@ open class SearchViewModel @Inject constructor(
                     }
                 }
         } // <---- конец удаляемого фрагмента
+
+        viewModelScope.launch {
+
+        }
     }
 
     private fun chargeInteractorSearch(): suspend () -> Flow<Resource<VacanciesSearchResult>> = {
