@@ -95,7 +95,7 @@ class SearchResultConverterImpl : SearchResultConverter {
                 }
             }
         }
-        return result
+        return result.sortedBy { it.name }
     }
 
     private fun mapIndustriesDto(from: IndustriesDto): Industry {
