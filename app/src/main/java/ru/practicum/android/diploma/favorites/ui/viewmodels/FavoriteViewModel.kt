@@ -33,40 +33,42 @@ class FavoriteViewModel @Inject constructor(
     }
 
     private fun checkState() {
-
+        handleRequest()
     }
 
     fun handleRequest(nextPage: Boolean = false) {
         viewModelScope.launch {
-            _state.value = FavoritesScreenState.Loading(isBottomIndicator = (currentPage != 0))
-            interactor.getFavoritesVacancies(page = currentPage + if (nextPage) 1 else 0)
-                .catch {
-                    _state.value = FavoritesScreenState.Error()
-                    Log.d("FavoritesViewModel", "Error")
-                }
-                .collect {
-                    if (it.vacancies.isEmpty()) {
-                        totalPages = 0
-                        currentPage = 0
-                        vacancies.clear()
-                        _state.value = FavoritesScreenState.Empty()
-                        Log.d("FavoritesViewModel", "Favorites is empty")
-                    } else {
-                        totalPages = it.totalPages
-                        currentPage = it.currentPage
-                        vacancies.addAll(it.vacancies)
-                        _state.value = FavoritesScreenState.Content(
-                            totalPages = totalPages,
-                            currentPage = currentPage,
-                            totalVacancies = it.vacanciesFound,
-                            vacancies = vacancies
-                        )
-                        Log.d("FavoritesViewModel", "Favorites is not empty")
-                        Log.d("FavoritesViewModel", "Total: ${it.vacanciesFound}")
-                        Log.d("FavoritesViewModel", "Vacancies: $vacancies")
-                    }
-                }
+            if (currentPage < totalPages || currentPage == 0) {
+                _state.value = FavoritesScreenState.Loading(isBottomIndicator = (currentPage != 0))
 
+                interactor.getFavoritesVacancies(page = currentPage + if (nextPage && currentPage < totalPages) 1 else 0)
+                    .catch {
+                        _state.value = FavoritesScreenState.Error()
+                        Log.d("FavoritesViewModel", "Error")
+                    }
+                    .collect {
+                        if (it.vacancies.isEmpty()) {
+                            totalPages = 0
+                            currentPage = 0
+                            vacancies.clear()
+                            _state.value = FavoritesScreenState.Empty()
+                            Log.d("FavoritesViewModel", "Favorites is empty")
+                        } else {
+                            totalPages = it.totalPages
+                            currentPage = it.currentPage
+                            vacancies.addAll(it.vacancies)
+                            _state.value = FavoritesScreenState.Content(
+                                totalPages = totalPages,
+                                currentPage = currentPage,
+                                totalVacancies = it.vacanciesFound,
+                                vacancies = vacancies
+                            )
+                            Log.d("FavoritesViewModel", "Favorites is not empty")
+                            Log.d("FavoritesViewModel", "Total: ${it.vacanciesFound}")
+                            Log.d("FavoritesViewModel", "Vacancies: $vacancies")
+                        }
+                    }
+            }
         }
     }
 

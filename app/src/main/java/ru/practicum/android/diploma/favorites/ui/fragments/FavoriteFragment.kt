@@ -38,6 +38,9 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
             is FavoritesScreenState.Error -> {
                 // Блок для отображения ошибки
             }
+            is FavoritesScreenState.Loading -> {
+                // Блок для отображения загрузки
+            }
         }
     }
 }
