@@ -1,6 +1,6 @@
 package ru.practicum.android.diploma.filter.domain.models
 
-data class FilterFieldValue(
-    val id: Int?,
+data class FilterIndustryValue(
+    val id: String?,
     val text: String?
 )

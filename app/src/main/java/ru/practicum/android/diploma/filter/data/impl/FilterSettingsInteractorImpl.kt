@@ -1,10 +1,13 @@
 package ru.practicum.android.diploma.filter.data.impl
 
-import ru.practicum.android.diploma.filter.data.dto.FilterItemDto
+import ru.practicum.android.diploma.filter.data.dto.FilterIndustryDto
+import ru.practicum.android.diploma.filter.data.dto.FilterRegionDto
 import ru.practicum.android.diploma.filter.data.dto.FilterSettingsDto
 import ru.practicum.android.diploma.filter.domain.FilterSettingsInteractor
 import ru.practicum.android.diploma.filter.domain.FilterSettingsRepository
-import ru.practicum.android.diploma.filter.domain.models.FilterFieldValue
+import ru.practicum.android.diploma.filter.domain.models.FilterIndustryValue
+import ru.practicum.android.diploma.filter.domain.models.FilterRegionValue
+import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchSettingsState
 
 class FilterSettingsInteractorImpl(
     private val repository: FilterSettingsRepository
@@ -13,7 +16,7 @@ class FilterSettingsInteractorImpl(
         val current = repository.getFilterSettings()
         repository.saveFilterSettings(
             settings = FilterSettingsDto(
-                region = FilterItemDto(
+                region = FilterRegionDto(
                     id = id,
                     name = name
                 ),
@@ -24,20 +27,20 @@ class FilterSettingsInteractorImpl(
         )
     }
 
-    override fun getRegion(): FilterFieldValue {
+    override fun getRegion(): FilterRegionValue {
         val data = repository.getFilterSettings().region
-        return FilterFieldValue(
+        return FilterRegionValue(
             id = data.id,
             text = data.name
         )
     }
 
-    override fun setIndustry(id: Int?, name: String?) {
+    override fun setIndustry(id: String?, name: String?) {
         val current = repository.getFilterSettings()
         repository.saveFilterSettings(
             settings = FilterSettingsDto(
                 region = current.region,
-                industry = FilterItemDto(
+                industry = FilterIndustryDto(
                     id = id,
                     name = name
                 ),
@@ -47,9 +50,9 @@ class FilterSettingsInteractorImpl(
         )
     }
 
-    override fun getIndustry(): FilterFieldValue {
+    override fun getIndustry(): FilterIndustryValue {
         val data = repository.getFilterSettings().industry
-        return FilterFieldValue(
+        return FilterIndustryValue(
             id = data.id,
             text = data.name
         )
@@ -90,6 +93,15 @@ class FilterSettingsInteractorImpl(
     override fun resetSettings() {
         repository.saveFilterSettings(
             settings = FilterSettingsDto()
+        )
+    }
+
+    override fun getSearchSettings(): SearchSettingsState {
+        return SearchSettingsState(
+            currentRegion = getRegion().id,
+            currentSalary = getSalary(),
+            currentIndustry = getIndustry().id,
+            currentSalaryOnly = getWithSalaryOnly(),
         )
     }
 }
