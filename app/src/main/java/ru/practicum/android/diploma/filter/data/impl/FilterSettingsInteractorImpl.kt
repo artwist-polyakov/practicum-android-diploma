@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.filter.data.impl
 
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.callbackFlow
 import ru.practicum.android.diploma.filter.data.dto.FilterIndustryDto
@@ -106,5 +107,6 @@ class FilterSettingsInteractorImpl(
             currentIndustry = getIndustry().id,
             currentSalaryOnly = getWithSalaryOnly(),
         ))
+        awaitClose { close() }
     }.buffer(Channel.UNLIMITED)
 }
