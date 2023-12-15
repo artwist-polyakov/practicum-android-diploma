@@ -22,7 +22,6 @@ class FavoritesDBInteractorImpl(
     val converterSingle: SingleVacancyConverter
 ) : FavoritesDBInteractor {
     override suspend fun getFavoritesVacancies(page: Int, limit: Int): Flow<VacanciesSearchResult> {
-
         val total = withContext(Dispatchers.IO) { database.vacancyDao().getVacanciesCount() }
         val totalPages = ceil(total.toDouble() / limit).toInt()
         return withContext(Dispatchers.IO) {

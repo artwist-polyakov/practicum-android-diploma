@@ -41,7 +41,9 @@ class FavoriteViewModel @Inject constructor(
             if (currentPage < totalPages || currentPage == 0) {
                 _state.value = FavoritesScreenState.Loading(isBottomIndicator = (currentPage != 0))
 
-                interactor.getFavoritesVacancies(page = currentPage + if (nextPage && currentPage < totalPages) 1 else 0)
+                interactor.getFavoritesVacancies(
+                    page = currentPage + if (nextPage && currentPage < totalPages) 1 else 0
+                )
                     .catch {
                         _state.value = FavoritesScreenState.Error()
                         Log.d("FavoritesViewModel", "Error")
