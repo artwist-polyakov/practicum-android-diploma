@@ -53,26 +53,51 @@ open class SearchViewModel @Inject constructor(
         }
 
         // todo удалить этот код когда будет реализован фильтр индустрии
-        viewModelScope.launch {
-            interactor.getIndustries()
-                .collect { resource ->
-                    // Обработка ситуации, когда flow успешно эмитит событие.
-                    when (resource) {
-                        is Resource.Success -> {
-                            resource.data?.forEach {
-                                Log.d("SearchViewModel", "Industries: $it")
-                            }
-                        }
+//        viewModelScope.launch {
+//            interactor.getIndustries()
+//                .collect { resource ->
+//                    // Обработка ситуации, когда flow успешно эмитит событие.
+//                    when (resource) {
+//                        is Resource.Success -> {
+//                            resource.data?.forEach {
+//                                Log.d("SearchViewModel", "Industries: $it")
+//                            }
+//                        }
+//
+//                        else -> {
+//                            Log.d("SearchViewModel", "${resource.error}")
+//                        }
+//                    }
+//                }
+//        } // <---- конец удаляемого фрагмента
 
-                        else -> {
-                            Log.d("SearchViewModel", "${resource.error}")
-                        }
+        viewModelScope.launch {
+            sharedPrefsInteractor.getSearchSettings()
+                .collect { settings ->
+                    Log.d("SearchViewModel", "Current SearchSettings: $searchSettings")
+                    Log.d("SearchViewModel", "SearchSettings: $settings")
+                    if (checkSettingsToReset(settings)) {
+                        Log.d("SearchViewModel", "checkSettingsToReset: true")
+                        handleSearchSettings(searchSettings)
                     }
                 }
-        } // <---- конец удаляемого фрагмента
+        }
+    }
 
-        viewModelScope.launch {
-
+    private fun checkSettingsToReset(newSettings: SearchSettingsState): Boolean {
+        if (newSettings.currentSalaryOnly != searchSettings.currentSalaryOnly ||
+            newSettings.currentSalary != searchSettings.currentSalary ||
+            newSettings.currentIndustry != searchSettings.currentIndustry ||
+            newSettings.currentRegion != searchSettings.currentRegion
+        ) {
+            searchSettings = searchSettings.copy(currentPage = 0)
+            searchSettings = searchSettings.copy(currentSalaryOnly = newSettings.currentSalaryOnly)
+            searchSettings = searchSettings.copy(currentSalary = newSettings.currentSalary)
+            searchSettings = searchSettings.copy(currentIndustry = newSettings.currentIndustry)
+            searchSettings = searchSettings.copy(currentRegion = newSettings.currentRegion)
+            return true
+        } else {
+            return false
         }
     }
 
