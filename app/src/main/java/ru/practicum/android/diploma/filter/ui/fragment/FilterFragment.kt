@@ -18,15 +18,11 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
     override val viewModel by viewModels<FilterViewModel>()
     private var defaultHintColor: Int = 0
     private var activeHintColor: Int = 0
-    private var activeFilterHintColor: Int = 0
     override fun initViews(): Unit = with(binding) {
-        defaultHintColor = ContextCompat.getColor(requireContext(), R.color.inputTextHint)
+        defaultHintColor = ContextCompat.getColor(requireContext(), R.color.textHintApearence)
         activeHintColor = ContextCompat.getColor(requireContext(), R.color.blue)
-        activeFilterHintColor = ContextCompat.getColor(requireContext(), R.color.textHintApearence)
 
         tiSalaryField.requestFocus()
-
-        filterFieldManager()
     }
 
     override fun subscribe(): Unit = with(binding) {
@@ -88,36 +84,8 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
 
     // Слушатель полей фильтров отрасли и места работы
     private fun filterFieldListeners() = with(binding) {
-//        tiWorkPlace.doOnTextChanged { text, _, _, _ ->
-//            var hintColor = 0
-//            if (text.toString().isEmpty()) {
-//                hintColor = defaultHintColor
-//                ivArrowForwardLocation.setImageResource(R.drawable.arrow_forward_24px)
-//                ivArrowForwardLocation.isClickable = false
-//            } else {
-//                hintColor = activeFilterHintColor
-//                ivArrowForwardLocation.setImageResource(R.drawable.ic_cross_24px)
-//                ivArrowForwardLocation.isClickable = true
-//            }
-//            tlWorkPlace.hintTextColor = ColorStateList.valueOf(hintColor)
-//        }
-
         tiWorkPlace.setupTextChangeListener(tlWorkPlace, ivArrowForwardLocation, requireContext())
-        tiIndustry.setupTextChangeListener(tlIndustry, ivArrowForwardLocation, requireContext())
-
-//        tiIndustry.doOnTextChanged { text, _, _, _ ->
-//            var hintColor = 0
-//            if (text.toString().isEmpty()) {
-//                hintColor = defaultHintColor
-//                ivArrowForwardIndustry.setImageResource(R.drawable.arrow_forward_24px)
-//                ivArrowForwardIndustry.isClickable = false
-//            } else {
-//                hintColor = activeFilterHintColor
-//                ivArrowForwardIndustry.setImageResource(R.drawable.ic_cross_24px)
-//                ivArrowForwardIndustry.isClickable = true
-//            }
-//            tlIndustry.hintTextColor = ColorStateList.valueOf(hintColor)
-//        }
+        tiIndustry.setupTextChangeListener(tlIndustry, ivArrowForwardIndustry, requireContext())
     }
 
     private fun arrowForwardListeners() = with(binding) {
@@ -127,16 +95,6 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
         ivArrowForwardIndustry.setOnClickListener {
             tiIndustry.text = null
         }
-    }
-
-    private fun filterFieldManager() = with(binding) {
-        tiWorkPlace.isFocusable = false
-        tiWorkPlace.isCursorVisible = false
-        tiWorkPlace.keyListener = null
-
-        tiIndustry.isFocusable = false
-        tiIndustry.isCursorVisible = false
-        tiIndustry.keyListener = null
     }
 
     private fun resetFilter() = with(binding) {

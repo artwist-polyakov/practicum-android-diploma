@@ -9,22 +9,33 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import ru.practicum.android.diploma.R
 
+/**
+ * Метод расширение над TextInputEditText управляет цветом подсказки и изображением закрепленным над полем.
+ * Принимает элементы TextInputLayout, иконка перехода на фрагмент выбора значения
+ * (эта иконка заменяется на ic_cross_24px) и контекст.
+ * Дополнительно настраивает свойства инпута - отключает слушатель ввода, установку фокуса и курсора
+ */
 fun TextInputEditText.setupTextChangeListener(textInput: TextInputLayout, forwardIcon: ImageView, context: Context) {
-    val defaultHintColor = ContextCompat.getColor(context, R.color.inputTextHint)
-    val activeFilterHintColor = ContextCompat.getColor(context, R.color.red)
-    val forwardIconResId = R.drawable.arrow_forward_24px
-    val crossIconResId = R.drawable.ic_cross_24px
+    val defaultHintColor = ContextCompat.getColor(context, R.color.gray)
+    val activeFilterHintColor = ContextCompat.getColor(context, R.color.textHintApearence)
+    filterSettings(this)
 
     this.doOnTextChanged { text, _, _, _ ->
-        val hintColor = if (text.isNullOrEmpty()) {
-            forwardIcon.setImageResource(forwardIconResId)
+        val hintColor = if (text.toString().isEmpty()) {
+            forwardIcon.setImageResource(R.drawable.arrow_forward_24px)
             forwardIcon.isClickable = false
             defaultHintColor
         } else {
-            forwardIcon.setImageResource(crossIconResId)
+            forwardIcon.setImageResource(R.drawable.ic_cross_24px)
             forwardIcon.isClickable = true
             activeFilterHintColor
         }
-        textInput.hintTextColor = ColorStateList.valueOf(hintColor)
+        textInput.defaultHintTextColor = ColorStateList.valueOf(hintColor)
     }
+}
+
+private fun filterSettings(editText: TextInputEditText) {
+    editText.isFocusable = false
+    editText.isCursorVisible = false
+    editText.keyListener = null
 }
