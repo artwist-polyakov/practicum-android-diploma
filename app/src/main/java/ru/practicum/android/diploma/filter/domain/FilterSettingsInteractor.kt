@@ -7,17 +7,9 @@ interface FilterSettingsInteractor {
 
     fun getRegion(): FilterFieldValue
 
-    fun getRegionId(): Int?
-
-    fun getRegionName(): String?
-
     fun setIndustry(id: Int?, name: String?)
 
     fun getIndustry(): FilterFieldValue
-
-    fun getIndustryId(): Int?
-
-    fun getIndustryName(): String?
 
     fun setSalary(id: Int?)
 

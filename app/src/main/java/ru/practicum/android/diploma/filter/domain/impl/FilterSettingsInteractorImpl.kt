@@ -32,14 +32,6 @@ class FilterSettingsInteractorImpl(
         )
     }
 
-    override fun getRegionId(): Int? {
-        return getRegion().id
-    }
-
-    override fun getRegionName(): String? {
-        return getRegion().text
-    }
-
     override fun setIndustry(id: Int?, name: String?) {
         val current = repository.getFilterSettings()
         repository.saveFilterSettings(
@@ -61,14 +53,6 @@ class FilterSettingsInteractorImpl(
             id = data.id,
             text = data.name
         )
-    }
-
-    override fun getIndustryId(): Int? {
-        return getIndustry().id
-    }
-
-    override fun getIndustryName(): String? {
-        return getIndustry().text
     }
 
     override fun setSalary(value: Int?) {
