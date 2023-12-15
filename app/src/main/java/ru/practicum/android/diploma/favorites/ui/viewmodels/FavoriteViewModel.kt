@@ -23,6 +23,8 @@ class FavoriteViewModel @Inject constructor(
     private var currentPage: Int = 0
 
     private var _state = MutableStateFlow<FavoritesScreenState>(FavoritesScreenState.Empty())
+
+    val state: MutableStateFlow<FavoritesScreenState>
         get() = _state
 
     init {

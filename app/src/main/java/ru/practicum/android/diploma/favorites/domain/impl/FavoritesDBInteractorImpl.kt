@@ -22,10 +22,13 @@ class FavoritesDBInteractorImpl(
     val converterSingle: SingleVacancyConverter
 ) : FavoritesDBInteractor {
     override suspend fun getFavoritesVacancies(page: Int, limit: Int): Flow<VacanciesSearchResult> {
-        val total = database.vacancyDao().getVacanciesCount()
+
+        val total = withContext(Dispatchers.IO) { database.vacancyDao().getVacanciesCount() }
         val totalPages = ceil(total.toDouble() / limit).toInt()
-        return database.vacancyEmployerReferenceDao().getVacancies(page, limit).map {
-            converter.map(it, page, total, totalPages)
+        return withContext(Dispatchers.IO) {
+            database.vacancyEmployerReferenceDao().getVacancies(page, limit).map {
+                converter.map(it, page, total, totalPages)
+            }
         }
     }
 
@@ -33,9 +36,11 @@ class FavoritesDBInteractorImpl(
         withContext(Dispatchers.IO) { database.vacancyDao().isVacancyExists(vacancyId) }
 
     override suspend fun getVacancy(vacancyId: Int): Flow<DetailedVacancyItem?> {
-        return database.vacancyEmployerReferenceDao().getVacancyWithEmployer(vacancyId).map {
-            it?.let { vacancy ->
-                converter.map(vacancy)
+        return withContext(Dispatchers.IO) {
+            database.vacancyEmployerReferenceDao().getVacancyWithEmployer(vacancyId).map {
+                it?.let { vacancy ->
+                    converter.map(vacancy)
+                }
             }
         }
     }
