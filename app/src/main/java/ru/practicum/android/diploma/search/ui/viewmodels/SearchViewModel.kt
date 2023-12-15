@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.search.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -74,16 +73,17 @@ open class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             sharedPrefsInteractor.getSearchSettings()
                 .collect { settings ->
-                    Log.d("SearchViewModel", "Current SearchSettings: $searchSettings")
-                    Log.d("SearchViewModel", "SearchSettings: $settings")
+//                    Log.d("SearchViewModel", "Current SearchSettings: $searchSettings")
+//                    Log.d("SearchViewModel", "SearchSettings: $settings")
                     if (checkSettingsToReset(settings)) {
-                        Log.d("SearchViewModel", "checkSettingsToReset: true")
+//                        Log.d("SearchViewModel", "checkSettingsToReset: true")
                         handleSearchSettings(searchSettings)
                     }
                 }
         }
     }
 
+    @Suppress("ComplexCondition")
     private fun checkSettingsToReset(newSettings: SearchSettingsState): Boolean {
         if (newSettings.currentSalaryOnly != searchSettings.currentSalaryOnly ||
             newSettings.currentSalary != searchSettings.currentSalary ||

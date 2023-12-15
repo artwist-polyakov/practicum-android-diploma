@@ -16,10 +16,12 @@ import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchSettingsSt
 import javax.inject.Inject
 
 @HiltViewModel
-class SimilarVacanciesViewModel @Inject constructor(private val interactor: SearchInteractor,
-                                                    private val  sharedPrefsInteractor: FilterSettingsInteractor
+class SimilarVacanciesViewModel @Inject constructor(
+    private val interactor: SearchInteractor,
+    private val sharedPrefsInteractor: FilterSettingsInteractor
 ) : SearchViewModel(
-    interactor, sharedPrefsInteractor
+    interactor,
+    sharedPrefsInteractor
 ) {
     private var searchSettings: SearchSettingsState = SearchSettingsState()
     private var _state = MutableStateFlow<SearchScreenState>(SearchScreenState.Default())
