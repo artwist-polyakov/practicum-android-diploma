@@ -51,4 +51,7 @@
     <dimen name="vacancy_count_horizontal_padding">12dp</dimen>
     <dimen name="vacancy_count_vertical_padding">4dp</dimen>
     <dimen name="vacancy_count_margin">8dp</dimen>
+
+    <dimen name="filter_icon_side">48dp</dimen>
+    <dimen name="filter_end_margin">12dp</dimen>
 </resources>

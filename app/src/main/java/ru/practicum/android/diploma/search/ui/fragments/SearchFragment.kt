@@ -97,6 +97,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     }
 
     private fun render(state: SearchScreenState) {
+        if (state.isFilterEnabled) {
+            binding.ivFilter.setImageResource(R.drawable.filter_on__24px)
+        } else {
+            binding.ivFilter.setImageResource(R.drawable.filter_24px)
+        }
         when (state) {
             is SearchScreenState.Content -> {
 //                updateRefresh()
