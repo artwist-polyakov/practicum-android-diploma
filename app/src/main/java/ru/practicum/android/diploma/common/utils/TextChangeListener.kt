@@ -12,10 +12,15 @@ import ru.practicum.android.diploma.R
 /**
  * Метод расширение над TextInputEditText управляет цветом подсказки и изображением закрепленным над полем.
  * Принимает элементы TextInputLayout, иконка перехода на фрагмент выбора значения
- * (эта иконка заменяется на ic_cross_24px) и контекст.
- * Дополнительно настраивает свойства инпута - отключает слушатель ввода, установку фокуса и курсора
+ * (эта иконка заменяется на ic_cross_24px), контекст и лямбду для настройки дополнительных действий
+ * Дополнительно настраивает свойства инпута - отключает слушатель ввода, установку фокуса и курсора.
  */
-fun TextInputEditText.setupTextChangeListener(textInput: TextInputLayout, forwardIcon: ImageView, context: Context) {
+fun TextInputEditText.setupTextChangeListener(
+    textInput: TextInputLayout,
+    forwardIcon: ImageView,
+    context: Context,
+    afterTextChanged: () -> Unit = {}
+) {
     val defaultHintColor = ContextCompat.getColor(context, R.color.gray)
     val activeFilterHintColor = ContextCompat.getColor(context, R.color.textHintApearence)
     filterSettings(this)
@@ -32,6 +37,7 @@ fun TextInputEditText.setupTextChangeListener(textInput: TextInputLayout, forwar
         }
         textInput.defaultHintTextColor = ColorStateList.valueOf(hintColor)
     }
+    afterTextChanged()
 }
 
 private fun filterSettings(editText: TextInputEditText) {

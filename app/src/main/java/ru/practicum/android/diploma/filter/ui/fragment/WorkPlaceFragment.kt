@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.filter.ui.fragment
 
-import androidx.core.content.ContextCompat
+import android.os.Bundle
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.practicum.android.diploma.R
@@ -13,12 +14,10 @@ class WorkPlaceFragment : BaseFragment<FragmentWorkPlaceBinding, WorkPlaceViewMo
     FragmentWorkPlaceBinding::inflate
 ) {
     override val viewModel by viewModels<WorkPlaceViewModel>()
-    private var defaultHintColor: Int = 0
-    private var activeFilterHintColor: Int = 0
 
     override fun initViews() {
-        defaultHintColor = ContextCompat.getColor(requireContext(), R.color.inputTextHint)
-        activeFilterHintColor = ContextCompat.getColor(requireContext(), R.color.textHintApearence)
+        manageVisibilityButton()
+        updateRegionClickable()
     }
 
     override fun subscribe(): Unit = with(binding) {
@@ -28,12 +27,31 @@ class WorkPlaceFragment : BaseFragment<FragmentWorkPlaceBinding, WorkPlaceViewMo
             findNavController().popBackStack()
         }
 
-        tiCountry.setOnClickListener { Unit }
-        tiRegion.setOnClickListener { Unit }
+        tiCountry.setOnClickListener { }
+        tiRegion.setOnClickListener {
+            val bundle = Bundle().apply {
+                putInt(COUNTRY_KEY, 1)
+            }
+            findNavController().navigate(R.id.action_workPlaceFragment_to_regionFragment, bundle)
+        }
     }
 
     private fun filterFieldListeners() = with(binding) {
-        tiCountry.setupTextChangeListener(tlCountry, ivArrowForwardCountry, requireContext())
+        tiCountry.setupTextChangeListener(tlCountry, ivArrowForwardCountry, requireContext()) {
+            updateRegionClickable()
+        }
         tiRegion.setupTextChangeListener(tlRegion, ivArrowForwardRegion, requireContext())
+    }
+
+    private fun manageVisibilityButton() = with(binding) {
+        btnSelect.isVisible = tiCountry.text?.isNotEmpty() == true || tiRegion.text?.isNotEmpty() == true
+    }
+
+    private fun updateRegionClickable() = with(binding) {
+        tiRegion.isClickable = tiCountry.text?.isNotEmpty() == true
+    }
+
+    companion object {
+        private const val COUNTRY_KEY = "country"
     }
 }
