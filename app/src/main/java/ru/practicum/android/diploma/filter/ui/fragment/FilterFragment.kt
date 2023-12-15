@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.common.ui.BaseFragment
+import ru.practicum.android.diploma.common.utils.setupTextChangeListener
 import ru.practicum.android.diploma.databinding.FragmentFilterBinding
 import ru.practicum.android.diploma.filter.ui.viewmodel.FilterViewModel
 
@@ -87,33 +88,36 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
 
     // Слушатель полей фильтров отрасли и места работы
     private fun filterFieldListeners() = with(binding) {
-        tiWorkPlace.doOnTextChanged { text, _, _, _ ->
-            var hintColor = 0
-            if (text.toString().isEmpty()) {
-                hintColor = defaultHintColor
-                ivArrowForwardLocation.setImageResource(R.drawable.arrow_forward_24px)
-                ivArrowForwardLocation.isClickable = false
-            } else {
-                hintColor = activeFilterHintColor
-                ivArrowForwardLocation.setImageResource(R.drawable.ic_cross_24px)
-                ivArrowForwardLocation.isClickable = true
-            }
-            tlWorkPlace.hintTextColor = ColorStateList.valueOf(hintColor)
-        }
+//        tiWorkPlace.doOnTextChanged { text, _, _, _ ->
+//            var hintColor = 0
+//            if (text.toString().isEmpty()) {
+//                hintColor = defaultHintColor
+//                ivArrowForwardLocation.setImageResource(R.drawable.arrow_forward_24px)
+//                ivArrowForwardLocation.isClickable = false
+//            } else {
+//                hintColor = activeFilterHintColor
+//                ivArrowForwardLocation.setImageResource(R.drawable.ic_cross_24px)
+//                ivArrowForwardLocation.isClickable = true
+//            }
+//            tlWorkPlace.hintTextColor = ColorStateList.valueOf(hintColor)
+//        }
 
-        tiIndustry.doOnTextChanged { text, _, _, _ ->
-            var hintColor = 0
-            if (text.toString().isEmpty()) {
-                hintColor = defaultHintColor
-                ivArrowForwardIndustry.setImageResource(R.drawable.arrow_forward_24px)
-                ivArrowForwardIndustry.isClickable = false
-            } else {
-                hintColor = activeFilterHintColor
-                ivArrowForwardIndustry.setImageResource(R.drawable.ic_cross_24px)
-                ivArrowForwardIndustry.isClickable = true
-            }
-            tlIndustry.hintTextColor = ColorStateList.valueOf(hintColor)
-        }
+        tiWorkPlace.setupTextChangeListener(tlWorkPlace, ivArrowForwardLocation, requireContext())
+        tiIndustry.setupTextChangeListener(tlIndustry, ivArrowForwardLocation, requireContext())
+
+//        tiIndustry.doOnTextChanged { text, _, _, _ ->
+//            var hintColor = 0
+//            if (text.toString().isEmpty()) {
+//                hintColor = defaultHintColor
+//                ivArrowForwardIndustry.setImageResource(R.drawable.arrow_forward_24px)
+//                ivArrowForwardIndustry.isClickable = false
+//            } else {
+//                hintColor = activeFilterHintColor
+//                ivArrowForwardIndustry.setImageResource(R.drawable.ic_cross_24px)
+//                ivArrowForwardIndustry.isClickable = true
+//            }
+//            tlIndustry.hintTextColor = ColorStateList.valueOf(hintColor)
+//        }
     }
 
     private fun arrowForwardListeners() = with(binding) {
