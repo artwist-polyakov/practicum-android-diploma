@@ -32,7 +32,7 @@ class FavoritesDBConverterImpl(
 
     override fun map(from: VacancyWithEmployerDTO): DetailedVacancyItem {
         val type = object : TypeToken<Map<String, String>>() {}.type
-        val logoMap: Map<String, String> = gsonService.fromJson(from.logosJSON, type)
+        val logoMap: Map<String, String>? = gsonService.fromJson(from.logosJSON, type)
         val typePhones = object : TypeToken<ContactsDto>() {}.type
         val phones: ContactsDto? = gsonService.fromJson(from.phonesJSON, typePhones)
         val contact: Contacts?
@@ -50,7 +50,7 @@ class FavoritesDBConverterImpl(
                 id = vacancyId,
                 title = title,
                 employerName = employerName,
-                employerLogo = logoMap.getOrDefault("medium", null),
+                employerLogo = logoMap?.getOrDefault("240", null),
                 area = city,
                 haveSalary = salaryFrom != null || salaryTo != null,
                 salaryFrom = salaryFrom,
@@ -69,14 +69,14 @@ class FavoritesDBConverterImpl(
 
     private fun mapDtoToGeneral(from: VacancyWithEmployerDTO): VacancyGeneral {
         val type = object : TypeToken<Map<String, String>>() {}.type
-        val logoMap: Map<String, String> = gsonService.fromJson(from.logosJSON, type)
+        val logoMap: Map<String, String>? = gsonService.fromJson(from.logosJSON, type)
         return with(from) {
             VacancyGeneral(
                 id = vacancyId,
                 region = city,
                 title = title,
                 employerName = employerName,
-                employerLogo = logoMap.getOrDefault("medium", null),
+                employerLogo = logoMap?.getOrDefault("240", null),
                 haveSalary = salaryFrom != null || salaryTo != null,
                 salaryFrom = salaryFrom,
                 salaryTo = salaryTo,
