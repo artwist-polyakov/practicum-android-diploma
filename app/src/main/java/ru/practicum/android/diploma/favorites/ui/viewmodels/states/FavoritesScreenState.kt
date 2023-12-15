@@ -4,6 +4,11 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
 
 sealed class FavoritesScreenState {
+
+    data class Loading(
+        val isBottomIndicator: Boolean = false
+    ) : FavoritesScreenState()
+
     data class Empty(
         val image: Int = R.drawable.image_andy,
         val text: Int = R.string.empty_list

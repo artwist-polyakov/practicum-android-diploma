@@ -33,8 +33,13 @@ class FavoriteViewModel @Inject constructor(
     }
 
     private fun checkState() {
+
+    }
+
+    fun handleRequest(nextPage: Boolean = false) {
         viewModelScope.launch {
-            interactor.getFavoritesVacancies(page = currentPage)
+            _state.value = FavoritesScreenState.Loading(isBottomIndicator = (currentPage != 0))
+            interactor.getFavoritesVacancies(page = currentPage + if (nextPage) 1 else 0)
                 .catch {
                     _state.value = FavoritesScreenState.Error()
                     Log.d("FavoritesViewModel", "Error")
