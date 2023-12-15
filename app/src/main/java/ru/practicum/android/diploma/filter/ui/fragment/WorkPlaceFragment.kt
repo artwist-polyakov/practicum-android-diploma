@@ -27,7 +27,10 @@ class WorkPlaceFragment : BaseFragment<FragmentWorkPlaceBinding, WorkPlaceViewMo
             findNavController().popBackStack()
         }
 
-        tiCountry.setOnClickListener { }
+        tiCountry.setOnClickListener {
+            findNavController().navigate(R.id.action_workPlaceFragment_to_countryFragment)
+        }
+
         tiRegion.setOnClickListener {
             val bundle = Bundle().apply {
                 putInt(COUNTRY_KEY, 1)

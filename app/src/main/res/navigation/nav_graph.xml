@@ -81,15 +81,27 @@
         tools:layout="@layout/fragment_work_place">
         <action
             android:id="@+id/action_workPlaceFragment_to_regionFragment"
-            app:destination="@id/regionFragment" />
+            app:destination="@id/regionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_workPlaceFragment_to_countryFragment"
+            app:destination="@id/countryFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/regionFragment"
         android:name="ru.practicum.android.diploma.filter.ui.fragment.RegionFragment"
         android:label="fragment_location"
-        app:enterAnim="@anim/slide_in_right"
-        app:exitAnim="@anim/slide_out_left"
-        app:popEnterAnim="@anim/slide_in_left"
-        app:popExitAnim="@anim/slide_out_right"
         tools:layout="@layout/fragment_region" />
+    <fragment
+        android:id="@+id/countryFragment"
+        android:name="ru.practicum.android.diploma.filter.ui.fragment.CountryFragment"
+        android:label="CountryFragment"
+        tools:layout="@layout/fragment_country" />
 </navigation>
