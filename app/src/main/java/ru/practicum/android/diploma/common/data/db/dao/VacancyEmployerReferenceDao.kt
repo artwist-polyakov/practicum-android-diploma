@@ -54,10 +54,23 @@ interface VacancyEmployerReferenceDao : VacancyDao, EmployerDao {
          ON reference.vacancyId = vacancies.id
          LEFT JOIN employers 
          ON reference.employerId = employers.id
+         ORDER BY vacancies.lastUpdate DESC"""
+    )
+    fun getVacanciesForEmployer(employerId: Int): Flow<List<VacancyWithEmployerDTO>>
+
+    @Transaction
+    @Query(
+        """
+         SELECT *
+         FROM (SELECT * FROM vacancy_employer_reference) as reference
+         LEFT JOIN vacancies
+         ON reference.vacancyId = vacancies.id
+         LEFT JOIN employers 
+         ON reference.employerId = employers.id
          ORDER BY vacancies.lastUpdate DESC
          LIMIT :limit OFFSET :page * :limit"""
     )
-    fun getVacancies(employerId: Int, page: Int = 0, limit: Int = DEFAULT_LIMIT): Flow<List<VacancyWithEmployerDTO>>
+    fun getAllVacancies(page: Int = 0, limit: Int = DEFAULT_LIMIT): Flow<List<VacancyWithEmployerDTO>>
 
     @Query(
         """
@@ -90,7 +103,7 @@ interface VacancyEmployerReferenceDao : VacancyDao, EmployerDao {
     suspend fun removeVacancy(vacancy: VacancyEntity, employer: EmployerEntity?) {
         removeVacancy(vacancy)
         employer?.let {
-            if (getVacancies(it.id).first().isEmpty()) {
+            if (getVacanciesForEmployer(it.id).first().isEmpty()) {
                 removeEmployer(it.id)
             }
         }

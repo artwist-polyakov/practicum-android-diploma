@@ -37,6 +37,7 @@ class FavoriteViewModel @Inject constructor(
             interactor.getFavoritesVacancies(page = currentPage)
                 .catch {
                     _state.value = FavoritesScreenState.Error()
+                    Log.d("FavoritesViewModel", "Error")
                 }
                 .collect {
                     if (it.vacancies.isEmpty()) {

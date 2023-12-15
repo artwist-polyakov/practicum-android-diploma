@@ -26,7 +26,7 @@ class FavoritesDBInteractorImpl(
         val total = withContext(Dispatchers.IO) { database.vacancyDao().getVacanciesCount() }
         val totalPages = ceil(total.toDouble() / limit).toInt()
         return withContext(Dispatchers.IO) {
-            database.vacancyEmployerReferenceDao().getVacancies(page, limit).map {
+            database.vacancyEmployerReferenceDao().getAllVacancies(page = page, limit = limit).map {
                 converter.map(it, page, total, totalPages)
             }
         }
