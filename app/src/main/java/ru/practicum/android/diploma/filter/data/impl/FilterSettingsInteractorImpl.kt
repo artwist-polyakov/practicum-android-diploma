@@ -1,5 +1,8 @@
 package ru.practicum.android.diploma.filter.data.impl
 
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.buffer
+import kotlinx.coroutines.flow.callbackFlow
 import ru.practicum.android.diploma.filter.data.dto.FilterIndustryDto
 import ru.practicum.android.diploma.filter.data.dto.FilterRegionDto
 import ru.practicum.android.diploma.filter.data.dto.FilterSettingsDto
@@ -96,12 +99,12 @@ class FilterSettingsInteractorImpl(
         )
     }
 
-    override fun getSearchSettings(): SearchSettingsState {
-        return SearchSettingsState(
+    override fun getSearchSettings() = callbackFlow<SearchSettingsState> {
+        send(SearchSettingsState(
             currentRegion = getRegion().id,
             currentSalary = getSalary(),
             currentIndustry = getIndustry().id,
             currentSalaryOnly = getWithSalaryOnly(),
-        )
-    }
+        ))
+    }.buffer(Channel.UNLIMITED)
 }
