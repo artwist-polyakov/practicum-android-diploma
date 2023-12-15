@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.filter.domain.impl
+package ru.practicum.android.diploma.filter.data.impl
 
 import ru.practicum.android.diploma.filter.data.dto.FilterItemDto
 import ru.practicum.android.diploma.filter.data.dto.FilterSettingsDto
