@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.common.data.dto.Resource
 import ru.practicum.android.diploma.common.domain.models.NetworkErrors
+import ru.practicum.android.diploma.filter.domain.FilterSettingsInteractor
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
 import ru.practicum.android.diploma.search.domain.models.VacanciesSearchResult
 import ru.practicum.android.diploma.search.ui.viewmodels.states.ErrorsSearchScreenStates
@@ -15,8 +16,12 @@ import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchSettingsSt
 import javax.inject.Inject
 
 @HiltViewModel
-class SimilarVacanciesViewModel @Inject constructor(private val interactor: SearchInteractor) : SearchViewModel(
-    interactor
+class SimilarVacanciesViewModel @Inject constructor(
+    private val interactor: SearchInteractor,
+    private val sharedPrefsInteractor: FilterSettingsInteractor
+) : SearchViewModel(
+    interactor,
+    sharedPrefsInteractor
 ) {
     private var searchSettings: SearchSettingsState = SearchSettingsState()
     private var _state = MutableStateFlow<SearchScreenState>(SearchScreenState.Default())
