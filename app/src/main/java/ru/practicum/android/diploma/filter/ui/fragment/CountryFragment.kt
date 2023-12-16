@@ -2,7 +2,7 @@ package ru.practicum.android.diploma.filter.ui.fragment
 
 import android.util.Log
 import android.view.View
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,7 +19,7 @@ import ru.practicum.android.diploma.search.ui.viewmodels.states.ErrorsSearchScre
 
 @AndroidEntryPoint
 class CountryFragment : BaseFragment<FragmentCountryBinding, WorkPlaceViewModel>(FragmentCountryBinding::inflate) {
-    override val viewModel by viewModels<WorkPlaceViewModel>()
+    override val viewModel by activityViewModels<WorkPlaceViewModel>()
     private var onRegionClickDebounce: ((SingleTreeElement) -> Unit)? = null
     private var onRegionClick: ((SingleTreeElement) -> Unit)? = null
     private val locationAdapter = LocationAdapter() { data ->

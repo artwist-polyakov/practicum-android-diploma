@@ -9,7 +9,6 @@ import ru.practicum.android.diploma.favorites.domain.api.FavoritesDBConverter
 import ru.practicum.android.diploma.favorites.domain.api.FavoritesDBInteractor
 import ru.practicum.android.diploma.favorites.domain.impl.FavoritesDBInteractorImpl
 import ru.practicum.android.diploma.filter.data.impl.FilterSettingsInteractorImpl
-import ru.practicum.android.diploma.filter.data.impl.FilterSettingsRepositoryImpl
 import ru.practicum.android.diploma.filter.domain.FilterSettingsInteractor
 import ru.practicum.android.diploma.filter.domain.FilterSettingsRepository
 import ru.practicum.android.diploma.search.data.HHSearchRepository

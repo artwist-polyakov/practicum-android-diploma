@@ -28,6 +28,10 @@ open class WorkPlaceViewModel @Inject constructor(
     val state: StateFlow<SearchRegionScreenState>
         get() = _state
 
+    init {
+        state
+    }
+
     fun getAreas() {
         viewModelScope.launch {
             searchInteractor.getAreas().collect { result ->
@@ -51,7 +55,6 @@ open class WorkPlaceViewModel @Inject constructor(
                     _state.value = SearchRegionScreenState.Error(ErrorsSearchScreenStates.FAIL_FETCH_REGIONS)
                 } else {
                     _state.value = SearchRegionScreenState.Content(result.data)
-                    Log.i("WorkPlaceVMMyLog", "provideResponse status data = ${result.data}")
                 }
             }
 
@@ -75,7 +78,7 @@ open class WorkPlaceViewModel @Inject constructor(
                 )
                 Log.i("WorkPlaceVMMyLog", "updateStateWithCountry currentState = ${currentState.selectedCountry}")
             }
-            Log.i("WorkPlaceVMMyLog", "updateStateWithCountry state = ${currentState}")
+            Log.i("WorkPlaceVMMyLog", "updateStateWithCountry state = $currentState")
 
             filterInteractor.setRegion(id.toInt(), name)
         }

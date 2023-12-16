@@ -1,9 +1,8 @@
 package ru.practicum.android.diploma.filter.ui.fragment
 
-import android.os.Bundle
 import android.util.Log
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +18,7 @@ import ru.practicum.android.diploma.filter.ui.viewmodel.states.SearchRegionScree
 class WorkPlaceFragment : BaseFragment<FragmentWorkPlaceBinding, WorkPlaceViewModel>(
     FragmentWorkPlaceBinding::inflate
 ) {
-    override val viewModel by viewModels<WorkPlaceViewModel>()
+    override val viewModel by activityViewModels<WorkPlaceViewModel>()
 
     override fun initViews() {
         manageVisibilityButton()
@@ -28,6 +27,7 @@ class WorkPlaceFragment : BaseFragment<FragmentWorkPlaceBinding, WorkPlaceViewMo
 
     override fun subscribe(): Unit = with(binding) {
         filterFieldListeners()
+        onCrossClicks()
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collect { state ->
@@ -48,10 +48,7 @@ class WorkPlaceFragment : BaseFragment<FragmentWorkPlaceBinding, WorkPlaceViewMo
         }
 
         tiRegion.setOnClickListener {
-            val bundle = Bundle().apply {
-                putInt(COUNTRY_KEY, 1)
-            }
-            findNavController().navigate(R.id.action_workPlaceFragment_to_regionFragment, bundle)
+            findNavController().navigate(R.id.action_workPlaceFragment_to_regionFragment)
         }
     }
 
@@ -68,6 +65,16 @@ class WorkPlaceFragment : BaseFragment<FragmentWorkPlaceBinding, WorkPlaceViewMo
 
     private fun updateRegionClickable() = with(binding) {
         tiRegion.isClickable = tiCountry.text?.isNotEmpty() == true
+    }
+
+    private fun onCrossClicks() = with(binding) {
+        ivArrowForwardCountry.setOnClickListener {
+            tiCountry.text?.clear()
+        }
+
+        ivArrowForwardRegion.setOnClickListener {
+            tiRegion.text?.clear()
+        }
     }
 
     companion object {
