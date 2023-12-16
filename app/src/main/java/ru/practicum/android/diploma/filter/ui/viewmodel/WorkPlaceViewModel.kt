@@ -20,17 +20,13 @@ import javax.inject.Inject
 typealias regionList = List<SingleTreeElement>
 
 @HiltViewModel
-open class WorkPlaceViewModel @Inject constructor(
+class WorkPlaceViewModel @Inject constructor(
     private val searchInteractor: SearchInteractor,
     private val filterInteractor: FilterSettingsInteractor
 ) : BaseViewModel() {
     private var _state = MutableStateFlow<SearchRegionScreenState>(SearchRegionScreenState.Loading)
     val state: StateFlow<SearchRegionScreenState>
         get() = _state
-
-    init {
-        state
-    }
 
     fun getAreas() {
         viewModelScope.launch {
