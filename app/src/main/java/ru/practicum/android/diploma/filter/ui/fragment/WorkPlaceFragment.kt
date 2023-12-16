@@ -28,6 +28,7 @@ class WorkPlaceFragment : BaseFragment<FragmentWorkPlaceBinding, WorkPlaceViewMo
     override fun subscribe(): Unit = with(binding) {
         filterFieldListeners()
         onCrossClicks()
+        updateButtonBlockVisibility()
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collect { state ->
@@ -79,8 +80,7 @@ class WorkPlaceFragment : BaseFragment<FragmentWorkPlaceBinding, WorkPlaceViewMo
         }
     }
 
-    companion object {
-        private const val COUNTRY_KEY = "country"
-        private const val REGION_KEY = "region"
+    private fun updateButtonBlockVisibility() = with(binding) {
+        btnSelect.isVisible = tiCountry.text.toString().isNotEmpty() || tiRegion.text.toString().isNotEmpty()
     }
 }

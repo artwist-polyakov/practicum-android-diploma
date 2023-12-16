@@ -17,8 +17,6 @@ import ru.practicum.android.diploma.search.domain.models.SingleTreeElement
 import ru.practicum.android.diploma.search.ui.viewmodels.states.ErrorsSearchScreenStates
 import javax.inject.Inject
 
-typealias regionList = List<SingleTreeElement>
-
 @HiltViewModel
 class WorkPlaceViewModel @Inject constructor(
     private val searchInteractor: SearchInteractor,
@@ -27,6 +25,8 @@ class WorkPlaceViewModel @Inject constructor(
     private var _state = MutableStateFlow<SearchRegionScreenState>(SearchRegionScreenState.Loading)
     val state: StateFlow<SearchRegionScreenState>
         get() = _state
+
+    private var country: FilterRegionValue? = null
 
     fun getAreas() {
         viewModelScope.launch {
@@ -38,15 +38,13 @@ class WorkPlaceViewModel @Inject constructor(
 
     fun getRegions() {
         viewModelScope.launch {
-            val currentState = _state.value as SearchRegionScreenState.Content
-
-            searchInteractor.getAreas(currentState.selectedCountry?.id).collect { result ->
+            searchInteractor.getAreas(country?.id).collect { result ->
                 provideResponse(result)
             }
         }
     }
 
-    private fun provideResponse(result: Resource<regionList>) {
+    private fun provideResponse(result: Resource<List<SingleTreeElement>>) {
         when (result) {
             is Resource.Success -> {
                 if (result.data.isNullOrEmpty()) {
@@ -55,7 +53,6 @@ class WorkPlaceViewModel @Inject constructor(
                     val currentState = _state.value as? SearchRegionScreenState.Content
                     _state.value = currentState?.copy(regions = result.data)
                         ?: SearchRegionScreenState.Content(regions = result.data)
-
                     Log.i(MY_LOG, "regionList result = ${result.data}")
                 }
             }
@@ -71,13 +68,21 @@ class WorkPlaceViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Метод обновляет значение в state для selectedCountry и удаляет selectedRegion если значение selectedCountry изменилось
+     **/
     fun updateStateWithCountry(id: String, name: String) {
         viewModelScope.launch {
             val currentState = _state.value
             if (currentState is SearchRegionScreenState.Content) {
-                _state.value = currentState.copy(
-                    selectedCountry = FilterRegionValue(id.toInt(), name)
-                )
+                if (country != FilterRegionValue(id.toInt(), name)) {
+                    _state.value = currentState.copy(
+                        selectedCountry = FilterRegionValue(id.toInt(), name),
+                        selectedRegion = null
+                    )
+                    country = FilterRegionValue(id.toInt(), name)
+                }
+
                 val updatedState = _state.value as SearchRegionScreenState.Content
                 Log.i(MY_LOG, "updateStateWithRegion selectedCountry = ${updatedState.selectedCountry}")
                 Log.i(MY_LOG, "updateStateWithCountry currentState regions = ${currentState.regions}")
@@ -88,6 +93,9 @@ class WorkPlaceViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Метод обновляет значение в state selectedRegion
+     **/
     fun updateStateWithRegion(id: String, name: String) {
         viewModelScope.launch {
             val currentState = _state.value
@@ -99,7 +107,6 @@ class WorkPlaceViewModel @Inject constructor(
                 Log.i(MY_LOG, "updateStateWithRegion selectedRegion = ${updatedState.selectedRegion}")
                 Log.i(MY_LOG, "updateStateWithRegion currentState regions = ${currentState.regions}")
             }
-
             filterInteractor.setRegion(id.toInt(), name)
         }
     }
@@ -113,6 +120,8 @@ class WorkPlaceViewModel @Inject constructor(
                 )
             }
             filterInteractor.setRegion(null, null)
+            country = null
+            clearselectedRegion()
         }
     }
 

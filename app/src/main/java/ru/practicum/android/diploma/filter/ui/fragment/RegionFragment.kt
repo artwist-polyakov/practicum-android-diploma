@@ -80,7 +80,7 @@ class RegionFragment : BaseFragment<FragmentRegionBinding, WorkPlaceViewModel>(F
     private fun renderState(state: SearchRegionScreenState) {
         when (state) {
             is SearchRegionScreenState.Content -> {
-                showData(state.regions)
+                showData(state.regions[0].children!!)
                 Log.i(MY_LOG, "state selectedCountry = ${state.selectedCountry}")
             }
 

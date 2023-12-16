@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.search.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -52,20 +51,20 @@ open class SearchViewModel @Inject constructor(
             _state.value = SearchScreenState.Default(isFilterEnabled())
         }
 
-        viewModelScope.launch {
-            interactor.getAreas(13).collect{
-                when (it) {
-                    is Resource.Success -> {
-                        it.data?.forEach {
-                            Log.d("SearchViewModel", "Areas: $it")
-                        }
-                    }
-                    else -> {
-                        Log.d("SearchViewModel", "${it.error}")
-                    }
-                }
-            }
-        }
+//        viewModelScope.launch {
+//            interactor.getAreas(13).collect {
+//                when (it) {
+//                    is Resource.Success -> {
+//                        it.data?.forEach {
+//                            Log.d("SearchViewModel", "Areas: $it")
+//                        }
+//                    }
+//                    else -> {
+//                        Log.d("SearchViewModel", "${it.error}")
+//                    }
+//                }
+//            }
+//        }
 
         // todo удалить этот код когда будет реализован фильтр индустрии
 //        viewModelScope.launch {
