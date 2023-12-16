@@ -40,9 +40,11 @@ open class WorkPlaceViewModel @Inject constructor(
         }
     }
 
-    fun getAreas(forId: Int) {
+    fun getRegions() {
         viewModelScope.launch {
-            searchInteractor.getAreas(forId).collect { result ->
+            val currentState = _state.value as SearchRegionScreenState.Content
+
+            searchInteractor.getAreas(currentState.selectedCountry?.id).collect { result ->
                 provideResponse(result)
             }
         }
@@ -54,7 +56,11 @@ open class WorkPlaceViewModel @Inject constructor(
                 if (result.data.isNullOrEmpty()) {
                     _state.value = SearchRegionScreenState.Error(ErrorsSearchScreenStates.FAIL_FETCH_REGIONS)
                 } else {
-                    _state.value = SearchRegionScreenState.Content(result.data)
+                    val currentState = _state.value as? SearchRegionScreenState.Content
+                    _state.value = currentState?.copy(regions = result.data)
+                        ?: SearchRegionScreenState.Content(regions = result.data)
+
+                    Log.i(MY_LOG, "regionList result = ${result.data}")
                 }
             }
 
@@ -76,9 +82,11 @@ open class WorkPlaceViewModel @Inject constructor(
                 _state.value = currentState.copy(
                     selectedCountry = FilterRegionValue(id.toInt(), name)
                 )
-                Log.i("WorkPlaceVMMyLog", "updateStateWithCountry currentState = ${currentState.selectedCountry}")
+                val updatedState = _state.value as SearchRegionScreenState.Content
+                Log.i(MY_LOG, "updateStateWithRegion selectedCountry = ${updatedState.selectedCountry}")
+                Log.i(MY_LOG, "updateStateWithCountry currentState regions = ${currentState.regions}")
             }
-            Log.i("WorkPlaceVMMyLog", "updateStateWithCountry state = $currentState")
+            Log.i(MY_LOG, "updateStateWithCountry state = $currentState")
 
             filterInteractor.setRegion(id.toInt(), name)
         }
@@ -91,7 +99,11 @@ open class WorkPlaceViewModel @Inject constructor(
                 _state.value = currentState.copy(
                     selectedRegion = FilterRegionValue(id.toInt(), name)
                 )
+                val updatedState = _state.value as SearchRegionScreenState.Content
+                Log.i(MY_LOG, "updateStateWithRegion selectedRegion = ${updatedState.selectedRegion}")
+                Log.i(MY_LOG, "updateStateWithRegion currentState regions = ${currentState.regions}")
             }
+
             filterInteractor.setRegion(id.toInt(), name)
         }
     }
@@ -118,5 +130,9 @@ open class WorkPlaceViewModel @Inject constructor(
             }
             filterInteractor.setRegion(null, null)
         }
+    }
+
+    companion object {
+        private const val MY_LOG = "WorkPlaceVMMyLog"
     }
 }

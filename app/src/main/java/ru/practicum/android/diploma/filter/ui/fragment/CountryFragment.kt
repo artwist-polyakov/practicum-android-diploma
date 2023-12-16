@@ -21,7 +21,6 @@ import ru.practicum.android.diploma.search.ui.viewmodels.states.ErrorsSearchScre
 class CountryFragment : BaseFragment<FragmentCountryBinding, WorkPlaceViewModel>(FragmentCountryBinding::inflate) {
     override val viewModel by activityViewModels<WorkPlaceViewModel>()
     private var onRegionClickDebounce: ((SingleTreeElement) -> Unit)? = null
-    private var onRegionClick: ((SingleTreeElement) -> Unit)? = null
     private val locationAdapter = LocationAdapter() { data ->
         onRegionClickDebounce?.invoke(data)
     }
