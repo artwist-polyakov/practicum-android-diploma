@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.common.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
 import com.google.gson.Gson
 import dagger.Module
@@ -16,6 +17,8 @@ import ru.practicum.android.diploma.common.data.network.NetworkClient
 import ru.practicum.android.diploma.common.data.network.RetrofitNetworkClient
 import ru.practicum.android.diploma.favorites.domain.api.FavoritesDBConverter
 import ru.practicum.android.diploma.favorites.domain.impl.FavoritesDBConverterImpl
+import ru.practicum.android.diploma.filter.data.impl.FilterSettingsRepositoryImpl
+import ru.practicum.android.diploma.filter.domain.FilterSettingsRepository
 import ru.practicum.android.diploma.search.domain.api.SearchResultConverter
 import ru.practicum.android.diploma.search.domain.impl.SearchResultConverterImpl
 import ru.practicum.android.diploma.vacancy.data.sharing.ExternalNavigatorImpl
@@ -64,4 +67,17 @@ class DataModule {
     fun providesExternalNavigator(@ApplicationContext context: Context): ExternalNavigator = ExternalNavigatorImpl(
         context = context
     )
+
+    @Provides
+    fun providesSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
+        context.getSharedPreferences(
+            "filter_settings",
+            Context.MODE_PRIVATE
+        )
+
+
+    @Provides
+    @Singleton
+    fun providesSharedPrefsRepository(@ApplicationContext context: Context): FilterSettingsRepository =
+        FilterSettingsRepositoryImpl(providesSharedPreferences(context = context))
 }
