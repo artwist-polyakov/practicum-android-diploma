@@ -70,14 +70,17 @@ class WorkPlaceFragment : BaseFragment<FragmentWorkPlaceBinding, WorkPlaceViewMo
     private fun onCrossClicks() = with(binding) {
         ivArrowForwardCountry.setOnClickListener {
             tiCountry.text?.clear()
+            viewModel.clearselectedCountry()
         }
 
         ivArrowForwardRegion.setOnClickListener {
             tiRegion.text?.clear()
+            viewModel.clearselectedRegion()
         }
     }
 
     companion object {
         private const val COUNTRY_KEY = "country"
+        private const val REGION_KEY = "region"
     }
 }

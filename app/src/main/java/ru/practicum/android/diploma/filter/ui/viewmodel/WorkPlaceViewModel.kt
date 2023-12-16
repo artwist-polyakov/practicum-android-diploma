@@ -95,4 +95,28 @@ open class WorkPlaceViewModel @Inject constructor(
             filterInteractor.setRegion(id.toInt(), name)
         }
     }
+
+    fun clearselectedCountry() {
+        viewModelScope.launch {
+            val currentState = _state.value
+            if (currentState is SearchRegionScreenState.Content) {
+                _state.value = currentState.copy(
+                    selectedCountry = null
+                )
+            }
+            filterInteractor.setRegion(null, null)
+        }
+    }
+
+    fun clearselectedRegion() {
+        viewModelScope.launch {
+            val currentState = _state.value
+            if (currentState is SearchRegionScreenState.Content) {
+                _state.value = currentState.copy(
+                    selectedRegion = null
+                )
+            }
+            filterInteractor.setRegion(null, null)
+        }
+    }
 }
