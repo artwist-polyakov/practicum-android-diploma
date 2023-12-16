@@ -73,6 +73,11 @@ class RetrofitNetworkClient(
     }
 
     private suspend fun makeAreasRequest(dto: AreasRequest): Response {
+        dto.id?.let{
+            return AreaSearchResponse(areas = hhService.getAreaById(areaId = it)).apply {
+                resultCode = SUCCESS
+            }
+        }
         return AreaSearchResponse(areas = hhService.getAreas()).apply {
             resultCode = SUCCESS
         }

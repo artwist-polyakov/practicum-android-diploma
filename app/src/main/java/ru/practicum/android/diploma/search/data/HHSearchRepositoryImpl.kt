@@ -60,7 +60,7 @@ class HHSearchRepositoryImpl(
     }
 
     override fun getAreas(forId: Int?): Flow<Resource<AreaSearchResponse>> {
-        val request = AreasRequest()
+        val request = AreasRequest(forId)
         return handleResponse<AreaSearchResponse> { networkClient.doRequest(request) }
     }
 
