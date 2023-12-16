@@ -35,7 +35,6 @@ class SimilarVacanciesFragment :
         }
 
         binding.vacancyList.root.apply {
-            layoutManager = LinearLayoutManager(context)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = vacancyListAdapter
         }

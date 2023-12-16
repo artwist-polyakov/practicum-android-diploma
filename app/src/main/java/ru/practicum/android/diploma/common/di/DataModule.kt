@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.common.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
 import com.google.gson.Gson
 import dagger.Module
@@ -64,4 +65,10 @@ class DataModule {
     fun providesExternalNavigator(@ApplicationContext context: Context): ExternalNavigator = ExternalNavigatorImpl(
         context = context
     )
+
+    @Provides
+    @Singleton
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
+        return context.getSharedPreferences("shared_prefs", Context.MODE_PRIVATE)
+    }
 }
