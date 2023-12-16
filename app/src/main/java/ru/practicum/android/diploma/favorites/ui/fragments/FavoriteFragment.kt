@@ -59,21 +59,33 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
     private fun render(state: FavoritesScreenState) {
         when (state) {
             is FavoritesScreenState.Empty -> {
-                // Блок для отображения пустого экрана
+                emptyFavorites()
             }
 
             is FavoritesScreenState.Content -> {
-                // Блок для отображения контента
+                showFavorites()
             }
 
             is FavoritesScreenState.Error -> {
-                // Блок для отображения ошибки
+                showError()
             }
 
             is FavoritesScreenState.Loading -> {
                 // Блок для отображения загрузки
             }
         }
+    }
+
+    private fun emptyFavorites() {
+
+    }
+
+    private fun showFavorites() {
+
+    }
+
+    private fun showError() {
+
     }
 
     companion object {
