@@ -1,10 +1,8 @@
 package ru.practicum.android.diploma.favorites.ui.fragments
 
-import android.view.View.VISIBLE
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -18,7 +16,6 @@ import ru.practicum.android.diploma.databinding.FragmentFavoriteBinding
 import ru.practicum.android.diploma.favorites.ui.viewmodels.FavoriteViewModel
 import ru.practicum.android.diploma.favorites.ui.viewmodels.states.FavoritesScreenState
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
-import ru.practicum.android.diploma.search.ui.fragments.SearchFragment
 import ru.practicum.android.diploma.search.ui.fragments.VacancyAdapter
 import ru.practicum.android.diploma.vacancy.ui.VacancyFragment
 
