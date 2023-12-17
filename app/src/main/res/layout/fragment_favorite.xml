@@ -61,6 +61,7 @@
         android:layout_height="@dimen/progressbar_size"
         android:indeterminateTint="@color/blue"
         android:indeterminateTintMode="src_in"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -46,7 +46,7 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
                 putInt(VacancyFragment.ARG_ID, data.id)
             }
             findNavController().navigate(
-                R.id.action_searchFragment_to_vacancyFragment,
+                R.id.action_favoriteFragment_to_vacancyFragment,
                 bundle
             )
         }
