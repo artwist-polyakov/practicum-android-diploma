@@ -27,6 +27,11 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
         onVacancyClickDebounce?.invoke(data)
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.handleRequest()
+    }
+
     override fun initViews() {
         binding.favoritesList.root.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
