@@ -84,9 +84,7 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
         binding.favoritesList.root.visibility = VISIBLE
         binding.progressBar.visibility = GONE
         vacancyListAdapter.setScrollLoadingEnabled(state.currentPage != state.totalPages - 1)
-        vacancyListAdapter.setData(state.vacancies, state.totalVacancies)
-        val vac = state.vacancies
-        Log.d("FavoritesViewModel", "Vacancies: $vac")
+        vacancyListAdapter.setData(state.vacancies, 0)
     }
 
     private fun showError(state: FavoritesScreenState.Error) {
