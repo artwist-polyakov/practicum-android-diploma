@@ -21,7 +21,7 @@ import ru.practicum.android.diploma.search.ui.viewmodels.states.ErrorsSearchScre
 class CountryFragment : BaseFragment<FragmentCountryBinding, WorkPlaceViewModel>(FragmentCountryBinding::inflate) {
     override val viewModel by activityViewModels<WorkPlaceViewModel>()
     private var onRegionClickDebounce: ((SingleTreeElement) -> Unit)? = null
-    private val locationAdapter = LocationAdapter() { data ->
+    private val locationAdapter = LocationAdapter { data ->
         onRegionClickDebounce?.invoke(data)
     }
 
@@ -65,7 +65,7 @@ class CountryFragment : BaseFragment<FragmentCountryBinding, WorkPlaceViewModel>
             }
 
             is SearchRegionScreenState.Error -> {
-                showEror(state.error)
+                showError(state.error)
             }
 
             else -> showProgressBar()
@@ -85,7 +85,7 @@ class CountryFragment : BaseFragment<FragmentCountryBinding, WorkPlaceViewModel>
         }
     }
 
-    private fun showEror(error: ErrorsSearchScreenStates) {
+    private fun showError(error: ErrorsSearchScreenStates) {
         with(binding) {
             locationList.root.visibility = View.GONE
             progressBar.visibility = View.GONE

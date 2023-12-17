@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.filter.ui.fragment
 
 import android.content.res.ColorStateList
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -9,8 +10,10 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.common.ui.BaseFragment
+import ru.practicum.android.diploma.common.utils.parcelable
 import ru.practicum.android.diploma.common.utils.setupTextChangeListener
 import ru.practicum.android.diploma.databinding.FragmentFilterBinding
+import ru.practicum.android.diploma.filter.domain.models.FilterRegionValue
 import ru.practicum.android.diploma.filter.ui.viewmodel.FilterViewModel
 
 @AndroidEntryPoint
@@ -18,8 +21,14 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
     override val viewModel by viewModels<FilterViewModel>()
     private var defaultHintColor: Int = 0
     private var activeHintColor: Int = 0
+    private var filterRegionValue: FilterRegionValue? = null
     override fun initViews(): Unit = with(binding) {
-        defaultHintColor = ContextCompat.getColor(requireContext(), R.color.textHintApearence)
+        filterRegionValue = arguments?.parcelable<FilterRegionValue>(WorkPlaceFragment.AREA_KEY)
+        Log.i("FilterFragmentMyLog", "filterRegionValue = $filterRegionValue")
+
+        tiWorkPlace.setText(filterRegionValue?.text ?: "")
+
+        defaultHintColor = ContextCompat.getColor(requireContext(), R.color.inputTextHint)
         activeHintColor = ContextCompat.getColor(requireContext(), R.color.blue)
 
         tiSalaryField.requestFocus()
@@ -37,11 +46,6 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
         llSalaryChecbox.setOnClickListener {
             checkboxHideWithSalary.isChecked = !checkboxHideWithSalary.isChecked
             updateButtonBlockVisibility()
-
-            if (checkboxHideWithSalary.isChecked) {
-                tiIndustry.setText("IT")
-                tiWorkPlace.setText("USA, LA")
-            }
         }
 
         checkboxHideWithSalary.setOnClickListener {

@@ -52,6 +52,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/enter_region"
             android:imeOptions="actionDone"
+            android:inputType="textCapSentences"
             android:singleLine="true"
             android:textColorHint="?attr/formsHintColor" />
 

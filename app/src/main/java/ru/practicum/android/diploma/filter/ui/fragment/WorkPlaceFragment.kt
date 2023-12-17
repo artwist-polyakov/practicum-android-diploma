@@ -1,9 +1,11 @@
 package ru.practicum.android.diploma.filter.ui.fragment
 
+import android.os.Bundle
 import android.util.Log
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -20,6 +22,19 @@ class WorkPlaceFragment : BaseFragment<FragmentWorkPlaceBinding, WorkPlaceViewMo
 ) {
     override val viewModel by activityViewModels<WorkPlaceViewModel>()
 
+    override fun onResume() {
+        super.onResume()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.state.collect { state ->
+                if (state is SearchRegionScreenState.Content) {
+                    binding.tiRegion.setText(state.selectedRegion?.text)
+                    binding.tiCountry.setText(state.selectedCountry?.text)
+                    updateButtonBlockVisibility()
+                }
+            }
+        }
+    }
+
     override fun initViews() {
         manageVisibilityButton()
         updateRegionClickable()
@@ -29,16 +44,7 @@ class WorkPlaceFragment : BaseFragment<FragmentWorkPlaceBinding, WorkPlaceViewMo
         filterFieldListeners()
         onCrossClicks()
         updateButtonBlockVisibility()
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.state.collect { state ->
-                if (state is SearchRegionScreenState.Content) {
-                    Log.i("WorkPlaceFragmentMyLog", "country = ${state.selectedCountry}")
-                    tiRegion.setText(state.selectedRegion?.text)
-                    tiCountry.setText(state.selectedCountry?.text)
-                }
-            }
-        }
+        onPressedButton()
 
         ivArrowBack.setOnClickListener {
             findNavController().popBackStack()
@@ -82,5 +88,26 @@ class WorkPlaceFragment : BaseFragment<FragmentWorkPlaceBinding, WorkPlaceViewMo
 
     private fun updateButtonBlockVisibility() = with(binding) {
         btnSelect.isVisible = tiCountry.text.toString().isNotEmpty() || tiRegion.text.toString().isNotEmpty()
+    }
+
+    private fun onPressedButton() {
+        binding.btnSelect.setOnClickListener {
+            if (viewModel.getFilterArea() == null) {
+                findNavController().popBackStack()
+            } else {
+                val bundle = Bundle().apply {
+                    this.putParcelable(AREA_KEY, viewModel.getFilterArea()!!)
+                }
+                Log.i("WorkPlaceFragmentMyLog", "viewModel.getFilterArea() = ${viewModel.getFilterArea()}")
+                val navOptions = NavOptions.Builder()
+                    .setPopUpTo(R.id.filterFragment, inclusive = false)
+                    .build()
+                findNavController().navigate(R.id.action_workPlaceFragment_to_filterFragment, bundle, navOptions)
+            }
+        }
+    }
+
+    companion object {
+        const val AREA_KEY = "area"
     }
 }

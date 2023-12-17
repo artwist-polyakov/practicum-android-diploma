@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.filter.ui.fragment
 
-import android.util.Log
 import android.view.View
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
@@ -23,7 +22,7 @@ import ru.practicum.android.diploma.search.ui.viewmodels.states.ErrorsSearchScre
 class RegionFragment : BaseFragment<FragmentRegionBinding, WorkPlaceViewModel>(FragmentRegionBinding::inflate) {
     override val viewModel by activityViewModels<WorkPlaceViewModel>()
     private var onRegionClickDebounce: ((SingleTreeElement) -> Unit)? = null
-    private val locationAdapter = LocationAdapter() { data ->
+    private val locationAdapter = LocationAdapter { data ->
         onRegionClickDebounce?.invoke(data)
     }
 
@@ -36,16 +35,12 @@ class RegionFragment : BaseFragment<FragmentRegionBinding, WorkPlaceViewModel>(F
 
     override fun subscribe() {
         inputListener()
-        Log.i(MY_LOG, "RegionFragment launched")
 
         with(binding) {
             onRegionClickDebounce = debounce(
-                CLICK_DEBOUNCE_DELAY_500MS,
-                viewLifecycleOwner.lifecycleScope,
-                false
+                CLICK_DEBOUNCE_DELAY_500MS, viewLifecycleOwner.lifecycleScope, false
             ) { data ->
                 viewModel.updateStateWithRegion(data.id, data.name)
-                Log.i(MY_LOG, "region = ${data.name}  id = ${data.id}")
                 findNavController().popBackStack()
             }
 
@@ -66,32 +61,52 @@ class RegionFragment : BaseFragment<FragmentRegionBinding, WorkPlaceViewModel>(F
         }
     }
 
-    private fun inputListener() = with(binding) {
-        tiSearchField.doOnTextChanged { text, _, _, _ ->
-            // добавить поиск по регионам
-            if (text.toString().isNotEmpty()) {
-                ivSearchFieldButton.setImageResource(R.drawable.close_24px)
+    private fun inputListener() {
+        binding.tiSearchField.doOnTextChanged { text, _, _, _ ->
+            val inputText = text.toString()
+            if (inputText.isNotEmpty()) {
+                processNonEmptyInput(inputText)
             } else {
-                ivSearchFieldButton.setImageResource(R.drawable.search_24px)
+                processEmptyInput()
             }
+        }
+    }
+
+    private fun processNonEmptyInput(inputText: String) {
+        binding.ivSearchFieldButton.setImageResource(R.drawable.close_24px)
+
+        val currentState = viewModel.state.value
+        if (currentState is SearchRegionScreenState.Content) {
+            val filteredRegions = viewModel.filterRegions(
+                viewModel.unpackRegions(currentState.regions[0].children!!),
+                inputText
+            )
+            if (filteredRegions.isEmpty()) {
+                showError(ErrorsSearchScreenStates.NO_REGION)
+            } else {
+                showData(filteredRegions)
+            }
+        }
+    }
+
+    private fun processEmptyInput() {
+        binding.ivSearchFieldButton.setImageResource(R.drawable.search_24px)
+
+        val currentState = viewModel.state.value
+        if (currentState is SearchRegionScreenState.Content) {
+            showData(viewModel.unpackRegions(currentState.regions[0].children!!))
         }
     }
 
     private fun renderState(state: SearchRegionScreenState) {
         when (state) {
-            is SearchRegionScreenState.Content -> {
-                showData(state.regions[0].children!!)
-                Log.i(MY_LOG, "state selectedCountry = ${state.selectedCountry}")
-            }
+            is SearchRegionScreenState.Content -> showData(viewModel.unpackRegions(state.regions[0].children!!))
 
-            is SearchRegionScreenState.Error -> {
-                showEror(state.error)
-            }
+            is SearchRegionScreenState.Error -> showError(state.error)
 
             else -> showProgressBar()
         }
     }
-
 
     private fun showData(regions: List<SingleTreeElement>) {
         showData()
@@ -106,7 +121,7 @@ class RegionFragment : BaseFragment<FragmentRegionBinding, WorkPlaceViewModel>(F
         }
     }
 
-    private fun showEror(error: ErrorsSearchScreenStates) {
+    private fun showError(error: ErrorsSearchScreenStates) {
         with(binding) {
             locationList.root.visibility = View.GONE
             progressBar.visibility = View.GONE
@@ -124,8 +139,8 @@ class RegionFragment : BaseFragment<FragmentRegionBinding, WorkPlaceViewModel>(F
             locationList.root.visibility = View.GONE
         }
     }
+
     companion object {
         private const val CLICK_DEBOUNCE_DELAY_500MS = 500L
-        private const val MY_LOG = "RegionFragmentMyLog"
     }
 }

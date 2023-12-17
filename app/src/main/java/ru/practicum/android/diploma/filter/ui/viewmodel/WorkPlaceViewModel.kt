@@ -9,7 +9,6 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.common.data.dto.Resource
 import ru.practicum.android.diploma.common.domain.models.NetworkErrors
 import ru.practicum.android.diploma.common.ui.BaseViewModel
-import ru.practicum.android.diploma.filter.domain.FilterSettingsInteractor
 import ru.practicum.android.diploma.filter.domain.models.FilterRegionValue
 import ru.practicum.android.diploma.filter.ui.viewmodel.states.SearchRegionScreenState
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
@@ -17,16 +16,21 @@ import ru.practicum.android.diploma.search.domain.models.SingleTreeElement
 import ru.practicum.android.diploma.search.ui.viewmodels.states.ErrorsSearchScreenStates
 import javax.inject.Inject
 
+typealias regions = List<SingleTreeElement>
+
+/**
+ * WorkPlaceViewModel является Shared ViewModel для WorkPlaceFragment, CountryFragment и RegionFragment
+ */
 @HiltViewModel
 class WorkPlaceViewModel @Inject constructor(
-    private val searchInteractor: SearchInteractor,
-    private val filterInteractor: FilterSettingsInteractor
+    private val searchInteractor: SearchInteractor
 ) : BaseViewModel() {
     private var _state = MutableStateFlow<SearchRegionScreenState>(SearchRegionScreenState.Loading)
     val state: StateFlow<SearchRegionScreenState>
         get() = _state
 
     private var country: FilterRegionValue? = null
+    private var region: FilterRegionValue? = null
 
     fun getAreas() {
         viewModelScope.launch {
@@ -44,7 +48,7 @@ class WorkPlaceViewModel @Inject constructor(
         }
     }
 
-    private fun provideResponse(result: Resource<List<SingleTreeElement>>) {
+    private fun provideResponse(result: Resource<regions>) {
         when (result) {
             is Resource.Success -> {
                 if (result.data.isNullOrEmpty()) {
@@ -53,7 +57,6 @@ class WorkPlaceViewModel @Inject constructor(
                     val currentState = _state.value as? SearchRegionScreenState.Content
                     _state.value = currentState?.copy(regions = result.data)
                         ?: SearchRegionScreenState.Content(regions = result.data)
-                    Log.i(MY_LOG, "regionList result = ${result.data}")
                 }
             }
 
@@ -71,43 +74,37 @@ class WorkPlaceViewModel @Inject constructor(
     /**
      * Метод обновляет значение в state для selectedCountry и удаляет selectedRegion если значение selectedCountry изменилось
      **/
-    fun updateStateWithCountry(id: String, name: String) {
+    fun updateStateWithCountry(id: String, name: String, region: FilterRegionValue? = null) {
         viewModelScope.launch {
             val currentState = _state.value
-            if (currentState is SearchRegionScreenState.Content) {
-                if (country != FilterRegionValue(id.toInt(), name)) {
-                    _state.value = currentState.copy(
-                        selectedCountry = FilterRegionValue(id.toInt(), name),
-                        selectedRegion = null
-                    )
-                    country = FilterRegionValue(id.toInt(), name)
-                }
-
-                val updatedState = _state.value as SearchRegionScreenState.Content
-                Log.i(MY_LOG, "updateStateWithRegion selectedCountry = ${updatedState.selectedCountry}")
-                Log.i(MY_LOG, "updateStateWithCountry currentState regions = ${currentState.regions}")
+            if (currentState is SearchRegionScreenState.Content && country != FilterRegionValue(id.toInt(), name)) {
+                _state.value = currentState.copy(
+                    selectedCountry = FilterRegionValue(id.toInt(), name),
+                    selectedRegion = region
+                )
+                country = FilterRegionValue(id.toInt(), name)
             }
-            Log.i(MY_LOG, "updateStateWithCountry state = $currentState")
-
-            filterInteractor.setRegion(id.toInt(), name)
         }
     }
 
     /**
-     * Метод обновляет значение в state selectedRegion
+     * Метод обновляет значение в state selectedRegion.
+     * Если country еще не обозначен, то метод находит первого родителя и присваивает его поля в country
      **/
     fun updateStateWithRegion(id: String, name: String) {
         viewModelScope.launch {
             val currentState = _state.value
             if (currentState is SearchRegionScreenState.Content) {
-                _state.value = currentState.copy(
-                    selectedRegion = FilterRegionValue(id.toInt(), name)
-                )
-                val updatedState = _state.value as SearchRegionScreenState.Content
-                Log.i(MY_LOG, "updateStateWithRegion selectedRegion = ${updatedState.selectedRegion}")
-                Log.i(MY_LOG, "updateStateWithRegion currentState regions = ${currentState.regions}")
+                val newRegion = FilterRegionValue(id.toInt(), name)
+                _state.value = currentState.copy(selectedRegion = newRegion)
+                region = newRegion
+
+                if (currentState.selectedCountry == null) {
+                    val parent: SingleTreeElement? =
+                        getCountryFromRegion(currentState.regions, region!!.id!!.toString())
+                    updateStateWithCountry(parent?.id.toString(), parent?.name ?: "", newRegion)
+                }
             }
-            filterInteractor.setRegion(id.toInt(), name)
         }
     }
 
@@ -119,7 +116,6 @@ class WorkPlaceViewModel @Inject constructor(
                     selectedCountry = null
                 )
             }
-            filterInteractor.setRegion(null, null)
             country = null
             clearselectedRegion()
         }
@@ -133,7 +129,51 @@ class WorkPlaceViewModel @Inject constructor(
                     selectedRegion = null
                 )
             }
-            filterInteractor.setRegion(null, null)
+            region = null
+        }
+    }
+
+    private fun getCountryFromRegion(areas: regions, childId: String): SingleTreeElement? {
+        val flatList = unpackRegions(areas)
+        var currentElement = flatList.find { it.id == childId }
+
+        while (currentElement?.parent != null) {
+            currentElement = flatList.find { it.id == currentElement!!.parent.toString() }
+        }
+        return currentElement
+    }
+
+    fun unpackRegions(area: regions): regions {
+        val unpackedList = mutableListOf<SingleTreeElement>()
+
+        fun unpack(list: regions) {
+            for (element in list) {
+                unpackedList.add(element)
+                element.children?.let { unpack(it) }
+            }
+        }
+
+        unpack(area)
+        return unpackedList
+    }
+
+    fun getFilterArea(): FilterRegionValue? {
+        Log.i(MY_LOG, "region = $region \ncountry = $country")
+        return when {
+            region != null -> FilterRegionValue(
+                id = region!!.id,
+                text = if (country != null) "${country!!.text}, ${region!!.text}" else region!!.text
+            )
+
+            country != null -> FilterRegionValue(id = country!!.id, text = country!!.text)
+            else -> null
+        }
+    }
+
+    fun filterRegions(regionList: List<SingleTreeElement>, input: String): List<SingleTreeElement> {
+        val lowerCaseInput = input.lowercase().trim()
+        return regionList.filter {
+            it.name.lowercase().contains(lowerCaseInput)
         }
     }
 
