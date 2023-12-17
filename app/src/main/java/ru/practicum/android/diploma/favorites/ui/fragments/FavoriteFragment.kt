@@ -2,6 +2,7 @@ package ru.practicum.android.diploma.favorites.ui.fragments
 
 import android.view.View.VISIBLE
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import androidx.fragment.app.viewModels
@@ -82,7 +83,10 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
         binding.tvFavoriteStateText.visibility = GONE
         binding.favoritesList.root.visibility = VISIBLE
         binding.progressBar.visibility = GONE
-        vacancyListAdapter.setData(state.vacancies)
+        vacancyListAdapter.setScrollLoadingEnabled(state.currentPage != state.totalPages - 1)
+        vacancyListAdapter.setData(state.vacancies, state.totalVacancies)
+        val vac = state.vacancies
+        Log.d("FavoritesViewModel", "Vacancies: $vac")
     }
 
     private fun showError(state: FavoritesScreenState.Error) {
