@@ -1,6 +1,8 @@
 package ru.practicum.android.diploma.favorites.ui.fragments
 
+import android.view.View.VISIBLE
 import android.os.Bundle
+import android.view.View.GONE
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -58,34 +60,44 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
 
     private fun render(state: FavoritesScreenState) {
         when (state) {
-            is FavoritesScreenState.Empty -> {
-                emptyFavorites()
-            }
-
-            is FavoritesScreenState.Content -> {
-                showFavorites()
-            }
-
-            is FavoritesScreenState.Error -> {
-                showError()
-            }
-
-            is FavoritesScreenState.Loading -> {
-                // Блок для отображения загрузки
-            }
+            is FavoritesScreenState.Empty -> emptyFavorites(state)
+            is FavoritesScreenState.Content -> showFavorites(state)
+            is FavoritesScreenState.Error -> showError(state)
+            is FavoritesScreenState.Loading -> isLoading()
         }
     }
 
-    private fun emptyFavorites() {
-
+    private fun emptyFavorites(state: FavoritesScreenState.Empty) {
+        binding.ivFavoriteStateImage.visibility = VISIBLE
+        binding.tvFavoriteStateText.visibility = VISIBLE
+        binding.favoritesList.root.visibility = GONE
+        binding.progressBar.visibility = GONE
+        binding.ivFavoriteStateImage.setImageResource(state.image)
+        binding.tvFavoriteStateText.setText(state.text)
     }
 
-    private fun showFavorites() {
-
+    private fun showFavorites(state: FavoritesScreenState.Content) {
+        binding.ivFavoriteStateImage.visibility = GONE
+        binding.tvFavoriteStateText.visibility = GONE
+        binding.favoritesList.root.visibility = VISIBLE
+        binding.progressBar.visibility = GONE
+        vacancyListAdapter.setData(state.vacancies)
     }
 
-    private fun showError() {
+    private fun showError(state: FavoritesScreenState.Error) {
+        binding.ivFavoriteStateImage.visibility = VISIBLE
+        binding.tvFavoriteStateText.visibility = VISIBLE
+        binding.favoritesList.root.visibility = GONE
+        binding.progressBar.visibility = GONE
+        binding.ivFavoriteStateImage.setImageResource(state.image)
+        binding.tvFavoriteStateText.setText(state.text)
+    }
 
+    private fun isLoading() {
+        binding.ivFavoriteStateImage.visibility = GONE
+        binding.tvFavoriteStateText.visibility = GONE
+        binding.favoritesList.root.visibility = GONE
+        binding.progressBar.visibility = VISIBLE
     }
 
     companion object {
