@@ -27,14 +27,6 @@ class FavoriteViewModel @Inject constructor(
     val state: MutableStateFlow<FavoritesScreenState>
         get() = _state
 
-    init {
-        checkState()
-    }
-
-    private fun checkState() {
-        handleRequest()
-    }
-
     // todo почистить логи
     fun handleRequest(nextPage: Boolean = false) {
         viewModelScope.launch {
@@ -54,6 +46,9 @@ class FavoriteViewModel @Inject constructor(
                             vacancies.clear()
                             _state.value = FavoritesScreenState.Empty()
                         } else {
+                            if (!nextPage) {
+                                vacancies.clear()
+                            }
                             totalPages = it.totalPages
                             currentPage = it.currentPage
                             vacancies.addAll(it.vacancies)
@@ -63,13 +58,9 @@ class FavoriteViewModel @Inject constructor(
                                 totalVacancies = it.vacanciesFound,
                                 vacancies = vacancies
                             )
-                            Log.d("FavoritesViewModel", "Total: ${it.vacanciesFound}")
-                            Log.d("FavoritesViewModel", "Vacancies: $vacancies")
                         }
                     }
             }
         }
     }
-
-
 }

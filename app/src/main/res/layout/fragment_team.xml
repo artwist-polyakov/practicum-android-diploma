@@ -6,14 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".team.ui.fragments.TeamFragment">
 
-
     <LinearLayout
         android:id="@+id/ll_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingVertical="@dimen/image_padding_medium"
+        android:paddingVertical="@dimen/icon_padding"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -23,9 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingVertical="@dimen/image_padding_medium"
-            android:text="@string/team"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="@string/team" />
     </LinearLayout>
 
     <TextView
