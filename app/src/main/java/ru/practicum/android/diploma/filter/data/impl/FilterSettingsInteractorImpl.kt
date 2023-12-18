@@ -103,15 +103,17 @@ class FilterSettingsInteractorImpl(
         )
     }
 
-    override fun getSearchSettings() = callbackFlow<SearchSettingsState> {
-        send(SearchSettingsState(
-            currentRegion = getRegion().id,
-            currentSalary = getSalary(),
-            currentIndustry = getIndustry().id,
-            currentSalaryOnly = getWithSalaryOnly(),
-        ))
-        awaitClose { close() }
-    }.buffer(Channel.UNLIMITED)
+    override fun getSearchSettings() = repository.settingsFlow().map { dto ->
+        // преобразуем DTO в UI-стэйт
+        SearchSettingsState(
+            currentPage = -1,
+            currentQuery = "",
+            currentRegion = dto.region?.id,
+            currentSalary = dto.salary,
+            currentIndustry = dto.industry?.id,
+            currentSalaryOnly = dto.withSalaryOnly,
+        )
+    }.conflate()
 
     override fun getFilterUISettings() = repository.settingsFlow().map { dto ->
         // преобразуем DTO в UI-стэйт

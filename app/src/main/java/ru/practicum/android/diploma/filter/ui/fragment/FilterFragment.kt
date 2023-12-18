@@ -1,6 +1,9 @@
 package ru.practicum.android.diploma.filter.ui.fragment
 
 import android.content.res.ColorStateList
+import android.util.Log
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -16,6 +19,7 @@ import ru.practicum.android.diploma.databinding.FragmentFilterBinding
 import ru.practicum.android.diploma.filter.domain.models.FilterRegionValue
 import ru.practicum.android.diploma.filter.ui.viewmodel.FilterViewModel
 import ru.practicum.android.diploma.filter.ui.viewmodel.states.FilterScreenState
+import ru.practicum.android.diploma.filter.ui.viewmodel.states.FilterViewModelInteraction
 
 @AndroidEntryPoint
 class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(FragmentFilterBinding::inflate) {
@@ -39,6 +43,7 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collect { state ->
+                Log.d("FilterViewModel", "Подписался")
                 render(state)
             }
         }
@@ -49,11 +54,13 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
 
         llSalaryChecbox.setOnClickListener {
             checkboxHideWithSalary.isChecked = !checkboxHideWithSalary.isChecked
-            updateButtonBlockVisibility()
+            viewModel.handleInteraction(
+                FilterViewModelInteraction.setSalaryOnly(checkboxHideWithSalary.isChecked))
         }
 
         checkboxHideWithSalary.setOnClickListener {
-            updateButtonBlockVisibility()
+            viewModel.handleInteraction(
+                FilterViewModelInteraction.setSalaryOnly(checkboxHideWithSalary.isChecked))
         }
 
         ivInputButton.setOnClickListener {
@@ -66,18 +73,34 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
 
         tiIndustry.setOnClickListener { Unit }
 
-        btnApply.setOnClickListener { Unit }
+        btnApply.setOnClickListener { Unit
+            viewModel.handleInteraction(
+                FilterViewModelInteraction.saveSettings)
+            findNavController().popBackStack()}
 
         btnReset.setOnClickListener {
-            resetFilter()
+            viewModel.handleInteraction(
+                FilterViewModelInteraction.clearSettings)
+            findNavController().popBackStack()
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.state.collect { state ->
+                Log.d("FilterViewModel", "Подписался")
+                render(state)
+            }
+        }
+    }
+
 
     private fun inputListener() = with(binding) {
         tiSalaryField.doOnTextChanged { text, _, _, _ ->
             ivInputButton.isVisible = text.toString().isNotEmpty()
 
-            updateButtonBlockVisibility()
+//            updateButtonBlockVisibility()
 
             val hintColor = if (text.toString().isEmpty()) defaultHintColor else activeHintColor
 
@@ -87,6 +110,10 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
                 tiSalaryField.setText(text.toString().substring(1))
                 tiSalaryField.setSelection(tiSalaryField.text?.length ?: 0)
             }
+            viewModel.handleInteraction(
+                FilterViewModelInteraction.setSalary(
+                    if (text.toString().isNotEmpty()) text.toString().toInt() else null
+                ))
         }
     }
 
@@ -110,7 +137,6 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
         tiIndustry.text = null
         tiSalaryField.text = null
         checkboxHideWithSalary.isChecked = false
-        llButtonBlock.isVisible = false
     }
 
     private fun updateButtonBlockVisibility() = with(binding) {
@@ -124,12 +150,14 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
                 binding.tiIndustry.setText(state.industry)
                 binding.tiSalaryField.setText((state.salary ?: "").toString())
                 binding.checkboxHideWithSalary.isChecked = state.withSalaryOnly
-                binding.btnReset.isVisible = state.isResetButtonEnabled
-                binding.btnApply.isEnabled = state.isApplyButtonEnabled
+                binding.llButtonBlock.visibility = VISIBLE
+                binding.btnReset.visibility = VISIBLE
+                binding.btnApply.visibility = if (state.isApplyButtonEnabled) VISIBLE else GONE
             }
             is FilterScreenState.Empty -> {
-                binding.btnApply.isEnabled = false
-                binding.btnReset.isVisible = false
+                binding.llButtonBlock.visibility = GONE
+                binding.btnApply.visibility = GONE
+                binding.btnReset.visibility = GONE
             }
         }
     }

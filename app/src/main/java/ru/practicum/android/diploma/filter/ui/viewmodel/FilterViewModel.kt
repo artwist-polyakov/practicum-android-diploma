@@ -4,19 +4,19 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.common.ui.BaseViewModel
-import ru.practicum.android.diploma.filter.data.impl.FilterSettingsInteractorImpl
 import ru.practicum.android.diploma.filter.domain.FilterSettingsInteractor
 import ru.practicum.android.diploma.filter.ui.viewmodel.states.FilterScreenState
 import ru.practicum.android.diploma.filter.ui.viewmodel.states.FilterSettingsUIState
+import ru.practicum.android.diploma.filter.ui.viewmodel.states.FilterViewModelInteraction
 import javax.inject.Inject
 
 @HiltViewModel
 class FilterViewModel @Inject constructor(private val repository: FilterSettingsInteractor) : BaseViewModel() {
     private var filterSettingsUI: FilterSettingsUIState = FilterSettingsUIState()
+    private var hadInitilized = false
     private var _state = MutableStateFlow<FilterScreenState>(FilterScreenState.Empty)
     open val state: MutableStateFlow<FilterScreenState>
         get() = _state
@@ -27,6 +27,25 @@ class FilterViewModel @Inject constructor(private val repository: FilterSettings
 
 
     private fun checkState() {
+        if (!hadInitilized) {
+            filterSettingsUI = FilterSettingsUIState(
+                region = repository.getRegion().text,
+                industry = repository.getIndustry().text,
+                salary = repository.getSalary(),
+                salaryOnly = repository.getWithSalaryOnly()
+            )
+            hadInitilized = true
+            if (areSettingsSettled(filterSettingsUI)) {
+                _state.value = FilterScreenState.Settled(
+                    filterSettingsUI.region ?: "",
+                    filterSettingsUI.industry ?: "",
+                    filterSettingsUI.salary,
+                    filterSettingsUI.salaryOnly,
+                    true,
+                    false
+                )
+            }
+        }
         viewModelScope.launch {
             repository.getFilterUISettings()
                 // нашедшему причину задвоенного возвращения состояния
@@ -45,6 +64,7 @@ class FilterViewModel @Inject constructor(private val repository: FilterSettings
                             true,
                             isApplyEnabled
                         )
+                        filterSettingsUI = it
                     }
                     Log.d("FilterViewModel", "${_state.value}")
                 }
@@ -63,6 +83,20 @@ class FilterViewModel @Inject constructor(private val repository: FilterSettings
             || settings.industry != filterSettingsUI.industry
             || settings.salary != filterSettingsUI.salary
             || settings.salaryOnly != filterSettingsUI.salaryOnly
+    }
+
+    fun handleInteraction(kind: FilterViewModelInteraction) {
+        when (kind) {
+            FilterViewModelInteraction.clearSettings -> repository.resetSettings()
+            FilterViewModelInteraction.saveSettings -> {}
+            is FilterViewModelInteraction.setSalary -> {
+                repository.setSalary(kind.salary)
+            }
+
+            is FilterViewModelInteraction.setSalaryOnly -> {
+                repository.setWithSalaryOnly(kind.onlySalary)
+            }
+        }
     }
 
 }
