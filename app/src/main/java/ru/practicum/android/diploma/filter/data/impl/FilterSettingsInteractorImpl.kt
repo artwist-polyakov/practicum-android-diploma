@@ -11,6 +11,7 @@ import ru.practicum.android.diploma.filter.domain.FilterSettingsInteractor
 import ru.practicum.android.diploma.filter.domain.FilterSettingsRepository
 import ru.practicum.android.diploma.filter.domain.models.FilterIndustryValue
 import ru.practicum.android.diploma.filter.domain.models.FilterRegionValue
+import ru.practicum.android.diploma.filter.ui.viewmodel.states.FilterSettingsUIState
 import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchSettingsState
 
 class FilterSettingsInteractorImpl(
@@ -106,6 +107,16 @@ class FilterSettingsInteractorImpl(
             currentSalary = getSalary(),
             currentIndustry = getIndustry().id,
             currentSalaryOnly = getWithSalaryOnly(),
+        ))
+        awaitClose { close() }
+    }.buffer(Channel.UNLIMITED)
+
+    override fun getFilterUISettings() = callbackFlow<FilterSettingsUIState> {
+        send(FilterSettingsUIState(
+            region = getRegion().text,
+            salary = getSalary(),
+            industry = getIndustry().text,
+            salaryOnly = getWithSalaryOnly(),
         ))
         awaitClose { close() }
     }.buffer(Channel.UNLIMITED)
