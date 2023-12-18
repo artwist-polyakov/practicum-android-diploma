@@ -38,7 +38,10 @@ class RegionFragment : BaseFragment<FragmentRegionBinding, WorkPlaceViewModel>(F
 
         with(binding) {
             onRegionClickDebounce = debounce(
-                CLICK_DEBOUNCE_DELAY_500MS, viewLifecycleOwner.lifecycleScope, false
+                CLICK_DEBOUNCE_DELAY_500MS,
+                viewLifecycleOwner.lifecycleScope,
+                useLastParam = false,
+                actionWithDelay = false
             ) { data ->
                 viewModel.updateStateWithRegion(data.id, data.name)
                 findNavController().popBackStack()
