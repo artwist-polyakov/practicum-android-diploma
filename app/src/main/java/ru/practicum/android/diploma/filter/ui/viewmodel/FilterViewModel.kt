@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.common.ui.BaseViewModel
 import ru.practicum.android.diploma.filter.data.impl.FilterSettingsInteractorImpl
@@ -28,6 +29,7 @@ class FilterViewModel @Inject constructor(private val repository: FilterSettings
     private fun checkState() {
         viewModelScope.launch {
             repository.getFilterUISettings()
+                .distinctUntilChanged()
                 .collect {
                     if (!areSettingsSettled(it)) {
                         _state.value = FilterScreenState.Empty
