@@ -161,7 +161,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/between_text_card"
         android:orientation="vertical"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -169,6 +168,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_apply"
             style="@style/Button.Blue"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_marginBottom="@dimen/image_margin_medium"
             android:text="@string/apply" />
@@ -176,6 +176,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_reset"
             style="@style/Button.Transparent"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:text="@string/reset" />
     </LinearLayout>
