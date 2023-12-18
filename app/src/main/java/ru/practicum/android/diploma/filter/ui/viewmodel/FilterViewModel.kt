@@ -43,7 +43,8 @@ class FilterViewModel @Inject constructor(private val repository: FilterSettings
                             it.salary,
                             it.salaryOnly,
                             true,
-                            isApplyEnabled)
+                            isApplyEnabled
+                        )
                     }
                     Log.d("FilterViewModel", "${_state.value}")
                 }
