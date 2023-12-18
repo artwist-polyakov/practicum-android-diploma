@@ -72,37 +72,45 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
     }
 
     private fun emptyFavorites(state: FavoritesScreenState.Empty) {
-        binding.ivFavoriteStateImage.visibility = VISIBLE
-        binding.tvFavoriteStateText.visibility = VISIBLE
-        binding.favoritesList.root.visibility = GONE
-        binding.progressBar.visibility = GONE
-        binding.ivFavoriteStateImage.setImageResource(state.image)
-        binding.tvFavoriteStateText.setText(state.text)
+        with(binding) {
+            ivFavoriteStateImage.visibility = VISIBLE
+            tvFavoriteStateText.visibility = VISIBLE
+            favoritesList.root.visibility = GONE
+            progressBar.visibility = GONE
+            ivFavoriteStateImage.setImageResource(state.image)
+            tvFavoriteStateText.setText(state.text)
+        }
     }
 
     private fun showFavorites(state: FavoritesScreenState.Content) {
-        binding.ivFavoriteStateImage.visibility = GONE
-        binding.tvFavoriteStateText.visibility = GONE
-        binding.favoritesList.root.visibility = VISIBLE
-        binding.progressBar.visibility = GONE
+        with(binding) {
+            ivFavoriteStateImage.visibility = GONE
+            tvFavoriteStateText.visibility = GONE
+            favoritesList.root.visibility = VISIBLE
+            progressBar.visibility = GONE
+        }
         vacancyListAdapter.setScrollLoadingEnabled(state.currentPage != state.totalPages - 1)
         vacancyListAdapter.setData(state.vacancies, 0)
     }
 
     private fun showError(state: FavoritesScreenState.Error) {
-        binding.ivFavoriteStateImage.visibility = VISIBLE
-        binding.tvFavoriteStateText.visibility = VISIBLE
-        binding.favoritesList.root.visibility = GONE
-        binding.progressBar.visibility = GONE
-        binding.ivFavoriteStateImage.setImageResource(state.image)
-        binding.tvFavoriteStateText.setText(state.text)
+        with(binding) {
+            ivFavoriteStateImage.visibility = VISIBLE
+            tvFavoriteStateText.visibility = VISIBLE
+            favoritesList.root.visibility = GONE
+            progressBar.visibility = GONE
+            ivFavoriteStateImage.setImageResource(state.image)
+            tvFavoriteStateText.setText(state.text)
+        }
     }
 
     private fun isLoading() {
-        binding.ivFavoriteStateImage.visibility = GONE
-        binding.tvFavoriteStateText.visibility = GONE
-        binding.favoritesList.root.visibility = GONE
-        binding.progressBar.visibility = VISIBLE
+        with(binding) {
+            ivFavoriteStateImage.visibility = GONE
+            tvFavoriteStateText.visibility = GONE
+            favoritesList.root.visibility = GONE
+            progressBar.visibility = VISIBLE
+        }
     }
 
     companion object {
