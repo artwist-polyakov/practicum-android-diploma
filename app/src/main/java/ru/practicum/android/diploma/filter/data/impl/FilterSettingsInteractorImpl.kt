@@ -4,6 +4,8 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.conflate
+import kotlinx.coroutines.flow.map
 import ru.practicum.android.diploma.filter.data.dto.FilterIndustryDto
 import ru.practicum.android.diploma.filter.data.dto.FilterRegionDto
 import ru.practicum.android.diploma.filter.data.dto.FilterSettingsDto
@@ -111,13 +113,15 @@ class FilterSettingsInteractorImpl(
         awaitClose { close() }
     }.buffer(Channel.UNLIMITED)
 
-    override fun getFilterUISettings() = callbackFlow<FilterSettingsUIState> {
-        send(FilterSettingsUIState(
-            region = getRegion().text,
-            salary = getSalary(),
-            industry = getIndustry().text,
-            salaryOnly = getWithSalaryOnly(),
-        ))
-        awaitClose { close() }
-    }.buffer(Channel.UNLIMITED)
+    override fun getFilterUISettings() = repository.settingsFlow().map { dto ->
+        // преобразуем DTO в UI-стэйт
+        FilterSettingsUIState(
+            region = dto.region?.name,
+            salary = dto.salary,
+            industry = dto.industry?.name,
+            salaryOnly = dto.withSalaryOnly,
+        )
+    }.conflate()
+
+
 }

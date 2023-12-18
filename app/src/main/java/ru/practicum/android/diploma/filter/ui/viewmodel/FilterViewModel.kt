@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.filter.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,15 +29,19 @@ class FilterViewModel @Inject constructor(private val repository: FilterSettings
         viewModelScope.launch {
             repository.getFilterUISettings()
                 .collect {
-                    val isResetEnabled = areSettingsSettled(it)
-                    val isApplyEnabled = areSettingsChanged(it)
-                    _state.value = FilterScreenState.Settled(
-                        it.region ?: "",
-                        it.industry ?: "",
-                        it.salary,
-                        it.salaryOnly,
-                        isResetEnabled,
-                        isApplyEnabled)
+                    if (!areSettingsSettled(it)) {
+                        _state.value = FilterScreenState.Empty
+                    } else {
+                        val isApplyEnabled = areSettingsChanged(it)
+                        _state.value = FilterScreenState.Settled(
+                            it.region ?: "",
+                            it.industry ?: "",
+                            it.salary,
+                            it.salaryOnly,
+                            true,
+                            isApplyEnabled)
+                    }
+                    Log.d("FilterViewModel", "${_state.value}")
                 }
         }
     }
