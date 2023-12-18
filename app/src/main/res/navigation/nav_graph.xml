@@ -55,6 +55,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_filterFragment_to_industryFragment"
+            app:destination="@id/industryFragment" />
     </fragment>
     <fragment
         android:id="@+id/vacancyFragment"
@@ -119,4 +122,9 @@
         android:name="ru.practicum.android.diploma.filter.ui.fragment.CountryFragment"
         android:label="CountryFragment"
         tools:layout="@layout/fragment_country" />
+    <fragment
+        android:id="@+id/industryFragment"
+        android:name="ru.practicum.android.diploma.filter.ui.fragment.IndustryFragment"
+        android:label="fragment_industry"
+        tools:layout="@layout/fragment_industry" />
 </navigation>
