@@ -60,14 +60,9 @@ class CountryFragment : BaseFragment<FragmentCountryBinding, WorkPlaceViewModel>
 
     private fun renderState(state: SearchRegionScreenState) {
         when (state) {
-            is SearchRegionScreenState.Content -> {
-                showData(state.regions)
-                Log.i("CountryFragmentMyLog", "state selectedCountry = ${state.selectedCountry}")
-            }
+            is SearchRegionScreenState.Content -> showData(state.countries)
 
-            is SearchRegionScreenState.Error -> {
-                showError(state.error)
-            }
+            is SearchRegionScreenState.Error -> showError(state.error)
 
             else -> showProgressBar()
         }
