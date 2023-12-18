@@ -104,7 +104,7 @@
                     android:layout_width="@dimen/employer_in_card"
                     android:layout_height="@dimen/employer_in_card"
                     android:layout_gravity="center_vertical"
-                    android:scaleType="fitCenter"
+                    android:scaleType = "center"
                     android:layout_marginStart="@dimen/standart_margin"
                     android:layout_marginTop="@dimen/standart_margin"
                     android:layout_marginBottom="@dimen/standart_margin"
