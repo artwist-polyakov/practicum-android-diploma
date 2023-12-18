@@ -9,17 +9,21 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.common.ui.BaseFragment
+import ru.practicum.android.diploma.common.utils.debounce
 import ru.practicum.android.diploma.common.utils.setupTextChangeListener
 import ru.practicum.android.diploma.databinding.FragmentFilterBinding
 import ru.practicum.android.diploma.filter.domain.models.FilterRegionValue
 import ru.practicum.android.diploma.filter.ui.viewmodel.FilterViewModel
 import ru.practicum.android.diploma.filter.ui.viewmodel.states.FilterScreenState
 import ru.practicum.android.diploma.filter.ui.viewmodel.states.FilterViewModelInteraction
+import ru.practicum.android.diploma.search.ui.viewmodels.SearchViewModel
+import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchSettingsState
 
 @AndroidEntryPoint
 class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(FragmentFilterBinding::inflate) {
@@ -27,6 +31,9 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
     private var defaultHintColor: Int = 0
     private var activeHintColor: Int = 0
     private var filterRegionValue: FilterRegionValue? = null
+
+    lateinit var salaryDebounce: (Int?) -> Unit
+
     override fun initViews(): Unit = with(binding) {
         tiWorkPlace.setText(filterRegionValue?.text ?: "")
 
@@ -37,6 +44,17 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
     }
 
     override fun subscribe(): Unit = with(binding) {
+
+        salaryDebounce = debounce<Int?>(
+            DEBOUNCE_DELAY,
+            viewLifecycleOwner.lifecycleScope,
+            true
+        ) {
+            viewModel.handleInteraction(
+                FilterViewModelInteraction.setSalary(it)
+            )
+        }
+
         inputListener()
         filterFieldListeners()
         arrowForwardListeners()
@@ -55,12 +73,14 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
         llSalaryChecbox.setOnClickListener {
             checkboxHideWithSalary.isChecked = !checkboxHideWithSalary.isChecked
             viewModel.handleInteraction(
-                FilterViewModelInteraction.setSalaryOnly(checkboxHideWithSalary.isChecked))
+                FilterViewModelInteraction.setSalaryOnly(checkboxHideWithSalary.isChecked)
+            )
         }
 
         checkboxHideWithSalary.setOnClickListener {
             viewModel.handleInteraction(
-                FilterViewModelInteraction.setSalaryOnly(checkboxHideWithSalary.isChecked))
+                FilterViewModelInteraction.setSalaryOnly(checkboxHideWithSalary.isChecked)
+            )
         }
 
         ivInputButton.setOnClickListener {
@@ -73,14 +93,17 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
 
         tiIndustry.setOnClickListener { Unit }
 
-        btnApply.setOnClickListener { Unit
+        btnApply.setOnClickListener {
             viewModel.handleInteraction(
-                FilterViewModelInteraction.saveSettings)
-            findNavController().popBackStack()}
+                FilterViewModelInteraction.saveSettings
+            )
+            findNavController().popBackStack()
+        }
 
         btnReset.setOnClickListener {
             viewModel.handleInteraction(
-                FilterViewModelInteraction.clearSettings)
+                FilterViewModelInteraction.clearSettings
+            )
             findNavController().popBackStack()
         }
     }
@@ -110,10 +133,8 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
                 tiSalaryField.setText(text.toString().substring(1))
                 tiSalaryField.setSelection(tiSalaryField.text?.length ?: 0)
             }
-            viewModel.handleInteraction(
-                FilterViewModelInteraction.setSalary(
-                    if (text.toString().isNotEmpty()) text.toString().toInt() else null
-                ))
+            salaryDebounce(if (text.toString().isNotEmpty()) text.toString().toInt() else null)
+
         }
     }
 
@@ -154,11 +175,16 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
                 binding.btnReset.visibility = VISIBLE
                 binding.btnApply.visibility = if (state.isApplyButtonEnabled) VISIBLE else GONE
             }
+
             is FilterScreenState.Empty -> {
                 binding.llButtonBlock.visibility = GONE
                 binding.btnApply.visibility = GONE
                 binding.btnReset.visibility = GONE
             }
         }
+    }
+
+    companion object {
+        const val DEBOUNCE_DELAY = 750L
     }
 }

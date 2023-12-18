@@ -88,7 +88,7 @@ class FilterViewModel @Inject constructor(private val repository: FilterSettings
     fun handleInteraction(kind: FilterViewModelInteraction) {
         when (kind) {
             FilterViewModelInteraction.clearSettings -> repository.resetSettings()
-            FilterViewModelInteraction.saveSettings -> {}
+            FilterViewModelInteraction.saveSettings -> Unit
             is FilterViewModelInteraction.setSalary -> {
                 repository.setSalary(kind.salary)
             }

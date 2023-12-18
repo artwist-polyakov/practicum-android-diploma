@@ -104,7 +104,7 @@ class FilterSettingsInteractorImpl(
     }
 
     override fun getSearchSettings() = repository.settingsFlow().map { dto ->
-        // преобразуем DTO в UI-стэйт
+        // преобразуем DTO в SETTINGS-стэйт
         SearchSettingsState(
             currentPage = -1,
             currentQuery = "",
