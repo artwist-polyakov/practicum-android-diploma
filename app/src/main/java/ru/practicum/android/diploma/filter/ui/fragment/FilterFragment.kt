@@ -5,13 +5,16 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.common.ui.BaseFragment
 import ru.practicum.android.diploma.common.utils.setupTextChangeListener
 import ru.practicum.android.diploma.databinding.FragmentFilterBinding
 import ru.practicum.android.diploma.filter.ui.viewmodel.FilterViewModel
+import ru.practicum.android.diploma.filter.ui.viewmodel.states.FilterScreenState
 
 @AndroidEntryPoint
 class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(FragmentFilterBinding::inflate) {
@@ -29,6 +32,12 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
         inputListener()
         filterFieldListeners()
         arrowForwardListeners()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.state.collect { state ->
+                render(state)
+            }
+        }
 
         ivArrowBack.setOnClickListener {
             findNavController().popBackStack()
@@ -107,5 +116,22 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
 
     private fun updateButtonBlockVisibility() = with(binding) {
         llButtonBlock.isVisible = checkboxHideWithSalary.isChecked || tiSalaryField.text.toString().isNotEmpty()
+    }
+
+    private fun render(state: FilterScreenState) {
+        when (state) {
+            is FilterScreenState.Settled -> {
+                binding.tiWorkPlace.setText(state.region)
+                binding.tiIndustry.setText(state.industry)
+                binding.tiSalaryField.setText((state.salary ?: "").toString())
+                binding.checkboxHideWithSalary.isChecked = state.withSalaryOnly
+                binding.btnReset.isVisible = state.isResetButtonEnabled
+                binding.btnApply.isEnabled = state.isApplyButtonEnabled
+            }
+            is FilterScreenState.Empty -> {
+                binding.btnApply.isEnabled = false
+                binding.btnReset.isVisible = false
+            }
+        }
     }
 }

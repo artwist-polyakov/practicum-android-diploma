@@ -7,7 +7,7 @@ sealed class FilterScreenState {
         val industry: String = "",
         val salary: Int? = null,
         val withSalaryOnly: Boolean = false,
-        val isResetButtonEmabled: Boolean = false,
+        val isResetButtonEnabled: Boolean = false,
         val isApplyButtonEnabled: Boolean = false
     ) : FilterScreenState()
 }

@@ -7,12 +7,13 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.common.ui.BaseViewModel
 import ru.practicum.android.diploma.filter.data.impl.FilterSettingsInteractorImpl
+import ru.practicum.android.diploma.filter.domain.FilterSettingsInteractor
 import ru.practicum.android.diploma.filter.ui.viewmodel.states.FilterScreenState
 import ru.practicum.android.diploma.filter.ui.viewmodel.states.FilterSettingsUIState
 import javax.inject.Inject
 
 @HiltViewModel
-class FilterViewModel @Inject constructor(private val repository: FilterSettingsInteractorImpl) : BaseViewModel() {
+class FilterViewModel @Inject constructor(private val repository: FilterSettingsInteractor) : BaseViewModel() {
     private var filterSettingsUI: FilterSettingsUIState = FilterSettingsUIState()
     private var _state = MutableStateFlow<FilterScreenState>(FilterScreenState.Empty)
     open val state: MutableStateFlow<FilterScreenState>
