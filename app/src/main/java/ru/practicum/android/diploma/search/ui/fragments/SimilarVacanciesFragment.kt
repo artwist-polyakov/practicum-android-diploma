@@ -35,7 +35,6 @@ class SimilarVacanciesFragment :
         }
 
         binding.vacancyList.root.apply {
-            layoutManager = LinearLayoutManager(context)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = vacancyListAdapter
         }
@@ -50,6 +49,7 @@ class SimilarVacanciesFragment :
         onVacancyClickDebounce = debounce(
             CLICK_DEBOUNCE_DELAY_500MS,
             viewLifecycleOwner.lifecycleScope,
+            false,
             false
         ) { data ->
             val bundle = Bundle().apply {

@@ -58,5 +58,5 @@ interface HHService {
     @GET("areas/{area_id}")
     suspend fun getAreaById(
         @Path("area_id") areaId: Int
-    ): List<AreasDto>
+    ): AreasDto
 }

@@ -46,7 +46,7 @@ class InteractorModule {
     ): SingleVacancyInteractor = SingleVacancyInteractorImpl(repository, converter, database, externalNavigator)
 
     @Provides
-    fun provideSFilterSettingsInteractorImpl(
+    fun provideFilterSettingInteractor(
         repository: FilterSettingsRepository
     ): FilterSettingsInteractor = FilterSettingsInteractorImpl(repository)
 }

@@ -17,8 +17,6 @@ import ru.practicum.android.diploma.common.data.network.NetworkClient
 import ru.practicum.android.diploma.common.data.network.RetrofitNetworkClient
 import ru.practicum.android.diploma.favorites.domain.api.FavoritesDBConverter
 import ru.practicum.android.diploma.favorites.domain.impl.FavoritesDBConverterImpl
-import ru.practicum.android.diploma.filter.data.impl.FilterSettingsRepositoryImpl
-import ru.practicum.android.diploma.filter.domain.FilterSettingsRepository
 import ru.practicum.android.diploma.search.domain.api.SearchResultConverter
 import ru.practicum.android.diploma.search.domain.impl.SearchResultConverterImpl
 import ru.practicum.android.diploma.vacancy.data.sharing.ExternalNavigatorImpl
@@ -69,15 +67,8 @@ class DataModule {
     )
 
     @Provides
-    fun providesSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
-        context.getSharedPreferences(
-            "filter_settings",
-            Context.MODE_PRIVATE
-        )
-
-
-    @Provides
     @Singleton
-    fun providesSharedPrefsRepository(@ApplicationContext context: Context): FilterSettingsRepository =
-        FilterSettingsRepositoryImpl(providesSharedPreferences(context = context))
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
+        return context.getSharedPreferences("shared_prefs", Context.MODE_PRIVATE)
+    }
 }
