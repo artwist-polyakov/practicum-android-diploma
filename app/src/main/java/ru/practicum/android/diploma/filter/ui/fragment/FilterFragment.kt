@@ -1,7 +1,6 @@
 package ru.practicum.android.diploma.filter.ui.fragment
 
 import android.content.res.ColorStateList
-import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -10,7 +9,6 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.common.ui.BaseFragment
-import ru.practicum.android.diploma.common.utils.parcelable
 import ru.practicum.android.diploma.common.utils.setupTextChangeListener
 import ru.practicum.android.diploma.databinding.FragmentFilterBinding
 import ru.practicum.android.diploma.filter.domain.models.FilterRegionValue
@@ -23,9 +21,6 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
     private var activeHintColor: Int = 0
     private var filterRegionValue: FilterRegionValue? = null
     override fun initViews(): Unit = with(binding) {
-        filterRegionValue = arguments?.parcelable<FilterRegionValue>(WorkPlaceFragment.AREA_KEY)
-        Log.i("FilterFragmentMyLog", "filterRegionValue = $filterRegionValue")
-
         tiWorkPlace.setText(filterRegionValue?.text ?: "")
 
         defaultHintColor = ContextCompat.getColor(requireContext(), R.color.inputTextHint)

@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.common.data.dto.Resource
 import ru.practicum.android.diploma.common.domain.models.NetworkErrors
 import ru.practicum.android.diploma.common.ui.BaseViewModel
+import ru.practicum.android.diploma.filter.domain.FilterSettingsInteractor
 import ru.practicum.android.diploma.filter.domain.models.FilterRegionValue
 import ru.practicum.android.diploma.filter.ui.viewmodel.states.SearchRegionScreenState
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
@@ -23,7 +24,8 @@ typealias regions = List<SingleTreeElement>
  */
 @HiltViewModel
 class WorkPlaceViewModel @Inject constructor(
-    private val searchInteractor: SearchInteractor
+    private val searchInteractor: SearchInteractor,
+    private val filterInteractor: FilterSettingsInteractor
 ) : BaseViewModel() {
     private var _state = MutableStateFlow<SearchRegionScreenState>(SearchRegionScreenState.Loading)
     val state: StateFlow<SearchRegionScreenState>
@@ -168,6 +170,10 @@ class WorkPlaceViewModel @Inject constructor(
             country != null -> FilterRegionValue(id = country!!.id, text = country!!.text)
             else -> null
         }
+    }
+
+    fun saveRegionToPrefs(region: FilterRegionValue) {
+        filterInteractor.setRegion(region.id, region.text)
     }
 
     fun filterRegions(regionList: List<SingleTreeElement>, input: String): List<SingleTreeElement> {

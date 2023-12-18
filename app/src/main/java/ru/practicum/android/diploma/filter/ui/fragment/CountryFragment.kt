@@ -42,7 +42,8 @@ class CountryFragment : BaseFragment<FragmentCountryBinding, WorkPlaceViewModel>
         onRegionClickDebounce = debounce(
             CLICK_DEBOUNCE_DELAY_500MS,
             viewLifecycleOwner.lifecycleScope,
-            false
+            useLastParam = false,
+            actionWithDelay = false
         ) { data ->
             viewModel.updateStateWithCountry(data.id, data.name)
             Log.i("CountryFragmentMyLog", "country = ${data.name}  id = ${data.id}")
