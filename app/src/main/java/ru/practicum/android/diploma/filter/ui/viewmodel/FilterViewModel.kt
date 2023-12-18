@@ -29,6 +29,8 @@ class FilterViewModel @Inject constructor(private val repository: FilterSettings
     private fun checkState() {
         viewModelScope.launch {
             repository.getFilterUISettings()
+                // нашедшему причину задвоенного возвращения состояния
+                // префов от меня приз. А. Поляков.
                 .distinctUntilChanged()
                 .collect {
                     if (!areSettingsSettled(it)) {
