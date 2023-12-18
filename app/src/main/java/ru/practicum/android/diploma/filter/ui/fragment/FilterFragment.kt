@@ -9,7 +9,6 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -22,8 +21,6 @@ import ru.practicum.android.diploma.filter.domain.models.FilterRegionValue
 import ru.practicum.android.diploma.filter.ui.viewmodel.FilterViewModel
 import ru.practicum.android.diploma.filter.ui.viewmodel.states.FilterScreenState
 import ru.practicum.android.diploma.filter.ui.viewmodel.states.FilterViewModelInteraction
-import ru.practicum.android.diploma.search.ui.viewmodels.SearchViewModel
-import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchSettingsState
 
 @AndroidEntryPoint
 class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(FragmentFilterBinding::inflate) {
@@ -32,7 +29,7 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
     private var activeHintColor: Int = 0
     private var filterRegionValue: FilterRegionValue? = null
 
-    lateinit var salaryDebounce: (Int?) -> Unit
+    var salaryDebounce: (Int?) -> Unit = {}
 
     override fun initViews(): Unit = with(binding) {
         tiWorkPlace.setText(filterRegionValue?.text ?: "")
@@ -44,7 +41,6 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
     }
 
     override fun subscribe(): Unit = with(binding) {
-
         salaryDebounce = debounce<Int?>(
             DEBOUNCE_DELAY,
             viewLifecycleOwner.lifecycleScope,
@@ -65,7 +61,10 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
                 render(state)
             }
         }
+        setupClicklisteners()
+    }
 
+    private fun setupClicklisteners() = with(binding) {
         ivArrowBack.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -153,16 +152,16 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
         }
     }
 
-    private fun resetFilter() = with(binding) {
-        tiWorkPlace.text = null
-        tiIndustry.text = null
-        tiSalaryField.text = null
-        checkboxHideWithSalary.isChecked = false
-    }
+//    private fun resetFilter() = with(binding) {
+//        tiWorkPlace.text = null
+//        tiIndustry.text = null
+//        tiSalaryField.text = null
+//        checkboxHideWithSalary.isChecked = false
+//    }
 
-    private fun updateButtonBlockVisibility() = with(binding) {
-        llButtonBlock.isVisible = checkboxHideWithSalary.isChecked || tiSalaryField.text.toString().isNotEmpty()
-    }
+//    private fun updateButtonBlockVisibility() = with(binding) {
+//        llButtonBlock.isVisible = checkboxHideWithSalary.isChecked || tiSalaryField.text.toString().isNotEmpty()
+//    }
 
     private fun render(state: FilterScreenState) {
         when (state) {
@@ -185,6 +184,6 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
     }
 
     companion object {
-        const val DEBOUNCE_DELAY = 750L
+        const val DEBOUNCE_DELAY = 1000L
     }
 }

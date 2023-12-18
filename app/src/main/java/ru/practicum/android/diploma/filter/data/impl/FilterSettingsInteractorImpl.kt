@@ -1,9 +1,5 @@
 package ru.practicum.android.diploma.filter.data.impl
 
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.buffer
-import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.map
 import ru.practicum.android.diploma.filter.data.dto.FilterIndustryDto

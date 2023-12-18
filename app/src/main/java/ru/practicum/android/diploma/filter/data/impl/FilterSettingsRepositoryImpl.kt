@@ -37,8 +37,10 @@ class FilterSettingsRepositoryImpl(
 
     override fun settingsFlow(): Flow<FilterSettingsDto> = settingsUpdateChannel.receiveAsFlow()
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences,
-                                           key: String?) {
+    override fun onSharedPreferenceChanged(
+        sharedPreferences: SharedPreferences,
+        key: String?
+    ) {
         if (DATA_KEY == key) {
             // Настройки были изменены, отправляем новое состояние в канал
             val settings = getFilterSettings()

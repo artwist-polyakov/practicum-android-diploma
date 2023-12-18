@@ -43,6 +43,14 @@ open class SearchViewModel @Inject constructor(
     }
 
     init {
+        searchSettings = searchSettings.copy(
+            currentPage = 0,
+            currentQuery = "",
+            currentRegion = sharedPrefsInteractor.getRegion().id,
+            currentIndustry = sharedPrefsInteractor.getIndustry().id,
+            currentSalary = sharedPrefsInteractor.getSalary(),
+            currentSalaryOnly = sharedPrefsInteractor.getWithSalaryOnly()
+        )
         checkState()
     }
 
@@ -88,10 +96,7 @@ open class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             sharedPrefsInteractor.getSearchSettings()
                 .collect { settings ->
-//                    Log.d("SearchViewModel", "Current SearchSettings: $searchSettings")
-//                    Log.d("SearchViewModel", "SearchSettings: $settings")
                     if (checkSettingsToReset(settings)) {
-//                        Log.d("SearchViewModel", "checkSettingsToReset: true")
                         handleSearchSettings(searchSettings)
                     }
                 }

@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.filter.ui.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,8 +24,7 @@ class FilterViewModel @Inject constructor(private val repository: FilterSettings
         checkState()
     }
 
-
-    private fun checkState() {
+    private fun firstLaunch() {
         if (!hadInitilized) {
             filterSettingsUI = FilterSettingsUIState(
                 region = repository.getRegion().text,
@@ -46,6 +44,12 @@ class FilterViewModel @Inject constructor(private val repository: FilterSettings
                 )
             }
         }
+    }
+
+
+    private fun checkState() {
+        firstLaunch()
+
         viewModelScope.launch {
             repository.getFilterUISettings()
                 // нашедшему причину задвоенного возвращения состояния
@@ -66,7 +70,6 @@ class FilterViewModel @Inject constructor(private val repository: FilterSettings
                         )
                         filterSettingsUI = it
                     }
-                    Log.d("FilterViewModel", "${_state.value}")
                 }
         }
     }
