@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import ru.practicum.android.diploma.filter.data.dto.FilterSettingsDto
 import ru.practicum.android.diploma.filter.domain.FilterSettingsRepository
 
-
 class FinalFilterRepositoryImpl(
     private val sharedPreferences: SharedPreferences
 ) : FilterSettingsRepository, SharedPreferences.OnSharedPreferenceChangeListener {

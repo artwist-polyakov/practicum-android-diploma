@@ -20,7 +20,6 @@ import ru.practicum.android.diploma.vacancy.domain.api.SingleVacancyConverter
 import ru.practicum.android.diploma.vacancy.domain.api.SingleVacancyInteractor
 import ru.practicum.android.diploma.vacancy.domain.impl.SingleVacancyInteractorImpl
 
-
 @Module
 @InstallIn(ViewModelComponent::class)
 class InteractorModule {
