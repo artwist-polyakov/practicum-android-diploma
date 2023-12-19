@@ -7,7 +7,7 @@ sealed class IndustryScreenState {
     data class Content(
         val data: List<Industry>,
         val currentIndustry: String? = null
-    ): IndustryScreenState()
+    ) : IndustryScreenState()
 
     data object Error : IndustryScreenState()
 }

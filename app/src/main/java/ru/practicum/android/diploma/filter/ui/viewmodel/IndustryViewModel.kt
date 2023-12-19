@@ -32,7 +32,7 @@ class IndustryViewModel @Inject constructor(
                 selectedIndustry = data
                 true
             }
-        }?: true
+        } ?: true
     }
 
     fun saveIndustryToPref() {

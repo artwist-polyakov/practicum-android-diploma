@@ -21,7 +21,7 @@ class IndustryAdapter(
         fun bind(data: Industry) = with(binding) {
             name.text = data.name
             with(radioButton) {
-                isChecked = (data.id == selectedId)
+                isChecked = data.id == selectedId
                 setOnClickListener {
                     selectedId = data.id
                     clickListener(data)
@@ -71,8 +71,9 @@ class IndustryAdapter(
             filteredList = dataList.toMutableList()
         } else {
             for (data in dataList) {
-                if (data.name.lowercase().contains(filterText))
+                if (data.name.lowercase().contains(filterText)) {
                     filteredList.add(data)
+                }
             }
         }
         notifyDataSetChanged()
