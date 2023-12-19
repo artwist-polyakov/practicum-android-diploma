@@ -83,6 +83,6 @@ class FavoriteViewModel @Inject constructor(
     }
 
     fun nextPager() {
-        handleRequest(totalPages - 1 != currentPage)
+        handleRequest(totalPages - 1 > currentPage)
     }
 }
