@@ -1,19 +1,17 @@
 package ru.practicum.android.diploma.filter.ui.fragment
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
 import androidx.recyclerview.widget.RecyclerView
 import ru.practicum.android.diploma.databinding.IndustryListItemBinding
 import ru.practicum.android.diploma.search.domain.models.Industry
 
-class IndustryAdapter (
+class IndustryAdapter(
     private val clickListener: (Industry) -> Unit
 ) : RecyclerView.Adapter<IndustryAdapter.IndustryViewHolder>() {
 
-    var selectedView: RadioButton? = null
-    var selectedPosition: Int? = null
+    private var selectedId: String? = null
+    private var filterText: String = ""
 
     inner class IndustryViewHolder(
         private val binding: IndustryListItemBinding,
@@ -21,47 +19,62 @@ class IndustryAdapter (
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(data: Industry) = with(binding) {
-            binding.name.text = data.name
-            with(binding.radioButton) {
-                isChecked = adapterPosition == selectedPosition
+            name.text = data.name
+            with(radioButton) {
+                isChecked = (data.id == selectedId)
                 setOnClickListener {
-                    itemView.callOnClick()
+                    selectedId = data.id
+                    clickListener(data)
+                    notifyDataSetChanged()
                 }
             }
             itemView.setOnClickListener {
-                selectedView?.let{
-                    it.isChecked = false
-                    notifyItemChanged(selectedPosition!!)
-                }
-
-                selectedView = binding.radioButton
-                selectedPosition = adapterPosition
-                selectedView?.let{
-                    it.isChecked = true
-                    notifyItemChanged(selectedPosition!!)
-                }
-                clickListener(dataList[selectedPosition!!])
+                radioButton.callOnClick()
             }
         }
     }
 
-    private var dataList = ArrayList<Industry>()
+    private var dataList: MutableList<Industry> = mutableListOf()
+    private var filteredList: MutableList<Industry> = mutableListOf()
+
+    fun setSelectedIndustry(id: String?) {
+        selectedId = id
+        filtrate()
+    }
 
     fun setData(data: List<Industry>) {
         dataList.clear()
         dataList.addAll(data)
-        notifyDataSetChanged()
+        filtrate()
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IndustryViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = IndustryListItemBinding.inflate(layoutInflater, parent, false)
         return IndustryViewHolder(binding, clickListener)
     }
 
-    override fun getItemCount(): Int = dataList.size
+    override fun getItemCount(): Int = filteredList.size
 
     override fun onBindViewHolder(holder: IndustryViewHolder, position: Int) {
-        holder.bind(dataList[position])
+        holder.bind(filteredList[position])
     }
 
+    fun setFilter(text: String) {
+        filterText = text
+        filtrate()
+    }
+
+    private fun filtrate() {
+        filteredList.clear()
+        if (filterText.isEmpty()) {
+            filteredList = dataList.toMutableList()
+        } else {
+            for (data in dataList) {
+                if (data.name.lowercase().contains(filterText))
+                    filteredList.add(data)
+            }
+        }
+        notifyDataSetChanged()
+    }
 }
