@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import ru.practicum.android.diploma.filter.data.dto.FilterSettingsDto
 import ru.practicum.android.diploma.filter.domain.FilterSettingsRepository
 
-private const val DATA_KEY = "filter_settings"
 
 class FilterSettingsRepositoryImpl(
     private val sharedPreferences: SharedPreferences
@@ -52,5 +51,9 @@ class FilterSettingsRepositoryImpl(
     override fun destroy() {
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
         settingsUpdateChannel.close()
+    }
+
+    companion object {
+        private const val DATA_KEY = "filter_settings"
     }
 }

@@ -9,8 +9,6 @@ import ru.practicum.android.diploma.filter.data.dto.FilterSettingsDto
 import ru.practicum.android.diploma.filter.domain.FilterSettingsRepository
 
 
-private const val DATA_KEY = "final_filter_settings"
-
 class FinalFilterRepositoryImpl(
     private val sharedPreferences: SharedPreferences
 ) : FilterSettingsRepository, SharedPreferences.OnSharedPreferenceChangeListener {
@@ -53,5 +51,9 @@ class FinalFilterRepositoryImpl(
     override fun destroy() {
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
         settingsUpdateChannel.close()
+    }
+
+    companion object {
+        private const val DATA_KEY = "final_filter_settings"
     }
 }
