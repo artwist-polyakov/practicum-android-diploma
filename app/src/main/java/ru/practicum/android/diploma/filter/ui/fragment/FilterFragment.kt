@@ -90,7 +90,9 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
             findNavController().navigate(R.id.action_filterFragment_to_workPlaceFragment)
         }
 
-        tiIndustry.setOnClickListener { Unit }
+        tiIndustry.setOnClickListener {
+            findNavController().navigate(R.id.action_filterFragment_to_industryFragment)
+        }
 
         btnApply.setOnClickListener {
             viewModel.handleInteraction(

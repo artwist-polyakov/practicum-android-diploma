@@ -35,19 +35,19 @@ class FilterViewModel @Inject constructor(private val repository: FilterSettings
             hadInitilized = true
             if (areSettingsSettled(filterSettingsUI)) {
                 _state.value = FilterScreenState.Settled(
-                    filterSettingsUI.region ?: "",
-                    filterSettingsUI.industry ?: "",
-                    filterSettingsUI.salary,
-                    filterSettingsUI.salaryOnly,
-                    true,
-                    false
+                    region = filterSettingsUI.region ?: "",
+                    industry = filterSettingsUI.industry ?: "",
+                    salary = filterSettingsUI.salary,
+                    withSalaryOnly = filterSettingsUI.salaryOnly,
+                    isResetButtonEnabled = true,
+                    isApplyButtonEnabled = false
                 )
             }
         }
     }
 
 
-    private fun checkState() {
+    fun checkState() {
         firstLaunch()
 
         viewModelScope.launch {
@@ -61,12 +61,12 @@ class FilterViewModel @Inject constructor(private val repository: FilterSettings
                     } else {
                         val isApplyEnabled = areSettingsChanged(it)
                         _state.value = FilterScreenState.Settled(
-                            it.region ?: "",
-                            it.industry ?: "",
-                            it.salary,
-                            it.salaryOnly,
-                            true,
-                            isApplyEnabled
+                            region = it.region ?: "",
+                            industry = it.industry ?: "",
+                            salary = it.salary,
+                            withSalaryOnly = it.salaryOnly,
+                            isResetButtonEnabled = true,
+                            isApplyButtonEnabled = isApplyEnabled
                         )
                         filterSettingsUI = it
                     }
