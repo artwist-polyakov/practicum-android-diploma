@@ -4,7 +4,7 @@
     <!--    Общие строки        -->
     <string name="no_internet">Нет интернета</string>
     <string name="server_error">Ошибка сервера</string>
-    <string name="no_vacancies">Не удалось получить \n список вакансий</string>
+    <string name="no_vacancies">Не удалось получить список вакансий</string>
 
     <!--    Ресурсы для экрана Поиска    -->
     <string name="main">Главная</string>
