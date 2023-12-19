@@ -24,6 +24,8 @@ interface FilterSettingsInteractor {
 
     fun getWithSalaryOnly(): Boolean
 
+    fun saveSettings()
+
     fun resetSettings()
 
     fun getSearchSettings(): Flow<SearchSettingsState>

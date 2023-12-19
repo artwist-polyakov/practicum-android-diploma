@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.filter.data.impl
 
+import android.util.Log
 import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.map
 import ru.practicum.android.diploma.filter.data.dto.FilterIndustryDto
@@ -13,8 +14,17 @@ import ru.practicum.android.diploma.filter.ui.viewmodel.states.FilterSettingsUIS
 import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchSettingsState
 
 class FilterSettingsInteractorImpl(
-    private val repository: FilterSettingsRepository
+    private val repository: FilterSettingsRepository,
+    private val finalRepository: FilterSettingsRepository
 ) : FilterSettingsInteractor {
+
+    init {
+        repository.saveFilterSettings(
+            finalRepository.getFilterSettings()
+        )
+        Log.d("FinalRepository", "Init Final Repository ${finalRepository.getFilterSettings()}")
+    }
+
     override fun setRegion(id: Int?, name: String?) {
         val current = repository.getFilterSettings()
         repository.saveFilterSettings(
@@ -97,9 +107,18 @@ class FilterSettingsInteractorImpl(
         repository.saveFilterSettings(
             settings = FilterSettingsDto()
         )
+        finalRepository.saveFilterSettings(
+            settings = FilterSettingsDto()
+        )
     }
 
-    override fun getSearchSettings() = repository.settingsFlow().map { dto ->
+    override fun saveSettings() {
+        finalRepository.saveFilterSettings(
+            repository.getFilterSettings()
+        )
+    }
+
+    override fun getSearchSettings() = finalRepository.settingsFlow().map { dto ->
         // преобразуем DTO в SETTINGS-стэйт
         SearchSettingsState(
             currentPage = -1,
