@@ -85,8 +85,8 @@ class FavoriteViewModel @Inject constructor(
             vacancies = vacancies
         )
 
-        Log.d("Стейт totalPages", totalPages.toString())
-        Log.d("Стейт currentPage", currentPage.toString())
-        Log.d("Стейт vacanciesFound", result.vacanciesFound.toString())
+    }
+    fun nextPager() {
+        handleRequest((totalPages-1)!=currentPage)
     }
 }

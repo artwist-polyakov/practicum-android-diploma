@@ -45,7 +45,7 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
                     ) {
                         super.onScrollStateChanged(recyclerView, newState)
                         if (!recyclerView.canScrollVertically(1)) {
-                            viewModel.handleRequest(true)
+                            viewModel.nextPager()
                         }
                     }
                 }
