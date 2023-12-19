@@ -5,4 +5,7 @@ sealed class FilterViewModelInteraction {
     object saveSettings : FilterViewModelInteraction()
     data class setSalary(val salary: Int?) : FilterViewModelInteraction()
     data class setSalaryOnly(val onlySalary: Boolean) : FilterViewModelInteraction()
+    object clearSalary : FilterViewModelInteraction()
+    object clearRegion : FilterViewModelInteraction()
+    object clearIndustry : FilterViewModelInteraction()
 }
