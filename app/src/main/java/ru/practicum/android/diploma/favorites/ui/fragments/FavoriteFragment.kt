@@ -17,6 +17,7 @@ import ru.practicum.android.diploma.favorites.ui.viewmodels.FavoriteViewModel
 import ru.practicum.android.diploma.favorites.ui.viewmodels.states.FavoritesScreenState
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
 import ru.practicum.android.diploma.search.ui.fragments.VacancyAdapter
+import ru.practicum.android.diploma.search.ui.viewmodels.states.ViewModelInteractionState
 import ru.practicum.android.diploma.vacancy.ui.VacancyFragment
 
 @AndroidEntryPoint
@@ -36,6 +37,19 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
         binding.favoritesList.root.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = vacancyListAdapter
+            addOnScrollListener(
+                object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
+                    override fun onScrollStateChanged(
+                        recyclerView: androidx.recyclerview.widget.RecyclerView,
+                        newState: Int
+                    ) {
+                        super.onScrollStateChanged(recyclerView, newState)
+                        if (!recyclerView.canScrollVertically(1)) {
+                            viewModel.handleRequest(true)
+                        }
+                    }
+                }
+            )
         }
     }
 
@@ -90,7 +104,7 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
             progressBar.visibility = GONE
         }
         vacancyListAdapter.setScrollLoadingEnabled(state.currentPage != state.totalPages - 1)
-        vacancyListAdapter.setData(state.vacancies, 0)
+        vacancyListAdapter.setData(state.vacancies, state.currentPage)
     }
 
     private fun showError(state: FavoritesScreenState.Error) {

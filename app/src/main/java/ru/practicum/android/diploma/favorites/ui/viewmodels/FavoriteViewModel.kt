@@ -1,16 +1,17 @@
 package ru.practicum.android.diploma.favorites.ui.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.common.ui.BaseViewModel
 import ru.practicum.android.diploma.favorites.domain.api.FavoritesDBInteractor
 import ru.practicum.android.diploma.favorites.ui.viewmodels.states.FavoritesScreenState
 import ru.practicum.android.diploma.search.domain.models.VacanciesSearchResult
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
+import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchSettingsState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,6 +27,9 @@ class FavoriteViewModel @Inject constructor(
 
     val state: MutableStateFlow<FavoritesScreenState>
         get() = _state
+
+    private var searchSettings: SearchSettingsState = SearchSettingsState()
+    private var isLastUpdatePage = false
 
     fun handleRequest(nextPage: Boolean = false) {
         viewModelScope.launch {
@@ -80,5 +84,9 @@ class FavoriteViewModel @Inject constructor(
             totalVacancies = result.vacanciesFound,
             vacancies = vacancies
         )
+
+        Log.d("Стейт totalPages", totalPages.toString())
+        Log.d("Стейт currentPage", currentPage.toString())
+        Log.d("Стейт vacanciesFound", result.vacanciesFound.toString())
     }
 }
