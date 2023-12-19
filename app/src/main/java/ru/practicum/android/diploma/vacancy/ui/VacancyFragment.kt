@@ -78,12 +78,11 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
             fetchWebview(item)
             ivEmployerLogo.load(item.employerLogo) {
                 placeholder(R.drawable.placeholder_48px)
-                transformations(
-                    RoundedCornersTransformation(
-                        radius = resources.getDimensionPixelSize(R.dimen.button_radius).toFloat()
-                    )
-                )
+                error(R.drawable.placeholder_48px)
             }
+            val radius = resources.getDimension(R.dimen.vacancy_logo_corner_radius)
+            val shapeAppearanceModel = ivEmployerLogo.shapeAppearanceModel.toBuilder().setAllCornerSizes(radius).build()
+            ivEmployerLogo.shapeAppearanceModel = shapeAppearanceModel
 
             tvEmployerText.text = item.employerName
             tvCityText.text = item.area
