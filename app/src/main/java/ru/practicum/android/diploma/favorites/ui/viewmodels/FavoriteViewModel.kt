@@ -41,7 +41,7 @@ class FavoriteViewModel @Inject constructor(
 
     private suspend fun loadVacancies() {
         interactor.getFavoritesVacancies(
-            page = currentPage + if (currentPage < totalPages-1) 1 else 0
+            page = currentPage + if (currentPage < totalPages - 1) 1 else 0
         )
             .catch { handleError() }
             .collect { processResult(it) }
