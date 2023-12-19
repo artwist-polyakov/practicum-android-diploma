@@ -36,6 +36,19 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
         binding.favoritesList.root.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = vacancyListAdapter
+            addOnScrollListener(
+                object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
+                    override fun onScrollStateChanged(
+                        recyclerView: androidx.recyclerview.widget.RecyclerView,
+                        newState: Int
+                    ) {
+                        super.onScrollStateChanged(recyclerView, newState)
+                        if (!recyclerView.canScrollVertically(1)) {
+                            viewModel.nextPager()
+                        }
+                    }
+                }
+            )
         }
     }
 
@@ -90,7 +103,7 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
             progressBar.visibility = GONE
         }
         vacancyListAdapter.setScrollLoadingEnabled(state.currentPage != state.totalPages - 1)
-        vacancyListAdapter.setData(state.vacancies, 0)
+        vacancyListAdapter.setData(state.vacancies, state.currentPage)
     }
 
     private fun showError(state: FavoritesScreenState.Error) {
