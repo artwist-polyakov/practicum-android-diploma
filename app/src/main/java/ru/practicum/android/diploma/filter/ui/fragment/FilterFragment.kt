@@ -148,9 +148,13 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
     private fun arrowForwardListeners() = with(binding) {
         ivArrowForwardLocation.setOnClickListener {
             tiWorkPlace.text = null
+            viewModel.handleInteraction(
+                FilterViewModelInteraction.clearRegion)
         }
         ivArrowForwardIndustry.setOnClickListener {
             tiIndustry.text = null
+            viewModel.handleInteraction(
+                FilterViewModelInteraction.clearIndustry)
         }
     }
 
