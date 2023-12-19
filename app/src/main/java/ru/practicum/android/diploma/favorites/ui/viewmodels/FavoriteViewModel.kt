@@ -28,7 +28,7 @@ class FavoriteViewModel @Inject constructor(
 
     fun handleRequest(nextPage: Boolean = false) {
         viewModelScope.launch {
-            if (currentPage < totalPages || currentPage == 0) {
+            if (currentPage < totalPages - 1 || currentPage == 0) {
                 setLoadingState()
                 loadVacancies(nextPage)
             }
@@ -67,7 +67,7 @@ class FavoriteViewModel @Inject constructor(
     }
 
     private fun updateStateWithContent(result: VacanciesSearchResult, nextPage: Boolean) {
-        if (!nextPage) {
+        if (result.currentPage == 0) {
             vacancies.clear()
         }
         totalPages = result.totalPages
@@ -82,7 +82,4 @@ class FavoriteViewModel @Inject constructor(
 
     }
 
-    fun nextPager() {
-        handleRequest(totalPages - 1 != currentPage)
-    }
 }
