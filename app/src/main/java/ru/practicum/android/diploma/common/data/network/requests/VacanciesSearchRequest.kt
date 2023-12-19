@@ -6,7 +6,7 @@ data class VacanciesSearchRequest(
     val perPage: Int = 20,
     val searchField: String? = "name",
     val area: Int? = null,
-    val industry: Int? = null,
+    val industry: String? = null,
     val salary: Int? = null,
     val onlyWithSalary: Boolean = false
 )
