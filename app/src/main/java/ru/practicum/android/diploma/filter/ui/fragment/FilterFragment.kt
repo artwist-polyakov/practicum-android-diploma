@@ -149,12 +149,14 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
         ivArrowForwardLocation.setOnClickListener {
             tiWorkPlace.text = null
             viewModel.handleInteraction(
-                FilterViewModelInteraction.clearRegion)
+                FilterViewModelInteraction.clearRegion
+            )
         }
         ivArrowForwardIndustry.setOnClickListener {
             tiIndustry.text = null
             viewModel.handleInteraction(
-                FilterViewModelInteraction.clearIndustry)
+                FilterViewModelInteraction.clearIndustry
+            )
         }
     }
 
