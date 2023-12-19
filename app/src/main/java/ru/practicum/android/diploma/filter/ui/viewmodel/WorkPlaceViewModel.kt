@@ -33,6 +33,8 @@ class WorkPlaceViewModel @Inject constructor(
 
     private var country: FilterRegionValue? = null
     private var region: FilterRegionValue? = null
+    private var countryList: regions? = null
+    private var regionList: regions? = null
 
     fun getAreas() {
         viewModelScope.launch {
@@ -56,9 +58,17 @@ class WorkPlaceViewModel @Inject constructor(
                 if (result.data.isNullOrEmpty()) {
                     _state.value = SearchRegionScreenState.Error(ErrorsSearchScreenStates.FAIL_FETCH_REGIONS)
                 } else {
-                    val currentState = _state.value as? SearchRegionScreenState.Content
-                    _state.value = currentState?.copy(regions = result.data)
-                        ?: SearchRegionScreenState.Content(regions = result.data)
+                    if (regionList == null) {
+                        val currentState = _state.value as? SearchRegionScreenState.Content
+                        countryList = getCountries(result.data)
+                        regionList = result.data
+
+                        _state.value = currentState?.copy(regions = regionList!!, countries = countryList!!)
+                            ?: SearchRegionScreenState.Content(
+                                regions = regionList!!,
+                                countries = countryList!!
+                            )
+                    }
                 }
             }
 
@@ -171,6 +181,9 @@ class WorkPlaceViewModel @Inject constructor(
             else -> null
         }
     }
+
+    fun getCountries(area: regions): regions = area.filter { it.parent == null }
+
 
     fun saveRegionToPrefs(region: FilterRegionValue) {
         filterInteractor.setRegion(region.id, region.text)

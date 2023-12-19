@@ -1,9 +1,7 @@
 package ru.practicum.android.diploma.filter.data.impl
 
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.buffer
-import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.conflate
+import kotlinx.coroutines.flow.map
 import ru.practicum.android.diploma.filter.data.dto.FilterIndustryDto
 import ru.practicum.android.diploma.filter.data.dto.FilterRegionDto
 import ru.practicum.android.diploma.filter.data.dto.FilterSettingsDto
@@ -11,6 +9,7 @@ import ru.practicum.android.diploma.filter.domain.FilterSettingsInteractor
 import ru.practicum.android.diploma.filter.domain.FilterSettingsRepository
 import ru.practicum.android.diploma.filter.domain.models.FilterIndustryValue
 import ru.practicum.android.diploma.filter.domain.models.FilterRegionValue
+import ru.practicum.android.diploma.filter.ui.viewmodel.states.FilterSettingsUIState
 import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchSettingsState
 
 class FilterSettingsInteractorImpl(
@@ -100,13 +99,27 @@ class FilterSettingsInteractorImpl(
         )
     }
 
-    override fun getSearchSettings() = callbackFlow<SearchSettingsState> {
-        send(SearchSettingsState(
-            currentRegion = getRegion().id,
-            currentSalary = getSalary(),
-            currentIndustry = getIndustry().id,
-            currentSalaryOnly = getWithSalaryOnly(),
-        ))
-        awaitClose { close() }
-    }.buffer(Channel.UNLIMITED)
+    override fun getSearchSettings() = repository.settingsFlow().map { dto ->
+        // преобразуем DTO в SETTINGS-стэйт
+        SearchSettingsState(
+            currentPage = -1,
+            currentQuery = "",
+            currentRegion = dto.region?.id,
+            currentSalary = dto.salary,
+            currentIndustry = dto.industry?.id,
+            currentSalaryOnly = dto.withSalaryOnly,
+        )
+    }.conflate()
+
+    override fun getFilterUISettings() = repository.settingsFlow().map { dto ->
+        // преобразуем DTO в UI-стэйт
+        FilterSettingsUIState(
+            region = dto.region?.name,
+            salary = dto.salary,
+            industry = dto.industry?.name,
+            salaryOnly = dto.withSalaryOnly,
+        )
+    }.conflate()
+
+
 }

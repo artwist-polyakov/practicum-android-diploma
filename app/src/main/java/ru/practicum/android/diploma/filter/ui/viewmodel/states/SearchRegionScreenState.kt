@@ -12,6 +12,7 @@ sealed class SearchRegionScreenState {
 
     data class Content(
         val regions: List<SingleTreeElement>,
+        val countries: List<SingleTreeElement>,
         val selectedCountry: FilterRegionValue? = null,
         val selectedRegion: FilterRegionValue? = null
     ) : SearchRegionScreenState()
