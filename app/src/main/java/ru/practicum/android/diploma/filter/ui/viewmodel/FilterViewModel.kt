@@ -99,6 +99,16 @@ class FilterViewModel @Inject constructor(private val repository: FilterSettings
             is FilterViewModelInteraction.setSalaryOnly -> {
                 repository.setWithSalaryOnly(kind.onlySalary)
             }
+
+            FilterViewModelInteraction.clearIndustry -> {
+                repository.setIndustry(null, null)
+            }
+            FilterViewModelInteraction.clearRegion -> {
+                repository.setRegion(null, null)
+            }
+            FilterViewModelInteraction.clearSalary -> {
+                repository.setSalary(null)
+            }
         }
     }
 
