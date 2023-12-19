@@ -26,11 +26,11 @@ class FavoriteViewModel @Inject constructor(
     val state: MutableStateFlow<FavoritesScreenState>
         get() = _state
 
-    fun handleRequest(nextPage: Boolean = false) {
+    fun handleRequest() {
         viewModelScope.launch {
             if (currentPage < totalPages - 1 || currentPage == 0) {
                 setLoadingState()
-                loadVacancies(nextPage)
+                loadVacancies()
             }
         }
     }
@@ -39,19 +39,19 @@ class FavoriteViewModel @Inject constructor(
         _state.value = FavoritesScreenState.Loading(isBottomIndicator = currentPage != 0)
     }
 
-    private suspend fun loadVacancies(nextPage: Boolean) {
+    private suspend fun loadVacancies() {
         interactor.getFavoritesVacancies(
-            page = currentPage + if (nextPage && currentPage < totalPages) 1 else 0
+            page = currentPage + if (currentPage < totalPages-1) 1 else 0
         )
             .catch { handleError() }
-            .collect { processResult(it, nextPage) }
+            .collect { processResult(it) }
     }
 
-    private fun processResult(result: VacanciesSearchResult, nextPage: Boolean) {
+    private fun processResult(result: VacanciesSearchResult) {
         if (result.vacancies.isEmpty()) {
             resetState()
         } else {
-            updateStateWithContent(result, nextPage)
+            updateStateWithContent(result)
         }
     }
 
@@ -66,7 +66,7 @@ class FavoriteViewModel @Inject constructor(
         _state.value = FavoritesScreenState.Empty()
     }
 
-    private fun updateStateWithContent(result: VacanciesSearchResult, nextPage: Boolean) {
+    private fun updateStateWithContent(result: VacanciesSearchResult) {
         if (result.currentPage == 0) {
             vacancies.clear()
         }
@@ -83,6 +83,6 @@ class FavoriteViewModel @Inject constructor(
     }
 
     fun nextPager() {
-        handleRequest(totalPages - 1 > currentPage)
+        handleRequest()
     }
 }
