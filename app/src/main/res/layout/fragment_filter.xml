@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorBackground"
     tools:context=".filter.ui.fragment.FilterFragment">
 
     <LinearLayout
@@ -37,10 +38,12 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tl_work_place"
         style="@style/TextInputLayout.FilterItem"
+        android:layout_width="0dp"
+        android:backgroundTint="?attr/colorBackground"
         android:layout_marginStart="@dimen/negative_margin_standard"
         android:layout_marginTop="@dimen/between_text_card"
         android:paddingVertical="@dimen/image_padding_medium"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/iv_arrow_forward_location"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_header">
 
@@ -49,6 +52,7 @@
             style="@style/TextInputEditText.FilterInput"
             android:hint="@string/workplace"
             android:maxLines="1"
+            android:ellipsize="end"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -61,15 +65,16 @@
         android:paddingEnd="0dp"
         android:src="@drawable/arrow_forward_24px"
         app:layout_constraintBottom_toBottomOf="@+id/tl_work_place"
-        app:layout_constraintEnd_toEndOf="@+id/tl_work_place"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tl_work_place" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tl_industry"
         style="@style/TextInputLayout.FilterItem"
         android:layout_marginStart="@dimen/negative_margin_standard"
+        android:layout_width="0dp"
         android:paddingVertical="@dimen/image_padding_medium"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/iv_arrow_forward_industry"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tl_work_place">
 
@@ -78,6 +83,7 @@
             style="@style/TextInputEditText.FilterInput"
             android:hint="@string/industry"
             android:maxLines="1"
+            android:ellipsize="end"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -90,7 +96,7 @@
         android:paddingEnd="0dp"
         android:src="@drawable/arrow_forward_24px"
         app:layout_constraintBottom_toBottomOf="@+id/tl_industry"
-        app:layout_constraintEnd_toEndOf="@+id/tl_industry"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tl_industry" />
 
     <com.google.android.material.textfield.TextInputLayout
