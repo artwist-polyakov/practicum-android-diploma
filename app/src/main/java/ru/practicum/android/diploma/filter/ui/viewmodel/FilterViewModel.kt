@@ -61,12 +61,12 @@ class FilterViewModel @Inject constructor(private val repository: FilterSettings
                     } else {
                         val isApplyEnabled = areSettingsChanged(it)
                         _state.value = FilterScreenState.Settled(
-                            it.region ?: "",
-                            it.industry ?: "",
-                            it.salary,
-                            it.salaryOnly,
-                            true,
-                            isApplyEnabled
+                            region =it.region ?: "",
+                            industry = it.industry ?: "",
+                            salary = it.salary,
+                            withSalaryOnly = it.salaryOnly,
+                            isResetButtonEnabled = true,
+                            isApplyButtonEnabled = isApplyEnabled
                         )
                         filterSettingsUI = it
                     }
