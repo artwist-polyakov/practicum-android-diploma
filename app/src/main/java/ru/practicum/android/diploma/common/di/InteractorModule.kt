@@ -20,6 +20,7 @@ import ru.practicum.android.diploma.vacancy.domain.api.SingleVacancyConverter
 import ru.practicum.android.diploma.vacancy.domain.api.SingleVacancyInteractor
 import ru.practicum.android.diploma.vacancy.domain.impl.SingleVacancyInteractorImpl
 
+
 @Module
 @InstallIn(ViewModelComponent::class)
 class InteractorModule {
@@ -47,6 +48,7 @@ class InteractorModule {
 
     @Provides
     fun provideFilterSettingInteractor(
-        repository: FilterSettingsRepository
-    ): FilterSettingsInteractor = FilterSettingsInteractorImpl(repository)
+        @FilterSettingsRepositoryImpl1 repository: FilterSettingsRepository,
+        @FinalFilterRepositoryImpl2 secondRepository: FilterSettingsRepository
+    ): FilterSettingsInteractor = FilterSettingsInteractorImpl(repository, secondRepository)
 }

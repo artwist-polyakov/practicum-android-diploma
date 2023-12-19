@@ -13,7 +13,7 @@ import ru.practicum.android.diploma.filter.ui.viewmodel.states.FilterViewModelIn
 import javax.inject.Inject
 
 @HiltViewModel
-class FilterViewModel @Inject constructor(private val repository: FilterSettingsInteractor) : BaseViewModel() {
+class FilterViewModel @Inject constructor(private val interactor: FilterSettingsInteractor) : BaseViewModel() {
     private var filterSettingsUI: FilterSettingsUIState = FilterSettingsUIState()
     private var hadInitilized = false
     private var _state = MutableStateFlow<FilterScreenState>(FilterScreenState.Empty)
@@ -27,10 +27,10 @@ class FilterViewModel @Inject constructor(private val repository: FilterSettings
     private fun firstLaunch() {
         if (!hadInitilized) {
             filterSettingsUI = FilterSettingsUIState(
-                region = repository.getRegion().text,
-                industry = repository.getIndustry().text,
-                salary = repository.getSalary(),
-                salaryOnly = repository.getWithSalaryOnly()
+                region = interactor.getRegion().text,
+                industry = interactor.getIndustry().text,
+                salary = interactor.getSalary(),
+                salaryOnly = interactor.getWithSalaryOnly()
             )
             hadInitilized = true
             if (areSettingsSettled(filterSettingsUI)) {
@@ -51,7 +51,7 @@ class FilterViewModel @Inject constructor(private val repository: FilterSettings
         firstLaunch()
 
         viewModelScope.launch {
-            repository.getFilterUISettings()
+            interactor.getFilterUISettings()
                 // нашедшему причину задвоенного возвращения состояния
                 // префов от меня приз. А. Поляков.
                 .distinctUntilChanged()
@@ -90,24 +90,24 @@ class FilterViewModel @Inject constructor(private val repository: FilterSettings
 
     fun handleInteraction(kind: FilterViewModelInteraction) {
         when (kind) {
-            FilterViewModelInteraction.clearSettings -> repository.resetSettings()
-            FilterViewModelInteraction.saveSettings -> Unit
+            FilterViewModelInteraction.clearSettings -> interactor.resetSettings()
+            FilterViewModelInteraction.saveSettings -> interactor.saveSettings()
             is FilterViewModelInteraction.setSalary -> {
-                repository.setSalary(kind.salary)
+                interactor.setSalary(kind.salary)
             }
 
             is FilterViewModelInteraction.setSalaryOnly -> {
-                repository.setWithSalaryOnly(kind.onlySalary)
+                interactor.setWithSalaryOnly(kind.onlySalary)
             }
 
             FilterViewModelInteraction.clearIndustry -> {
-                repository.setIndustry(null, null)
+                interactor.setIndustry(null, null)
             }
             FilterViewModelInteraction.clearRegion -> {
-                repository.setRegion(null, null)
+                interactor.setRegion(null, null)
             }
             FilterViewModelInteraction.clearSalary -> {
-                repository.setSalary(null)
+                interactor.setSalary(null)
             }
         }
     }

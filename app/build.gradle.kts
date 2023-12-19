@@ -85,7 +85,4 @@ dependencies {
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.convertGson)
-
-    // LeakCanary
-    debugImplementation(libs.leakcanary)
 }
