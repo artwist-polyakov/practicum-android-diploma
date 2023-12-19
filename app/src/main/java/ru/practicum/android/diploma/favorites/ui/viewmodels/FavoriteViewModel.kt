@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.favorites.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,9 +26,6 @@ class FavoriteViewModel @Inject constructor(
 
     val state: MutableStateFlow<FavoritesScreenState>
         get() = _state
-
-    private var searchSettings: SearchSettingsState = SearchSettingsState()
-    private var isLastUpdatePage = false
 
     fun handleRequest(nextPage: Boolean = false) {
         viewModelScope.launch {
@@ -86,7 +82,8 @@ class FavoriteViewModel @Inject constructor(
         )
 
     }
+
     fun nextPager() {
-        handleRequest((totalPages-1)!=currentPage)
+        handleRequest(totalPages - 1 != currentPage)
     }
 }
