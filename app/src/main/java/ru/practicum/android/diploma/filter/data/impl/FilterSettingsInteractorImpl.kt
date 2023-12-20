@@ -22,7 +22,6 @@ class FilterSettingsInteractorImpl(
         repository.saveFilterSettings(
             finalRepository.getFilterSettings()
         )
-        Log.d("FinalRepository", "Init Final Repository ${finalRepository.getFilterSettings()}")
     }
 
     override fun setRegion(id: Int?, name: String?) {
