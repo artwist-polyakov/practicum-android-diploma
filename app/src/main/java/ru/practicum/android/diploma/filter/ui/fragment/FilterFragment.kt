@@ -36,8 +36,6 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
 
         defaultHintColor = ContextCompat.getColor(requireContext(), R.color.inputTextHint)
         activeHintColor = ContextCompat.getColor(requireContext(), R.color.blue)
-
-        tiSalaryField.requestFocus()
     }
 
     override fun subscribe(): Unit = with(binding) {
@@ -65,6 +63,11 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
     }
 
     private fun setupClicklisteners() = with(binding) {
+
+        root.setOnClickListener {
+            tiSalaryField.clearFocus()
+        }
+
         ivArrowBack.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -74,6 +77,7 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
             viewModel.handleInteraction(
                 FilterViewModelInteraction.setSalaryOnly(checkboxHideWithSalary.isChecked)
             )
+            tiSalaryField.clearFocus()
         }
 
         checkboxHideWithSalary.setOnClickListener {
