@@ -75,6 +75,7 @@ class WorkPlaceFragment : BaseFragment<FragmentWorkPlaceBinding, WorkPlaceViewMo
         ivArrowForwardCountry.setOnClickListener {
             tiCountry.text?.clear()
             viewModel.clearselectedCountry()
+            viewModel.clearselectedRegion()
         }
 
         ivArrowForwardRegion.setOnClickListener {
@@ -91,7 +92,7 @@ class WorkPlaceFragment : BaseFragment<FragmentWorkPlaceBinding, WorkPlaceViewMo
         binding.btnSelect.setOnClickListener {
             val region = viewModel.getFilterArea()
             if (region != null) {
-//                viewModel.saveRegionToPrefs(region) // TODO настроить передачу объекта через bundle
+                viewModel.saveRegionToPrefs(region)
             }
             findNavController().popBackStack()
         }

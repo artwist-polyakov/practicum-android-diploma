@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.filter.ui.fragment
 
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope

@@ -89,4 +89,8 @@ class IndustryFragment : BaseFragment<FragmentIndustryBinding, IndustryViewModel
             }
         }
     }
+
+    companion object {
+        const val INDUSTRY_KEY = "industry"
+    }
 }
