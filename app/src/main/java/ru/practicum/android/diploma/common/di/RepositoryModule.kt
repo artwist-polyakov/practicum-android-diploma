@@ -42,7 +42,7 @@ class RepositoryModule {
         FilterSettingsRepositoryImpl(sharedPreferences, FINAL_DATA_KEY)
 
     companion object {
-        private const val TEMP_DATA_KEY =  "filter_settings"
+        private const val TEMP_DATA_KEY = "filter_settings"
         private const val FINAL_DATA_KEY = "final_filter_settings"
     }
 }
