@@ -59,40 +59,6 @@ open class SearchViewModel @Inject constructor(
             _state.value = SearchScreenState.Default(isFilterEnabled())
         }
 
-//        viewModelScope.launch {
-//            interactor.getAreas(13).collect {
-//                when (it) {
-//                    is Resource.Success -> {
-//                        it.data?.forEach {
-//                            Log.d("SearchViewModel", "Areas: $it")
-//                        }
-//                    }
-//                    else -> {
-//                        Log.d("SearchViewModel", "${it.error}")
-//                    }
-//                }
-//            }
-//        }
-
-        // todo удалить этот код когда будет реализован фильтр индустрии
-//        viewModelScope.launch {
-//            interactor.getIndustries()
-//                .collect { resource ->
-//                    // Обработка ситуации, когда flow успешно эмитит событие.
-//                    when (resource) {
-//                        is Resource.Success -> {
-//                            resource.data?.forEach {
-//                                Log.d("SearchViewModel", "Industries: $it")
-//                            }
-//                        }
-//
-//                        else -> {
-//                            Log.d("SearchViewModel", "${resource.error}")
-//                        }
-//                    }
-//                }
-//        } // <---- конец удаляемого фрагмента
-
         viewModelScope.launch {
             sharedPrefsInteractor.getSearchSettings()
                 .collect { settings ->

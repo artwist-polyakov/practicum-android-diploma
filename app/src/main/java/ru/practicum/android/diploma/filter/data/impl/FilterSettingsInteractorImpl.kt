@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.filter.data.impl
 
-import android.util.Log
 import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.map
 import ru.practicum.android.diploma.filter.data.dto.FilterIndustryDto
@@ -22,7 +21,6 @@ class FilterSettingsInteractorImpl(
         repository.saveFilterSettings(
             finalRepository.getFilterSettings()
         )
-        Log.d("FinalRepository", "Init Final Repository ${finalRepository.getFilterSettings()}")
     }
 
     override fun setRegion(id: Int?, name: String?) {
