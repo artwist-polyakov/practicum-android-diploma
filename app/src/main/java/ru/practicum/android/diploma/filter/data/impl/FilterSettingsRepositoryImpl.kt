@@ -10,7 +10,7 @@ import ru.practicum.android.diploma.filter.domain.FilterSettingsRepository
 
 class FilterSettingsRepositoryImpl(
     private val sharedPreferences: SharedPreferences
-) : FilterSettingsRepository, SharedPreferences.OnSharedPreferenceChangeListener {
+) : FilterSettingsRepository {
 
     // Этот канал будет использоваться для оповещения о изменениях настроек
     private val settingsUpdateChannel =
