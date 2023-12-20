@@ -91,7 +91,7 @@ class WorkPlaceFragment : BaseFragment<FragmentWorkPlaceBinding, WorkPlaceViewMo
         binding.btnSelect.setOnClickListener {
             val region = viewModel.getFilterArea()
             if (region != null) {
-                viewModel.saveRegionToPrefs(region) // сохранение в префы
+//                viewModel.saveRegionToPrefs(region) // TODO настроить передачу объекта через bundle
             }
             findNavController().popBackStack()
         }

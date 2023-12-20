@@ -46,7 +46,6 @@ class CountryFragment : BaseFragment<FragmentCountryBinding, WorkPlaceViewModel>
             actionWithDelay = false
         ) { data ->
             viewModel.updateStateWithCountry(data.id, data.name)
-            Log.i("CountryFragmentMyLog", "country = ${data.name}  id = ${data.id}")
             findNavController().popBackStack()
         }
 
