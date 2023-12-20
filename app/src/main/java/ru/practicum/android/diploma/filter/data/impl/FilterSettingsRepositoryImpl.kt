@@ -9,7 +9,8 @@ import ru.practicum.android.diploma.filter.data.dto.FilterSettingsDto
 import ru.practicum.android.diploma.filter.domain.FilterSettingsRepository
 
 class FilterSettingsRepositoryImpl(
-    private val sharedPreferences: SharedPreferences
+    private val sharedPreferences: SharedPreferences,
+    private val key: String
 ) : FilterSettingsRepository {
 
     // Этот канал будет использоваться для оповещения о изменениях настроек
@@ -21,7 +22,7 @@ class FilterSettingsRepositoryImpl(
     }
 
     override fun getFilterSettings(): FilterSettingsDto {
-        return sharedPreferences.getString(DATA_KEY, null)
+        return sharedPreferences.getString(key, null)
             ?.let { text ->
                 Gson().fromJson(text, FilterSettingsDto::class.java)
             }
@@ -29,7 +30,7 @@ class FilterSettingsRepositoryImpl(
     }
 
     override fun saveFilterSettings(settings: FilterSettingsDto) {
-        sharedPreferences.edit().putString(DATA_KEY, Gson().toJson(settings)).apply()
+        sharedPreferences.edit().putString(key, Gson().toJson(settings)).apply()
         settingsUpdateChannel.trySend(settings).isSuccess
     }
 
@@ -39,7 +40,7 @@ class FilterSettingsRepositoryImpl(
         sharedPreferences: SharedPreferences,
         key: String?
     ) {
-        if (DATA_KEY == key) {
+        if (this.key == key) {
             // Настройки были изменены, отправляем новое состояние в канал
             val settings = getFilterSettings()
             settingsUpdateChannel.trySend(settings).isSuccess
@@ -50,9 +51,5 @@ class FilterSettingsRepositoryImpl(
     override fun destroy() {
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
         settingsUpdateChannel.close()
-    }
-
-    companion object {
-        private const val DATA_KEY = "filter_settings"
     }
 }

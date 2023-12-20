@@ -7,7 +7,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ru.practicum.android.diploma.common.data.network.NetworkClient
 import ru.practicum.android.diploma.filter.data.impl.FilterSettingsRepositoryImpl
-import ru.practicum.android.diploma.filter.data.impl.FinalFilterRepositoryImpl
 import ru.practicum.android.diploma.filter.domain.FilterSettingsRepository
 import ru.practicum.android.diploma.search.data.HHSearchRepository
 import ru.practicum.android.diploma.search.data.HHSearchRepositoryImpl
@@ -34,11 +33,16 @@ class RepositoryModule {
     @Singleton
     @FilterSettingsRepositoryImpl1
     fun provideFilterRepository(sharedPreferences: SharedPreferences): FilterSettingsRepository =
-        FilterSettingsRepositoryImpl(sharedPreferences)
+        FilterSettingsRepositoryImpl(sharedPreferences, TEMP_DATA_KEY)
 
     @Provides
     @Singleton
     @FinalFilterRepositoryImpl2
     fun provideFinalFilterRepository(sharedPreferences: SharedPreferences): FilterSettingsRepository =
-        FinalFilterRepositoryImpl(sharedPreferences)
+        FilterSettingsRepositoryImpl(sharedPreferences, FINAL_DATA_KEY)
+
+    companion object {
+        private const val TEMP_DATA_KEY =  "filter_settings"
+        private const val FINAL_DATA_KEY = "final_filter_settings"
+    }
 }
