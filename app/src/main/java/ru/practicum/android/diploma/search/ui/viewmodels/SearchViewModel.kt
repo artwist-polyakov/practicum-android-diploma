@@ -76,11 +76,13 @@ open class SearchViewModel @Inject constructor(
             newSettings.currentIndustry != searchSettings.currentIndustry ||
             newSettings.currentRegion != searchSettings.currentRegion
         ) {
-            searchSettings = searchSettings.copy(currentPage = 0)
-            searchSettings = searchSettings.copy(currentSalaryOnly = newSettings.currentSalaryOnly)
-            searchSettings = searchSettings.copy(currentSalary = newSettings.currentSalary)
-            searchSettings = searchSettings.copy(currentIndustry = newSettings.currentIndustry)
-            searchSettings = searchSettings.copy(currentRegion = newSettings.currentRegion)
+            searchSettings = searchSettings.copy(
+                currentPage = 0,
+                currentSalaryOnly = newSettings.currentSalaryOnly,
+                currentSalary = newSettings.currentSalary,
+                currentIndustry = newSettings.currentIndustry,
+                currentRegion = newSettings.currentRegion
+            )
             return true
         } else {
             return false
