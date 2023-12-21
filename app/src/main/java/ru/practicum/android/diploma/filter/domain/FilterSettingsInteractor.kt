@@ -28,6 +28,8 @@ interface FilterSettingsInteractor {
 
     fun resetSettings()
 
+    fun restoreSettings()
+
     fun getSearchSettings(): Flow<SearchSettingsState>
 
     fun getFilterUISettings(): Flow<FilterSettingsUIState>
