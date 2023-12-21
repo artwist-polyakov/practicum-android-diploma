@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.filter.ui.fragment
 
+import android.util.Log
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -91,6 +92,7 @@ class WorkPlaceFragment : BaseFragment<FragmentWorkPlaceBinding, WorkPlaceViewMo
     private fun onPressedButton() {
         binding.btnSelect.setOnClickListener {
             val region = viewModel.getFilterArea()
+            Log.i("WorkPlaceFragmentMyLog", "region = $region")
             if (region != null) {
                 viewModel.saveRegionToPrefs(region)
             }

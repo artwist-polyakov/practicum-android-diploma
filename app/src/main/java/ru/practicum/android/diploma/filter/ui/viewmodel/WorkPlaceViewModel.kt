@@ -64,7 +64,7 @@ class WorkPlaceViewModel @Inject constructor(
                         val currentState = _state.value as? SearchRegionScreenState.Content
                         _state.value = currentState?.copy(regions = regionList!!, countries = countryList!!)
                             ?: SearchRegionScreenState.Content(
-                                regions = unpackRegions(regionList!!),
+                                regions = unpackRegions(regionList!!).filter { it.parent != null },
                                 countries = countryList!!
                             )
                     }
@@ -85,48 +85,35 @@ class WorkPlaceViewModel @Inject constructor(
     /**
      * Метод обновляет значение в state для selectedCountry и удаляет selectedRegion если значение selectedCountry изменилось
      **/
-    fun updateStateWithCountry(id: String, name: String, region: FilterRegionValue? = null) {
+    fun updateStateWithRegion(id: String, name: String) {
         viewModelScope.launch {
-            val currentState = _state.value
-            val selectedCountry = FilterRegionValue(id.toInt(), name)
-            if (currentState is SearchRegionScreenState.Content && country != selectedCountry) {
-                country = selectedCountry
-
-                val countryIndex = countryList?.indexOfFirst { it.id == country?.id.toString() } ?: -1
-                if (countryIndex != -1) {
-                    val selectedRegions = unpackRegions(countryList!![countryIndex].children ?: emptyList())
-                    _state.value = currentState.copy(
-                        selectedCountry = selectedCountry,
-                        selectedRegion = region,
-                        regions = selectedRegions
-                    )
-                }
-            }
+            region = FilterRegionValue(id.toInt(), name)
+            val parentRegion = getCountryFromRegion(regionList ?: emptyList(), region?.id.toString())
+            country = FilterRegionValue(parentRegion?.id?.toInt(), parentRegion?.name)
+            updateState(country, region)
         }
     }
 
     /**
      * Метод обновляет значение в state selectedRegion.
      **/
-    fun updateStateWithRegion(id: String, name: String) {
+    fun updateStateWithCountry(id: String, name: String, region: FilterRegionValue? = null) {
+        country = FilterRegionValue(id.toInt(), name)
+        updateState(country, region)
+    }
+
+    private fun updateState(selectedCountry: FilterRegionValue?, selectedRegion: FilterRegionValue?) {
         viewModelScope.launch {
             val currentState = _state.value
             if (currentState is SearchRegionScreenState.Content) {
-                region = FilterRegionValue(id.toInt(), name)
-                val parentRegion = getCountryFromRegion(regionList!!, region!!.id.toString())
-                country = FilterRegionValue(parentRegion?.id!!.toInt(), parentRegion.name)
-                val countryIndex = countryList?.indexOfFirst { it.id == country?.id.toString() } ?: -1
-                val selectedRegions = unpackRegions(countryList!![countryIndex].children ?: emptyList())
+                val countryIndex = countryList?.indexOfFirst { it.id == selectedCountry?.id.toString() } ?: -1
+                val childrenList = regionList?.get(countryIndex)?.children
+                val regions = unpackRegions(childrenList!!)
                 _state.value = currentState.copy(
-                    selectedRegion = region,
-                    selectedCountry = country,
-                    regions = selectedRegions
+                    selectedCountry = selectedCountry,
+                    selectedRegion = selectedRegion,
+                    regions = regions
                 )
-                if (currentState.selectedCountry == null) {
-                    val parent: SingleTreeElement? =
-                        getCountryFromRegion(currentState.regions, region!!.id!!.toString())
-                    updateStateWithCountry(parent?.id.toString(), parent?.name ?: "", region)
-                }
             }
         }
     }
@@ -137,7 +124,7 @@ class WorkPlaceViewModel @Inject constructor(
             if (currentState is SearchRegionScreenState.Content) {
                 _state.value = currentState.copy(
                     selectedCountry = null,
-                    regions = unpackRegions(regionList!!)
+                    regions = unpackRegions(regionList ?: emptyList()).filter { it.parent != null }
                 )
             }
             country = null
