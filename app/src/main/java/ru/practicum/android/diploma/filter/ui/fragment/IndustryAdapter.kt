@@ -61,7 +61,7 @@ class IndustryAdapter(
     }
 
     fun setFilter(text: String) {
-        filterText = text
+        filterText = text.lowercase().trim()
         filtrate()
     }
 
