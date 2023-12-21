@@ -104,7 +104,7 @@ class WorkPlaceViewModel @Inject constructor(
     }
 
     fun saveRegionToPrefs(region: FilterRegionValue) {
-        filterInteractor.setRegion(region.id, region.text)
+        viewModelScope.launch { filterInteractor.setRegion(region.id, region.text) }
     }
 
     fun processNonEmptyInput(inputText: String) {
