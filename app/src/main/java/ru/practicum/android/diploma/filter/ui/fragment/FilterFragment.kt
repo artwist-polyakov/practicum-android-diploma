@@ -58,7 +58,6 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collect { state ->
-                Log.d("FilterViewModel", "Подписался")
                 render(state)
             }
         }
@@ -114,7 +113,6 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
         super.onResume()
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collect { state ->
-                Log.d("FilterViewModel", "Подписался")
                 render(state)
             }
         }

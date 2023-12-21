@@ -26,7 +26,7 @@ open class SearchViewModel @Inject constructor(
     private val sharedPrefsInteractor: FilterSettingsInteractor
 ) : BaseViewModel() {
     private var searchSettings: SearchSettingsState = SearchSettingsState()
-    private var vacancies: MutableList<VacancyGeneral> = mutableListOf()
+    private val vacancies: MutableList<VacancyGeneral> = mutableListOf()
     private var showSnackBar: Boolean = false
     private var totalPages: Int = 0
     private var isLastUpdatePage = false
@@ -43,15 +43,18 @@ open class SearchViewModel @Inject constructor(
     }
 
     init {
-        searchSettings = searchSettings.copy(
-            currentPage = 0,
-            currentQuery = "",
-            currentRegion = sharedPrefsInteractor.getRegion().id,
-            currentIndustry = sharedPrefsInteractor.getIndustry().id,
-            currentSalary = sharedPrefsInteractor.getSalary(),
-            currentSalaryOnly = sharedPrefsInteractor.getWithSalaryOnly()
-        )
-        checkState()
+        viewModelScope.launch {
+            searchSettings = searchSettings.copy(
+                currentPage = 0,
+                currentQuery = "",
+                currentRegion = sharedPrefsInteractor.getRegion().id,
+                currentIndustry = sharedPrefsInteractor.getIndustry().id,
+                currentSalary = sharedPrefsInteractor.getSalary(),
+                currentSalaryOnly = sharedPrefsInteractor.getWithSalaryOnly()
+            )
+            checkState()
+        }
+
     }
 
     private fun checkState() {
