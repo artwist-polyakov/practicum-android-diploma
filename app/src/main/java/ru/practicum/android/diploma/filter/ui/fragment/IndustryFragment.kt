@@ -59,7 +59,7 @@ class IndustryFragment : BaseFragment<FragmentIndustryBinding, IndustryViewModel
 
         btnSelect.setOnClickListener {
             viewModel.saveIndustryToPref()
-            findNavController().popBackStack()
+//            findNavController().popBackStack()
         }
     }
 
