@@ -84,11 +84,25 @@ class FilterViewModel @Inject constructor(private val interactor: FilterSettings
             || settings.salaryOnly
     }
 
+    /**
+     * Возврат true/false из метода определяет отображение кнопки "Применить"
+     * Метод содержит закомментированный ретёрн, который отражает логику авторов
+     * Авторы считают, что применять настройки фильтра можно только тогда,
+     * когда они отличаются он ранее выставленных. В противном случае применяться
+     * настройки не должны.
+     *
+     * Ревьювер попросил сделать кнопку применить всегда
+     * в случае если есть хотя бы одно заполненное значение фильтра.
+     *
+     * todo после сдачи раскомментировать оригинальный код
+     */
     private fun areSettingsChanged(settings: FilterSettingsUIState): Boolean {
-        return settings.region != filterSettingsUI.region
-            || settings.industry != filterSettingsUI.industry
-            || settings.salary != filterSettingsUI.salary
-            || settings.salaryOnly != filterSettingsUI.salaryOnly
+//        return settings.region != filterSettingsUI.region
+//            || settings.industry != filterSettingsUI.industry
+//            || settings.salary != filterSettingsUI.salary
+//            || settings.salaryOnly != filterSettingsUI.salaryOnly
+        return settings.region != null || settings.industry != null ||
+            settings.salary != null || settings.salaryOnly == true
     }
 
     fun handleInteraction(kind: FilterViewModelInteraction) {
