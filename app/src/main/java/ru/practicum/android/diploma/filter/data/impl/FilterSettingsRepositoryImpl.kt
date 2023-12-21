@@ -2,9 +2,7 @@ package ru.practicum.android.diploma.filter.data.impl
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import androidx.lifecycle.LifecycleCoroutineScope
 import com.google.gson.Gson
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow

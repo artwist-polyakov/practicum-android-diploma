@@ -40,7 +40,7 @@ class IndustryViewModel @Inject constructor(
 
     fun saveIndustryToPref() {
         selectedIndustry?.let { data ->
-            viewModelScope.launch{
+            viewModelScope.launch {
                 filterInteractor.setIndustry(data.id, data.name)
             }
         }

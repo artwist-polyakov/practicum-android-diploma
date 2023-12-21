@@ -113,7 +113,7 @@ class FilterSettingsInteractorImpl(
     /**
      * Позволяет восстановить настройки, которые применены в текущем фильтре
      */
-    override  suspend fun restoreSettings() {
+    override suspend fun restoreSettings() {
         repository.saveFilterSettings(
             finalRepository.getFilterSettings()
         )

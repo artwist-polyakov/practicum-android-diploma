@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
@@ -20,7 +21,6 @@ import ru.practicum.android.diploma.search.ui.viewmodels.states.ErrorsSearchScre
 import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchScreenState
 import ru.practicum.android.diploma.search.ui.viewmodels.states.ViewModelInteractionState
 import ru.practicum.android.diploma.vacancy.ui.VacancyFragment
-import androidx.recyclerview.widget.RecyclerView
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(FragmentSearchBinding::inflate) {

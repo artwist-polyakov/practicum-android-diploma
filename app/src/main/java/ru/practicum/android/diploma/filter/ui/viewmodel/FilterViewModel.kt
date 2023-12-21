@@ -110,27 +110,27 @@ class FilterViewModel @Inject constructor(private val interactor: FilterSettings
 
     fun handleInteraction(kind: FilterViewModelInteraction) {
         when (kind) {
-            FilterViewModelInteraction.clearSettings -> viewModelScope.launch{
+            FilterViewModelInteraction.clearSettings -> viewModelScope.launch {
                 interactor.resetSettings()
             }
-            FilterViewModelInteraction.saveSettings -> viewModelScope.launch{
+            FilterViewModelInteraction.saveSettings -> viewModelScope.launch {
                 interactor.saveSettings()
             }
-            is FilterViewModelInteraction.setSalary -> viewModelScope.launch{
+            is FilterViewModelInteraction.setSalary -> viewModelScope.launch {
                 interactor.setSalary(kind.salary)
             }
 
-            is FilterViewModelInteraction.setSalaryOnly -> viewModelScope.launch{
+            is FilterViewModelInteraction.setSalaryOnly -> viewModelScope.launch {
                 interactor.setWithSalaryOnly(kind.onlySalary)
             }
 
-            FilterViewModelInteraction.clearIndustry -> viewModelScope.launch{
+            FilterViewModelInteraction.clearIndustry -> viewModelScope.launch {
                 interactor.setIndustry(null, null)
             }
-            FilterViewModelInteraction.clearRegion -> viewModelScope.launch{
+            FilterViewModelInteraction.clearRegion -> viewModelScope.launch {
                 interactor.setRegion(null, null)
             }
-            FilterViewModelInteraction.clearSalary -> viewModelScope.launch{
+            FilterViewModelInteraction.clearSalary -> viewModelScope.launch {
                 interactor.setSalary(null)
             }
         }
