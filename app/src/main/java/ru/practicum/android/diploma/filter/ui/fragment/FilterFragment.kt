@@ -173,7 +173,6 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
 //    }
 
     private fun render(state: FilterScreenState) {
-        Log.d("FilterVM", "currentState = $state")
         when (state) {
             is FilterScreenState.Settled -> {
                 binding.tiWorkPlace.setText(state.region)
