@@ -1,7 +1,6 @@
 package ru.practicum.android.diploma.filter.ui.fragment
 
 import android.content.res.ColorStateList
-import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.core.content.ContextCompat

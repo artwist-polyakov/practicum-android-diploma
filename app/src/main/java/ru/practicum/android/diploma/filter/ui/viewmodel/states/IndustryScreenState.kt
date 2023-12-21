@@ -8,6 +8,6 @@ sealed class IndustryScreenState {
         val data: List<Industry>,
         val currentIndustry: String? = null
     ) : IndustryScreenState()
-    object goAway: IndustryScreenState()
+    object goAway : IndustryScreenState()
     data object Error : IndustryScreenState()
 }
