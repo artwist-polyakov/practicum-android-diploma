@@ -42,8 +42,8 @@ class FilterViewModel @Inject constructor(private val interactor: FilterSettings
                     industry = filterSettingsUI.industry ?: "",
                     salary = filterSettingsUI.salary,
                     withSalaryOnly = filterSettingsUI.salaryOnly,
-                    isResetButtonEnabled = true,
-                    isApplyButtonEnabled = false
+                    isResetButtonEnabled = areSettingsSettled(filterSettingsUI),
+                    isApplyButtonEnabled = areSettingsChanged(filterSettingsUI)
                 )
             }
         }

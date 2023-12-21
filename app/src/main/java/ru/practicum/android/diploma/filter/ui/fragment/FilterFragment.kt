@@ -38,6 +38,7 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
         activeHintColor = ContextCompat.getColor(requireContext(), R.color.blue)
 
         tiSalaryField.requestFocus()
+
     }
 
     override fun subscribe(): Unit = with(binding) {
