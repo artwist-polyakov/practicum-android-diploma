@@ -17,12 +17,6 @@ class FilterSettingsInteractorImpl(
     private val finalRepository: FilterSettingsRepository
 ) : FilterSettingsInteractor {
 
-    init {
-        repository.saveFilterSettings(
-            finalRepository.getFilterSettings()
-        )
-    }
-
     override fun setRegion(id: Int?, name: String?) {
         val current = repository.getFilterSettings()
         repository.saveFilterSettings(
@@ -113,6 +107,15 @@ class FilterSettingsInteractorImpl(
     override fun saveSettings() {
         finalRepository.saveFilterSettings(
             repository.getFilterSettings()
+        )
+    }
+
+    /**
+     * Позволяет восстановить настройки, которые применены в текущем фильтре
+     */
+    override fun restoreSettings() {
+        repository.saveFilterSettings(
+            finalRepository.getFilterSettings()
         )
     }
 
