@@ -38,6 +38,7 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
         activeHintColor = ContextCompat.getColor(requireContext(), R.color.blue)
 
         tiSalaryField.requestFocus()
+
     }
 
     override fun subscribe(): Unit = with(binding) {
@@ -172,6 +173,7 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
 //    }
 
     private fun render(state: FilterScreenState) {
+        Log.d("FilterVM", "currentState = $state")
         when (state) {
             is FilterScreenState.Settled -> {
                 binding.tiWorkPlace.setText(state.region)
