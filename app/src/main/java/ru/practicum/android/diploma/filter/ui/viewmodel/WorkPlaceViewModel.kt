@@ -72,12 +72,23 @@ class WorkPlaceViewModel @Inject constructor(
             }
 
             is Resource.Error -> {
-                _state.value = SearchRegionScreenState.Error(
-                    when (result.error) {
-                        NetworkErrors.NoInternet -> ErrorsSearchScreenStates.NO_INTERNET
-                        else -> ErrorsSearchScreenStates.SERVER_ERROR
-                    }
-                )
+                if (regionList.isNullOrEmpty()) {
+                    _state.value = SearchRegionScreenState.Error(
+                        when (result.error) {
+                            NetworkErrors.NoInternet -> ErrorsSearchScreenStates.NO_INTERNET
+                            else -> ErrorsSearchScreenStates.SERVER_ERROR
+                        }
+                    )
+                } else {
+                    val currentState = _state.value as? SearchRegionScreenState.Content
+                    _state.value = currentState?.copy(
+                        regions = unpackRegions(regionList!!).filter { it.parent != null },
+                        countries = countryList!!
+                    ) ?: SearchRegionScreenState.Content(
+                        regions = unpackRegions(regionList!!).filter { it.parent != null },
+                        countries = countryList!!
+                    )
+                }
             }
         }
     }
