@@ -68,36 +68,12 @@ class RegionFragment : BaseFragment<FragmentRegionBinding, WorkPlaceViewModel>(F
         binding.tiSearchField.doOnTextChanged { text, _, _, _ ->
             val inputText = text.toString()
             if (inputText.isNotEmpty()) {
-                processNonEmptyInput(inputText)
+                binding.ivSearchFieldButton.setImageResource(R.drawable.close_24px)
+                viewModel.processNonEmptyInput(inputText)
             } else {
-                processEmptyInput()
+                binding.ivSearchFieldButton.setImageResource(R.drawable.close_24px)
+                viewModel.processEmptyInput()
             }
-        }
-    }
-
-    private fun processNonEmptyInput(inputText: String) {
-        binding.ivSearchFieldButton.setImageResource(R.drawable.close_24px)
-
-        val currentState = viewModel.state.value
-        if (currentState is SearchRegionScreenState.Content) {
-            val filteredRegions = viewModel.filterRegions(
-                currentState.regions,
-                inputText
-            )
-            if (filteredRegions.isEmpty()) {
-                showError(ErrorsSearchScreenStates.NO_REGION)
-            } else {
-                showData(filteredRegions)
-            }
-        }
-    }
-
-    private fun processEmptyInput() {
-        binding.ivSearchFieldButton.setImageResource(R.drawable.search_24px)
-
-        val currentState = viewModel.state.value
-        if (currentState is SearchRegionScreenState.Content) {
-            showData(currentState.regions)
         }
     }
 
