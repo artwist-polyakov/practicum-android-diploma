@@ -81,7 +81,7 @@ class RegionFragment : BaseFragment<FragmentRegionBinding, WorkPlaceViewModel>(F
         val currentState = viewModel.state.value
         if (currentState is SearchRegionScreenState.Content) {
             val filteredRegions = viewModel.filterRegions(
-                viewModel.unpackRegions(currentState.regions[0].children!!),
+                currentState.regions,
                 inputText
             )
             if (filteredRegions.isEmpty()) {
@@ -97,13 +97,13 @@ class RegionFragment : BaseFragment<FragmentRegionBinding, WorkPlaceViewModel>(F
 
         val currentState = viewModel.state.value
         if (currentState is SearchRegionScreenState.Content) {
-            showData(viewModel.unpackRegions(currentState.regions[0].children!!))
+            showData(currentState.regions)
         }
     }
 
     private fun renderState(state: SearchRegionScreenState) {
         when (state) {
-            is SearchRegionScreenState.Content -> showData(viewModel.unpackRegions(state.regions[0].children!!))
+            is SearchRegionScreenState.Content -> showData(state.regions)
 
             is SearchRegionScreenState.Error -> showError(state.error)
 

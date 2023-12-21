@@ -161,17 +161,6 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
         }
     }
 
-//    private fun resetFilter() = with(binding) {
-//        tiWorkPlace.text = null
-//        tiIndustry.text = null
-//        tiSalaryField.text = null
-//        checkboxHideWithSalary.isChecked = false
-//    }
-
-//    private fun updateButtonBlockVisibility() = with(binding) {
-//        llButtonBlock.isVisible = checkboxHideWithSalary.isChecked || tiSalaryField.text.toString().isNotEmpty()
-//    }
-
     private fun render(state: FilterScreenState) {
         when (state) {
             is FilterScreenState.Settled -> {

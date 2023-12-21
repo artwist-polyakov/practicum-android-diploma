@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.filter.ui.fragment
 
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -46,7 +45,6 @@ class CountryFragment : BaseFragment<FragmentCountryBinding, WorkPlaceViewModel>
             actionWithDelay = false
         ) { data ->
             viewModel.updateStateWithCountry(data.id, data.name)
-            Log.i("CountryFragmentMyLog", "country = ${data.name}  id = ${data.id}")
             findNavController().popBackStack()
         }
 
