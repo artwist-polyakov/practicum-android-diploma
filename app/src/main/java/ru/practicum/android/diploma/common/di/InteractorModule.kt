@@ -47,7 +47,7 @@ class InteractorModule {
 
     @Provides
     fun provideFilterSettingInteractor(
-        @FilterSettingsRepositoryImpl1 repository: FilterSettingsRepository,
-        @FinalFilterRepositoryImpl2 secondRepository: FilterSettingsRepository
+        @TemporarySettingsRepositoryImpl repository: FilterSettingsRepository,
+        @SearchSettingsRepository secondRepository: FilterSettingsRepository
     ): FilterSettingsInteractor = FilterSettingsInteractorImpl(repository, secondRepository)
 }

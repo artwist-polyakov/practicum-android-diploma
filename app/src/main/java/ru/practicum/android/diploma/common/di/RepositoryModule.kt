@@ -15,11 +15,11 @@ import javax.inject.Singleton
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class FilterSettingsRepositoryImpl1
+annotation class TemporarySettingsRepositoryImpl
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class FinalFilterRepositoryImpl2
+annotation class SearchSettingsRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -31,13 +31,13 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    @FilterSettingsRepositoryImpl1
+    @TemporarySettingsRepositoryImpl
     fun provideFilterRepository(sharedPreferences: SharedPreferences): FilterSettingsRepository =
         FilterSettingsRepositoryImpl(sharedPreferences, TEMP_DATA_KEY)
 
     @Provides
     @Singleton
-    @FinalFilterRepositoryImpl2
+    @SearchSettingsRepository
     fun provideFinalFilterRepository(sharedPreferences: SharedPreferences): FilterSettingsRepository =
         FilterSettingsRepositoryImpl(sharedPreferences, FINAL_DATA_KEY)
 
