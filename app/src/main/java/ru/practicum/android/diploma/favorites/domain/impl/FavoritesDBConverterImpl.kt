@@ -50,7 +50,7 @@ class FavoritesDBConverterImpl(
                 id = vacancyId,
                 title = title,
                 employerName = employerName,
-                employerLogo = logoMap?.getOrDefault("240", null),
+                employerLogo = logoMap?.getOrDefault(LOGO_SIZE, null),
                 area = city,
                 haveSalary = salaryFrom != null || salaryTo != null,
                 salaryFrom = salaryFrom,
@@ -76,7 +76,7 @@ class FavoritesDBConverterImpl(
                 region = city,
                 title = title,
                 employerName = employerName,
-                employerLogo = logoMap?.getOrDefault("240", null),
+                employerLogo = logoMap?.getOrDefault(LOGO_SIZE, null),
                 haveSalary = salaryFrom != null || salaryTo != null,
                 salaryFrom = salaryFrom,
                 salaryTo = salaryTo,
@@ -94,5 +94,9 @@ class FavoritesDBConverterImpl(
                     " " + (from.number ?: "").toString()
             )
         }
+    }
+
+    companion object {
+        const val LOGO_SIZE = "240"
     }
 }

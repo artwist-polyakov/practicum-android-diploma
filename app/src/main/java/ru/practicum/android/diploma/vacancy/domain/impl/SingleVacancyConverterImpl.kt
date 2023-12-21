@@ -55,7 +55,7 @@ class SingleVacancyConverterImpl(
                     id = vacancyId,
                     title = title,
                     employerName = employerName,
-                    employerLogo = logoMap?.getOrDefault("240", null),
+                    employerLogo = logoMap?.getOrDefault(LOGO_SIZE, null),
                     area = city,
                     haveSalary = salaryFrom != null || salaryTo != null,
                     salaryFrom = salaryFrom,
@@ -153,5 +153,9 @@ class SingleVacancyConverterImpl(
                 phones = phones
             )
         }
+    }
+
+    companion object {
+        const val LOGO_SIZE = "240"
     }
 }
