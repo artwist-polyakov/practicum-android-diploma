@@ -25,6 +25,9 @@ class FilterViewModel @Inject constructor(private val interactor: FilterSettings
     }
 
     private fun firstLaunch() {
+        // метод restoreSettings восстанавливает текущие настройки проект
+        // сейчас он закомментирован, для соответствия ТЗ
+//        interactor.restoreSettings()
         if (!hadInitilized) {
             filterSettingsUI = FilterSettingsUIState(
                 region = interactor.getRegion().text,
