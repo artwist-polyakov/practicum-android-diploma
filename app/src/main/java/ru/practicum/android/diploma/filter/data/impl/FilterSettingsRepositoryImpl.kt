@@ -1,55 +1,63 @@
 package ru.practicum.android.diploma.filter.data.impl
 
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import com.google.gson.Gson
-import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.filter.data.dto.FilterSettingsDto
 import ru.practicum.android.diploma.filter.domain.FilterSettingsRepository
 
 class FilterSettingsRepositoryImpl(
     private val sharedPreferences: SharedPreferences,
-    private val key: String
-) : FilterSettingsRepository {
+    private val key: String,
+) : FilterSettingsRepository, CoroutineScope by CoroutineScope(
+    Dispatchers.IO +
+        SupervisorJob()
+) {
 
-    // Этот канал будет использоваться для оповещения о изменениях настроек
-    private val settingsUpdateChannel =
-        Channel<FilterSettingsDto>(Channel.CONFLATED)
+    private val _settingsUpdateFlow = MutableSharedFlow<FilterSettingsDto>(replay = 1)
+    val settingsUpdateFlow: Flow<FilterSettingsDto> = _settingsUpdateFlow.asSharedFlow()
 
     init {
         sharedPreferences.registerOnSharedPreferenceChangeListener(this)
     }
 
-    override fun getFilterSettings(): FilterSettingsDto {
-        return sharedPreferences.getString(key, null)
-            ?.let { text ->
-                Gson().fromJson(text, FilterSettingsDto::class.java)
-            }
-            ?: FilterSettingsDto()
+    override suspend fun getFilterSettings(): FilterSettingsDto {
+        return withContext(Dispatchers.IO) {
+            sharedPreferences.getString(key, null)
+                ?.let { text ->
+                    Gson().fromJson(text, FilterSettingsDto::class.java)
+                }
+                ?: FilterSettingsDto()
+        }
     }
 
-    override fun saveFilterSettings(settings: FilterSettingsDto) {
-        sharedPreferences.edit().putString(key, Gson().toJson(settings)).apply()
-        settingsUpdateChannel.trySend(settings).isSuccess
+    override suspend fun saveFilterSettings(settings: FilterSettingsDto) {
+        withContext(Dispatchers.IO) {
+            sharedPreferences.edit { putString(key, Gson().toJson(settings)) }
+        }
+        _settingsUpdateFlow.emit(settings)
     }
 
-    override fun settingsFlow(): Flow<FilterSettingsDto> = settingsUpdateChannel.receiveAsFlow()
+    override fun settingsFlow(): Flow<FilterSettingsDto> = settingsUpdateFlow
 
     override fun onSharedPreferenceChanged(
         sharedPreferences: SharedPreferences,
         key: String?
     ) {
         if (this.key == key) {
-            // Настройки были изменены, отправляем новое состояние в канал
-            val settings = getFilterSettings()
-            settingsUpdateChannel.trySend(settings).isSuccess
+            launch {
+                // Вызываем suspend функцию getFilterSettings внутри корутины
+                val settings = getFilterSettings()
+                _settingsUpdateFlow.emit(settings)
+            }
         }
-    }
-
-    // Вызывать в месте очистки ресурсов, чтобы избежать утечек памяти
-    override fun destroy() {
-        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
-        settingsUpdateChannel.close()
     }
 }

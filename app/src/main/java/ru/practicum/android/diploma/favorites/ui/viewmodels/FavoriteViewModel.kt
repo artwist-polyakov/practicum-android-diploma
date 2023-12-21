@@ -16,7 +16,7 @@ import javax.inject.Inject
 class FavoriteViewModel @Inject constructor(
     private val interactor: FavoritesDBInteractor
 ) : BaseViewModel() {
-    private var vacancies: MutableList<VacancyGeneral> = mutableListOf()
+    private val vacancies: MutableList<VacancyGeneral> = mutableListOf()
 
     private var totalPages: Int = 0
     private var currentPage: Int = 0

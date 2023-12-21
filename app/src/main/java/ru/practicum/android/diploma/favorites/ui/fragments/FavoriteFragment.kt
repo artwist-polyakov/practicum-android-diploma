@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
@@ -37,9 +38,9 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = vacancyListAdapter
             addOnScrollListener(
-                object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
+                object : RecyclerView.OnScrollListener() {
                     override fun onScrollStateChanged(
-                        recyclerView: androidx.recyclerview.widget.RecyclerView,
+                        recyclerView: RecyclerView,
                         newState: Int
                     ) {
                         super.onScrollStateChanged(recyclerView, newState)

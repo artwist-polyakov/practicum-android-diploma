@@ -8,27 +8,27 @@ import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchSettingsSt
 
 @Suppress("TooManyFunctions")
 interface FilterSettingsInteractor {
-    fun setRegion(id: Int?, name: String?)
+    suspend fun setRegion(id: Int?, name: String?)
 
-    fun getRegion(): FilterRegionValue
+    suspend fun getRegion(): FilterRegionValue
 
-    fun setIndustry(id: String?, name: String?)
+    suspend fun setIndustry(id: String?, name: String?)
 
-    fun getIndustry(): FilterIndustryValue
+    suspend fun getIndustry(): FilterIndustryValue
 
-    fun setSalary(id: Int?)
+    suspend fun setSalary(id: Int?)
 
-    fun getSalary(): Int?
+    suspend fun getSalary(): Int?
 
-    fun setWithSalaryOnly(state: Boolean)
+    suspend fun setWithSalaryOnly(state: Boolean)
 
-    fun getWithSalaryOnly(): Boolean
+    suspend fun getWithSalaryOnly(): Boolean
 
-    fun saveSettings()
+    suspend fun saveSettings()
 
-    fun resetSettings()
+    suspend fun resetSettings()
 
-    fun restoreSettings()
+    suspend fun restoreSettings()
 
     fun getSearchSettings(): Flow<SearchSettingsState>
 
