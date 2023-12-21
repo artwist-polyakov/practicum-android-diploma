@@ -17,7 +17,7 @@ class FilterSettingsInteractorImpl(
     private val finalRepository: FilterSettingsRepository
 ) : FilterSettingsInteractor {
 
-    override fun setRegion(id: Int?, name: String?) {
+    override suspend fun setRegion(id: Int?, name: String?) {
         val current = repository.getFilterSettings()
         repository.saveFilterSettings(
             settings = FilterSettingsDto(
@@ -32,7 +32,7 @@ class FilterSettingsInteractorImpl(
         )
     }
 
-    override fun getRegion(): FilterRegionValue {
+    override suspend fun getRegion(): FilterRegionValue {
         val data = repository.getFilterSettings().region
         return FilterRegionValue(
             id = data.id,
@@ -40,7 +40,7 @@ class FilterSettingsInteractorImpl(
         )
     }
 
-    override fun setIndustry(id: String?, name: String?) {
+    override suspend fun setIndustry(id: String?, name: String?) {
         val current = repository.getFilterSettings()
         repository.saveFilterSettings(
             settings = FilterSettingsDto(
@@ -55,7 +55,7 @@ class FilterSettingsInteractorImpl(
         )
     }
 
-    override fun getIndustry(): FilterIndustryValue {
+    override suspend fun getIndustry(): FilterIndustryValue {
         val data = repository.getFilterSettings().industry
         return FilterIndustryValue(
             id = data.id,
@@ -63,7 +63,7 @@ class FilterSettingsInteractorImpl(
         )
     }
 
-    override fun setSalary(value: Int?) {
+    override suspend fun setSalary(value: Int?) {
         val current = repository.getFilterSettings()
         repository.saveFilterSettings(
             settings = FilterSettingsDto(
@@ -75,11 +75,11 @@ class FilterSettingsInteractorImpl(
         )
     }
 
-    override fun getSalary(): Int? {
+    override suspend fun getSalary(): Int? {
         return repository.getFilterSettings().salary
     }
 
-    override fun setWithSalaryOnly(state: Boolean) {
+    override suspend fun setWithSalaryOnly(state: Boolean) {
         val current = repository.getFilterSettings()
         repository.saveFilterSettings(
             settings = FilterSettingsDto(
@@ -91,11 +91,11 @@ class FilterSettingsInteractorImpl(
         )
     }
 
-    override fun getWithSalaryOnly(): Boolean {
+    override suspend fun getWithSalaryOnly(): Boolean {
         return repository.getFilterSettings().withSalaryOnly
     }
 
-    override fun resetSettings() {
+    override suspend fun resetSettings() {
         repository.saveFilterSettings(
             settings = FilterSettingsDto()
         )
@@ -104,7 +104,7 @@ class FilterSettingsInteractorImpl(
         )
     }
 
-    override fun saveSettings() {
+    override suspend fun saveSettings() {
         finalRepository.saveFilterSettings(
             repository.getFilterSettings()
         )
@@ -113,7 +113,7 @@ class FilterSettingsInteractorImpl(
     /**
      * Позволяет восстановить настройки, которые применены в текущем фильтре
      */
-    override fun restoreSettings() {
+    override  suspend fun restoreSettings() {
         repository.saveFilterSettings(
             finalRepository.getFilterSettings()
         )

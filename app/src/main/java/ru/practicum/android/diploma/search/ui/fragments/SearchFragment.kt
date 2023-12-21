@@ -20,6 +20,7 @@ import ru.practicum.android.diploma.search.ui.viewmodels.states.ErrorsSearchScre
 import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchScreenState
 import ru.practicum.android.diploma.search.ui.viewmodels.states.ViewModelInteractionState
 import ru.practicum.android.diploma.vacancy.ui.VacancyFragment
+import androidx.recyclerview.widget.RecyclerView
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(FragmentSearchBinding::inflate) {
@@ -34,9 +35,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = vacancyListAdapter
             addOnScrollListener(
-                object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
+                object : RecyclerView.OnScrollListener() {
                     override fun onScrollStateChanged(
-                        recyclerView: androidx.recyclerview.widget.RecyclerView,
+                        recyclerView: RecyclerView,
                         newState: Int
                     ) {
                         super.onScrollStateChanged(recyclerView, newState)
@@ -157,7 +158,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
             llProblemLayout.visibility = View.VISIBLE
             ivStateImage.setImageResource(error.imageResource)
             tvStateText.visibility = View.VISIBLE
-            tvStateText.text = getString(error.messageResource)
+            val message = if (error.messageResource != -1) getString(error.messageResource) else ""
+            tvStateText.text = message
         }
     }
 

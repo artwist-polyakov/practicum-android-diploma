@@ -27,26 +27,29 @@ class FilterViewModel @Inject constructor(private val interactor: FilterSettings
     private fun firstLaunch() {
         // метод restoreSettings восстанавливает текущие настройки проект
         // сейчас он закомментирован, для соответствия ТЗ
-//        interactor.restoreSettings()
-        if (!hadInitilized) {
-            filterSettingsUI = FilterSettingsUIState(
-                region = interactor.getRegion().text,
-                industry = interactor.getIndustry().text,
-                salary = interactor.getSalary(),
-                salaryOnly = interactor.getWithSalaryOnly()
-            )
-            hadInitilized = true
-            if (areSettingsSettled(filterSettingsUI)) {
-                _state.value = FilterScreenState.Settled(
-                    region = filterSettingsUI.region ?: "",
-                    industry = filterSettingsUI.industry ?: "",
-                    salary = filterSettingsUI.salary,
-                    withSalaryOnly = filterSettingsUI.salaryOnly,
-                    isResetButtonEnabled = areSettingsSettled(filterSettingsUI),
-                    isApplyButtonEnabled = areSettingsChanged(filterSettingsUI)
+        viewModelScope.launch {
+            //        interactor.restoreSettings()
+            if (!hadInitilized) {
+                filterSettingsUI = FilterSettingsUIState(
+                    region = interactor.getRegion().text,
+                    industry = interactor.getIndustry().text,
+                    salary = interactor.getSalary(),
+                    salaryOnly = interactor.getWithSalaryOnly()
                 )
+                hadInitilized = true
+                if (areSettingsSettled(filterSettingsUI)) {
+                    _state.value = FilterScreenState.Settled(
+                        region = filterSettingsUI.region ?: "",
+                        industry = filterSettingsUI.industry ?: "",
+                        salary = filterSettingsUI.salary,
+                        withSalaryOnly = filterSettingsUI.salaryOnly,
+                        isResetButtonEnabled = areSettingsSettled(filterSettingsUI),
+                        isApplyButtonEnabled = areSettingsChanged(filterSettingsUI)
+                    )
+                }
             }
         }
+
     }
 
 
@@ -107,23 +110,27 @@ class FilterViewModel @Inject constructor(private val interactor: FilterSettings
 
     fun handleInteraction(kind: FilterViewModelInteraction) {
         when (kind) {
-            FilterViewModelInteraction.clearSettings -> interactor.resetSettings()
-            FilterViewModelInteraction.saveSettings -> interactor.saveSettings()
-            is FilterViewModelInteraction.setSalary -> {
+            FilterViewModelInteraction.clearSettings -> viewModelScope.launch{
+                interactor.resetSettings()
+            }
+            FilterViewModelInteraction.saveSettings -> viewModelScope.launch{
+                interactor.saveSettings()
+            }
+            is FilterViewModelInteraction.setSalary -> viewModelScope.launch{
                 interactor.setSalary(kind.salary)
             }
 
-            is FilterViewModelInteraction.setSalaryOnly -> {
+            is FilterViewModelInteraction.setSalaryOnly -> viewModelScope.launch{
                 interactor.setWithSalaryOnly(kind.onlySalary)
             }
 
-            FilterViewModelInteraction.clearIndustry -> {
+            FilterViewModelInteraction.clearIndustry -> viewModelScope.launch{
                 interactor.setIndustry(null, null)
             }
-            FilterViewModelInteraction.clearRegion -> {
+            FilterViewModelInteraction.clearRegion -> viewModelScope.launch{
                 interactor.setRegion(null, null)
             }
-            FilterViewModelInteraction.clearSalary -> {
+            FilterViewModelInteraction.clearSalary -> viewModelScope.launch{
                 interactor.setSalary(null)
             }
         }
