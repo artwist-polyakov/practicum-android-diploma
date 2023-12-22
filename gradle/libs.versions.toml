@@ -72,6 +72,9 @@ coil = "io.coil-kt:coil:2.3.0"
 # Debug
 leakcanary = "com.squareup.leakcanary:leakcanary-android:2.12"
 
+# Redmadrobot
+inputmask = "com.redmadrobot:input-mask-android:7.2.4"
+
 [bundles]
 [plugins]
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-android" }

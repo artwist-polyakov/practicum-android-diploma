@@ -9,6 +9,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.redmadrobot.inputmask.MaskedTextChangedListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
@@ -133,6 +134,20 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
                 tiSalaryField.setSelection(tiSalaryField.text?.length ?: 0)
             }
             salaryDebounce(if (text.toString().isNotEmpty()) text.toString().toInt() else null)
+
+            MaskedTextChangedListener.installOn(
+                tiSalaryField,
+                "[000] { } [000] { } [000] { } [000]",
+                object : MaskedTextChangedListener.ValueListener {
+                    override fun onTextChanged(
+                        maskFilled: Boolean,
+                        extractedValue: String,
+                        formattedValue: String,
+                        tailPlaceholder: String
+                    ) {
+                    }
+                }
+            )
 
         }
     }
