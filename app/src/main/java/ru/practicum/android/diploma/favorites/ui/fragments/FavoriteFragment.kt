@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.favorites.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -12,6 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.common.ui.BaseFragment
+import ru.practicum.android.diploma.common.ui.MainActivityBlur
 import ru.practicum.android.diploma.common.utils.debounce
 import ru.practicum.android.diploma.databinding.FragmentFavoriteBinding
 import ru.practicum.android.diploma.favorites.ui.viewmodels.FavoriteViewModel
@@ -23,9 +25,22 @@ import ru.practicum.android.diploma.vacancy.ui.VacancyFragment
 @AndroidEntryPoint
 class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel>(FragmentFavoriteBinding::inflate) {
     override val viewModel by viewModels<FavoriteViewModel>()
+    private var mainActivityBlur: MainActivityBlur? = null
     private var onVacancyClickDebounce: ((VacancyGeneral) -> Unit)? = null
     private val vacancyListAdapter = VacancyAdapter { data ->
         onVacancyClickDebounce?.invoke(data)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is MainActivityBlur) {
+            mainActivityBlur = context
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        mainActivityBlur = null
     }
 
     override fun onResume() {
