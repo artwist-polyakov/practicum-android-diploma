@@ -10,6 +10,7 @@ import ru.practicum.android.diploma.common.data.dto.Resource
 import ru.practicum.android.diploma.common.domain.models.NetworkErrors
 import ru.practicum.android.diploma.common.ui.BaseViewModel
 import ru.practicum.android.diploma.common.utils.debounce
+import ru.practicum.android.diploma.filter.domain.FilterSettingsInteractor
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
 import ru.practicum.android.diploma.search.domain.models.VacanciesSearchResult
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
@@ -21,10 +22,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 open class SearchViewModel @Inject constructor(
-    private val interactor: SearchInteractor
+    private val interactor: SearchInteractor,
+    private val sharedPrefsInteractor: FilterSettingsInteractor
 ) : BaseViewModel() {
     private var searchSettings: SearchSettingsState = SearchSettingsState()
-    private var vacancies: MutableList<VacancyGeneral> = mutableListOf()
+    private val vacancies: MutableList<VacancyGeneral> = mutableListOf()
     private var showSnackBar: Boolean = false
     private var totalPages: Int = 0
     private var isLastUpdatePage = false
@@ -41,12 +43,52 @@ open class SearchViewModel @Inject constructor(
     }
 
     init {
-        checkState()
+        viewModelScope.launch {
+            searchSettings = searchSettings.copy(
+                currentPage = 0,
+                currentQuery = "",
+                currentRegion = sharedPrefsInteractor.getRegion().id,
+                currentIndustry = sharedPrefsInteractor.getIndustry().id,
+                currentSalary = sharedPrefsInteractor.getSalary(),
+                currentSalaryOnly = sharedPrefsInteractor.getWithSalaryOnly()
+            )
+            checkState()
+        }
+
     }
 
     private fun checkState() {
         if (searchSettings.currentQuery.isEmpty()) {
-            _state.value = SearchScreenState.Default
+            _state.value = SearchScreenState.Default(isFilterEnabled())
+        }
+
+        viewModelScope.launch {
+            sharedPrefsInteractor.getSearchSettings()
+                .collect { settings ->
+                    if (checkSettingsToReset(settings)) {
+                        handleSearchSettings(searchSettings)
+                    }
+                }
+        }
+    }
+
+    @Suppress("ComplexCondition")
+    private fun checkSettingsToReset(newSettings: SearchSettingsState): Boolean {
+        if (newSettings.currentSalaryOnly != searchSettings.currentSalaryOnly ||
+            newSettings.currentSalary != searchSettings.currentSalary ||
+            newSettings.currentIndustry != searchSettings.currentIndustry ||
+            newSettings.currentRegion != searchSettings.currentRegion
+        ) {
+            searchSettings = searchSettings.copy(
+                currentPage = 0,
+                currentSalaryOnly = newSettings.currentSalaryOnly,
+                currentSalary = newSettings.currentSalary,
+                currentIndustry = newSettings.currentIndustry,
+                currentRegion = newSettings.currentRegion
+            )
+            return true
+        } else {
+            return false
         }
     }
 
@@ -69,7 +111,8 @@ open class SearchViewModel @Inject constructor(
                 }
                 if (result.data?.vacancies.isNullOrEmpty()) {
                     showSnackBar = false
-                    _state.value = SearchScreenState.Error(ErrorsSearchScreenStates.NOT_FOUND, showSnackBar)
+                    _state.value =
+                        SearchScreenState.Error(ErrorsSearchScreenStates.NOT_FOUND, showSnackBar, isFilterEnabled())
                 } else if (result.data!!.vacanciesFound > 0) {
                     showSnackBar = result.data.currentPage >= 0
                     _state.value = SearchScreenState.Content(
@@ -78,7 +121,8 @@ open class SearchViewModel @Inject constructor(
                         result.data.vacanciesFound,
                         vacancies.apply {
                             addAll(result.data.vacancies)
-                        }
+                        },
+                        isFilterEnabled()
                     )
                 }
             }
@@ -92,7 +136,7 @@ open class SearchViewModel @Inject constructor(
                     when (result.error) {
                         NetworkErrors.NoInternet -> ErrorsSearchScreenStates.NO_INTERNET
                         else -> ErrorsSearchScreenStates.SERVER_ERROR
-                    }, showSnackBar
+                    }, showSnackBar, isFilterEnabled()
                 )
             }
         }
@@ -100,12 +144,11 @@ open class SearchViewModel @Inject constructor(
 
     private fun getVacancies(settings: SearchSettingsState) {
         if (settings.currentQuery.isNotEmpty()) {
-            _state.value = SearchScreenState.Loading(settings.currentPage)
+            _state.value = SearchScreenState.Loading(settings.currentPage, isFilterEnabled())
             viewModelScope.launch {
                 chargeInteractorSearch().invoke()
                     .collect { result ->
                         handleSearchResponse(result)
-                        _state.emit(_state.value)
                     }
             }
         }
@@ -113,7 +156,7 @@ open class SearchViewModel @Inject constructor(
 
     private fun handleSearchSettings(searchSettings: SearchSettingsState) {
         if (searchSettings.currentQuery.isEmpty()) {
-            _state.value = SearchScreenState.Default
+            _state.value = SearchScreenState.Default(isFilterEnabled())
         }
 
         if (searchSettings.currentPage > 0) {
@@ -125,6 +168,12 @@ open class SearchViewModel @Inject constructor(
             searchDebounce(searchSettings)
         }
     }
+
+    private fun isFilterEnabled(): Boolean =
+        searchSettings.currentRegion != null ||
+            searchSettings.currentIndustry != null ||
+            searchSettings.currentSalary != null ||
+            searchSettings.currentSalaryOnly
 
     fun handleInteraction(interaction: ViewModelInteractionState) {
         var newSearchSettings = searchSettings
@@ -170,6 +219,7 @@ open class SearchViewModel @Inject constructor(
             handleSearchSettings(searchSettings)
         }
     }
+
     fun giveMyPageToReload(): Int =
         searchSettings.currentPage
 

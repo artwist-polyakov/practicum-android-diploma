@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
@@ -34,9 +35,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = vacancyListAdapter
             addOnScrollListener(
-                object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
+                object : RecyclerView.OnScrollListener() {
                     override fun onScrollStateChanged(
-                        recyclerView: androidx.recyclerview.widget.RecyclerView,
+                        recyclerView: RecyclerView,
                         newState: Int
                     ) {
                         super.onScrollStateChanged(recyclerView, newState)
@@ -97,6 +98,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     }
 
     private fun render(state: SearchScreenState) {
+        if (state.isFilterEnabled) {
+            binding.ivFilter.setImageResource(R.drawable.filter_on__24px)
+        } else {
+            binding.ivFilter.setImageResource(R.drawable.filter_24px)
+        }
         when (state) {
             is SearchScreenState.Content -> {
 //                updateRefresh()
@@ -152,7 +158,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
             llProblemLayout.visibility = View.VISIBLE
             ivStateImage.setImageResource(error.imageResource)
             tvStateText.visibility = View.VISIBLE
-            tvStateText.text = getString(error.messageResource)
+            val message = if (error.messageResource != -1) getString(error.messageResource) else ""
+            tvStateText.text = message
         }
     }
 

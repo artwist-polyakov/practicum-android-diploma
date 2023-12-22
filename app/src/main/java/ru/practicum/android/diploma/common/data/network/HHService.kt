@@ -24,7 +24,7 @@ interface HHService {
         @Query("per_page") perPage: Int = 20,
         @Query("area") area: Int? = null,
         @Query("search_field") searchField: String? = "name",
-        @Query("industry") industry: Int? = null,
+        @Query("industry") industry: String? = null,
         @Query("salary") salary: Int? = null,
         @Query("only_with_salary") onlyWithSalary: Boolean = false
     ): HHSearchResponse
@@ -58,5 +58,5 @@ interface HHService {
     @GET("areas/{area_id}")
     suspend fun getAreaById(
         @Path("area_id") areaId: Int
-    ): List<AreasDto>
+    ): AreasDto
 }

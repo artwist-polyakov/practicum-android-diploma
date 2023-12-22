@@ -12,5 +12,8 @@
     <color name="lightGray">#E6E8EB</color>
     <color name="background">#80AEAFB4</color>
 
-    <color name="htmlText">@color/blackDay</color>
+    <color name="htmlText">@color/blackUniversal</color>
+    <color name="inputTextHint">@color/gray</color>
+    <color name="textHintApearence">@color/blackUniversal</color>
+    <color name="formsBackground">@color/whiteDay</color>
 </resources>

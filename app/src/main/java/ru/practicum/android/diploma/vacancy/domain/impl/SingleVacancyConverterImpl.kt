@@ -34,7 +34,7 @@ class SingleVacancyConverterImpl(
 
     override fun map(from: VacancyWithEmployerDTO, isFavorite: Boolean): Resource<DetailedVacancyItem> {
         val typeLogo = object : TypeToken<Map<String, String>>() {}.type
-        val logoMap: Map<String, String> = gson.fromJson(from.logosJSON, typeLogo)
+        val logoMap: Map<String, String>? = gson.fromJson(from.logosJSON, typeLogo)
         val keySkills: List<String>? = gson.fromJson(from.keySkillsJSON, object : TypeToken<List<String>>() {}.type)
         val phones: ContactsDto? = gson.fromJson(from.phonesJSON, object : TypeToken<ContactsDto>() {}.type)
         val contact: Contacts?
@@ -55,7 +55,7 @@ class SingleVacancyConverterImpl(
                     id = vacancyId,
                     title = title,
                     employerName = employerName,
-                    employerLogo = logoMap.getOrDefault("medium", null),
+                    employerLogo = logoMap?.getOrDefault(LOGO_SIZE, null),
                     area = city,
                     haveSalary = salaryFrom != null || salaryTo != null,
                     salaryFrom = salaryFrom,
@@ -153,5 +153,9 @@ class SingleVacancyConverterImpl(
                 phones = phones
             )
         }
+    }
+
+    companion object {
+        const val LOGO_SIZE = "240"
     }
 }

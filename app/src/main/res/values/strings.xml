@@ -28,6 +28,7 @@
     <string name="region_error">Такого региона нет</string>
     <string name="region_empty_list">Не удалось получить список</string>
     <string name="industry_selection">Выбор отрасли</string>
+    <string name="industry_empty_list">Не удалось получить список</string>
     <string name="enter_industry">Введите отрасль</string>
     <string name="apply">Применить</string>
     <string name="reset">Сбросить</string>

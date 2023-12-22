@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorBackground"
     tools:context=".search.ui.fragments.SearchFragment">
 
     <LinearLayout
@@ -26,10 +27,10 @@
 
         <ImageView
             android:id="@+id/iv_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/filter_icon_side"
+            android:layout_height="@dimen/filter_icon_side"
             android:contentDescription="@string/app_name"
-            android:padding="@dimen/image_padding_medium"
+            android:scaleType="center"
             android:src="@drawable/filter_24px" />
     </LinearLayout>
 

@@ -34,6 +34,7 @@
         <item name="iconsTint">@color/blackDay</item>
         <item name="iconsBackgroundColorActive">@color/blue</item>
         <item name="iconsColorActive">@color/whiteUniversal</item>
+        <item name="itemTextColor">@color/gray</item>
 
         <item name="searchResultAnnotationColor">@color/blue</item>
         <item name="searchResultAnnotationTextColor">@color/whiteUniversal</item>

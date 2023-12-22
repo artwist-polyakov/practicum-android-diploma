@@ -66,8 +66,11 @@ navigation = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "
 # Fragment
 fragment = "androidx.fragment:fragment-ktx:1.6.2"
 
-#Coil
+# Coil
 coil = "io.coil-kt:coil:2.3.0"
+
+# Debug
+leakcanary = "com.squareup.leakcanary:leakcanary-android:2.12"
 
 [bundles]
 [plugins]

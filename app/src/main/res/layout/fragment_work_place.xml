@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorBackground"
+    tools:context=".filter.ui.fragment.WorkPlaceFragment">
+
+    <LinearLayout
+        android:id="@+id/ll_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/image_padding_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_arrow_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/app_name"
+            android:padding="@dimen/image_padding_medium"
+            android:paddingStart="0dp"
+            android:src="@drawable/arrow_back_24px" />
+
+        <TextView
+            style="@style/Text.Medium22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standart_margin"
+            android:text="@string/location_selection" />
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tl_country"
+        style="@style/TextInputLayout.FilterItem"
+        android:layout_marginStart="@dimen/negative_margin_standard"
+        android:layout_marginTop="@dimen/between_text_card"
+        android:paddingVertical="@dimen/image_padding_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_header">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ti_country"
+            style="@style/TextInputEditText.FilterInput"
+            android:hint="@string/country"
+            android:maxLines="1"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/iv_arrow_forward_country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:padding="@dimen/image_padding_medium"
+        android:paddingEnd="0dp"
+        android:src="@drawable/arrow_forward_24px"
+        app:layout_constraintBottom_toBottomOf="@+id/tl_country"
+        app:layout_constraintEnd_toEndOf="@+id/tl_country"
+        app:layout_constraintTop_toTopOf="@+id/tl_country" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tl_region"
+        style="@style/TextInputLayout.FilterItem"
+        android:layout_marginStart="@dimen/negative_margin_standard"
+        android:paddingVertical="@dimen/image_padding_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tl_country">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ti_region"
+            style="@style/TextInputEditText.FilterInput"
+            android:hint="@string/region"
+            android:maxLines="1"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/iv_arrow_forward_region"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:padding="@dimen/image_padding_medium"
+        android:paddingEnd="0dp"
+        android:src="@drawable/arrow_forward_24px"
+        app:layout_constraintBottom_toBottomOf="@+id/tl_region"
+        app:layout_constraintEnd_toEndOf="@+id/tl_region"
+        app:layout_constraintTop_toTopOf="@+id/tl_region" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_select"
+        style="@style/Button.Blue"
+        android:layout_width="0dp"
+        android:layout_marginBottom="@dimen/image_margin_medium"
+        android:text="@string/select"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

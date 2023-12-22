@@ -7,7 +7,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import coil.load
-import coil.transform.RoundedCornersTransformation
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
@@ -78,12 +77,11 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
             fetchWebview(item)
             ivEmployerLogo.load(item.employerLogo) {
                 placeholder(R.drawable.placeholder_48px)
-                transformations(
-                    RoundedCornersTransformation(
-                        radius = resources.getDimensionPixelSize(R.dimen.button_radius).toFloat()
-                    )
-                )
+                error(R.drawable.placeholder_48px)
             }
+            val radius = resources.getDimension(R.dimen.vacancy_logo_corner_radius)
+            val shapeAppearanceModel = ivEmployerLogo.shapeAppearanceModel.toBuilder().setAllCornerSizes(radius).build()
+            ivEmployerLogo.shapeAppearanceModel = shapeAppearanceModel
 
             tvEmployerText.text = item.employerName
             tvCityText.text = item.area
@@ -101,17 +99,21 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
 
     private fun fetchSalary(item: DetailedVacancyItem) = with(binding) {
         tvSalary.text = when {
-            item.salaryFrom == null -> getString(R.string.salary_not_specified)
-            item.salaryTo == null -> getString(
-                R.string.salary_from, item.salaryFrom.formatSalary(), item.salaryCurrency
-            )
+            item.salaryFrom != null && item.salaryTo != null ->
+                getString(
+                    R.string.salary_from_to,
+                    item.salaryFrom.formatSalary(),
+                    item.salaryTo.formatSalary(),
+                    item.salaryCurrency
+                )
 
-            else -> getString(
-                R.string.salary_from_to,
-                item.salaryFrom.formatSalary(),
-                item.salaryTo.formatSalary(),
-                item.salaryCurrency
-            )
+            item.salaryFrom != null ->
+                getString(R.string.salary_from, item.salaryFrom.formatSalary(), item.salaryCurrency)
+
+            item.salaryTo != null ->
+                getString(R.string.salary_to, item.salaryTo.formatSalary(), item.salaryCurrency)
+
+            else -> getString(R.string.salary_not_specified)
         }
     }
 
