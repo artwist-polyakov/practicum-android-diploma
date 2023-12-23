@@ -30,7 +30,7 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
     override val viewModel by viewModels<FavoriteViewModel>()
     private var onVacancyClickDebounce: ((VacancyGeneral) -> Unit)? = null
     private val vacancyListAdapter = VacancyAdapter({ data -> onVacancyClickDebounce?.invoke(data) },
-        { data -> if (suggestTrackDeleting()) viewModel.deleteFromFavorites(data) else true })
+        { data -> if (suggestTrackDeleting(data)) viewModel.deleteFromFavorites(data) else true })
 
     override fun onResume() {
         super.onResume()
@@ -124,19 +124,35 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
         }
     }
 
-    private fun suggestTrackDeleting(): Boolean {
+    private fun suggestTrackDeleting(vacancy: VacancyGeneral): Boolean {
         var decision = false
+        val vacancyName = vacancy.title
         val popupMenu = PopupMenu(context, view)
         popupMenu.inflate(R.menu.delete_from_favorite) // Замените my_menu на ваше меню
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_delete -> {
-                    decision=true
+                    decision = true
+                    val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+                    alertDialogBuilder.setTitle("Подтверждение удаления")
+                    alertDialogBuilder.setMessage("Вы уверены, что хотите удалить вакансию $vacancyName?")
+                    alertDialogBuilder.setPositiveButton("Да") { _: DialogInterface, _: Int ->
+                        decision = true
+                    }
+                    alertDialogBuilder.setNegativeButton("Нет") { _: DialogInterface, _: Int ->
+                        decision = false
+                    }
+                    val alertDialog: AlertDialog = alertDialogBuilder.create()
+                    alertDialog.show()
+                    alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+                        .setTextColor(resources.getColor(R.color.blackDay, null))
+                    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                        .setTextColor(resources.getColor(R.color.blackDay, null))
                     return@setOnMenuItemClickListener true
                 }
 
                 else -> {
-                    decision=false
+                    decision = false
                     return@setOnMenuItemClickListener false
                 }
             }
