@@ -1,13 +1,18 @@
 package ru.practicum.android.diploma.favorites.ui.fragments
 
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.PopupMenu
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
@@ -24,10 +29,8 @@ import ru.practicum.android.diploma.vacancy.ui.VacancyFragment
 class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel>(FragmentFavoriteBinding::inflate) {
     override val viewModel by viewModels<FavoriteViewModel>()
     private var onVacancyClickDebounce: ((VacancyGeneral) -> Unit)? = null
-    private val vacancyListAdapter = VacancyAdapter(
-        { data -> onVacancyClickDebounce?.invoke(data) },
-        { data -> viewModel.deleteFromFavorites(data) }
-    )
+    private val vacancyListAdapter = VacancyAdapter({ data -> onVacancyClickDebounce?.invoke(data) },
+        { data -> if (suggestTrackDeleting()) viewModel.deleteFromFavorites(data) else true })
 
     override fun onResume() {
         super.onResume()
@@ -38,35 +41,28 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
         binding.favoritesList.root.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = vacancyListAdapter
-            addOnScrollListener(
-                object : RecyclerView.OnScrollListener() {
-                    override fun onScrollStateChanged(
-                        recyclerView: RecyclerView,
-                        newState: Int
-                    ) {
-                        super.onScrollStateChanged(recyclerView, newState)
-                        if (!recyclerView.canScrollVertically(1)) {
-                            viewModel.handleRequest()
-                        }
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(
+                    recyclerView: RecyclerView, newState: Int
+                ) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    if (!recyclerView.canScrollVertically(1)) {
+                        viewModel.handleRequest()
                     }
                 }
-            )
+            })
         }
     }
 
     override fun subscribe() {
         onVacancyClickDebounce = debounce(
-            CLICK_DEBOUNCE_DELAY,
-            viewLifecycleOwner.lifecycleScope,
-            false,
-            false
+            CLICK_DEBOUNCE_DELAY, viewLifecycleOwner.lifecycleScope, false, false
         ) { data ->
             val bundle = Bundle().apply {
                 putInt(VacancyFragment.ARG_ID, data.id)
             }
             findNavController().navigate(
-                R.id.action_favoriteFragment_to_vacancyFragment,
-                bundle
+                R.id.action_favoriteFragment_to_vacancyFragment, bundle
             )
         }
 
@@ -126,6 +122,27 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
             favoritesList.root.visibility = GONE
             progressBar.visibility = VISIBLE
         }
+    }
+
+    private fun suggestTrackDeleting(): Boolean {
+        var decision = false
+        val popupMenu = PopupMenu(context, view)
+        popupMenu.inflate(R.menu.delete_from_favorite) // Замените my_menu на ваше меню
+        popupMenu.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.action_delete -> {
+                    decision=true
+                    return@setOnMenuItemClickListener true
+                }
+
+                else -> {
+                    decision=false
+                    return@setOnMenuItemClickListener false
+                }
+            }
+        }
+        popupMenu.show()
+        return decision
     }
 
     companion object {
