@@ -3,7 +3,6 @@ package ru.practicum.android.diploma.filter.ui.fragment
 import android.content.res.ColorStateList
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.core.content.ContextCompat

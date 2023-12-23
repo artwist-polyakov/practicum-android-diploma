@@ -40,24 +40,28 @@ class SimilarVacanciesViewModel @Inject constructor(
         _state.value = SearchScreenState.Loading(currentPage)
         viewModelScope.launch {
             interactor.searchSimilarVacancies(vacancyId, currentPage).collect { result ->
-                processSearchResult(result)
+                provideResponse(result)
             }
         }
     }
 
-    private fun processSearchResult(result: Resource<VacanciesSearchResult>) {
+    private fun provideResponse(result: Resource<VacanciesSearchResult>) {
         when (result) {
             is Resource.Success -> {
-                result.data?.let { data ->
-                    totalPages = data.totalPages
-                    currentPage = data.currentPage
-                    vacancies.addAll(data.vacancies)
-                    _state.value = SearchScreenState.Content(
-                        totalPages,
-                        currentPage,
-                        vacancies.size,
-                        vacancies.toList()
-                    )
+                if (result.data?.vacancies.isNullOrEmpty()) {
+                    _state.value = SearchScreenState.Error(ErrorsSearchScreenStates.NOT_FOUND)
+                } else if (result.data!!.vacanciesFound > 0) {
+                    result.data.let { data ->
+                        totalPages = data.totalPages
+                        currentPage = data.currentPage
+                        vacancies.addAll(data.vacancies)
+                        _state.value = SearchScreenState.Content(
+                            totalPages,
+                            currentPage,
+                            vacancies.size,
+                            vacancies.toList()
+                        )
+                    }
                 }
             }
 
@@ -77,33 +81,6 @@ class SimilarVacanciesViewModel @Inject constructor(
         if (currentPage + 1 < totalPages) {
             currentPage++
             loadVacancies()
-        }
-    }
-
-
-    private fun provideResponse(result: Resource<VacanciesSearchResult>) {
-        when (result) {
-            is Resource.Success -> {
-                if (result.data?.vacancies.isNullOrEmpty()) {
-                    _state.value = SearchScreenState.Error(ErrorsSearchScreenStates.NOT_FOUND)
-                } else if (result.data!!.vacanciesFound > 0) {
-                    _state.value = SearchScreenState.Content(
-                        result.data.totalPages,
-                        result.data.currentPage,
-                        result.data.vacancies.toList().size,
-                        result.data.vacancies.toList()
-                    )
-                }
-            }
-
-            is Resource.Error -> {
-                _state.value = SearchScreenState.Error(
-                    when (result.error) {
-                        NetworkErrors.NoInternet -> ErrorsSearchScreenStates.NO_INTERNET
-                        else -> ErrorsSearchScreenStates.SERVER_ERROR
-                    }
-                )
-            }
         }
     }
 }

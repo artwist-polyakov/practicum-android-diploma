@@ -87,17 +87,6 @@ class SimilarVacanciesFragment :
         }
     }
 
-    private fun showError(error: ErrorsSearchScreenStates) {
-        with(binding) {
-            vacancyList.root.visibility = View.GONE
-            progressBar.visibility = View.GONE
-
-            tvErrorMessage.visibility = View.VISIBLE
-            tvErrorMessage.text = getString(error.messageResource)
-            tvErrorMessage.setCompoundDrawablesWithIntrinsicBounds(0, error.imageResource, 0, 0)
-        }
-    }
-
     private fun showError(error: ErrorsSearchScreenStates, showSnackbar: Boolean = false) {
         vacancyListAdapter.setScrollLoadingEnabled(false)
         vacancyListAdapter.refreshLastItem()
