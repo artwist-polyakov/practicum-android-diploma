@@ -105,7 +105,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         }
         when (state) {
             is SearchScreenState.Content -> {
-//                updateRefresh()
                 showData(state)
             }
 
@@ -137,6 +136,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
 
     private fun showProblem(error: ErrorsSearchScreenStates, showSnackbar: Boolean = false) {
         vacancyListAdapter.setScrollLoadingEnabled(false)
+        vacancyListAdapter.setShowScrollRefresh(true)
         vacancyListAdapter.refreshLastItem()
         if (showSnackbar) {
             binding.root.showCustomSnackbar(getString(error.messageResource))

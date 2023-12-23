@@ -3,6 +3,7 @@ package ru.practicum.android.diploma.search.ui.fragments
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -44,10 +45,15 @@ class VacancyAdapter(
 
         fun showLoadingIndicator() {
             binding.pbLoadingBar.visibility = View.VISIBLE
+            binding.ivReload.visibility = View.GONE
         }
 
         fun hideLoadingIndicator() {
             binding.pbLoadingBar.visibility = View.GONE
+        }
+
+        fun showRefreshButton() {
+            binding.ivReload.isVisible = !binding.pbLoadingBar.isVisible
         }
 
         private fun parseSalary(from: Int?, to: Int?, currency: String?): String {
@@ -77,6 +83,7 @@ class VacancyAdapter(
     private var currentPage: Int = 0
     private var dataList = ArrayList<VacancyGeneral>()
     private var showScrollLoading = true
+    private var showScrollRefresh = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VacancyViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -90,6 +97,9 @@ class VacancyAdapter(
             holder.showLoadingIndicator()
         } else {
             holder.hideLoadingIndicator()
+        }
+        if (showScrollRefresh && position == dataList.size - 1) {
+            holder.showRefreshButton()
         }
 
     }
@@ -112,6 +122,10 @@ class VacancyAdapter(
 
     fun setScrollLoadingEnabled(show: Boolean) {
         showScrollLoading = show
+    }
+
+    fun setShowScrollRefresh(show: Boolean) {
+        showScrollRefresh = show
     }
 
     fun refreshLastItem() {
