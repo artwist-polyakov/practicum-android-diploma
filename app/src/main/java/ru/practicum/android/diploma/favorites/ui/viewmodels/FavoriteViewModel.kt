@@ -81,7 +81,6 @@ class FavoriteViewModel @Inject constructor(
             totalVacancies = result.vacanciesFound,
             vacancies = vacancies
         )
-
     }
 
     fun nextPager() {

@@ -24,9 +24,9 @@ class SimilarVacanciesFragment :
     BaseFragment<FragmentSimilarVacanciesBinding, SimilarVacanciesViewModel>(FragmentSimilarVacanciesBinding::inflate) {
     override val viewModel: SimilarVacanciesViewModel by viewModels()
     private var onVacancyClickDebounce: ((VacancyGeneral) -> Unit)? = null
-    private val vacancyListAdapter = VacancyAdapter() { data ->
+    private val vacancyListAdapter = VacancyAdapter({ data ->
         onVacancyClickDebounce?.invoke(data)
-    }
+    }, { _ -> true })
 
     override fun initViews() {
         val vacancyId = arguments?.getInt(VacancyFragment.ARG_ID)
