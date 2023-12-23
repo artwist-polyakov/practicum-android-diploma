@@ -88,16 +88,15 @@ class FavoriteViewModel @Inject constructor(
         handleRequest()
     }
 
-    fun deleteFromFavorites(vacancy: DetailedVacancyItem):Boolean {
+    fun deleteFromFavorites(vacancy: VacancyGeneral): Boolean {
         viewModelScope.launch {
-            /*val result = */
-            interactor.interactWithVacancyFavor(vacancy)
-            return@launch
-            /*var currentVacancy = (state.value as? VacancyState.Content)?.vacancy
-            currentVacancy = currentVacancy?.copy(favorite = result)
-            currentVacancy?.let {
-                _state.value = VacancyState.Content(it)
-            }*/
+            interactor.getVacancy(vacancy.id)
+                .collect { result ->
+                    if (result != null) {
+                        interactor.interactWithVacancyFavor(result)
+                    }
+                }
         }
+        return true
     }
 }
