@@ -26,7 +26,7 @@ open class SearchViewModel @Inject constructor(
     private val sharedPrefsInteractor: FilterSettingsInteractor
 ) : BaseViewModel() {
     private var searchSettings: SearchSettingsState = SearchSettingsState()
-    private val vacancies: MutableList<VacancyGeneral> = mutableListOf()
+    protected val vacancies: MutableList<VacancyGeneral> = mutableListOf()
     private var showSnackBar: Boolean = false
     private var totalPages: Int = 0
     private var isLastUpdatePage = false

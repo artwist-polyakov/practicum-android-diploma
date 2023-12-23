@@ -12,7 +12,6 @@ import ru.practicum.android.diploma.search.domain.api.SearchInteractor
 import ru.practicum.android.diploma.search.domain.models.VacanciesSearchResult
 import ru.practicum.android.diploma.search.ui.viewmodels.states.ErrorsSearchScreenStates
 import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchScreenState
-import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchSettingsState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,21 +22,64 @@ class SimilarVacanciesViewModel @Inject constructor(
     interactor,
     sharedPrefsInteractor
 ) {
-    private var searchSettings: SearchSettingsState = SearchSettingsState()
     private var _state = MutableStateFlow<SearchScreenState>(SearchScreenState.Default())
     override val state: StateFlow<SearchScreenState>
         get() = _state
+    private var totalPages: Int = 0
+    private var currentPage: Int = 0
+    private var isLastUpdatePage = false
 
     var vacancyId: Int = 0
 
     fun getVacancyList(id: Int) {
+        vacancyId = id
+        loadVacancies()
+    }
+
+    private fun loadVacancies() {
+        _state.value = SearchScreenState.Loading(currentPage)
         viewModelScope.launch {
-            interactor.searchSimilarVacancies(id)
-                .collect { result ->
-                    provideResponse(result)
-                }
+            interactor.searchSimilarVacancies(vacancyId, currentPage).collect { result ->
+                processSearchResult(result)
+            }
         }
     }
+
+    private fun processSearchResult(result: Resource<VacanciesSearchResult>) {
+        when (result) {
+            is Resource.Success -> {
+                result.data?.let { data ->
+                    totalPages = data.totalPages
+                    currentPage = data.currentPage
+                    vacancies.addAll(data.vacancies)
+                    _state.value = SearchScreenState.Content(
+                        totalPages,
+                        currentPage,
+                        vacancies.size,
+                        vacancies.toList()
+                    )
+                }
+            }
+
+            is Resource.Error -> {
+                val showSnackbar = vacancies.isNotEmpty()
+                when (result.error) {
+                    NetworkErrors.NoInternet -> _state.value =
+                        SearchScreenState.Error(ErrorsSearchScreenStates.NO_INTERNET, showSnackbar)
+
+                    else -> _state.value = SearchScreenState.Error(ErrorsSearchScreenStates.NO_INTERNET, showSnackbar)
+                }
+            }
+        }
+    }
+
+    fun loadMoreVacancies() {
+        if (currentPage + 1 < totalPages) {
+            currentPage++
+            loadVacancies()
+        }
+    }
+
 
     private fun provideResponse(result: Resource<VacanciesSearchResult>) {
         when (result) {

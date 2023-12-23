@@ -50,8 +50,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
                 }
             )
         }
-//        updateRefresh()
-
     }
 
     override fun subscribe() {
@@ -104,22 +102,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
             binding.ivFilter.setImageResource(R.drawable.filter_24px)
         }
         when (state) {
-            is SearchScreenState.Content -> {
-//                updateRefresh()
-                showData(state)
-            }
-
-            is SearchScreenState.Error -> {
-                showProblem(state.error, state.showSnackBar)
-            }
-
-            is SearchScreenState.Loading -> {
-                if (state.forPage == 0) showCentralProgressBar()
-            }
-
-            is SearchScreenState.Default -> {
-                showDefault()
-            }
+            is SearchScreenState.Content -> showData(state)
+            is SearchScreenState.Error -> showProblem(state.error, state.showSnackBar)
+            is SearchScreenState.Loading -> if (state.forPage == 0) showCentralProgressBar()
+            is SearchScreenState.Default -> showDefault()
         }
     }
 

@@ -3,6 +3,7 @@ package ru.practicum.android.diploma.filter.ui.fragment
 import android.content.res.ColorStateList
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.core.content.ContextCompat
@@ -126,8 +127,7 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 updateButtonVisibility(s.toString())
                 updateHintColor(s.toString())
-                val cleanString = s.toString().replace(" ", "").replace("\u202F", "")
-                val cleanNumberString = cleanString.replace(Regex("[^0-9]"), "")
+                val cleanNumberString = s.toString().replace(Regex("[^0-9]"), "")
                 if (cleanNumberString.isNotBlank()) {
                     try {
                         formatSalaryText(cleanNumberString, this)
