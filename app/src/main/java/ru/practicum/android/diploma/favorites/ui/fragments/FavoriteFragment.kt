@@ -128,7 +128,7 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
         var decision = false
         val vacancyName = vacancy.title
         val popupMenu = PopupMenu(context, view)
-        popupMenu.inflate(R.menu.delete_from_favorite) // Замените my_menu на ваше меню
+        popupMenu.inflate(R.menu.delete_from_favorite)
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_delete -> {
