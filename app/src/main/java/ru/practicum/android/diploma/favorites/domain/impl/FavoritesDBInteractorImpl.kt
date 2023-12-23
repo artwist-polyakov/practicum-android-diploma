@@ -59,4 +59,8 @@ class FavoritesDBInteractorImpl(
         }
         return false
     }
+
+    override suspend fun deleteVacancy(vacancyId: Int) {
+        database.vacancyDao().removeVacancyById(vacancyId)
+    }
 }

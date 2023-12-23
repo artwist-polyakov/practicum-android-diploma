@@ -9,4 +9,5 @@ interface FavoritesDBInteractor {
     suspend fun isVacancyFavorite(vacancyId: Int): Boolean
     suspend fun getVacancy(vacancyId: Int): Flow<DetailedVacancyItem?>
     suspend fun interactWithVacancyFavor(vacancy: DetailedVacancyItem): Boolean
+    suspend fun deleteVacancy(vacancyId: Int)
 }
