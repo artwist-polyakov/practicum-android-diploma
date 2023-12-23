@@ -66,18 +66,17 @@
         android:layout_gravity="center_horizontal" />
 
     <ImageView
-        android:id="@+id/pb_loading_bar"
+        android:id="@+id/iv_reload"
+        android:src="@drawable/ic_refresh_48"
         android:layout_width="@dimen/progressbar_size"
         android:layout_height="@dimen/progressbar_size"
         android:layout_marginEnd="@dimen/vacancy_item_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/vacancy_info"
-        android:indeterminateTint="@color/blue"
-        android:indeterminateTintMode="src_in"
         android:paddingVertical="@dimen/vacancy_item_margin"
         android:paddingBottom="@dimen/navbar_height"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_gravity="center_horizontal" />
 
 
