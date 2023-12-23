@@ -10,8 +10,6 @@ import ru.practicum.android.diploma.favorites.domain.api.FavoritesDBInteractor
 import ru.practicum.android.diploma.favorites.ui.viewmodels.states.FavoritesScreenState
 import ru.practicum.android.diploma.search.domain.models.VacanciesSearchResult
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
-import ru.practicum.android.diploma.vacancy.domain.models.DetailedVacancyItem
-import ru.practicum.android.diploma.vacancy.domain.models.VacancyState
 import javax.inject.Inject
 
 @HiltViewModel
