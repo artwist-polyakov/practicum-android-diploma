@@ -45,7 +45,7 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
                     ) {
                         super.onScrollStateChanged(recyclerView, newState)
                         if (!recyclerView.canScrollVertically(1)) {
-                            viewModel.nextPager()
+                            viewModel.handleRequest()
                         }
                     }
                 }
@@ -55,10 +55,10 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
 
     override fun subscribe() {
         onVacancyClickDebounce = debounce(
-            CLICK_DEBOUNCE_DELAY,
+            CLICK_DEBOUNCE_DELAY_500MS,
             viewLifecycleOwner.lifecycleScope,
-            false,
-            false
+            useLastParam = false,
+            actionWithDelay = false
         ) { data ->
             val bundle = Bundle().apply {
                 putInt(VacancyFragment.ARG_ID, data.id)
@@ -128,6 +128,6 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
     }
 
     companion object {
-        private const val CLICK_DEBOUNCE_DELAY = 500L
+        private const val CLICK_DEBOUNCE_DELAY_500MS = 500L
     }
 }
