@@ -24,9 +24,10 @@ import ru.practicum.android.diploma.vacancy.ui.VacancyFragment
 class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel>(FragmentFavoriteBinding::inflate) {
     override val viewModel by viewModels<FavoriteViewModel>()
     private var onVacancyClickDebounce: ((VacancyGeneral) -> Unit)? = null
-    private val vacancyListAdapter = VacancyAdapter { data ->
-        onVacancyClickDebounce?.invoke(data)
-    }
+    private val vacancyListAdapter = VacancyAdapter(
+        { data -> onVacancyClickDebounce?.invoke(data) },
+        { data -> viewModel.deleteFromFavorites(data) }
+    )
 
     override fun onResume() {
         super.onResume()

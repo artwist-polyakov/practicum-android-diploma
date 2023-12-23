@@ -12,12 +12,14 @@ import ru.practicum.android.diploma.databinding.VacancyListItemBinding
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
 
 class VacancyAdapter(
-    private val clickListener: (VacancyGeneral) -> Unit
+    private val clickListener: (VacancyGeneral) -> Unit,
+    private val longClickListener: (VacancyGeneral) -> Boolean
 ) : RecyclerView.Adapter<VacancyAdapter.VacancyViewHolder>() {
 
     inner class VacancyViewHolder(
         private val binding: VacancyListItemBinding,
-        private val clickListener: (VacancyGeneral) -> Unit
+        private val clickListener: (VacancyGeneral) -> Unit,
+        private val longClickListener: (VacancyGeneral) -> Boolean
     ) : RecyclerView.ViewHolder(binding.root) {
         private val radius = itemView.resources.getDimension(R.dimen.vacancy_logo_corner_radius)
         fun bind(data: VacancyGeneral) = with(binding) {
@@ -40,6 +42,7 @@ class VacancyAdapter(
             companyImage.shapeAppearanceModel = shapeAppearanceModel
 
             itemView.setOnClickListener { clickListener(data) }
+            itemView.setOnLongClickListener { longClickListener(data) }
         }
 
         fun showLoadingIndicator() {
@@ -71,7 +74,6 @@ class VacancyAdapter(
                     itemView.resources.getString(R.string.salary_not_specified)
             }
         }
-
     }
 
     private var currentPage: Int = 0
@@ -81,7 +83,7 @@ class VacancyAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VacancyViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = VacancyListItemBinding.inflate(layoutInflater, parent, false)
-        return VacancyViewHolder(binding, clickListener)
+        return VacancyViewHolder(binding, clickListener, longClickListener)
     }
 
     override fun onBindViewHolder(holder: VacancyViewHolder, position: Int) {
@@ -117,5 +119,4 @@ class VacancyAdapter(
     fun refreshLastItem() {
         notifyItemChanged(dataList.size - 1)
     }
-
 }
