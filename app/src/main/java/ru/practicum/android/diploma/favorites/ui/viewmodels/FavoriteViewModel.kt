@@ -42,9 +42,11 @@ class FavoriteViewModel @Inject constructor(
     private suspend fun loadVacancies() {
         interactor.getFavoritesVacancies(
             page = currentPage + if (currentPage < totalPages - 1) 1 else 0
-        )
-            .catch { handleError() }
-            .collect { processResult(it) }
+        ).catch {
+            handleError()
+        }.collect {
+            processResult(it)
+        }
     }
 
     private fun processResult(result: VacanciesSearchResult) {
@@ -79,10 +81,5 @@ class FavoriteViewModel @Inject constructor(
             totalVacancies = result.vacanciesFound,
             vacancies = vacancies
         )
-
-    }
-
-    fun nextPager() {
-        handleRequest()
     }
 }
