@@ -81,7 +81,7 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
 
     override fun subscribe() {
         onVacancyClickDebounce = debounce(
-            CLICK_DEBOUNCE_DELAY,
+            CLICK_DEBOUNCE_DELAY_500MS,
             viewLifecycleOwner.lifecycleScope,
             useLastParam = false,
             actionWithDelay = false
@@ -90,7 +90,8 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
                 putInt(VacancyFragment.ARG_ID, data.id)
             }
             findNavController().navigate(
-                R.id.action_favoriteFragment_to_vacancyFragment, bundle
+                R.id.action_favoriteFragment_to_vacancyFragment,
+                bundle
             )
         }
 
@@ -211,6 +212,6 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
     }
 
     companion object {
-        private const val CLICK_DEBOUNCE_DELAY = 500L
+        private const val CLICK_DEBOUNCE_DELAY_500MS = 500L
     }
 }
