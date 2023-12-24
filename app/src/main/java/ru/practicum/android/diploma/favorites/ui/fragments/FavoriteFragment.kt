@@ -158,7 +158,7 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
     }
 
     private fun suggestTrackDeleting(vacancy: VacancyGeneral, anchorView: View) {
-        requireContext().vibrateShot(100L)
+        requireContext().vibrateShot(VIBRATE_DURATION_100MS)
         val popupMenu = PopupMenu(
             context,
             anchorView,
@@ -171,24 +171,7 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_delete -> {
-                    applyBlur(true)
-                    val alertDialogBuilder: AlertDialog.Builder =
-                        AlertDialog.Builder(requireContext(), R.style.AlertDialog)
-                    alertDialogBuilder.setTitle(getString(R.string.deleting_confirmation))
-                    alertDialogBuilder.setMessage(getString(R.string.remove_vacancy, vacancy.title))
-                    alertDialogBuilder.setPositiveButton(getString(R.string.yes)) { _: DialogInterface, _: Int ->
-                        viewModel.deleteFromFavorites(vacancy)
-                        applyBlur(false)
-                    }
-                    alertDialogBuilder.setNegativeButton(getString(R.string.no)) { _: DialogInterface, _: Int ->
-                        applyBlur(false)
-                    }
-                    val alertDialog: AlertDialog = alertDialogBuilder.create()
-                    alertDialog.show()
-                    alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE)
-                        .setTextColor(resources.getColor(R.color.blackUniversal, null))
-                    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
-                        .setTextColor(resources.getColor(R.color.red, null))
+                    buildDialog(vacancy)
                     true
                 }
 
@@ -201,6 +184,27 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
             }
         }
         popupMenu.show()
+    }
+
+    private fun buildDialog(vacancy: VacancyGeneral) {
+        applyBlur(true)
+        val alertDialogBuilder: AlertDialog.Builder =
+            AlertDialog.Builder(requireContext(), R.style.AlertDialog)
+        alertDialogBuilder.setTitle(getString(R.string.deleting_confirmation))
+        alertDialogBuilder.setMessage(getString(R.string.remove_vacancy, vacancy.title))
+        alertDialogBuilder.setPositiveButton(getString(R.string.yes)) { _: DialogInterface, _: Int ->
+            viewModel.deleteFromFavorites(vacancy)
+            applyBlur(false)
+        }
+        alertDialogBuilder.setNegativeButton(getString(R.string.no)) { _: DialogInterface, _: Int ->
+            applyBlur(false)
+        }
+        val alertDialog: AlertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+            .setTextColor(resources.getColor(R.color.blackUniversal, null))
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            .setTextColor(resources.getColor(R.color.red, null))
     }
 
     private fun applyBlur(blurOn: Boolean) = with(binding) {
@@ -217,5 +221,6 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
 
     companion object {
         private const val CLICK_DEBOUNCE_DELAY_500MS = 500L
+        private const val VIBRATE_DURATION_100MS = 100L
     }
 }
