@@ -126,8 +126,7 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 updateButtonVisibility(s.toString())
                 updateHintColor(s.toString())
-                val cleanString = s.toString().replace(" ", "").replace("\u202F", "")
-                val cleanNumberString = cleanString.replace(Regex("[^0-9]"), "")
+                val cleanNumberString = s.toString().replace(Regex("[^0-9]"), "")
                 if (cleanNumberString.isNotBlank()) {
                     try {
                         formatSalaryText(cleanNumberString, this)

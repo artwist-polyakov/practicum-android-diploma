@@ -71,7 +71,6 @@ class VacancyAdapter(
                     itemView.resources.getString(R.string.salary_not_specified)
             }
         }
-
     }
 
     private var currentPage: Int = 0
@@ -91,7 +90,6 @@ class VacancyAdapter(
         } else {
             holder.hideLoadingIndicator()
         }
-
     }
 
     override fun getItemCount(): Int = dataList.size
@@ -117,5 +115,4 @@ class VacancyAdapter(
     fun refreshLastItem() {
         notifyItemChanged(dataList.size - 1)
     }
-
 }
