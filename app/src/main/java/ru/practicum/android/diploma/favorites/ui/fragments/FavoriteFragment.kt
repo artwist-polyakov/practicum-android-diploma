@@ -2,8 +2,9 @@ package ru.practicum.android.diploma.favorites.ui.fragments
 
 import android.app.AlertDialog
 import android.content.DialogInterface
-import android.graphics.Color
 import android.os.Bundle
+import android.view.MenuInflater
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.PopupMenu
@@ -12,7 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
@@ -29,8 +29,14 @@ import ru.practicum.android.diploma.vacancy.ui.VacancyFragment
 class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel>(FragmentFavoriteBinding::inflate) {
     override val viewModel by viewModels<FavoriteViewModel>()
     private var onVacancyClickDebounce: ((VacancyGeneral) -> Unit)? = null
-    private val vacancyListAdapter = VacancyAdapter({ data -> onVacancyClickDebounce?.invoke(data) },
-        { data -> if (suggestTrackDeleting(data)) viewModel.deleteFromFavorites(data) else true })
+    private val vacancyListAdapter = VacancyAdapter(
+        { data ->
+            onVacancyClickDebounce?.invoke(data)
+        },
+        { data, view ->
+            suggestTrackDeleting(data, view)
+        }
+    )
 
     override fun onResume() {
         super.onResume()
@@ -43,7 +49,8 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
             adapter = vacancyListAdapter
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(
-                    recyclerView: RecyclerView, newState: Int
+                    recyclerView: RecyclerView,
+                    newState: Int
                 ) {
                     super.onScrollStateChanged(recyclerView, newState)
                     if (!recyclerView.canScrollVertically(1)) {
@@ -56,7 +63,10 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
 
     override fun subscribe() {
         onVacancyClickDebounce = debounce(
-            CLICK_DEBOUNCE_DELAY, viewLifecycleOwner.lifecycleScope, false, false
+            CLICK_DEBOUNCE_DELAY,
+            viewLifecycleOwner.lifecycleScope,
+            useLastParam = false,
+            actionWithDelay = false
         ) { data ->
             val bundle = Bundle().apply {
                 putInt(VacancyFragment.ARG_ID, data.id)
@@ -76,7 +86,11 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
     private fun render(state: FavoritesScreenState) {
         when (state) {
             is FavoritesScreenState.Empty -> emptyFavorites(state)
-            is FavoritesScreenState.Content -> showFavorites(state)
+            is FavoritesScreenState.Content -> {
+                showFavorites(state)
+                vacancyListAdapter.setData(state.vacancies, state.currentPage)
+            }
+
             is FavoritesScreenState.Error -> showError(state)
             is FavoritesScreenState.Loading -> isLoading()
         }
@@ -124,41 +138,35 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
         }
     }
 
-    private fun suggestTrackDeleting(vacancy: VacancyGeneral): Boolean {
-        var decision = false
-        val vacancyName = vacancy.title
-        val popupMenu = PopupMenu(context, view)
-        popupMenu.inflate(R.menu.delete_from_favorite)
+    private fun suggestTrackDeleting(vacancy: VacancyGeneral, anchorView: View) {
+        val popupMenu = PopupMenu(context, anchorView, 0, 0, R.style.PopupMenu)
+        val inflater: MenuInflater = popupMenu.menuInflater
+        inflater.inflate(R.menu.delete_from_favorite, popupMenu.menu)
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_delete -> {
-                    decision = true
-                    val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
-                    alertDialogBuilder.setTitle("Подтверждение удаления")
-                    alertDialogBuilder.setMessage("Вы уверены, что хотите удалить вакансию $vacancyName?")
-                    alertDialogBuilder.setPositiveButton("Да") { _: DialogInterface, _: Int ->
-                        decision = true
+                    val alertDialogBuilder: AlertDialog.Builder =
+                        AlertDialog.Builder(requireContext(), R.style.AlertDialog)
+                    alertDialogBuilder.setTitle(getString(R.string.deleting_confirmation))
+                    alertDialogBuilder.setMessage(getString(R.string.remove_vacancy, vacancy.title))
+                    alertDialogBuilder.setPositiveButton(getString(R.string.yes)) { _: DialogInterface, _: Int ->
+                        viewModel.deleteFromFavorites(vacancy)
                     }
-                    alertDialogBuilder.setNegativeButton("Нет") { _: DialogInterface, _: Int ->
-                        decision = false
+                    alertDialogBuilder.setNegativeButton(getString(R.string.no)) { _: DialogInterface, _: Int ->
+                        Unit
                     }
                     val alertDialog: AlertDialog = alertDialogBuilder.create()
                     alertDialog.show()
                     alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE)
-                        .setTextColor(resources.getColor(R.color.blackDay, null))
+                        .setTextColor(resources.getColor(R.color.blackUniversal, null))
                     alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
-                        .setTextColor(resources.getColor(R.color.blackDay, null))
-                    return@setOnMenuItemClickListener true
+                        .setTextColor(resources.getColor(R.color.red, null))
+                    true
                 }
-
-                else -> {
-                    decision = false
-                    return@setOnMenuItemClickListener false
-                }
+                else -> false
             }
         }
         popupMenu.show()
-        return decision
     }
 
     companion object {

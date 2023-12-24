@@ -59,6 +59,10 @@
     <!--    Ресурсы для экрана Избранное    -->
     <string name="favorite">Избранное</string>
     <string name="empty_list">Список пуст</string>
+    <string name="deleting_confirmation">Подтверждение удаления</string>
+    <string name="remove_vacancy">Удалить вакансию %s</string>
+    <string name="yes">Дв</string>
+    <string name="no">Нет</string>
 
     <!--    Ресурсы для экрана Команда    -->
     <string name="team">Команда</string>
@@ -68,5 +72,6 @@
     <string name="AKochekovName">Антон Кочеков</string>
     <string name="NRyabcevName">Николай Рябцев</string>
     <string name="delete_item">Удалить</string>
+    <string name="share_item">Поделиться</string>
 
 </resources>

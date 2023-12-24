@@ -28,7 +28,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     private var onVacancyClickDebounce: ((VacancyGeneral) -> Unit)? = null
     private val vacancyListAdapter = VacancyAdapter({ data ->
         onVacancyClickDebounce?.invoke(data)
-    }, { _ -> true })
+    })
 
     override fun initViews() {
         binding.vacancyList.root.apply {

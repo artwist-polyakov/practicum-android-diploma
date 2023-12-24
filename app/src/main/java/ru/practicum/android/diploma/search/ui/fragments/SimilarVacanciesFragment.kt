@@ -26,7 +26,7 @@ class SimilarVacanciesFragment :
     private var onVacancyClickDebounce: ((VacancyGeneral) -> Unit)? = null
     private val vacancyListAdapter = VacancyAdapter({ data ->
         onVacancyClickDebounce?.invoke(data)
-    }, { _ -> true })
+    })
 
     override fun initViews() {
         val vacancyId = arguments?.getInt(VacancyFragment.ARG_ID)

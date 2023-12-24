@@ -212,4 +212,13 @@
         <item name="android:buttonTint">?attr/selectButtonColor</item>
     </style>
 
+    <style name="PopupMenu" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Widget.PopupMenu.Small</item>
+        <item name="android:popupBackground">@drawable/dialog_background</item>
+    </style>
+
+    <style name="AlertDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="android:background">@drawable/dialog_background</item>
+        <item name="android:windowBackground">@drawable/dialog_background</item>
+    </style>
 </resources>
