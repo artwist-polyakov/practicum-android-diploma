@@ -105,7 +105,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="boxBackgroundColor">?attr/formsBackgroundColor</item>
         <item name="hintTextAppearance">@style/Text.Hint</item>
-        <item name="hintTextColor">?attr/formsHintColor</item>
+        <item name="hintTextColor">@color/inputTextHint</item>
+        <item name="android:textColorHint">@color/inputTextHint</item>
         <item name="hintAnimationEnabled">false</item>
         <item name="boxCornerRadiusTopStart">@dimen/edittext_corner_radius</item>
         <item name="boxCornerRadiusTopEnd">@dimen/edittext_corner_radius</item>
