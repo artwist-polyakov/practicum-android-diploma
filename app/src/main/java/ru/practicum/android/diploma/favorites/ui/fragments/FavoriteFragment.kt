@@ -192,7 +192,11 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
                     true
                 }
 
-                R.id.action_share -> false // TODO добавить реализацию подедлиться вакансией
+                R.id.action_share -> {
+                    viewModel.shareVacancy(vacancy)
+                    true
+                }
+
                 else -> false
             }
         }

@@ -60,7 +60,7 @@
     <string name="favorite">Избранное</string>
     <string name="empty_list">Список пуст</string>
     <string name="deleting_confirmation">Подтверждение удаления</string>
-    <string name="remove_vacancy">Удалить вакансию %s</string>
+    <string name="remove_vacancy">Удалить вакансию %s?</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
 

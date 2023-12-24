@@ -20,6 +20,10 @@
         <item name="android:fontFamily">@font/ys_display_medium</item>
     </style>
 
+    <style name="Text.Medium16.PopupMenu" parent="TextAppearance.AppCompat.Widget.PopupMenu.Small">
+        <item name="android:textColor">@color/blackUniversal</item>
+    </style>
+
     <style name="Text.Regular16">
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
@@ -214,7 +218,7 @@
     </style>
 
     <style name="PopupMenu" parent="Widget.AppCompat.PopupMenu">
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Widget.PopupMenu.Small</item>
+        <item name="android:textAppearance">@style/Text.Medium16.PopupMenu</item>
         <item name="android:popupBackground">@drawable/dialog_background</item>
     </style>
 

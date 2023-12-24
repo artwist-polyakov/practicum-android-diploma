@@ -10,11 +10,14 @@ import ru.practicum.android.diploma.favorites.domain.api.FavoritesDBInteractor
 import ru.practicum.android.diploma.favorites.ui.viewmodels.states.FavoritesScreenState
 import ru.practicum.android.diploma.search.domain.models.VacanciesSearchResult
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
+import ru.practicum.android.diploma.vacancy.domain.api.SingleVacancyInteractor
+import ru.practicum.android.diploma.vacancy.ui.VacancyViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class FavoriteViewModel @Inject constructor(
-    private val interactor: FavoritesDBInteractor
+    private val interactor: FavoritesDBInteractor,
+    private val vacancyInteractor: SingleVacancyInteractor
 ) : BaseViewModel() {
     private val vacancies: MutableList<VacancyGeneral> = mutableListOf()
 
@@ -33,6 +36,18 @@ class FavoriteViewModel @Inject constructor(
                 loadVacancies()
             }
         }
+    }
+
+    fun deleteFromFavorites(vacancy: VacancyGeneral): Boolean {
+        viewModelScope.launch {
+            interactor.deleteVacancy(vacancy.id)
+            updateStateWithContent(VacanciesSearchResult(vacancies.size, currentPage, totalPages, vacancies))
+        }
+        return true
+    }
+
+    fun shareVacancy(vacancy: VacancyGeneral) {
+        vacancyInteractor.shareVacancy(VacancyViewModel.BASE_URL + vacancy.id.toString())
     }
 
     private fun setLoadingState() {
@@ -81,13 +96,5 @@ class FavoriteViewModel @Inject constructor(
             totalVacancies = result.vacanciesFound,
             vacancies = vacancies
         )
-    }
-
-    fun deleteFromFavorites(vacancy: VacancyGeneral): Boolean {
-        viewModelScope.launch {
-            interactor.deleteVacancy(vacancy.id)
-            updateStateWithContent(VacanciesSearchResult(vacancies.size, currentPage, totalPages, vacancies))
-        }
-        return true
     }
 }
