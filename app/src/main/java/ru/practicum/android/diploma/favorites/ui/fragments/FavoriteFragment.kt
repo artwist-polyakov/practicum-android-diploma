@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.favorites.ui.fragments
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.MenuInflater
@@ -17,7 +18,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.common.ui.BaseFragment
+import ru.practicum.android.diploma.common.ui.MainActivityBlur
+import ru.practicum.android.diploma.common.utils.applyBlurEffect
+import ru.practicum.android.diploma.common.utils.clearBlurEffect
 import ru.practicum.android.diploma.common.utils.debounce
+import ru.practicum.android.diploma.common.utils.vibrateShot
 import ru.practicum.android.diploma.databinding.FragmentFavoriteBinding
 import ru.practicum.android.diploma.favorites.ui.viewmodels.FavoriteViewModel
 import ru.practicum.android.diploma.favorites.ui.viewmodels.states.FavoritesScreenState
@@ -28,6 +33,7 @@ import ru.practicum.android.diploma.vacancy.ui.VacancyFragment
 @AndroidEntryPoint
 class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel>(FragmentFavoriteBinding::inflate) {
     override val viewModel by viewModels<FavoriteViewModel>()
+    private var mainActivityBlur: MainActivityBlur? = null
     private var onVacancyClickDebounce: ((VacancyGeneral) -> Unit)? = null
     private val vacancyListAdapter = VacancyAdapter(
         { data ->
@@ -41,6 +47,18 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
     override fun onResume() {
         super.onResume()
         viewModel.handleRequest()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is MainActivityBlur) {
+            mainActivityBlur = context
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        mainActivityBlur = null
     }
 
     override fun initViews() {
@@ -139,21 +157,30 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
     }
 
     private fun suggestTrackDeleting(vacancy: VacancyGeneral, anchorView: View) {
-        val popupMenu = PopupMenu(context, anchorView, 0, 0, R.style.PopupMenu)
+        requireContext().vibrateShot(100L)
+        val popupMenu = PopupMenu(
+            context,
+            anchorView,
+            0,
+            0,
+            R.style.PopupMenu
+        )
         val inflater: MenuInflater = popupMenu.menuInflater
         inflater.inflate(R.menu.delete_from_favorite, popupMenu.menu)
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_delete -> {
+                    applyBlur(true)
                     val alertDialogBuilder: AlertDialog.Builder =
                         AlertDialog.Builder(requireContext(), R.style.AlertDialog)
                     alertDialogBuilder.setTitle(getString(R.string.deleting_confirmation))
                     alertDialogBuilder.setMessage(getString(R.string.remove_vacancy, vacancy.title))
                     alertDialogBuilder.setPositiveButton(getString(R.string.yes)) { _: DialogInterface, _: Int ->
                         viewModel.deleteFromFavorites(vacancy)
+                        applyBlur(false)
                     }
                     alertDialogBuilder.setNegativeButton(getString(R.string.no)) { _: DialogInterface, _: Int ->
-                        Unit
+                        applyBlur(false)
                     }
                     val alertDialog: AlertDialog = alertDialogBuilder.create()
                     alertDialog.show()
@@ -163,10 +190,24 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
                         .setTextColor(resources.getColor(R.color.red, null))
                     true
                 }
+
+                R.id.action_share -> false // TODO добавить реализацию подедлиться вакансией
                 else -> false
             }
         }
         popupMenu.show()
+    }
+
+    private fun applyBlur(blurOn: Boolean) = with(binding) {
+        if (blurOn) {
+            llHeader.applyBlurEffect()
+            mainActivityBlur?.applyBlurEffect()
+            scrollView.applyBlurEffect()
+        } else {
+            llHeader.clearBlurEffect()
+            mainActivityBlur?.clearBlurEffect()
+            scrollView.clearBlurEffect()
+        }
     }
 
     companion object {
