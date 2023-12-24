@@ -26,9 +26,9 @@ import ru.practicum.android.diploma.vacancy.ui.VacancyFragment
 class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(FragmentSearchBinding::inflate) {
     override val viewModel: SearchViewModel by viewModels()
     private var onVacancyClickDebounce: ((VacancyGeneral) -> Unit)? = null
-    private val vacancyListAdapter = VacancyAdapter() { data ->
+    private val vacancyListAdapter = VacancyAdapter({ data ->
         onVacancyClickDebounce?.invoke(data)
-    }
+    })
 
     override fun initViews() {
         binding.vacancyList.root.apply {
