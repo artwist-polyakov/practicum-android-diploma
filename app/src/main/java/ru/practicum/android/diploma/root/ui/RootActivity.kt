@@ -11,11 +11,14 @@ import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.common.ui.BaseActivity
+import ru.practicum.android.diploma.common.ui.MainActivityBlur
+import ru.practicum.android.diploma.common.utils.applyBlurEffect
+import ru.practicum.android.diploma.common.utils.clearBlurEffect
 import ru.practicum.android.diploma.databinding.ActivityRootBinding
 import java.util.Locale
 
 @AndroidEntryPoint
-class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::inflate) {
+class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::inflate), MainActivityBlur {
 
     override fun initViews() = with(binding) {
         manageBottomNavigation()
@@ -75,4 +78,11 @@ class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::infl
         baseContext.resources.configuration.setLocale(locale)
     }
 
+    override fun applyBlurEffect() {
+        binding.bottomNavigationView.applyBlurEffect()
+    }
+
+    override fun clearBlurEffect() {
+        binding.bottomNavigationView.clearBlurEffect()
+    }
 }
