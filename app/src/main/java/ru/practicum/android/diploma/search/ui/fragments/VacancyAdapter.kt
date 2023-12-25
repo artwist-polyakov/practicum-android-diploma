@@ -162,6 +162,13 @@ class VacancyAdapter(
         diffResult.dispatchUpdatesTo(this)
     }
 
+    fun clearAll() {
+        val diffCallback = VacancyDiffCallback(dataList, emptyList())
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        dataList.clear()
+        diffResult.dispatchUpdatesTo(this)
+    }
+
     fun clearPageCounter() {
         currentPage = 0
     }

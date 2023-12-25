@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.search.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
@@ -71,12 +72,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collect { state ->
+                Log.d("SearchFragment", "$state")
                 render(state)
             }
         }
 
         with(binding) {
             tiSearchField.doOnTextChanged { text, _, _, _ ->
+                Log.d("SearchFragment", "Settled query")
                 viewModel.handleInteraction(ViewModelInteractionState.setQuery(text.toString()))
                 if (text.toString().isNotEmpty()) {
                     ivSearchFieldButton.setImageResource(R.drawable.close_24px)
@@ -180,6 +183,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     private fun showData(content: SearchScreenState.Content) {
         vacancyListAdapter.setScrollLoadingEnabled(content.currentPage != content.totalPages - 1)
         vacancyListAdapter.setShowScrollRefresh(false)
+        if (content.currentPage == 0) {
+            vacancyListAdapter.clearAll()
+        }
         vacancyListAdapter.setData(content.vacancies, content.currentPage)
         binding.vacancyCount.apply {
             text = resources.getQuantityString(
