@@ -14,7 +14,8 @@ import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
 
 class VacancyAdapter(
     private val clickListener: (VacancyGeneral) -> Unit,
-    private val onLongClickListener: (VacancyGeneral, View) -> Unit = { _, _ -> }
+    private val onLongClickListener: (VacancyGeneral, View) -> Unit = { _, _ -> },
+    private var loadNextPageCallback: (() -> Unit)? = null
 ) : RecyclerView.Adapter<VacancyAdapter.VacancyViewHolder>() {
 
     inner class VacancyViewHolder(
@@ -25,6 +26,9 @@ class VacancyAdapter(
             companyImage.load(data.employerLogo) {
                 placeholder(R.drawable.placeholder_48px)
                 error(R.drawable.placeholder_48px)
+            }
+            binding.ivReload.setOnClickListener {
+                loadNextPageCallback?.invoke()
             }
             companyName.text = data.employerName
             val titleBuilder: StringBuilder = StringBuilder()

@@ -26,9 +26,12 @@ import ru.practicum.android.diploma.vacancy.ui.VacancyFragment
 class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(FragmentSearchBinding::inflate) {
     override val viewModel: SearchViewModel by viewModels()
     private var onVacancyClickDebounce: ((VacancyGeneral) -> Unit)? = null
-    private val vacancyListAdapter = VacancyAdapter({ data ->
-        onVacancyClickDebounce?.invoke(data)
-    })
+    private val vacancyListAdapter = VacancyAdapter(
+        clickListener = { data ->
+            onVacancyClickDebounce?.invoke(data)
+        },
+        loadNextPageCallback = { loadNextPage() }
+    )
 
     override fun initViews() {
         binding.vacancyList.root.apply {
@@ -42,9 +45,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
                     ) {
                         super.onScrollStateChanged(recyclerView, newState)
                         if (!recyclerView.canScrollVertically(1)) {
-                            viewModel.handleInteraction(
-                                ViewModelInteractionState.setPage(viewModel.giveMyPageToReload() + 1)
-                            )
+                            loadNextPage()
                         }
                     }
                 }
@@ -104,7 +105,15 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         when (state) {
             is SearchScreenState.Content -> showData(state)
             is SearchScreenState.Error -> showProblem(state.error, state.showSnackBar)
-            is SearchScreenState.Loading -> if (state.forPage == 0) showCentralProgressBar()
+            is SearchScreenState.Loading -> {
+                if (state.forPage == 0) {
+                    showCentralProgressBar()
+                } else {
+                    vacancyListAdapter.setScrollLoadingEnabled(true)
+                    vacancyListAdapter.refreshLastItem()
+                }
+            }
+
             is SearchScreenState.Default -> showDefault()
         }
     }
@@ -127,14 +136,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         vacancyListAdapter.refreshLastItem()
         if (showSnackbar) {
             binding.root.showCustomSnackbar(getString(error.messageResource))
-            debounce<Boolean>(
-                CLICK_DEBOUNCE_DELAY,
-                viewLifecycleOwner.lifecycleScope,
-                false,
-                false
-            ) {
-                vacancyListAdapter.setScrollLoadingEnabled(it)
-            }.invoke(true)
             return
         }
         with(binding) {
@@ -187,6 +188,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
             measure(0, 0)
         }
         showData()
+    }
+
+    private fun loadNextPage() {
+        viewModel.handleInteraction(
+            ViewModelInteractionState.setPage(viewModel.giveMyPageToReload() + 1)
+        )
     }
 
 
