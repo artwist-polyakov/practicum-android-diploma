@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.libs
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -85,4 +87,7 @@ dependencies {
 
     // BlurView
     implementation(libs.blurview)
+
+    // Powermenu
+    implementation(libs.powermenu)
 }

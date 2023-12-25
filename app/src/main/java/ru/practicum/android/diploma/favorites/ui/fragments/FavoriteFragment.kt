@@ -3,17 +3,23 @@ package ru.practicum.android.diploma.favorites.ui.fragments
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.MenuInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.PopupMenu
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.skydoves.powermenu.MenuAnimation
+import com.skydoves.powermenu.PowerMenu
+import com.skydoves.powermenu.PowerMenuItem
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
@@ -159,31 +165,43 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
 
     private fun suggestTrackDeleting(vacancy: VacancyGeneral, anchorView: View) {
         requireContext().vibrateShot(VIBRATE_DURATION_100MS)
-        val popupMenu = PopupMenu(
-            context,
-            anchorView,
-            0,
-            0,
-            R.style.PopupMenu
-        )
-        val inflater: MenuInflater = popupMenu.menuInflater
-        inflater.inflate(R.menu.delete_from_favorite, popupMenu.menu)
-        popupMenu.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.action_delete -> {
-                    buildDialog(vacancy)
-                    true
-                }
+        val typeface = ResourcesCompat.getFont(requireContext(), R.font.ys_display_medium)!!
 
-                R.id.action_share -> {
+        val powerMenu = PowerMenu.Builder(requireContext())
+            .addItem(PowerMenuItem(getString(R.string.share_item), iconRes = R.drawable.ic_blue_sharing_24px))
+            .addItem(PowerMenuItem(getString(R.string.delete_item), iconRes = R.drawable.ic_trash_basket))
+            .setAnimation(MenuAnimation.SHOWUP_TOP_LEFT)
+            .setMenuRadius(48f)
+            .setMenuShadow(48f)
+            .setMenuColor(ContextCompat.getColor(requireContext(), R.color.formsBackground))
+            .setTextColor(ContextCompat.getColor(requireContext(), R.color.htmlText))
+            .setTextSize(18)
+            .setTextTypeface(typeface)
+            .setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
+            .setSize(dpToPx(200, requireContext()), dpToPx(140, requireContext()))
+            .setPadding(16)
+            .build()
+
+        powerMenu.setOnMenuItemClickListener { position, item ->
+            when (position) {
+                0 -> {
                     viewModel.shareVacancy(vacancy)
-                    true
+                    powerMenu.dismiss()
                 }
 
-                else -> false
+                1 -> {
+                    buildDialog(vacancy)
+                    powerMenu.dismiss()
+                }
             }
         }
-        popupMenu.show()
+
+        powerMenu.showAsAnchorLeftTop(anchorView)
+    }
+
+    private fun dpToPx(dp: Int, context: Context): Int {
+        val density = context.resources.displayMetrics.density
+        return (dp * density).toInt()
     }
 
     private fun buildDialog(vacancy: VacancyGeneral) {
@@ -200,6 +218,9 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
             applyBlur(false)
         }
         val alertDialog: AlertDialog = alertDialogBuilder.create()
+        alertDialog.setOnCancelListener {
+            applyBlur(false)
+        }
         alertDialog.show()
         alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE)
             .setTextColor(resources.getColor(R.color.blackUniversal, null))

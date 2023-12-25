@@ -72,6 +72,9 @@ leakcanary = "com.squareup.leakcanary:leakcanary-android:2.12"
 # BlurView
 blurview = "com.github.Dimezis:BlurView:version-2.0.3"
 
+# Powermenu
+powermenu = "com.github.skydoves:powermenu:2.2.4"
+
 [bundles]
 [plugins]
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-android" }
