@@ -179,8 +179,7 @@ open class SearchViewModel @Inject constructor(
         var newSearchSettings = searchSettings
         // переменная костыль, чтобы обработать setQuery при возвращении на фрагмент
         // в таких случаях нам надо восстановить всё как было.
-        val t = isLastUpdatePage
-        isLastUpdatePage = false
+        val t = isLastUpdatePage; isLastUpdatePage = false
         when (interaction) {
             is ViewModelInteractionState.setRegion -> {
                 newSearchSettings = newSearchSettings.copy(currentPage = 0)
@@ -194,31 +193,26 @@ open class SearchViewModel @Inject constructor(
 
             is ViewModelInteractionState.setSalary -> {
                 newSearchSettings = newSearchSettings.copy(currentPage = 0)
-                newSearchSettings =
-                    newSearchSettings.copy(currentSalary = interaction.salary)
+                newSearchSettings = newSearchSettings.copy(currentSalary = interaction.salary)
             }
 
             is ViewModelInteractionState.setSalaryOnly -> {
                 newSearchSettings = newSearchSettings.copy(currentPage = 0)
-                newSearchSettings =
-                    newSearchSettings.copy(currentSalaryOnly = interaction.salaryOnly)
+                newSearchSettings = newSearchSettings.copy(currentSalaryOnly = interaction.salaryOnly)
             }
 
             is ViewModelInteractionState.setQuery -> {
                 if (interaction.query == searchSettings.currentQuery) {
-                    isLastUpdatePage = t
-                    return
+                    isLastUpdatePage = t; return
                 }
                 showSnackBar = false
                 newSearchSettings = newSearchSettings.copy(currentPage = 0)
-                newSearchSettings =
-                    newSearchSettings.copy(currentQuery = interaction.query)
+                newSearchSettings = newSearchSettings.copy(currentQuery = interaction.query)
             }
 
             is ViewModelInteractionState.setPage -> {
                 isLastUpdatePage = true
-                newSearchSettings =
-                    newSearchSettings.copy(currentPage = interaction.page)
+                newSearchSettings = newSearchSettings.copy(currentPage = interaction.page)
             }
         }
         if (newSearchSettings != searchSettings) {
