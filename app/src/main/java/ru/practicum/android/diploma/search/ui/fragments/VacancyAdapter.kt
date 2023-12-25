@@ -12,6 +12,38 @@ import ru.practicum.android.diploma.common.utils.formatSalary
 import ru.practicum.android.diploma.databinding.VacancyListItemBinding
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
 
+/** АДАПТЕР С ПОДДЕРЖКОЙ ЗАГРУЗКИ ПО СКРОЛЛУ
+ *
+ * Чтобы включить загрузку по скроллу надо:
+ *
+ *  1. Проинициировать метод loadNextPageCallback в конструкторе адаптера
+ *     Например так
+ *
+ *     ```
+ *     private val vacancyListAdapter = VacancyAdapter(
+ *                  clickListener = { data ->
+ *                      onVacancyClickDebounce?.invoke(data)
+ *                 },
+ *                 loadNextPageCallback = { loadNextPage() }
+ *             )
+ *     ```
+ *     То есть в фрагменте нужен метод загрузки следующей страницы
+ *
+ *  2. Обработать отображение скрытие элементов из фрагмента:
+ * - индикатора загрузки методы: setScrollLoadingEnabled(true/false)
+ * - кнопка повтора попытки загрузки: setShowScrollRefresh(true/false)
+ *
+ * !!! ❗️в конце инициализации обязательно вызвать метод refreshLastItem()
+ *
+ * ??? примеры:
+ *
+ * ??? — если у нас контент — то false/false
+ *
+ * ??? — если ошибка — у нас false/true
+ *
+ * ??? — если загрузка —  true/false
+ *
+ */
 class VacancyAdapter(
     private val clickListener: (VacancyGeneral) -> Unit,
     private val onLongClickListener: (VacancyGeneral, View) -> Unit = { _, _ -> },
