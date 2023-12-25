@@ -69,9 +69,6 @@ dependencies {
     kapt(libs.room.compiler)
     implementation(libs.room.ktx)
 
-    // ViewPager
-    implementation(libs.viewpager)
-
     // Navigation
     implementation(libs.navigation.fragment)
     implementation(libs.navigation)
@@ -85,4 +82,7 @@ dependencies {
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.convertGson)
+
+    // BlurView
+    implementation(libs.blurview)
 }
