@@ -28,6 +28,8 @@ class VacancyAdapter(
                 error(R.drawable.placeholder_48px)
             }
             binding.ivReload.setOnClickListener {
+                showScrollRefresh = false
+                refreshLastItem()
                 loadNextPageCallback?.invoke()
             }
             companyName.text = data.employerName
@@ -52,8 +54,9 @@ class VacancyAdapter(
         }
 
         fun showLoadingIndicator() {
-            binding.pbLoadingBar.visibility = View.VISIBLE
             binding.ivReload.visibility = View.GONE
+            binding.pbLoadingBar.visibility = View.VISIBLE
+
         }
 
         fun hideLoadingIndicator() {
@@ -61,7 +64,11 @@ class VacancyAdapter(
         }
 
         fun showRefreshButton() {
-            binding.ivReload.isVisible = !binding.pbLoadingBar.isVisible
+            binding.ivReload.visibility = View.VISIBLE
+        }
+
+        fun hideRefreshButton() {
+            binding.ivReload.visibility = View.GONE
         }
 
         private fun parseSalary(from: Int?, to: Int?, currency: String?): String {
@@ -107,8 +114,9 @@ class VacancyAdapter(
         }
         if (showScrollRefresh && position == dataList.size - 1) {
             holder.showRefreshButton()
+        } else {
+            holder.hideRefreshButton()
         }
-
     }
 
     override fun getItemCount(): Int = dataList.size

@@ -109,6 +109,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
                 if (state.forPage == 0) {
                     showCentralProgressBar()
                 } else {
+                    vacancyListAdapter.setShowScrollRefresh(false)
                     vacancyListAdapter.setScrollLoadingEnabled(true)
                     vacancyListAdapter.refreshLastItem()
                 }
@@ -178,6 +179,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
 
     private fun showData(content: SearchScreenState.Content) {
         vacancyListAdapter.setScrollLoadingEnabled(content.currentPage != content.totalPages - 1)
+        vacancyListAdapter.setShowScrollRefresh(false)
         vacancyListAdapter.setData(content.vacancies, content.currentPage)
         binding.vacancyCount.apply {
             text = resources.getQuantityString(
