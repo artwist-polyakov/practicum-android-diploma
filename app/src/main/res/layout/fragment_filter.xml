@@ -102,6 +102,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tl_salary"
         style="@style/TextInputLayout"
+        android:hint="@string/expected_salary"
+        app:expandedHintEnabled="false"
         android:layout_marginTop="@dimen/between_text_card"
         android:paddingVertical="@dimen/image_padding_medium"
         app:layout_constraintEnd_toEndOf="parent"
@@ -112,8 +114,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ti_salary_field"
             style="@style/TextInputEditText"
-            android:hint="@string/expected_salary"
-            android:maxLength="13"
+            android:maxLength="11"
             android:maxLines="1"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>

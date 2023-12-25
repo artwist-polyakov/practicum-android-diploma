@@ -26,16 +26,22 @@
             android:text="@string/favorite" />
     </LinearLayout>
 
-    <include
-        android:id="@+id/favorites_list"
-        layout="@layout/vacancy_list"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/between_text_card"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_header" />
+        app:layout_constraintTop_toBottomOf="@id/ll_header">
+
+        <include
+            android:id="@+id/favorites_list"
+            layout="@layout/vacancy_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
         android:id="@+id/ll_favorite_problem_layout"

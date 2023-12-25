@@ -13,12 +13,12 @@ import ru.practicum.android.diploma.databinding.VacancyListItemBinding
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
 
 class VacancyAdapter(
-    private val clickListener: (VacancyGeneral) -> Unit
+    private val clickListener: (VacancyGeneral) -> Unit,
+    private val onLongClickListener: (VacancyGeneral, View) -> Unit = { _, _ -> }
 ) : RecyclerView.Adapter<VacancyAdapter.VacancyViewHolder>() {
 
     inner class VacancyViewHolder(
-        private val binding: VacancyListItemBinding,
-        private val clickListener: (VacancyGeneral) -> Unit
+        private val binding: VacancyListItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         private val radius = itemView.resources.getDimension(R.dimen.vacancy_logo_corner_radius)
         fun bind(data: VacancyGeneral) = with(binding) {
@@ -40,7 +40,11 @@ class VacancyAdapter(
             val shapeAppearanceModel = companyImage.shapeAppearanceModel.toBuilder().setAllCornerSizes(radius).build()
             companyImage.shapeAppearanceModel = shapeAppearanceModel
 
-            itemView.setOnClickListener { clickListener(data) }
+            itemView.setOnClickListener { this@VacancyAdapter.clickListener(data) }
+            itemView.setOnLongClickListener {
+                this@VacancyAdapter.onLongClickListener(data, itemView)
+                true
+            }
         }
 
         fun showLoadingIndicator() {
@@ -77,7 +81,6 @@ class VacancyAdapter(
                     itemView.resources.getString(R.string.salary_not_specified)
             }
         }
-
     }
 
     private var currentPage: Int = 0
@@ -88,7 +91,7 @@ class VacancyAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VacancyViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = VacancyListItemBinding.inflate(layoutInflater, parent, false)
-        return VacancyViewHolder(binding, clickListener)
+        return VacancyViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: VacancyViewHolder, position: Int) {
@@ -131,5 +134,4 @@ class VacancyAdapter(
     fun refreshLastItem() {
         notifyItemChanged(dataList.size - 1)
     }
-
 }

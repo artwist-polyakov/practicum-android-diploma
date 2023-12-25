@@ -26,9 +26,9 @@ import ru.practicum.android.diploma.vacancy.ui.VacancyFragment
 class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(FragmentSearchBinding::inflate) {
     override val viewModel: SearchViewModel by viewModels()
     private var onVacancyClickDebounce: ((VacancyGeneral) -> Unit)? = null
-    private val vacancyListAdapter = VacancyAdapter() { data ->
+    private val vacancyListAdapter = VacancyAdapter({ data ->
         onVacancyClickDebounce?.invoke(data)
-    }
+    })
 
     override fun initViews() {
         binding.vacancyList.root.apply {
@@ -50,8 +50,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
                 }
             )
         }
-//        updateRefresh()
-
     }
 
     override fun subscribe() {
@@ -104,21 +102,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
             binding.ivFilter.setImageResource(R.drawable.filter_24px)
         }
         when (state) {
-            is SearchScreenState.Content -> {
-                showData(state)
-            }
-
-            is SearchScreenState.Error -> {
-                showProblem(state.error, state.showSnackBar)
-            }
-
-            is SearchScreenState.Loading -> {
-                if (state.forPage == 0) showCentralProgressBar()
-            }
-
-            is SearchScreenState.Default -> {
-                showDefault()
-            }
+            is SearchScreenState.Content -> showData(state)
+            is SearchScreenState.Error -> showProblem(state.error, state.showSnackBar)
+            is SearchScreenState.Loading -> if (state.forPage == 0) showCentralProgressBar()
+            is SearchScreenState.Default -> showDefault()
         }
     }
 
