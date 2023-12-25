@@ -57,8 +57,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         onVacancyClickDebounce = debounce(
             CLICK_DEBOUNCE_DELAY,
             viewLifecycleOwner.lifecycleScope,
-            false,
-            false
+            useLastParam = false,
+            actionWithDelay = false
         ) { data ->
             val bundle = Bundle().apply {
                 putInt(VacancyFragment.ARG_ID, data.id)
@@ -85,7 +85,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
                 }
                 vacancyListAdapter.clearPageCounter()
             }
-            // todo просчитать другие сценарии зануления числа страниц в адаптере
             ivSearchFieldButton.setOnClickListener {
                 if (tiSearchField.text.toString().isNotEmpty()) tiSearchField.text?.clear()
             }
