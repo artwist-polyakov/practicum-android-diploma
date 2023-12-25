@@ -67,18 +67,17 @@ data class DetailedVacancyItem(
         phones?.let { phones ->
             for (phone in phones) {
                 val cleanPhone = formatPhoneNumber(phone.second)
-                Log.i("DetailedVacancyMyLog", "cleanPhone = $cleanPhone")
                 builder.append(DIV_MARGIN)
                 builder.append("$OPEN_SPAN_STR\"contact-info\">Телефон</span>")
                 builder.append("<br><a href=\"tel:$cleanPhone\">")
                 builder.append(cleanPhone)
                 builder.append("</a><br>")
                 builder.append(CLOSE_DIV_STR)
-                phone.first?.let { comment ->
+                if (phone.first.isNotBlank()) {
                     builder.append(DIV_MARGIN)
                     builder.append("$OPEN_SPAN_STR\"contact-info\">Комментарий</span>")
                     builder.append("<br>")
-                    builder.append(comment)
+                    builder.append(phone.first)
                     builder.append("<br>$CLOSE_DIV_STR")
                 }
             }

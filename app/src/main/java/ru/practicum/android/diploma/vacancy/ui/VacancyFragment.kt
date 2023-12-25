@@ -24,9 +24,6 @@ class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(F
     override val viewModel: VacancyViewModel by viewModels()
     private var id: Int? = null
 
-    @Inject
-    lateinit var networkClient: NetworkClient
-
     override fun initViews() {
         binding.wvDescription.setBackgroundColor(Color.TRANSPARENT) // установка цвета из атрибутов не отрабатывается
 
