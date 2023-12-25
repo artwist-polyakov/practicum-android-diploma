@@ -180,6 +180,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     private fun showData(content: SearchScreenState.Content) {
         vacancyListAdapter.setScrollLoadingEnabled(content.currentPage != content.totalPages - 1)
         vacancyListAdapter.setShowScrollRefresh(false)
+        if (content.currentPage == 0) {
+            vacancyListAdapter.clearAll()
+        }
         vacancyListAdapter.setData(content.vacancies, content.currentPage)
         binding.vacancyCount.apply {
             text = resources.getQuantityString(
