@@ -82,7 +82,7 @@ class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::infl
 
     private fun setBlurView() = with(binding) {
         bottomNavigationView.setBackgroundColor(ContextCompat.getColor(this@RootActivity, R.color.transparent))
-        val radius = 20f
+        val radius = BLUR_RADIUS
         val decorView = window.decorView
         val rootView = decorView.findViewById(android.R.id.content) as ViewGroup
         val windowBackground = decorView.background
@@ -98,5 +98,9 @@ class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::infl
 
     override fun clearBlurEffect() {
         binding.bottomNavigationView.clearBlurEffect()
+    }
+
+    companion object {
+        private const val BLUR_RADIUS = 20f
     }
 }

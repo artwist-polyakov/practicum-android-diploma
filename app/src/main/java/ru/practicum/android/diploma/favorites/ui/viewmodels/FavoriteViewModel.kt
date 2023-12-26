@@ -3,6 +3,7 @@ package ru.practicum.android.diploma.favorites.ui.viewmodels
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.common.ui.BaseViewModel
@@ -25,25 +26,29 @@ class FavoriteViewModel @Inject constructor(
     private var currentPage: Int = 0
 
     private var _state = MutableStateFlow<FavoritesScreenState>(FavoritesScreenState.Empty())
-
-    val state: MutableStateFlow<FavoritesScreenState>
+    val state: StateFlow<FavoritesScreenState>
         get() = _state
 
-    fun handleRequest() {
+    fun loadVacancies() {
         viewModelScope.launch {
             if (currentPage < totalPages - 1 || currentPage == 0) {
-                setLoadingState()
-                loadVacancies()
+                if (vacancies.isEmpty()) setLoadingState()
+                interactor.getFavoritesVacancies(
+                    page = currentPage + if (currentPage < totalPages - 1) 1 else 0
+                ).catch { _ ->
+                    handleError()
+                }.collect { result ->
+                    processResult(result)
+                }
             }
         }
     }
 
-    fun deleteFromFavorites(vacancy: VacancyGeneral): Boolean {
+    fun deleteFromFavorites(vacancy: VacancyGeneral) {
         viewModelScope.launch {
             interactor.deleteVacancy(vacancy.id)
             updateStateWithContent(VacanciesSearchResult(vacancies.size, currentPage, totalPages, vacancies))
         }
-        return true
     }
 
     fun shareVacancy(vacancy: VacancyGeneral) {
@@ -54,18 +59,8 @@ class FavoriteViewModel @Inject constructor(
         _state.value = FavoritesScreenState.Loading(isBottomIndicator = currentPage != 0)
     }
 
-    private suspend fun loadVacancies() {
-        interactor.getFavoritesVacancies(
-            page = currentPage + if (currentPage < totalPages - 1) 1 else 0
-        ).catch {
-            handleError()
-        }.collect {
-            processResult(it)
-        }
-    }
-
     private fun processResult(result: VacanciesSearchResult) {
-        if (result.vacancies.isEmpty()) {
+        if (result.vacancies.isEmpty() && vacancies.isEmpty()) {
             resetState()
         } else {
             updateStateWithContent(result)

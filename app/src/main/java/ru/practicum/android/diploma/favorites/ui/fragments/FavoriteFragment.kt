@@ -3,13 +3,10 @@ package ru.practicum.android.diploma.favorites.ui.fragments
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
-import android.graphics.Typeface
 import android.os.Bundle
-import android.view.MenuInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
@@ -52,7 +49,7 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
 
     override fun onResume() {
         super.onResume()
-        viewModel.handleRequest()
+        viewModel.loadVacancies()
     }
 
     override fun onAttach(context: Context) {
@@ -78,7 +75,7 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
                 ) {
                     super.onScrollStateChanged(recyclerView, newState)
                     if (!recyclerView.canScrollVertically(1)) {
-                        viewModel.handleRequest()
+                        viewModel.loadVacancies()
                     }
                 }
             })
@@ -165,24 +162,9 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
 
     private fun suggestTrackDeleting(vacancy: VacancyGeneral, anchorView: View) {
         requireContext().vibrateShot(VIBRATE_DURATION_100MS)
-        val typeface = ResourcesCompat.getFont(requireContext(), R.font.ys_display_medium)!!
+        val powerMenu = buildMenu()
 
-        val powerMenu = PowerMenu.Builder(requireContext())
-            .addItem(PowerMenuItem(getString(R.string.share_item), iconRes = R.drawable.ic_blue_sharing_24px))
-            .addItem(PowerMenuItem(getString(R.string.delete_item), iconRes = R.drawable.ic_trash_basket))
-            .setAnimation(MenuAnimation.SHOWUP_TOP_LEFT)
-            .setMenuRadius(48f)
-            .setMenuShadow(48f)
-            .setMenuColor(ContextCompat.getColor(requireContext(), R.color.formsBackground))
-            .setTextColor(ContextCompat.getColor(requireContext(), R.color.htmlText))
-            .setTextSize(18)
-            .setTextTypeface(typeface)
-            .setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
-            .setSize(dpToPx(200, requireContext()), dpToPx(140, requireContext()))
-            .setPadding(16)
-            .build()
-
-        powerMenu.setOnMenuItemClickListener { position, item ->
+        powerMenu.setOnMenuItemClickListener { position, _ ->
             when (position) {
                 0 -> {
                     viewModel.shareVacancy(vacancy)
@@ -196,7 +178,28 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
             }
         }
 
-        powerMenu.showAsAnchorLeftTop(anchorView)
+        powerMenu.showAsAnchorLeftBottom(anchorView)
+    }
+
+    private fun buildMenu(): PowerMenu {
+        val typeface = ResourcesCompat.getFont(requireContext(), R.font.ys_display_medium)!!
+
+        return PowerMenu.Builder(requireContext())
+            .setLifecycleOwner(viewLifecycleOwner)
+            .addItem(PowerMenuItem(getString(R.string.share_item), iconRes = R.drawable.ic_blue_sharing_24px))
+            .addItem(PowerMenuItem(getString(R.string.delete_item), iconRes = R.drawable.ic_trash_basket))
+            .setAnimation(MenuAnimation.SHOWUP_TOP_LEFT)
+            .setMenuRadius(MENU_CORNER_RADIUS)
+            .setShowBackground(true)
+            .setMenuShadow(MENU_CORNER_RADIUS)
+            .setMenuColor(ContextCompat.getColor(requireContext(), R.color.formsBackground))
+            .setTextColor(ContextCompat.getColor(requireContext(), R.color.htmlText))
+            .setTextSize(FONT_SIZE)
+            .setTextTypeface(typeface)
+            .setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
+            .setSize(dpToPx(MENU_WIDTH_DP, requireContext()), dpToPx(MENU_HEIGHT_DP, requireContext()))
+            .setPadding(MENU_PADDING)
+            .build()
     }
 
     private fun dpToPx(dp: Int, context: Context): Int {
@@ -209,14 +212,14 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
         val alertDialogBuilder: AlertDialog.Builder =
             AlertDialog.Builder(requireContext(), R.style.AlertDialog)
         alertDialogBuilder.setTitle(getString(R.string.deleting_confirmation))
-        alertDialogBuilder.setMessage(getString(R.string.remove_vacancy, vacancy.title))
-        alertDialogBuilder.setPositiveButton(getString(R.string.yes)) { _: DialogInterface, _: Int ->
-            viewModel.deleteFromFavorites(vacancy)
-            applyBlur(false)
-        }
-        alertDialogBuilder.setNegativeButton(getString(R.string.no)) { _: DialogInterface, _: Int ->
-            applyBlur(false)
-        }
+            .setMessage(getString(R.string.remove_vacancy, vacancy.title))
+            .setPositiveButton(getString(R.string.yes)) { _: DialogInterface, _: Int ->
+                viewModel.deleteFromFavorites(vacancy)
+                applyBlur(false)
+            }
+            .setNegativeButton(getString(R.string.no)) { _: DialogInterface, _: Int ->
+                applyBlur(false)
+            }
         val alertDialog: AlertDialog = alertDialogBuilder.create()
         alertDialog.setOnCancelListener {
             applyBlur(false)
@@ -243,5 +246,10 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
     companion object {
         private const val CLICK_DEBOUNCE_DELAY_500MS = 500L
         private const val VIBRATE_DURATION_100MS = 100L
+        private const val MENU_CORNER_RADIUS = 48f
+        private const val FONT_SIZE = 18
+        private const val MENU_WIDTH_DP = 200
+        private const val MENU_HEIGHT_DP = 140
+        private const val MENU_PADDING = 16
     }
 }
