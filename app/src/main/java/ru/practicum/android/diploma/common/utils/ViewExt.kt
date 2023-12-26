@@ -7,7 +7,7 @@ import com.google.android.material.snackbar.Snackbar
 
 
 /**
-вызывается так binding.root.showCustomSnackbar(text)
+* Вызывается так binding.root.showCustomSnackbar(text)
 */
 fun View.showCustomSnackbar(text: String, duration: Int = Snackbar.LENGTH_SHORT) {
     val snackbar = Snackbar.make(this, text, duration)

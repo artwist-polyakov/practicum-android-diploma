@@ -32,7 +32,6 @@ class SearchInteractorImpl(
         converter.mapSearchResponce(result)
     }
 
-
     override fun searchSimilarVacancies(vacancyId: Int, page: Int): Flow<Resource<VacanciesSearchResult>> =
         repository.getSimilarVacancies(
             id = vacancyId,
@@ -40,7 +39,6 @@ class SearchInteractorImpl(
         ).map { result ->
             converter.mapSearchResponce(result)
         }
-
 
     override fun getIndustries(): Flow<Resource<List<Industry>>> =
         repository.getIndustries().map { result ->

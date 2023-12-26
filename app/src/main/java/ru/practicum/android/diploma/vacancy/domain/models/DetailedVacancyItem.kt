@@ -1,7 +1,5 @@
 package ru.practicum.android.diploma.vacancy.domain.models
 
-import android.util.Log
-
 @Suppress("Detekt.DataClassContainsFunctions")
 data class DetailedVacancyItem(
     val id: Int,
@@ -44,7 +42,6 @@ data class DetailedVacancyItem(
     private fun configureHTMLContacts(builder: StringBuilder): StringBuilder {
         if (!contacts?.name.isNullOrEmpty()) {
             contacts?.let {
-                Log.i("DetailedVacancyMyLog", "contacts = $contacts")
                 builder.append("$OPEN_SPAN_STR\"title margin\">Контакты</span>")
                 builder.append("$DIV_MARGIN<span class=\"contact-info\">Контактное лицо</span><br>")
                 builder.append(it.name)

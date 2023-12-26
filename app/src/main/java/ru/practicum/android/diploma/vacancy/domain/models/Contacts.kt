@@ -1,8 +1,10 @@
 package ru.practicum.android.diploma.vacancy.domain.models
 
-// PAIR — phone - first, comment - second
+typealias phone = String
+typealias comment = String
+
 data class Contacts(
     val name: String? = null,
-    val phones: List<Pair<String, String>>? = null,
+    val phones: List<Pair<comment, phone>>? = null,
     val email: String? = null,
 )

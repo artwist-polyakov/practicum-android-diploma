@@ -42,7 +42,7 @@ class IndustryViewModel @Inject constructor(
         selectedIndustry?.let { data ->
             viewModelScope.launch {
                 filterInteractor.setIndustry(data.id, data.name)
-                _state.value = IndustryScreenState.goAway
+                _state.value = IndustryScreenState.Hide
             }
         }
     }

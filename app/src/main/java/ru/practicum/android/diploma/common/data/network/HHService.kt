@@ -10,9 +10,7 @@ import ru.practicum.android.diploma.common.data.dto.IndustriesDto
 import ru.practicum.android.diploma.common.data.dto.VacancyItemDto
 import ru.practicum.android.diploma.common.data.network.response.HHSearchResponse
 
-// todo реализовать передачу токена
 interface HHService {
-
     @Headers(
         "Authorization: Bearer ${BuildConfig.HH_ACCESS_TOKEN}",
         "HH-User-Agent: Practicum HH Client/1.0 (master@artwist.ru)"

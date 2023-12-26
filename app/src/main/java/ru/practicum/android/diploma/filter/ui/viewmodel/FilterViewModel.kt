@@ -58,8 +58,8 @@ class FilterViewModel @Inject constructor(private val interactor: FilterSettings
 
         viewModelScope.launch {
             interactor.getFilterUISettings()
-                // нашедшему причину задвоенного возвращения состояния
-                // префов от меня приз. А. Поляков.
+                // ? нашедшему причину задвоенного возвращения состояния
+                // ? префов от меня приз. А. Поляков.
                 .distinctUntilChanged()
                 .collect {
                     if (!areSettingsSettled(it)) {
@@ -135,5 +135,4 @@ class FilterViewModel @Inject constructor(private val interactor: FilterSettings
             }
         }
     }
-
 }

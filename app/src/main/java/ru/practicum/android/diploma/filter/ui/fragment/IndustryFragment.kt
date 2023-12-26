@@ -87,7 +87,7 @@ class IndustryFragment : BaseFragment<FragmentIndustryBinding, IndustryViewModel
                 binding.btnSelect.visibility = View.GONE
             }
 
-            IndustryScreenState.goAway -> findNavController().popBackStack()
+            IndustryScreenState.Hide -> findNavController().popBackStack()
         }
     }
 

@@ -54,7 +54,6 @@ open class SearchViewModel @Inject constructor(
             )
             checkState()
         }
-
     }
 
     private fun checkState() {

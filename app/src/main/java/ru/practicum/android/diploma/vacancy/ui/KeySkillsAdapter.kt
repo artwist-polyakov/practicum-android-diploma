@@ -21,4 +21,3 @@ class KeySkillsAdapter(private val keySkills: List<String>) :
 
     override fun getItemCount() = keySkills.size
 }
-
