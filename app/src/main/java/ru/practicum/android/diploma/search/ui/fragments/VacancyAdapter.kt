@@ -55,6 +55,7 @@ class VacancyAdapter(
         private val radius = itemView.resources.getDimension(R.dimen.vacancy_logo_corner_radius)
         fun bind(data: VacancyGeneral) = with(binding) {
             companyImage.load(data.employerLogo) {
+                allowHardware(false)
                 placeholder(R.drawable.placeholder_48px)
                 error(R.drawable.placeholder_48px)
             }
