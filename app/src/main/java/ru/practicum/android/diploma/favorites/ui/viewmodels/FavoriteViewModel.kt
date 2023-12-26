@@ -20,7 +20,7 @@ class FavoriteViewModel @Inject constructor(
     private val interactor: FavoritesDBInteractor,
     private val vacancyInteractor: SingleVacancyInteractor
 ) : BaseViewModel() {
-    private val vacancies: MutableList<VacancyGeneral> = mutableListOf()
+    private val vacancies: LinkedHashSet<VacancyGeneral> = linkedSetOf()
 
     private var totalPages: Int = 0
     private var currentPage: Int = 0
@@ -47,7 +47,14 @@ class FavoriteViewModel @Inject constructor(
     fun deleteFromFavorites(vacancy: VacancyGeneral) {
         viewModelScope.launch {
             interactor.deleteVacancy(vacancy.id)
-            updateStateWithContent(VacanciesSearchResult(vacancies.size, currentPage, totalPages, vacancies))
+//            updateStateWithContent(VacanciesSearchResult(vacancies.toList().size, currentPage, totalPages, vacancies))
+            vacancies.remove(vacancy)
+            _state.value = FavoritesScreenState.Content(
+                totalPages = totalPages,
+                currentPage = currentPage,
+                totalVacancies = vacancies.size,
+                vacancies = vacancies.toList()
+            )
         }
     }
 
@@ -84,12 +91,17 @@ class FavoriteViewModel @Inject constructor(
         }
         totalPages = result.totalPages
         currentPage = result.currentPage
+        for (vacancy in result.vacancies) {
+            if (vacancy !in vacancies) {
+                vacancies.add(vacancy)
+            }
+        }
         vacancies.addAll(result.vacancies)
         _state.value = FavoritesScreenState.Content(
             totalPages = totalPages,
             currentPage = currentPage,
             totalVacancies = result.vacanciesFound,
-            vacancies = vacancies
+            vacancies = vacancies.toList()
         )
     }
 }
