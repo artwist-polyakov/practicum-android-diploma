@@ -176,6 +176,8 @@ open class SearchViewModel @Inject constructor(
 
     fun handleInteraction(interaction: ViewModelInteractionState) {
         var newSearchSettings = searchSettings
+        // переменная костыль, чтобы обработать setQuery при возвращении на фрагмент
+        // в таких случаях нам надо восстановить всё как было.
         val t = isLastUpdatePage; isLastUpdatePage = false
         when (interaction) {
             is ViewModelInteractionState.setRegion -> {
