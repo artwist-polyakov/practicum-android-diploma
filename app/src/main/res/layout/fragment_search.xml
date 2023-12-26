@@ -27,8 +27,8 @@
 
         <ImageView
             android:id="@+id/iv_filter"
-            android:layout_width="@dimen/filter_icon_side"
-            android:layout_height="@dimen/filter_icon_side"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:contentDescription="@string/app_name"
             android:scaleType="center"
             android:src="@drawable/filter_24px" />
