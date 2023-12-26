@@ -200,7 +200,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         )
     }
 
-
     companion object {
         private const val CLICK_DEBOUNCE_DELAY = 500L
     }
