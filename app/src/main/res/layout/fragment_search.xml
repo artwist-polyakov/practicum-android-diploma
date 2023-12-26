@@ -76,7 +76,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tl_search_field">
+        app:layout_constraintTop_toTopOf="@id/tl_search_field">
 
         <ImageView
             android:id="@+id/iv_state_image"
@@ -97,16 +97,32 @@
             tools:text="@string/no_internet" />
     </LinearLayout>
 
-    <include
-        android:id="@+id/vacancy_list"
-        layout="@layout/vacancy_list"
+    <ScrollView
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tl_search_field" />
+        app:layout_constraintTop_toBottomOf="@id/tl_search_field">
+
+        <LinearLayout
+            android:id="@+id/ll_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/vacancy_list"
+                layout="@layout/vacancy_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/navbar_height" />
+        </LinearLayout>
+    </ScrollView>
 
     <TextView
         android:id="@+id/vacancy_count"
@@ -119,8 +135,8 @@
         android:textColor="@color/whiteUniversal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/vacancy_list"
-        tools:text="@string/no_vacancies" />
+        app:layout_constraintTop_toTopOf="@id/scrollview"
+        tools:text="[найдено 456 вакансий]" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -131,7 +147,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tl_search_field" />
+        app:layout_constraintTop_toTopOf="@id/tl_search_field" />
 
     <ProgressBar
         android:id="@+id/pb_bottom_progress_bar"

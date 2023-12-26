@@ -17,4 +17,5 @@
     <color name="inputTextHint">@color/gray</color>
     <color name="textHintApearence">@color/blackUniversal</color>
     <color name="formsBackground">@color/whiteDay</color>
+    <color name="transparent">@android:color/transparent</color>
 </resources>

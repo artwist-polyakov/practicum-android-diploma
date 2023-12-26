@@ -10,22 +10,17 @@ import coil.load
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
-import ru.practicum.android.diploma.common.data.network.NetworkClient
 import ru.practicum.android.diploma.common.ui.BaseFragment
 import ru.practicum.android.diploma.common.utils.CssStyle
 import ru.practicum.android.diploma.common.utils.formatSalary
 import ru.practicum.android.diploma.databinding.FragmentVacancyBinding
 import ru.practicum.android.diploma.vacancy.domain.models.DetailedVacancyItem
 import ru.practicum.android.diploma.vacancy.domain.models.VacancyState
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class VacancyFragment : BaseFragment<FragmentVacancyBinding, VacancyViewModel>(FragmentVacancyBinding::inflate) {
     override val viewModel: VacancyViewModel by viewModels()
     private var id: Int? = null
-
-    @Inject
-    lateinit var networkClient: NetworkClient
 
     override fun initViews() {
         binding.wvDescription.setBackgroundColor(Color.TRANSPARENT) // установка цвета из атрибутов не отрабатывается

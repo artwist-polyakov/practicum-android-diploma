@@ -218,6 +218,8 @@
     </style>
 
     <style name="PopupMenu" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:minWidth">24dp</item>
+        <item name="android:padding">4dp</item>
         <item name="android:textAppearance">@style/Text.Medium16.PopupMenu</item>
         <item name="android:popupBackground">@drawable/dialog_background</item>
     </style>

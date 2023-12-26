@@ -3,6 +3,7 @@ package ru.practicum.android.diploma.root.ui
 import android.content.res.Configuration
 import android.os.Build
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowInsetsController
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
@@ -20,10 +21,11 @@ import java.util.Locale
 @AndroidEntryPoint
 class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::inflate), MainActivityBlur {
 
-    override fun initViews() = with(binding) {
+    override fun initViews() {
         manageBottomNavigation()
         setStatusBarColor()
         setRussianLocale()
+        setBlurView()
     }
 
     /**
@@ -78,11 +80,27 @@ class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::infl
         baseContext.resources.configuration.setLocale(locale)
     }
 
+    private fun setBlurView() = with(binding) {
+        bottomNavigationView.setBackgroundColor(ContextCompat.getColor(this@RootActivity, R.color.transparent))
+        val radius = BLUR_RADIUS
+        val decorView = window.decorView
+        val rootView = decorView.findViewById(android.R.id.content) as ViewGroup
+        val windowBackground = decorView.background
+
+        blurview.setupWith(rootView)
+            .setFrameClearDrawable(windowBackground)
+            .setBlurRadius(radius)
+    }
+
     override fun applyBlurEffect() {
         binding.bottomNavigationView.applyBlurEffect()
     }
 
     override fun clearBlurEffect() {
         binding.bottomNavigationView.clearBlurEffect()
+    }
+
+    companion object {
+        private const val BLUR_RADIUS = 20f
     }
 }
