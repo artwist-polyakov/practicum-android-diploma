@@ -97,32 +97,22 @@
             tools:text="@string/no_internet" />
     </LinearLayout>
 
-    <ScrollView
-        android:id="@+id/scrollview"
+    <LinearLayout
+        android:id="@+id/ll_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tl_search_field">
 
-        <LinearLayout
-            android:id="@+id/ll_content"
+        <include
+            android:id="@+id/vacancy_list"
+            layout="@layout/vacancy_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <include
-                android:id="@+id/vacancy_list"
-                layout="@layout/vacancy_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/navbar_height" />
-        </LinearLayout>
-    </ScrollView>
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/vacancy_count"
@@ -135,7 +125,7 @@
         android:textColor="@color/whiteUniversal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/scrollview"
+        app:layout_constraintTop_toTopOf="@id/ll_content"
         tools:text="[найдено 456 вакансий]" />
 
     <ProgressBar
