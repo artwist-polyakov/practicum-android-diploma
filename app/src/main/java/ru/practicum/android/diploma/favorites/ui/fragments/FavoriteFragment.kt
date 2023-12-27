@@ -36,32 +36,17 @@ import ru.practicum.android.diploma.vacancy.ui.VacancyFragment
 @AndroidEntryPoint
 class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel>(FragmentFavoriteBinding::inflate) {
     override val viewModel by viewModels<FavoriteViewModel>()
-    private var mainActivityBlur: MainActivityBlur? = null
     private var onVacancyClickDebounce: ((VacancyGeneral) -> Unit)? = null
     private val vacancyListAdapter = VacancyAdapter(
-        { data ->
+        clickListener = { data ->
             onVacancyClickDebounce?.invoke(data)
         },
-        { data, view ->
-            suggestTrackDeleting(data, view)
-        }
+        onLongClickListener = ::suggestTrackDeleting
     )
 
     override fun onResume() {
         super.onResume()
         viewModel.loadVacancies()
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is MainActivityBlur) {
-            mainActivityBlur = context
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        mainActivityBlur = null
     }
 
     override fun initViews() {
@@ -234,11 +219,11 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
     private fun applyBlur(blurOn: Boolean) = with(binding) {
         if (blurOn) {
             llHeader.applyBlurEffect()
-            mainActivityBlur?.applyBlurEffect()
+            (requireActivity() as? MainActivityBlur)?.applyBlurEffect()
             scrollView.applyBlurEffect()
         } else {
             llHeader.clearBlurEffect()
-            mainActivityBlur?.clearBlurEffect()
+            (requireActivity() as? MainActivityBlur)?.clearBlurEffect()
             scrollView.clearBlurEffect()
         }
     }
