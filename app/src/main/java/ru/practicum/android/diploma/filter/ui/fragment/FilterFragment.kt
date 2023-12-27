@@ -198,7 +198,7 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
                 binding.tiSalaryField.setText((state.salary ?: "").toString())
                 binding.checkboxHideWithSalary.isChecked = state.withSalaryOnly
                 binding.llButtonBlock.visibility = VISIBLE
-                binding.btnReset.visibility = VISIBLE
+                binding.btnReset.visibility = if (state.isResetButtonEnabled) VISIBLE else GONE
                 binding.btnApply.visibility = if (state.isApplyButtonEnabled) VISIBLE else GONE
             }
 
