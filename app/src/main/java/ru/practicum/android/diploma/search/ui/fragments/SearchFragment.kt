@@ -30,7 +30,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         clickListener = { data ->
             onVacancyClickDebounce?.invoke(data)
         },
-        loadNextPageCallback = { loadNextPage() }
+        loadNextPageCallback = ::loadNextPage
     )
 
     override fun initViews() {

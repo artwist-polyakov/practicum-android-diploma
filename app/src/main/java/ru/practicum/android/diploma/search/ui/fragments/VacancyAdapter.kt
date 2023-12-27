@@ -23,7 +23,7 @@ import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
  *                  clickListener = { data ->
  *                      onVacancyClickDebounce?.invoke(data)
  *                 },
- *                 loadNextPageCallback = { loadNextPage() }
+ *                 loadNextPageCallback = ::loadNextPage
  *             )
  *     ```
  *     То есть в фрагменте нужен метод загрузки следующей страницы
