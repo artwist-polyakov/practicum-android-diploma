@@ -92,9 +92,7 @@ class FavoriteViewModel @Inject constructor(
         totalPages = result.totalPages
         currentPage = result.currentPage
         for (vacancy in result.vacancies) {
-            if (vacancy !in vacancies) {
-                vacancies.add(vacancy)
-            }
+            vacancies.add(vacancy)
         }
         vacancies.addAll(result.vacancies)
         _state.value = FavoritesScreenState.Content(
