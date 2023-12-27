@@ -1,7 +1,5 @@
 package ru.practicum.android.diploma.search.ui.fragments
 
-import android.content.res.Configuration
-import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
 import androidx.core.widget.doOnTextChanged
@@ -24,7 +22,6 @@ import ru.practicum.android.diploma.search.ui.viewmodels.states.ErrorsSearchScre
 import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchScreenState
 import ru.practicum.android.diploma.search.ui.viewmodels.states.ViewModelInteractionState
 import ru.practicum.android.diploma.vacancy.ui.VacancyFragment
-import java.util.Locale
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(FragmentSearchBinding::inflate) {
