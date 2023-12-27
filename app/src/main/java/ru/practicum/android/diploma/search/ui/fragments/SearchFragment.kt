@@ -107,6 +107,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
             is SearchScreenState.Error -> showProblem(state.error, state.showSnackBar)
             is SearchScreenState.Loading -> {
                 if (state.forPage == 0) {
+                    vacancyListAdapter.clearAll()
                     showCentralProgressBar()
                 } else {
                     vacancyListAdapter.setShowScrollRefresh(false)

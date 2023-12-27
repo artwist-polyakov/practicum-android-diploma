@@ -220,11 +220,11 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
         if (blurOn) {
             llHeader.applyBlurEffect()
             (requireActivity() as? MainActivityBlur)?.applyBlurEffect()
-            scrollView.applyBlurEffect()
+            llItemList.applyBlurEffect()
         } else {
             llHeader.clearBlurEffect()
             (requireActivity() as? MainActivityBlur)?.clearBlurEffect()
-            scrollView.clearBlurEffect()
+            llItemList.clearBlurEffect()
         }
     }
 

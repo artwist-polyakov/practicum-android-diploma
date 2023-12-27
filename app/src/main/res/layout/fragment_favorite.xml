@@ -26,32 +26,22 @@
             android:text="@string/favorite" />
     </LinearLayout>
 
-    <ScrollView
-        android:id="@+id/scrollView"
+    <LinearLayout
+        android:id="@+id/ll_item_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/standart_margin"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ll_header">
 
-        <LinearLayout
+        <include
+            android:id="@+id/favorites_list"
+            layout="@layout/vacancy_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <include
-                android:id="@+id/favorites_list"
-                layout="@layout/vacancy_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/navbar_height" />
-        </LinearLayout>
-    </ScrollView>
+            android:layout_height="match_parent"/>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_favorite_problem_layout"
