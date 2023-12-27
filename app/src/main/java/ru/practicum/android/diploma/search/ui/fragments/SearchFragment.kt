@@ -156,7 +156,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
     private fun showCentralProgressBar() {
         with(binding) {
             llProblemLayout.visibility = View.GONE
-            vacancyList.root.visibility = View.GONE
+//            vacancyList.root.visibility = View.GONE
             vacancyCount.visibility = View.GONE
 
             progressBar.visibility = View.VISIBLE
