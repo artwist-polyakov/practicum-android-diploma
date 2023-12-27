@@ -1,5 +1,7 @@
 package ru.practicum.android.diploma.search.ui.fragments
 
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
 import androidx.core.widget.doOnTextChanged
@@ -13,6 +15,7 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.common.ui.BaseFragment
 import ru.practicum.android.diploma.common.utils.debounce
+import ru.practicum.android.diploma.common.utils.getquantityString
 import ru.practicum.android.diploma.common.utils.showCustomSnackbar
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
@@ -185,27 +188,17 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         }
         vacancyListAdapter.setData(content.vacancies, content.currentPage)
         binding.vacancyCount.apply {
-            setRussianLocale()
-            text = resources.getQuantityString(
-                R.plurals.founded_vacancies,
-                content.totalVacancies,
-                content.totalVacancies
-            )
+            text = content.totalVacancies.getquantityString(requireContext())
             measure(0, 0)
         }
         showData()
+
     }
 
     private fun loadNextPage() {
         viewModel.handleInteraction(
             ViewModelInteractionState.setPage(viewModel.giveMyPageToReload() + 1)
         )
-    }
-
-    private fun setRussianLocale() {
-        val locale = Locale("ru")
-        Locale.setDefault(locale)
-        requireContext().resources.configuration.setLocale(locale)
     }
 
     companion object {

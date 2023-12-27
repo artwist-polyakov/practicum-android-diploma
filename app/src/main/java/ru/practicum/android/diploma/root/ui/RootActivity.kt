@@ -24,7 +24,6 @@ class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::infl
     override fun initViews() {
         manageBottomNavigation()
         setStatusBarColor()
-        setRussianLocale()
         setBlurView()
     }
 
@@ -72,12 +71,6 @@ class RootActivity : BaseActivity<ActivityRootBinding>(ActivityRootBinding::infl
                 window.decorView.systemUiVisibility = 0
             }
         }
-    }
-
-    private fun setRussianLocale() {
-        val locale = Locale("ru")
-        Locale.setDefault(locale)
-        baseContext.resources.configuration.setLocale(locale)
     }
 
     private fun setBlurView() = with(binding) {
