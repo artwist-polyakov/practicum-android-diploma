@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginHorizontal="@dimen/standart_margin"
     android:background="?attr/colorBackground"
     tools:context=".filter.ui.fragment.FilterFragment">
 
@@ -39,9 +40,9 @@
         android:id="@+id/tl_work_place"
         style="@style/TextInputLayout.FilterItem"
         android:layout_width="0dp"
-        android:backgroundTint="?attr/colorBackground"
         android:layout_marginStart="@dimen/negative_margin_standard"
         android:layout_marginTop="@dimen/between_text_card"
+        android:backgroundTint="?attr/colorBackground"
         android:paddingVertical="@dimen/image_padding_medium"
         app:layout_constraintEnd_toStartOf="@id/iv_arrow_forward_location"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,9 +51,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ti_work_place"
             style="@style/TextInputEditText.FilterInput"
+            android:ellipsize="end"
             android:hint="@string/workplace"
             android:maxLines="1"
-            android:ellipsize="end"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -71,8 +72,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tl_industry"
         style="@style/TextInputLayout.FilterItem"
-        android:layout_marginStart="@dimen/negative_margin_standard"
         android:layout_width="0dp"
+        android:layout_marginStart="@dimen/negative_margin_standard"
         android:paddingVertical="@dimen/image_padding_medium"
         app:layout_constraintEnd_toStartOf="@id/iv_arrow_forward_industry"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,9 +82,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ti_industry"
             style="@style/TextInputEditText.FilterInput"
+            android:ellipsize="end"
             android:hint="@string/industry"
             android:maxLines="1"
-            android:ellipsize="end"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,10 +103,10 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tl_salary"
         style="@style/TextInputLayout"
-        android:hint="@string/expected_salary"
-        app:expandedHintEnabled="false"
         android:layout_marginTop="@dimen/between_text_card"
+        android:hint="@string/expected_salary"
         android:paddingVertical="@dimen/image_padding_medium"
+        app:expandedHintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tl_industry"
@@ -175,17 +176,17 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_apply"
             style="@style/Button.Blue"
-            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_marginBottom="@dimen/image_margin_medium"
-            android:text="@string/apply" />
+            android:text="@string/apply"
+            android:visibility="visible" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_reset"
             style="@style/Button.Transparent"
-            android:visibility="visible"
             android:layout_width="match_parent"
-            android:text="@string/reset" />
+            android:text="@string/reset"
+            android:visibility="visible" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
