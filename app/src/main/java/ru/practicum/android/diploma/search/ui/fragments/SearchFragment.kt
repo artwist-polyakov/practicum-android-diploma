@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.common.ui.BaseFragment
 import ru.practicum.android.diploma.common.utils.debounce
+import ru.practicum.android.diploma.common.utils.getquantityString
 import ru.practicum.android.diploma.common.utils.showCustomSnackbar
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
@@ -184,14 +185,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         }
         vacancyListAdapter.setData(content.vacancies, content.currentPage)
         binding.vacancyCount.apply {
-            text = resources.getQuantityString(
-                R.plurals.founded_vacancies,
-                content.totalVacancies,
-                content.totalVacancies
-            )
+            text = content.totalVacancies.getquantityString(requireContext())
             measure(0, 0)
         }
         showData()
+
     }
 
     private fun loadNextPage() {
