@@ -57,7 +57,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/vacancy_info"
         android:visibility="gone"
-        android:layout_height="88dp" />
+        android:layout_height="104dp" />
 
     <ProgressBar
         android:id="@+id/pb_loading_bar"
