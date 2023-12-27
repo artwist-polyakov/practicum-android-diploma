@@ -21,6 +21,7 @@ import ru.practicum.android.diploma.search.ui.viewmodels.states.ErrorsSearchScre
 import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchScreenState
 import ru.practicum.android.diploma.search.ui.viewmodels.states.ViewModelInteractionState
 import ru.practicum.android.diploma.vacancy.ui.VacancyFragment
+import java.util.Locale
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(FragmentSearchBinding::inflate) {
@@ -184,6 +185,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         }
         vacancyListAdapter.setData(content.vacancies, content.currentPage)
         binding.vacancyCount.apply {
+            setRussianLocale()
             text = resources.getQuantityString(
                 R.plurals.founded_vacancies,
                 content.totalVacancies,
@@ -198,6 +200,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(Frag
         viewModel.handleInteraction(
             ViewModelInteractionState.setPage(viewModel.giveMyPageToReload() + 1)
         )
+    }
+
+    private fun setRussianLocale() {
+        val locale = Locale("ru")
+        Locale.setDefault(locale)
+        requireContext().resources.configuration.setLocale(locale)
     }
 
     companion object {
