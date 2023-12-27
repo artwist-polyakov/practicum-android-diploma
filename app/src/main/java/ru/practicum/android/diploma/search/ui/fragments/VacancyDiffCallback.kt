@@ -18,8 +18,7 @@ class VacancyDiffCallback(
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         if (oldList.size != newList.size && oldItemPosition == oldList.lastIndex) {
-            // Всегда обновляет последний элемент старого списка, если размеры различаются
-            return false
+            return false // Всегда обновляет последний элемент старого списка, если размеры различаются
         }
         return oldList[oldItemPosition] == newList[newItemPosition]
     }

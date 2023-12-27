@@ -1,11 +1,12 @@
 package ru.practicum.android.diploma.filter.ui.fragment
 
 import android.content.res.ColorStateList
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -20,11 +21,14 @@ import ru.practicum.android.diploma.filter.domain.models.FilterRegionValue
 import ru.practicum.android.diploma.filter.ui.viewmodel.FilterViewModel
 import ru.practicum.android.diploma.filter.ui.viewmodel.states.FilterScreenState
 import ru.practicum.android.diploma.filter.ui.viewmodel.states.FilterViewModelInteraction
+import java.text.NumberFormat
+import java.util.Locale
 
 @AndroidEntryPoint
 class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(FragmentFilterBinding::inflate) {
     override val viewModel by viewModels<FilterViewModel>()
     private var defaultHintColor: Int = 0
+    private var defaultHintColorFiledInput: Int = 0
     private var activeHintColor: Int = 0
     private var filterRegionValue: FilterRegionValue? = null
 
@@ -34,10 +38,8 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
         tiWorkPlace.setText(filterRegionValue?.text ?: "")
 
         defaultHintColor = ContextCompat.getColor(requireContext(), R.color.inputTextHint)
-        activeHintColor = ContextCompat.getColor(requireContext(), R.color.blue)
-
-        tiSalaryField.requestFocus()
-
+        defaultHintColorFiledInput = ContextCompat.getColor(requireContext(), R.color.inputTextHint)
+        activeHintColor = ContextCompat.getColor(requireContext(), R.color.hint_color_selector)
     }
 
     override fun subscribe(): Unit = with(binding) {
@@ -117,27 +119,57 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
         }
     }
 
-
     private fun inputListener() = with(binding) {
-        tiSalaryField.doOnTextChanged { text, _, _, _ ->
-            ivInputButton.isVisible = text.toString().isNotEmpty()
+        val salaryTextWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
 
-//            updateButtonBlockVisibility()
-
-            val hintColor = if (text.toString().isEmpty()) defaultHintColor else activeHintColor
-
-            tlSalary.hintTextColor = ColorStateList.valueOf(hintColor)
-
-            if (text.toString().startsWith("0") && text?.length!! > 1) {
-                tiSalaryField.setText(text.toString().substring(1))
-                tiSalaryField.setSelection(tiSalaryField.text?.length ?: 0)
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                updateButtonVisibility(s.toString())
+                updateHintColor(s.toString())
+                val cleanNumberString = s.toString().replace(Regex("[^0-9]"), "")
+                if (cleanNumberString.isNotBlank()) {
+                    try {
+                        formatSalaryText(cleanNumberString, this)
+                    } catch (e: NumberFormatException) {
+                        handleNumberFormattingException()
+                    }
+                }
+                debounceSalaryInput(cleanNumberString)
             }
-            salaryDebounce(if (text.toString().isNotEmpty()) text.toString().toInt() else null)
 
+            override fun afterTextChanged(s: Editable?) = Unit
+        }
+        tiSalaryField.addTextChangedListener(salaryTextWatcher)
+    }
+
+    private fun updateButtonVisibility(text: String) {
+        binding.ivInputButton.isVisible = text.isNotEmpty()
+    }
+
+    private fun updateHintColor(text: String) {
+        val hintColor = if (text.isEmpty()) defaultHintColor else activeHintColor
+        binding.tlSalary.hintTextColor = ColorStateList.valueOf(hintColor)
+    }
+
+    private fun formatSalaryText(cleanNumberString: String, textWatcher: TextWatcher) {
+        val number = cleanNumberString.toInt()
+        val formattedNumber = NumberFormat.getNumberInstance(Locale.forLanguageTag("ru-RU")).format(number)
+        binding.tiSalaryField.apply {
+            removeTextChangedListener(textWatcher)
+            setText(formattedNumber)
+            setSelection(text?.length ?: 0)
+            addTextChangedListener(textWatcher)
         }
     }
 
-    // Слушатель полей фильтров отрасли и места работы
+    private fun handleNumberFormattingException() {
+        binding.tiSalaryField.setText("")
+    }
+
+    private fun debounceSalaryInput(cleanNumberString: String) {
+        salaryDebounce(if (cleanNumberString.isNotEmpty()) cleanNumberString.toIntOrNull() else null)
+    }
+
     private fun filterFieldListeners() = with(binding) {
         tiWorkPlace.setupTextChangeListener(tlWorkPlace, ivArrowForwardLocation, requireContext())
         tiIndustry.setupTextChangeListener(tlIndustry, ivArrowForwardIndustry, requireContext())
@@ -166,7 +198,7 @@ class FilterFragment : BaseFragment<FragmentFilterBinding, FilterViewModel>(Frag
                 binding.tiSalaryField.setText((state.salary ?: "").toString())
                 binding.checkboxHideWithSalary.isChecked = state.withSalaryOnly
                 binding.llButtonBlock.visibility = VISIBLE
-                binding.btnReset.visibility = VISIBLE
+                binding.btnReset.visibility = if (state.isResetButtonEnabled) VISIBLE else GONE
                 binding.btnApply.visibility = if (state.isApplyButtonEnabled) VISIBLE else GONE
             }
 

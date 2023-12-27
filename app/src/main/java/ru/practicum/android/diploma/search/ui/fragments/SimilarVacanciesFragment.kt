@@ -1,22 +1,24 @@
 package ru.practicum.android.diploma.search.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.common.ui.BaseFragment
 import ru.practicum.android.diploma.common.utils.debounce
+import ru.practicum.android.diploma.common.utils.showCustomSnackbar
 import ru.practicum.android.diploma.databinding.FragmentSimilarVacanciesBinding
 import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
 import ru.practicum.android.diploma.search.ui.viewmodels.SimilarVacanciesViewModel
 import ru.practicum.android.diploma.search.ui.viewmodels.states.ErrorsSearchScreenStates
 import ru.practicum.android.diploma.search.ui.viewmodels.states.SearchScreenState
+import ru.practicum.android.diploma.search.ui.viewmodels.states.ViewModelInteractionState
 import ru.practicum.android.diploma.vacancy.ui.VacancyFragment
 
 @AndroidEntryPoint
@@ -24,9 +26,13 @@ class SimilarVacanciesFragment :
     BaseFragment<FragmentSimilarVacanciesBinding, SimilarVacanciesViewModel>(FragmentSimilarVacanciesBinding::inflate) {
     override val viewModel: SimilarVacanciesViewModel by viewModels()
     private var onVacancyClickDebounce: ((VacancyGeneral) -> Unit)? = null
-    private val vacancyListAdapter = VacancyAdapter() { data ->
-        onVacancyClickDebounce?.invoke(data)
-    }
+    private val vacancyListAdapter = VacancyAdapter(
+        clickListener = { data ->
+            onVacancyClickDebounce?.invoke(data)
+        },
+        loadNextPageCallback = ::loadNextPage,
+        needNavPadding = false
+    )
 
     override fun initViews() {
         val vacancyId = arguments?.getInt(VacancyFragment.ARG_ID)
@@ -37,6 +43,16 @@ class SimilarVacanciesFragment :
         binding.vacancyList.root.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = vacancyListAdapter
+            addOnScrollListener(
+                object : RecyclerView.OnScrollListener() {
+                    override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                        super.onScrollStateChanged(recyclerView, newState)
+                        if (!recyclerView.canScrollVertically(1)) {
+                            viewModel.loadMoreVacancies()
+                        }
+                    }
+                }
+            )
         }
     }
 
@@ -49,8 +65,8 @@ class SimilarVacanciesFragment :
         onVacancyClickDebounce = debounce(
             CLICK_DEBOUNCE_DELAY_500MS,
             viewLifecycleOwner.lifecycleScope,
-            false,
-            false
+            useLastParam = false,
+            actionWithDelay = false
         ) { data ->
             val bundle = Bundle().apply {
                 putInt(VacancyFragment.ARG_ID, data.id)
@@ -66,31 +82,53 @@ class SimilarVacanciesFragment :
         }
     }
 
+    private fun loadNextPage() {
+        viewModel.handleInteraction(
+            ViewModelInteractionState.setPage(viewModel.giveMyPageToReload() + 1)
+        )
+    }
 
     private fun renderState(state: SearchScreenState) {
         when (state) {
-            is SearchScreenState.Content -> {
-                Log.d("SimilarFragmentContentMyLog", "content ${state.vacancies}")
-                showData(state.vacancies)
+            is SearchScreenState.Content -> showData(state)
+            is SearchScreenState.Error -> showError(state.error, state.showSnackBar)
+            is SearchScreenState.Loading -> {
+                if (state.forPage == 0) {
+                    showProgressBar()
+                } else {
+                    vacancyListAdapter.setShowScrollRefresh(false)
+                    vacancyListAdapter.setScrollLoadingEnabled(true)
+                    vacancyListAdapter.refreshLastItem()
+                }
             }
-
-            is SearchScreenState.Error -> {
-                Log.d("SimilarFragmentErrorMyLog", "error message ${state.error}")
-                showEror(state.error)
-            }
-
             else -> showProgressBar()
         }
     }
 
-    private fun showEror(error: ErrorsSearchScreenStates) {
-        with(binding) {
-            vacancyList.root.visibility = View.GONE
-            progressBar.visibility = View.GONE
+    private fun showError(error: ErrorsSearchScreenStates, showSnackbar: Boolean = false) {
+        vacancyListAdapter.setScrollLoadingEnabled(false)
+        vacancyListAdapter.setShowScrollRefresh(true)
+        vacancyListAdapter.refreshLastItem()
+        if (showSnackbar) {
+            binding.root.showCustomSnackbar(getString(error.messageResource))
+            debounce<Boolean>(
+                CLICK_DEBOUNCE_DELAY_500MS,
+                viewLifecycleOwner.lifecycleScope,
+                useLastParam = false,
+                actionWithDelay = false
+            ) {
+                vacancyListAdapter.setScrollLoadingEnabled(it)
+            }.invoke(true)
+            return
+        } else {
+            with(binding) {
+                vacancyList.root.visibility = View.GONE
+                progressBar.visibility = View.GONE
 
-            tvErrorMessage.visibility = View.VISIBLE
-            tvErrorMessage.text = getString(error.messageResource)
-            tvErrorMessage.setCompoundDrawablesWithIntrinsicBounds(0, error.imageResource, 0, 0)
+                tvErrorMessage.visibility = View.VISIBLE
+                tvErrorMessage.setCompoundDrawablesWithIntrinsicBounds(0, error.imageResource, 0, 0)
+                tvErrorMessage.text = if (error.messageResource != -1) getString(error.messageResource) else ""
+            }
         }
     }
 
@@ -110,9 +148,11 @@ class SimilarVacanciesFragment :
         }
     }
 
-    private fun showData(vacancies: List<VacancyGeneral>) {
+    private fun showData(content: SearchScreenState.Content) {
         showData()
-        vacancyListAdapter.setData(vacancies)
+        vacancyListAdapter.setData(content.vacancies)
+        vacancyListAdapter.setScrollLoadingEnabled(content.currentPage != content.totalPages - 1)
+        vacancyListAdapter.setShowScrollRefresh(false)
     }
 
     companion object {

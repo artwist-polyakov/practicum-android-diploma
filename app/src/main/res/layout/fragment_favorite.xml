@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/standart_margin"
         android:paddingVertical="@dimen/image_padding_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,16 +27,23 @@
             android:text="@string/favorite" />
     </LinearLayout>
 
-    <include
-        android:id="@+id/favorites_list"
-        layout="@layout/vacancy_list"
+    <LinearLayout
+        android:id="@+id/ll_item_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/between_text_card"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/standart_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_header" />
+        app:layout_constraintTop_toBottomOf="@id/ll_header">
+
+        <include
+            android:id="@+id/favorites_list"
+            layout="@layout/vacancy_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_favorite_problem_layout"

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginHorizontal="@dimen/standart_margin"
     android:background="?attr/colorBackground"
     tools:context=".search.ui.fragments.SearchFragment">
 
@@ -27,8 +28,8 @@
 
         <ImageView
             android:id="@+id/iv_filter"
-            android:layout_width="@dimen/filter_icon_side"
-            android:layout_height="@dimen/filter_icon_side"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:contentDescription="@string/app_name"
             android:scaleType="center"
             android:src="@drawable/filter_24px" />
@@ -76,7 +77,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tl_search_field">
+        app:layout_constraintTop_toTopOf="@id/tl_search_field">
 
         <ImageView
             android:id="@+id/iv_state_image"
@@ -97,16 +98,22 @@
             tools:text="@string/no_internet" />
     </LinearLayout>
 
-    <include
-        android:id="@+id/vacancy_list"
-        layout="@layout/vacancy_list"
+    <LinearLayout
+        android:id="@+id/ll_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:visibility="gone"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tl_search_field" />
+        app:layout_constraintTop_toBottomOf="@id/tl_search_field">
+
+        <include
+            android:id="@+id/vacancy_list"
+            layout="@layout/vacancy_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/vacancy_count"
@@ -119,8 +126,8 @@
         android:textColor="@color/whiteUniversal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/vacancy_list"
-        tools:text="@string/no_vacancies" />
+        app:layout_constraintTop_toTopOf="@id/ll_content"
+        tools:text="[найдено 456 вакансий]" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -131,7 +138,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tl_search_field" />
+        app:layout_constraintTop_toTopOf="@id/tl_search_field" />
 
     <ProgressBar
         android:id="@+id/pb_bottom_progress_bar"

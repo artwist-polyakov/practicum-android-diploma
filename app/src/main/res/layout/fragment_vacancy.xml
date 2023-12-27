@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginHorizontal="@dimen/standart_margin"
     android:background="?attr/colorBackground"
     android:orientation="vertical">
 
@@ -46,7 +47,6 @@
             android:id="@+id/iv_like_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/right_margin"
             android:src="@drawable/favorites_inactive_24px"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

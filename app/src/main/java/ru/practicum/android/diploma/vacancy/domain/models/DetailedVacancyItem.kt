@@ -1,7 +1,5 @@
 package ru.practicum.android.diploma.vacancy.domain.models
 
-import android.util.Log
-
 @Suppress("Detekt.DataClassContainsFunctions")
 data class DetailedVacancyItem(
     val id: Int,
@@ -44,7 +42,6 @@ data class DetailedVacancyItem(
     private fun configureHTMLContacts(builder: StringBuilder): StringBuilder {
         if (!contacts?.name.isNullOrEmpty()) {
             contacts?.let {
-                Log.i("DetailedVacancyMyLog", "contacts = $contacts")
                 builder.append("$OPEN_SPAN_STR\"title margin\">Контакты</span>")
                 builder.append("$DIV_MARGIN<span class=\"contact-info\">Контактное лицо</span><br>")
                 builder.append(it.name)
@@ -67,18 +64,17 @@ data class DetailedVacancyItem(
         phones?.let { phones ->
             for (phone in phones) {
                 val cleanPhone = formatPhoneNumber(phone.second)
-                Log.i("DetailedVacancyMyLog", "cleanPhone = $cleanPhone")
                 builder.append(DIV_MARGIN)
                 builder.append("$OPEN_SPAN_STR\"contact-info\">Телефон</span>")
                 builder.append("<br><a href=\"tel:$cleanPhone\">")
                 builder.append(cleanPhone)
                 builder.append("</a><br>")
                 builder.append(CLOSE_DIV_STR)
-                phone.first?.let { comment ->
+                if (phone.first.isNotBlank()) {
                     builder.append(DIV_MARGIN)
                     builder.append("$OPEN_SPAN_STR\"contact-info\">Комментарий</span>")
                     builder.append("<br>")
-                    builder.append(comment)
+                    builder.append(phone.first)
                     builder.append("<br>$CLOSE_DIV_STR")
                 }
             }

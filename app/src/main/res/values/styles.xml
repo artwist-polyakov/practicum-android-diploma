@@ -20,6 +20,10 @@
         <item name="android:fontFamily">@font/ys_display_medium</item>
     </style>
 
+    <style name="Text.Medium16.PopupMenu" parent="TextAppearance.AppCompat.Widget.PopupMenu.Small">
+        <item name="android:textColor">@color/blackUniversal</item>
+    </style>
+
     <style name="Text.Regular16">
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
@@ -105,7 +109,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="boxBackgroundColor">?attr/formsBackgroundColor</item>
         <item name="hintTextAppearance">@style/Text.Hint</item>
-        <item name="hintTextColor">?attr/formsHintColor</item>
+        <item name="hintTextColor">@color/inputTextHint</item>
+        <item name="android:textColorHint">@color/inputTextHint</item>
         <item name="hintAnimationEnabled">false</item>
         <item name="boxCornerRadiusTopStart">@dimen/edittext_corner_radius</item>
         <item name="boxCornerRadiusTopEnd">@dimen/edittext_corner_radius</item>
@@ -212,4 +217,15 @@
         <item name="android:buttonTint">?attr/selectButtonColor</item>
     </style>
 
+    <style name="PopupMenu" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:minWidth">24dp</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:textAppearance">@style/Text.Medium16.PopupMenu</item>
+        <item name="android:popupBackground">@drawable/dialog_background</item>
+    </style>
+
+    <style name="AlertDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="android:background">@drawable/dialog_background</item>
+        <item name="android:windowBackground">@drawable/dialog_background</item>
+    </style>
 </resources>

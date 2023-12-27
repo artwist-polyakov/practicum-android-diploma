@@ -56,9 +56,6 @@ room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 retrofit = "com.squareup.retrofit2:retrofit:2.9.0"
 convertGson = "com.squareup.retrofit2:converter-gson:2.9.0"
 
-# ViewPager
-viewpager = "androidx.viewpager2:viewpager2:1.0.0"
-
 # Navigation
 navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "nav" }
 navigation = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "nav" }
@@ -71,6 +68,12 @@ coil = "io.coil-kt:coil:2.3.0"
 
 # Debug
 leakcanary = "com.squareup.leakcanary:leakcanary-android:2.12"
+
+# BlurView
+blurview = "com.github.Dimezis:BlurView:version-2.0.3"
+
+# Powermenu
+powermenu = "com.github.skydoves:powermenu:2.2.4"
 
 [bundles]
 [plugins]
