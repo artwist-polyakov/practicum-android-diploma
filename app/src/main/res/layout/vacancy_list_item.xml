@@ -50,6 +50,15 @@
 
     </LinearLayout>
 
+    <View
+        android:id="@+id/v_placeholder"
+        android:layout_width="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vacancy_info"
+        android:visibility="gone"
+        android:layout_height="88dp" />
+
     <ProgressBar
         android:id="@+id/pb_loading_bar"
         android:layout_width="@dimen/progressbar_size"
@@ -78,6 +87,8 @@
         android:paddingBottom="@dimen/navbar_height"
         android:visibility="gone"
         android:layout_gravity="center_horizontal" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

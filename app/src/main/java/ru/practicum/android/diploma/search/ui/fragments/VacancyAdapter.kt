@@ -91,6 +91,14 @@ class VacancyAdapter(
 
         }
 
+        fun showPlaceholderView() {
+            binding.vPlaceholder.visibility = View.VISIBLE
+        }
+
+        fun hidePlaceholderView() {
+            binding.vPlaceholder.visibility = View.GONE
+        }
+
         fun hideLoadingIndicator() {
             binding.pbLoadingBar.visibility = View.GONE
         }
@@ -148,6 +156,11 @@ class VacancyAdapter(
             holder.showRefreshButton()
         } else {
             holder.hideRefreshButton()
+        }
+        if (position == dataList.size - 1) {
+            holder.showPlaceholderView()
+        } else {
+            holder.hidePlaceholderView()
         }
     }
 
