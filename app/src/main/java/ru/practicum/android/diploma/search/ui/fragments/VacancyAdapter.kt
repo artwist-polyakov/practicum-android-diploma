@@ -46,7 +46,8 @@ import ru.practicum.android.diploma.search.domain.models.VacancyGeneral
 class VacancyAdapter(
     private val clickListener: (VacancyGeneral) -> Unit,
     private val onLongClickListener: (VacancyGeneral, View) -> Unit = { _, _ -> },
-    private var loadNextPageCallback: (() -> Unit)? = null
+    private var loadNextPageCallback: (() -> Unit)? = null,
+    private val needNavPadding: Boolean = true
 ) : RecyclerView.Adapter<VacancyAdapter.VacancyViewHolder>() {
 
     inner class VacancyViewHolder(
@@ -157,7 +158,7 @@ class VacancyAdapter(
         } else {
             holder.hideRefreshButton()
         }
-        if (position == dataList.size - 1) {
+        if (needNavPadding && position == dataList.size - 1) {
             holder.showPlaceholderView()
         } else {
             holder.hidePlaceholderView()

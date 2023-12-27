@@ -30,7 +30,8 @@ class SimilarVacanciesFragment :
         clickListener = { data ->
             onVacancyClickDebounce?.invoke(data)
         },
-        loadNextPageCallback = ::loadNextPage
+        loadNextPageCallback = ::loadNextPage,
+        needNavPadding = false
     )
 
     override fun initViews() {
